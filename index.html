@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="img/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="settings/styles.css">
+    <title>Cargando Página... | Sist-Inventario</title>
+    <style>
+      /* Estilo para el contenedor de la página de carga */
+      #loading {
+        width: 550px;
+        max-width: 95%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin: 10px auto;
+      }
+
+      section img {
+        border-radius: 50% 50% 5px 5px;
+        width: 100%;
+        margin: 5px auto;
+      }
+
+      /* Estilo para la barra de carga */
+      #progressBar {
+        width: 100%;
+        margin: 5px auto;
+        background-color: var(--blanco);
+        border-radius: 30px;
+        position: relative;
+      }
+
+      /* Estilo para el progreso de la barra de carga */
+      #progress {
+        height: 40px;
+        width: 0%;
+        background-color: var(--grisClaro);
+        border-radius: 30px;
+      }
+
+      /* Estilo para el texto de porcentaje */
+      #progressText {
+        font-weight: bold;
+        color: var(--azul);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+      }
+    </style>
+  </head>
+
+  <body>
+   <img src="img/fondo_index.png" alt="fondo" class="fondo">
+
+    <main>
+      <section id="loading">
+        <img src="img/logoMides.png" alt="logo" />
+        <!-- Barra de carga -->
+        <div id="progressBar">
+          <div id="progress"></div>
+          <h4 id="progressText">0%</h4>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      // Función para ocultar la página de carga una vez que el contenido principal se haya cargado
+      window.addEventListener("load", function () {
+        const loading = document.getElementById("loading");
+        setTimeout(function () {
+          loading.style.display = "none";
+          window.location.href = "login/login.php";
+        }, 5000); // Aquí establecemos el tiempo en milisegundos (5000 ms = 5 segundos)
+      });
+
+      // Función para actualizar el progreso de la barra de carga
+      function updateProgress() {
+        var progress = document.getElementById("progress");
+        var width = 0;
+        var interval = setInterval(frame, 44);
+        function frame() {
+          if (width >= 100) {
+            clearInterval(interval);
+          } else {
+            width++;
+            progress.style.width = width + "%";
+            progressText.textContent = width + "%";
+          }
+        }
+      }
+      // Llama a la función updateProgress cuando se carga la página
+      window.onload = updateProgress;
+    </script>
+  </body>
+</html>
