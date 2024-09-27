@@ -1,0 +1,168 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+:root {
+  --even: #ebe7e7;
+  --fondo: #00000066;
+  --azul: #004b99;
+  --grisClaro:#c3c3c3;
+  --gris: #808080;
+  --blanco: #ffffff;
+  --negro: #000000;
+  --rojo: #e20000;
+  --verde: #0e7a00;
+  --naranja: #ffa500;
+  --choco: brown;
+  --amarillo: #ffff00;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+header, footer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  background-color: var(--blanco);
+  box-shadow: 0 0 10px var(--azul);
+}
+footer h6{
+  width: 95%;
+  margin: 5px auto;
+  text-align: center;
+  color: var(--azul);
+}
+main {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  flex: 1;
+}
+/*Imagen de Fondo*/
+.fondo {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  min-height: 100vh;
+  z-index: -2;
+}
+.ruta{
+  display: none;
+}
+
+@media screen and (max-width: 900px) {
+  .ruta{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    border: 1px solid var(--gris);
+    h4{
+      color: var(--azul);
+      margin: 5px;
+    }
+  }
+}
+
+/*Botones del switalet2*/
+.btn-confirm{
+  background-color: var(--azul);
+  color: var(--blanco);
+  font-weight: bold;
+  transition: 0.2s ease-in-out;
+}
+.btn-confirm:hover{
+  background-color: var(--blanco);
+  color: var(--azul);
+  box-shadow: 0 0 5px var(--azul);
+}
+.btn-cancel{
+  background-color: var(--gris);
+  color: var(--blanco);
+  transition: 0.2s ease-in-out;
+  font-weight: bold;
+}
+.btn-cancel:hover{
+  background-color: var(--blanco);
+  color: var(--gris);
+  box-shadow: 0 0 5px var(--gris);
+}
+.btnSubmitPanel{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 95%;
+}
+.btnSubmit{
+  height: 40px;
+  padding: 0 10px;
+  border: none;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: 0.3s ease-in-out;
+  margin: 10px 5px;
+}
+.btnSubmit:hover{
+  cursor: pointer;
+}
+.btnCancel{
+  color: var(--blanco);
+  background-color: var(--gris);
+  line-height: 40px;
+}
+.btnCreateUser{
+  color: var(--blanco);
+  background-color: var(--verde);
+}
+.btnEditUser{
+  color: var(--blanco);
+  background-color: var(--naranja);
+  line-height: 40px;
+}
+.btnSaveUser{
+  color: var(--blanco);
+  background-color: var(--verde);
+  pointer-events: none; 
+  opacity: 0.5; 
+}
+.btnCancel:hover{
+  color: var(--gris);
+  background-color: var(--blanco);
+  box-shadow: 0 0 5px var(--gris);
+}
+.btnCreateUser:hover{
+  color: var(--verde);
+  background-color: var(--blanco);
+  box-shadow: 0 0 5px var(--verde);
+}
+.btnEditUser:hover{
+  color: var(--naranja);
+  background-color: var(--blanco);
+  box-shadow: 0 0 5px var(--naranja);
+}
+.btnSaveUser:hover{
+  color: var(--verde);
+  background-color: var(--blanco);
+  box-shadow: 0 0 5px var(--verde);
+}
+.fa-floppy-disk{
+  font-size: 12px;
+  margin: 0 2px 0 0;
+  padding: 0;
+}

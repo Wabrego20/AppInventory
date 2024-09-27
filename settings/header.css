@@ -1,0 +1,309 @@
+header .fa-bars,
+header .fa-xmark {
+  display: none;
+}
+
+.logoApp {
+  width: 200px;
+  margin: 5px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 5px;
+    li {
+      margin: 2px;
+      background-color: var(--azul);
+      border-radius: 5px;
+      transition: 0.2s ease-in-out;
+      a {
+        color: var(--blanco);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 5px 10px;
+        text-decoration: none;
+      }
+    }
+  }
+}
+.active {
+  pointer-events: none;
+  background-color: var(--blanco);
+  border: 2px solid var(--azul);
+  a {
+    color: var(--azul);
+  }
+}
+nav ul li:hover {
+  box-shadow: 0 0 5px var(--azul);
+  background-color: var(--blanco);
+  a {
+    color: var(--azul);
+  }
+}
+
+.formUserLogOut {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  position: relative;
+  min-width: 120px;
+  button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: 0.2s ease-in-out;
+    width: 100%;
+    h5 {
+      margin: 5px;
+    }
+  }
+}
+
+.btnUser {
+  color: var(--blanco);
+  background-color: var(--azul);
+}
+.btnUser:hover {
+  color: var(--azul);
+  background-color: var(--blanco);
+  box-shadow: 0 0 5px var(--azul);
+}
+.btnLogOut,
+.btnSett {
+  position: absolute;
+}
+.btnLogOut {
+  top: 0;
+  scale: 0;
+  color: var(--blanco);
+  background-color: var(--rojo);
+}
+.btnLogOut:hover {
+  color: var(--rojo);
+  background-color: var(--blanco);
+  box-shadow: 0 0 5px var(--rojo);
+}
+.btnSett {
+  top: 0;
+  scale: 0;
+  color: var(--blanco);
+  background-color: var(--gris);
+}
+.btnSett:hover {
+  color: var(--gris);
+  background-color: var(--blanco);
+  box-shadow: 0 0 5px var(--gris);
+}
+
+@media screen and (max-width: 900px) {
+  nav {
+    z-index: 2;
+    background-color: var(--fondo);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    transition: 0.2s ease-in-out;
+    overflow: auto;
+    span {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--blanco);
+      position: relative;
+      .fa-xmark {
+        display: block;
+      }
+    }
+    ul {
+      margin: 0;
+      flex-direction: column;
+      align-items: start;
+      justify-content: start;
+      padding: 0;
+      width: 320px;
+      border-radius: 0 5px 5px 0;
+      background-color: var(--blanco);
+      li {
+        width: 99%;
+        a {
+          width: 100%;
+        }
+      }
+    }
+  }
+  header .fa-bars,
+  header .fa-xmark {
+    display: block;
+    font-size: 25px;
+    border-radius: 50%;
+    color: var(--blanco);
+    background-color: var(--azul);
+    text-align: center;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    transition: 0.2s ease-in-out;
+    margin: 5px;
+  }
+  header .fa-bars:hover,
+  header .fa-xmark:hover {
+    box-shadow: 0 0 5px var(--azul);
+    color: var(--azul);
+    background-color: var(--blanco);
+    cursor: pointer;
+  }
+}
+
+/*Formulario para Editar pefil de usuarios*/
+.modalEditUser {
+  z-index: 2;
+  background-color: var(--fondo);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  right: -100%;
+  display: flex;
+  justify-content: end;
+  align-items: start;
+  transition: 0.2s ease-in-out;
+  overflow: auto;
+}
+
+.panelEditUser {
+  width: 400px;
+  max-width: 95%;
+  height: 95%;
+}
+.formEditUser {
+  width: 100%;
+  margin: 0;
+  background-color: var(--blanco);
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 5px 0 0 5px;
+  box-shadow: 0 0 10px var(--azul);
+  h2 {
+    border-radius: 5px 5px 0 0;
+    margin: 0;
+    padding: 5px;
+    width: 100%;
+    text-align: center;
+    background-color: var(--azul);
+    color: var(--blanco);
+  }
+  .formLogCampo {
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: 5px auto;
+    label {
+      color: var(--azul);
+      font-weight: bold;
+    }
+    .campo {
+      display: flex;
+      align-items: center;
+      justify-content: start;
+      width: 100%;
+      position: relative;
+      i {
+        height: 40px;
+        line-height: 40px;
+        width: 40px;
+        text-align: center;
+        background-color: var(--azul);
+        color: var(--blanco);
+        border-radius: 5px 0 0 5px;
+      }
+      .fa-eye,
+      .fa-eye-slash {
+        position: absolute;
+        right: 0;
+        transition: 0.2s ease-in-out;
+        border-radius: 0 5px 5px 0;
+      }
+      .fa-eye:hover,
+      .fa-eye-slash:hover {
+        cursor: pointer;
+        box-shadow: 0 0 5px var(--azul);
+        background-color: var(--blanco);
+        color: var(--azul);
+      }
+      .btnTxt {
+        width: 100%;
+        height: 40px;
+        border-radius: 0 5px 5px 0;
+        border: 1px solid var(--azul);
+        font-size: 16px;
+        color: var(--azul);
+        font-weight: bold;
+        pointer-events: none;
+      }
+      .btnTxt:focus {
+        box-shadow: 0 0 5px var(--azul);
+        outline: 1px solid var(--azul);
+      }
+    }
+  }
+}
+
+/*editar imagen*/
+#uploadButton {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--azul);
+  color: var(--blanco);
+  border: none;
+  cursor: pointer;
+  margin: 5px auto;
+  transition: 0.2s ease-in-out;
+  img {
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    border-radius: 50%;
+    text-align: center;
+  }
+  i {
+    font-size: 50px;
+  }
+}
+#uploadButton:hover {
+  background-color: var(--blanco);
+  color: var(--azul);
+  box-shadow: 0 0 5px var(--azul);
+}

@@ -1,0 +1,146 @@
+.logoApp{
+    width: 200px;
+    margin: 5px;
+    max-width: 95%;
+}
+.logoMides{
+    width: 100px;
+    max-width: 95%;
+    margin: 5px;
+    border-radius: 15px;
+}
+main{
+    align-items: center;
+}
+.formLog{
+    width: 400px;
+    max-width: 95%;
+    background-color: var(--blanco);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 5px;
+    box-shadow: 0 0 10px var(--azul);
+    margin: 10px auto;
+}
+.formLog h2{
+    border-radius: 5px 5px 0 0;
+    margin: auto;
+    padding: 5px;
+    width: 100%;
+    text-align: center;
+    background-color: var(--azul);
+    color: var(--blanco);
+}
+.loginGif{
+    width: 100px;
+    margin: 5px;
+}
+.formLog h3{
+    color: var(--azul);
+    width: 100%;
+    text-align: center;
+    margin: 5px auto;
+}
+.formLogCampo{
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: 5px auto;
+}
+.formLogCampo label{
+    color: var(--azul);
+    font-weight: bold;
+}
+.campo{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    position: relative;
+}
+.campo i{
+    height: 40px;
+    line-height: 40px;
+    width: 40px;
+    text-align: center;
+    background-color: var(--azul);
+    color: var(--blanco);
+}
+.fa-user-tie, .fa-key, .fa-envelope{
+    border-radius: 5px 0 0 5px;
+}
+
+.fa-eye, .fa-eye-slash{
+    position: absolute;
+    right: 0;
+    border-radius: 0 5px 5px 0;
+    transition: 0.2s ease-in-out;
+}
+
+.fa-eye:hover, .fa-eye-slash:hover {
+    cursor: pointer;
+    box-shadow: 0 0 5px var(--azul);
+    background-color: var(--blanco);
+    color: var(--azul);
+}
+.btnTxt{
+    width: 100%;
+    height: 40px;
+    border-radius: 0 5px 5px 0;
+    border: 1px solid var(--azul);
+    font-size: 16px;
+    color: var(--azul);
+    font-weight: bold;
+}
+.btnTxt:focus{
+    box-shadow: 0 0 5px var(--azul);
+    outline: 1px solid var(--azul);
+}
+
+.btnSubmit{
+    width: 95%;
+    height: 40px;
+    border: none;
+    background-color: var(--azul);
+    font-size: 16px;
+    color: var(--blanco);
+    border-radius: 5px;
+    margin: 5px auto;
+    transition: 0.3s ease-in-out;
+}
+.btnSubmit:hover{
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 0 5px var(--azul);
+    background-color: var(--blanco);
+    color: var(--azul);
+}
+
+.formLog h5{
+    width: 100%;
+    margin: 5px auto;
+    text-align: center;
+}
+h5 a{
+    color: var(--azul);
+    font-weight: bold;
+    transition: 0.2s ease-in-out;
+}
+h5 a:hover{
+    color: var(--fondo);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.scale__on{
+    display: flex;
+}
+
+.scale__off{
+    display: none;
+}
