@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="img/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../config/header.css">
+    <link rel="stylesheet" href="../config/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQpaQnP+u8xY8ts4rIAq17xvvWXoX/qeO5RYj/rCO+N4LXEoOpwT<ctrl61>tVhUVNU6lV+0vYCj"
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Dashboard | Sist-Inventario</title>
+</head>
+
+<body>
+    <div class="fondo" style="background-image: url('../img/dashboard.png');"></div>
+    <header>
+        <i class="fa-solid fa-bars" onclick="verMenu();"></i>        
+        <nav id="menu">
+            <span>
+                <i class="fa-solid fa-bars-staggered" onclick="ocultarMenu();"></i>
+                <img src="../img/logoApp.png" alt="logoAPP" class="logoApp">
+            </span>
+            <ul>
+                <li>
+                    <a href="dashboard.html">
+                        <i class="fa-solid fa-house"></i>
+                        Inicio
+                    </a>
+                </li>
+                <li>
+                    <a href="articles.html">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                        Artículos
+                    </a>
+                </li>
+                <li>
+                    <a href="users.html">
+                        <i class="fa-solid fa-users"></i>
+                        Usuarios
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="#">
+                        <i class="fa-solid fa-warehouse"></i>
+                        Bodegas
+                    </a>
+                </li>
+                <li>
+                    <a href="orders.html">
+                        <i class="fa-solid fa-list-check"></i>
+                        Ordenes
+
+                    </a>
+                </li>
+                <li>
+                    <a href="notices.html">
+                        <i class="fa-solid fa-bell"></i>
+                        Notificaciones
+                    </a>
+                </li>
+                <li>
+                    <a href="settings.html">
+                        <i class="fa-solid fa-gear"></i>
+                        Configuraciones
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="loginSett">
+            <div class="loginFoto">
+                <i class="fa-solid fa-image-portrait"></i>
+            </div>
+            <div class="loginUser">
+                <div class="loginBtn" onclick="verBtnLogout();">
+                    <i class="fa-solid fa-user-check"></i>
+                    <h4>Usuario</h4>
+                    <i class="fa-solid fa-angle-down"></i>
+                </div>
+                <div class="loginBtn logout" id="logout" onclick="cerrarSesion();">
+                    <i class="fa-solid fa-user-xmark"></i>
+                    <h5>Cerrar Sesión</h5>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="ruta">
+        <h4>Bodegas</h4>
+    </div>
+    <main>
+
+    </main>
+    <footer>
+        <h6>© 2024 Universidad de Panamá y William Abrego. Todos los derechos reservados.</h6>
+    </footer>
+    <script src="../config/untils..js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+
+</html>
