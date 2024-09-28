@@ -1,6 +1,6 @@
 <!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
-//include_once ("../settings/sessionStar.php");
+include_once ("../settings/sessionStart.php");
 include_once ("../settings/conexion.php");
 $selectDepartament = "SELECT departament_id, departament_name FROM departament";
 $selectDepartament = $conn->query($selectDepartament);
@@ -197,7 +197,7 @@ $selectDepartament = $conn->query($selectDepartament);
         <div class="formUserLogOut">
             <button class="btnUser" onclick="verBtnLogout();">
                 <i class="fa-solid fa-user-check"></i>
-                <h5>Usuario</h5>
+                <h5><?php echo $_SESSION['users_user']; ?></h5>
                 <i class="fa-solid fa-angle-down"></i>
             </button>
             <button class="btnLogOut" id="logout" onclick="cerrarSesion();">
