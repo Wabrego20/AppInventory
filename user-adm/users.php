@@ -375,7 +375,6 @@ $selectDepartament = $conn->query($selectDepartament);
 
 <?php
 if (isset($_POST['users_dni']) && isset($_POST['users_name']) && isset($_POST['users_last_name']) && isset($_POST['users_email']) && isset($_POST['users_rol']) && isset($_POST['departament_id'])) {
-    include_once ("../settings/conexion.php");
     $dni = ltrim($_POST['users_dni'], '0'); // Eliminar el primer cero si existe
     $name = $_POST['users_name'];
     $lastName = $_POST['users_last_name'];

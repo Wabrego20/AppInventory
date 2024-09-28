@@ -1,52 +1,3 @@
-//FUNCIÓN PARA VALIDAR EL CIERRE DE SESIÓN
-function cerrarSesion() {
-  Swal.fire({
-    color: "var(--azul)",
-    title: "Cerrar Sesión",
-    text: "¿Desea Cerrar Sesión?",
-    icon: "question",
-    iconColor: "var(--azul)",
-    showCancelButton: true,
-    confirmButtonText: "Cerrar sesión",
-    cancelButtonText: "Cancelar",
-    customClass: {
-      confirmButton: "btn-confirm",
-      cancelButton: "btn-cancel",
-    },
-    allowOutsideClick: false,
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.fire({
-        color: "var(--verde)",
-        title: "Sesión Cerrada",
-        text: "¡Vuelve Pronto!",
-        icon: "success",
-        iconColor: "var(--verde)",
-        showCancelButton: false,
-        showConfirmButton: false,
-        allowOutsideClick: false,
-      });
-
-      fetch("log_out.php", {
-        method: "POST",
-      })
-      .then(response => {
-        if (!response.ok) {
-          console.error("Error en la solicitud:", response.statusText);
-          return;
-        }
-        setTimeout(function () {
-          window.location.href = window.location.href;
-        }, 1500);
-      })
-      .catch(error => {
-        console.error("Error al cerrar sesión:", error);
-      });
-    }
-  });
-}
-
-
 //FUNCIÓN PARA VER Y OCULTAR EL BOTÓN DE CERRAR SESIÓN
 var isAtTop = true;
 var verBtn1 = document.querySelector(".btnLogOut");
@@ -193,4 +144,46 @@ function passVisibility() {
     eyeIcon.style.display = "block";
     eyeSlashIcon.style.display = "none";
   }
+}
+
+//Cerrar Sesión
+function cerrarSesion() {
+  Swal.fire({
+    color: "var(--azul)",
+    title: "Cerrar Sesión",
+    text: "¿Desea Cerrar Sesión?",
+    icon: "question",
+    iconColor: "var(--azul)",
+    showCancelButton: true,
+    confirmButtonText: "Cerrar sesión",
+    cancelButtonText: "Cancelar",
+    customClass: {
+      confirmButton: "btn-confirm",
+      cancelButton: "btn-cancel",
+    },
+    allowOutsideClick: false,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      fetch("../settings/sessionEnd.php", {
+        method: "POST",
+      })
+        .then((response) => response.text())
+        .then((data) => {
+          Swal.fire({
+            color: "var(--verde)",
+            title: "Sesión Cerrada",
+            text: "¡Vuelve Pronto!",
+            icon: "success",
+            iconColor: "var(--verde)",
+            showCancelButton: false,
+            showConfirmButton: false,
+            allowOutsideClick: false,
+          });
+          setTimeout(() => {
+            window.location.href = "../login/login.php";
+          }, 1500);
+        })
+        .catch((error) => console.error("Error:", error));
+    }
+  });
 }
