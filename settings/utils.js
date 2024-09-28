@@ -169,6 +169,7 @@ function cerrarSesion() {
       })
         .then((response) => response.text())
         .then((data) => {
+          console.log(data);
           Swal.fire({
             color: "var(--verde)",
             title: "Sesión Cerrada",
@@ -181,6 +182,49 @@ function cerrarSesion() {
           });
           setTimeout(() => {
             window.location.href = "../login/login.php";
+          }, 1500);
+        })
+        .catch((error) => console.error("Error:", error));
+    }
+  });
+}
+
+//Eliminar usuario
+
+function deleteUser(userId) {
+  Swal.fire({
+    color: "var(--azul)",
+    title: "Eliminar Usuario",
+    text: "¿Está seguro que desea eliminar este usuario?",
+    icon: "question",
+    iconColor: "var(--azul)",
+    showCancelButton: true,
+    confirmButtonText: "Eliminar",
+    cancelButtonText: "Cancelar",
+    customClass: {
+      confirmButton: "btn-confirm",
+      cancelButton: "btn-cancel",
+    },
+    allowOutsideClick: false,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      fetch("../settings/deleteUser.php?users_id=" + userId)
+        .then((response) => response.text())
+        .then((data) => {
+          console.log(data); // Verifica la respuesta en la consola
+
+          Swal.fire({
+            color: "var(--verde)",
+            title: "Éxito",
+            text: "¡Usuario eliminado correctamente!",
+            icon: "success",
+            iconColor: "var(--verde)",
+            showCancelButton: false,
+            showConfirmButton: false,
+            allowOutsideClick: false,
+          });
+          setTimeout(() => {
+            window.location.href = window.location.href;
           }, 1500);
         })
         .catch((error) => console.error("Error:", error));

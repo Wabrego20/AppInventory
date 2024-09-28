@@ -253,7 +253,8 @@ $selectDepartament = $conn->query($selectDepartament);
                         echo "<td>" . $row['users_registration_date'] . "</td>";
                         ?>
                         <style>
-                            .fa-user-pen, .fa-user-minus{
+                            .fa-user-pen,
+                            .fa-user-minus {
                                 color: var(--blanco);
                                 border-radius: 50%;
                                 width: 40px;
@@ -262,20 +263,26 @@ $selectDepartament = $conn->query($selectDepartament);
                                 text-align: center;
                                 transition: 0.2s ease-in-out;
                             }
-                            .fa-user-pen:hover, .fa-user-minus:hover{
+
+                            .fa-user-pen:hover,
+                            .fa-user-minus:hover {
                                 background-color: var(--blanco);
                             }
-                            .fa-user-pen{
+
+                            .fa-user-pen {
                                 background-color: var(--naranja);
                             }
-                            .fa-user-pen:hover{
+
+                            .fa-user-pen:hover {
                                 color: var(--naranja);
                                 box-shadow: 0 0 5px var(--naranja);
                             }
-                            .fa-user-minus{
+
+                            .fa-user-minus {
                                 background-color: var(--rojo);
                             }
-                            .fa-user-minus:hover{
+
+                            .fa-user-minus:hover {
                                 color: var(--rojo);
                                 box-shadow: 0 0 5px var(--rojo);
                             }
@@ -286,9 +293,10 @@ $selectDepartament = $conn->query($selectDepartament);
                             </a>
                         </td>
                         <td>
-                            <a href="delete_user.php?id=<?php echo $row['users_id']; ?>">
+                            <a href="javascript:void(0);" onclick="deleteUser(<?php echo $row['users_id']; ?>)">
                                 <i class="fa-solid fa-user-minus"></i>
                             </a>
+
                         </td>
 
                         <?php
