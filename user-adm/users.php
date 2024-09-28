@@ -238,10 +238,10 @@ $selectDepartament = $conn->query($selectDepartament);
                 <?php
                 $usuarios = "SELECT * FROM users";
                 $verUsuarios = $conn->query($usuarios);
-                
+
                 if ($verUsuarios->num_rows > 0) {
                     $counter = 1;
-                    while($row = $verUsuarios->fetch_assoc()) {
+                    while ($row = $verUsuarios->fetch_assoc()) {
                         echo "<tr>";
                         echo "<td>" . $counter . "</td>";
                         echo "<td>" . $row['users_dni'] . "</td>";
@@ -251,8 +251,47 @@ $selectDepartament = $conn->query($selectDepartament);
                         echo "<td>" . $row['users_rol'] . "</td>";
                         //echo "<td><img src='path/to/images/" . $row['users_photo'] . "' alt='Foto' width='50'></td>";
                         echo "<td>" . $row['users_registration_date'] . "</td>";
-                        echo "<td><a href='edit_user.php?id=" . $row['users_id'] . "'>Editar</a></td>";
-                        echo "<td><a href='delete_user.php?id=" . $row['users_id'] . "'>Eliminar</a></td>";
+                        ?>
+                        <style>
+                            .fa-user-pen, .fa-user-minus{
+                                color: var(--blanco);
+                                border-radius: 50%;
+                                width: 40px;
+                                height: 40px;
+                                line-height: 40px;
+                                text-align: center;
+                                transition: 0.2s ease-in-out;
+                            }
+                            .fa-user-pen:hover, .fa-user-minus:hover{
+                                background-color: var(--blanco);
+                            }
+                            .fa-user-pen{
+                                background-color: var(--naranja);
+                            }
+                            .fa-user-pen:hover{
+                                color: var(--naranja);
+                                box-shadow: 0 0 5px var(--naranja);
+                            }
+                            .fa-user-minus{
+                                background-color: var(--rojo);
+                            }
+                            .fa-user-minus:hover{
+                                color: var(--rojo);
+                                box-shadow: 0 0 5px var(--rojo);
+                            }
+                        </style>
+                        <td>
+                            <a href="edit_user.php?id=<?php echo $row['users_id']; ?>">
+                                <i class="fa-solid fa-user-pen"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="delete_user.php?id=<?php echo $row['users_id']; ?>">
+                                <i class="fa-solid fa-user-minus"></i>
+                            </a>
+                        </td>
+
+                        <?php
                         echo "</tr>";
                         $counter++;
                     }
