@@ -65,17 +65,19 @@ document
     }
   });
 
+
+
 //FUNCION DE LA TABLA DE USUARIOS
 $(document).ready(function () {
-  $("#miTabla").DataTable({
+  $("#tableUsers").DataTable({
     language: {
       processing: "Procesando...",
-      lengthMenu: "Mostrar _MENU_ registros",
-      zeroRecords: "No se encontraron resultados",
-      emptyTable: "Ningún dato disponible en esta tabla",
-      info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-      infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
-      infoFiltered: "(filtrado de un total de _MAX_ registros)",
+      lengthMenu: "Mostrar _MENU_ usuarios",
+      zeroRecords: "No se encontraron usuarios",
+      emptyTable: "Ningún usuario disponible en esta tabla",
+      info: "Mostrando usuario del _START_ al _END_ de un total de _TOTAL_ usuarios",
+      infoEmpty: "Mostrando usuario del 0 al 0 de un total de 0 usuarios",
+      infoFiltered: "(filtrado de un total de _MAX_ usuarios)",
       search: "Buscar:",
       loadingRecords: "Cargando...",
       paginate: {
@@ -93,7 +95,7 @@ $(document).ready(function () {
     dom: "lBfrtip", // 'l' es para el selector de longitud
     buttons: [
       {
-        text: '<i class="fas fa-user-plus"></i> Crear Usuario',
+        text: '<i class="fas fa-user-plus"></i> Crear usuario',
         action: function (e, dt, node, config) {
           var formu = document.querySelector(".modalCreateUser");
           formu.style.scale = "1";
@@ -108,6 +110,51 @@ $(document).ready(function () {
 function ocultarFormCreateUser() {
   document.querySelector(".modalCreateUser").style.scale = "0";
 }
+
+//FUNCION DE LA TABLA DE ARTÍCULOS
+$(document).ready(function () {
+  $("#tableArticles").DataTable({
+    language: {
+      processing: "Procesando...",
+      lengthMenu: "Mostrar _MENU_ articulos",
+      zeroRecords: "No se encontraron articulos",
+      emptyTable: "Ningún articulo disponible en esta tabla",
+      info: "Mostrando articulo del _START_ al _END_ de un total de _TOTAL_ articulos",
+      infoEmpty: "Mostrando articulo del 0 al 0 de un total de 0 articulos",
+      infoFiltered: "(filtrado de un total de _MAX_ articulos)",
+      search: "Buscar:",
+      loadingRecords: "Cargando...",
+      paginate: {
+        first: "Primero",
+        last: "Último",
+        next: "Siguiente",
+        previous: "Anterior",
+      },
+      aria: {
+        sortAscending: ": Activar para ordenar la columna de manera ascendente",
+        sortDescending:
+          ": Activar para ordenar la columna de manera descendente",
+      },
+    },
+    dom: "lBfrtip", // 'l' es para el selector de longitud
+    buttons: [
+      {
+        text: '<i class="fa-solid fa-heart-circle-plus"></i> Crear articulo',
+        action: function (e, dt, node, config) {
+          var formu = document.querySelector(".modalCreateArticle");
+          formu.style.scale = "1";
+          // Aquí puedes agregar tu lógica para crear un usuario
+        },
+      },
+    ],
+  });
+});
+//Función para ver formulario de creación de usuarios
+function ocultarFormCreateArticle() {
+  document.querySelector(".modalCreateArticle").style.scale = "0";
+}
+
+
 
 function verFormRecoverPass() {
   var formLogin = document.querySelector(".login");
@@ -131,7 +178,7 @@ function verFormLogin() {
 }
 
 function passVisibility() {
-  const passwordField = document.getElementById("password");
+  const passwordField = document.getElementById("users_password");
   const eyeIcon = document.querySelector(".fa-eye");
   const eyeSlashIcon = document.querySelector(".fa-eye-slash");
 

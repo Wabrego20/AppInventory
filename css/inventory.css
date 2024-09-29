@@ -1,16 +1,71 @@
-main{
-    flex-direction: column;
-    align-items: center;
-    justify-content: start;
+main {
+  width: 1000px;
+  max-width: 95%;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 5px auto;
 }
-main h2{
-  width: 95%;
-  text-align: center;
-  color: var(--azul);
-  margin: 10px auto;
+.btn_seccion {
+  background-color: var(--azul);
+  color: var(--blanco);
+  width: 400px;
+  max-width: 95%;
+  height: 230px;
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: 0.2s ease-in-out;
+  h2 {
+    background-color: var(--blanco);
+    color: var(--azul);
+    border-radius: 5px 5px 0 0;
+    text-align: center;
+    box-shadow: inset 0 0 5px var(--azul);
+    width: 100%;
+  }
+  img {
+    width: 100px;
+    border-radius: 50%;
+  }
+  h4 {
+    border-top: 1px solid var(--gris);
+    text-align: justify;
+    padding: 5px 10px;
+  }
+}
+.btn_seccion:hover {
+  cursor: pointer;
+  box-shadow: 0 0 10px var(--azul);
 }
 
-.dataTables_wrapper{
+.ruta2 {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  border: 1px solid var(--gris);
+  flex-wrap: wrap;
+  h4 {
+    color: var(--azul);
+    margin: 5px;
+  }
+  a {
+    margin-left: 10px;
+    text-decoration: none;
+    color: var(--azul);
+    transition: 0.2s ease-in-out;
+    :hover {
+      text-decoration: underline;
+      color: var(--negro);
+    }
+  }
+}
+
+.dataTables_wrapper {
   background-color: var(--azul);
   max-width: 95%;
   margin: 5px auto;
@@ -19,27 +74,27 @@ main h2{
   font-weight: bold;
   .dt-buttons {
     float: inline-end;
-     margin: 5px;
-     .dt-button{
-     color: var(--blanco);
-     background-color: var(--verde);
-     border-radius: 5px;
-     border: none;
-     height: 40px;
-     padding: 0 10px;
-     }
-     .dt-button:hover{
-     color: var(--verde);
-     background-color: var(--blanco);
-     cursor: pointer;
-     box-shadow: 0 0 5px var(--verde);
-     }
+    margin: 5px;
+    .dt-button {
+      color: var(--blanco);
+      background-color: var(--verde);
+      border-radius: 5px;
+      border: none;
+      height: 40px;
+      padding: 0 10px;
+    }
+    .dt-button:hover {
+      color: var(--verde);
+      background-color: var(--blanco);
+      cursor: pointer;
+      box-shadow: 0 0 5px var(--verde);
+    }
   }
-  
+
   .dataTables_length {
     float: left;
     margin: 5px;
-    select{
+    select {
       width: 40px;
       height: 40px;
       color: blue;
@@ -53,7 +108,7 @@ main h2{
   .dataTables_filter {
     margin: 5px;
   }
-  input{
+  input {
     height: 40px;
     border-radius: 5px;
     border: none;
@@ -71,25 +126,24 @@ main h2{
     color: var(--azul);
     text-align: center;
   }
-  .dataTable tbody .even{
+  .dataTable tbody .even {
     background-color: var(--even);
   }
-  
-  .dataTables_empty{
-    color:var(--rojo)
-}
-.dataTables_paginate span a.current {
-  border-radius: 5px;
-}
+
+  .dataTables_empty {
+    color: var(--rojo);
+  }
+  .dataTables_paginate span a.current {
+    border-radius: 5px;
+  }
 }
 .dataTables_info {
   color: var(--blanco) !important;
   margin: 5px;
 }
 
-
 /*Formulario para crear usuarios*/
-.modalCreateUser{
+.modalCreateArticle {
   background-color: var(--fondo);
   width: 100%;
   height: 100%;
@@ -101,14 +155,14 @@ main h2{
   justify-content: center;
   align-items: center;
 }
-.panelCreateUser{
+.panelCreateArticle {
   width: 400px;
   max-width: 95%;
   height: 95%;
   overflow: auto;
   position: relative;
 }
-.formCreateUser{
+.formCreateArticle {
   width: 100%;
   background-color: var(--blanco);
   display: flex;
@@ -117,7 +171,7 @@ main h2{
   flex-direction: column;
   border-radius: 5px;
   box-shadow: 0 0 10px var(--azul);
-  h2{
+  h2 {
     border-radius: 5px 5px 0 0;
     margin: auto;
     padding: 5px;
@@ -126,7 +180,7 @@ main h2{
     background-color: var(--azul);
     color: var(--blanco);
   }
-  .formLogCampo{
+  .formLogCampo {
     width: 95%;
     display: flex;
     justify-content: space-between;
@@ -134,25 +188,26 @@ main h2{
     flex-wrap: wrap;
     flex-direction: column;
     margin: 5px auto;
-    label{
+    label {
       color: var(--azul);
       font-weight: bold;
     }
-    .campo{
+    .campo {
       display: flex;
       align-items: center;
       justify-content: start;
       width: 100%;
       position: relative;
-      i{
+      i {
         height: 40px;
         line-height: 40px;
         width: 40px;
         text-align: center;
         background-color: var(--azul);
         color: var(--blanco);
+        border-radius: 5px 0 0 5px;
       }
-      .btnTxt{
+      .btnTxt {
         width: 100%;
         height: 40px;
         border-radius: 0 5px 5px 0;
@@ -161,9 +216,18 @@ main h2{
         color: var(--azul);
         font-weight: bold;
       }
-      .btnTxt:focus{
+      .btnTxt:focus {
         box-shadow: 0 0 5px var(--azul);
         outline: 1px solid var(--azul);
+      }
+      .textArea {
+        resize: none;
+        height: 60px;
+        .fa-file-signature{
+            height: 60px;
+            line-height: 60px;
+            width: 60px;
+          }
       }
     }
   }
