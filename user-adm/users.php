@@ -163,7 +163,7 @@ $selectDepartament = $conn->query($selectDepartament);
                     </a>
                 </li>
                 <li>
-                    <a href="typeInventory/inventory.html">
+                    <a href="typeInventory/inventory.php">
                         <i class="fa-solid fa-boxes-stacked"></i>
                         <h5>Tipos de Inventarios</h5>
                     </a>

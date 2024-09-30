@@ -159,13 +159,13 @@ include_once ("../../settings/conexion.php");
                     </a>
                 </li>
                 <li>
-                    <a href="inventory.html">
+                    <a href="inventory.php">
                         <i class="fa-solid fa-boxes-stacked"></i>
                         <h5>Tipos de Inventarios</h5>
                     </a>
                 </li>
                 <li>
-                    <a href="warehouse.html">
+                    <a href="../warehouse.php">
                         <i class="fa-solid fa-warehouse"></i>
                         <h5>Bodegas</h5>
                     </a>
@@ -212,7 +212,7 @@ include_once ("../../settings/conexion.php");
 
     <!--Ruta que muestra donde se encuentra actualmente-->
     <div class="ruta2">
-        <a href="inventory.html">
+        <a href="inventory.php">
             <h5>Tipos de Inventarios</h5>
         </a>
         <i class="fa-solid fa-chevron-right"></i>
@@ -279,7 +279,7 @@ include_once ("../../settings/conexion.php");
                                 <?php
                                 if ($selectDepartament->num_rows > 0) {
                                     while ($row = $selectDepartament->fetch_assoc()) {
-                                        echo '<option value="' . $row["articles_category"] . '">' . $row["departament_name"] . '</option>';
+                                        echo '<option value="' . $row["categories_id"] . '">' . $row["categories_name"] . '</option>';
                                     }
                                 } else {
                                     echo '<option value="">No hay categorías disponibles</option>';
@@ -310,48 +310,68 @@ include_once ("../../settings/conexion.php");
                         </div>
                     </div>
 
-                    <!--campo de correo-->
+                    <!--campo de unidada de medida-->
                     <div class="formLogCampo">
-                        <label for="email">Correo:</label>
+                        <label for="articles_unit_measurement">Unidad de Medida:</label>
                         <div class="campo">
-                            <i class="fa-regular fa-envelope"></i>
-                            <input class="btnTxt" type="email" name="users_email" id="users_email" maxlength="20"
-                                placeholder="introduzca un correo por favor" required>
-                        </div>
-                    </div>
-
-                    <!--campo de departamento-->
-                    <div class="formLogCampo">
-                        <label for="departament">Departamento:</label>
-                        <div class="campo">
-                            <i class="fa-solid fa-building-user"></i>
-                            <select name="departament_id" class="btnTxt" id="departament_id" required>
+                            <i class="fa-solid fa-layer-group"></i>
+                            <select name="articles_unit_measurement" class="btnTxt" id="articles_unit_measurement"
+                                required>
                                 <option value="">Seleccione</option>
                                 <?php
                                 if ($selectDepartament->num_rows > 0) {
                                     while ($row = $selectDepartament->fetch_assoc()) {
-                                        echo '<option value="' . $row["departament_id"] . '">' . $row["departament_name"] . '</option>';
+                                        echo '<option value="' . $row["unit_measurement_id"] . '">' . $row["unit_measurement_name"] . '</option>';
                                     }
                                 } else {
-                                    echo '<option value="">No hay departamentos disponibles</option>';
+                                    echo '<option value="">No hay unidades disponibles</option>';
                                 }
                                 ?>
                             </select>
                         </div>
                     </div>
 
-                    <!--campo de rol-->
+                    <!--campo de bodega-->
                     <div class="formLogCampo">
-                        <label for="rol">Rol:</label>
+                        <label for="warehouse_name">Bodega:</label>
                         <div class="campo">
-                            <i class="fa-solid fa-user-secret"></i>
-                            <select name="users_rol" class="btnTxt" id="users_rol" required>
+                            <i class="fa-solid fa-warehouse"></i>
+                            <select name="warehouse_name" class="btnTxt" id="warehouse_name" required>
                                 <option value="">Seleccione</option>
-                                <option value="Administrador">Administrador</option>
-                                <option value="Gestor">Gestor</option>
+                                <?php
+                                if ($selectDepartament->num_rows > 0) {
+                                    while ($row = $selectDepartament->fetch_assoc()) {
+                                        echo '<option value="' . $row["warehouse_id"] . '">' . $row["warehouse_name"] . '</option>';
+                                    }
+                                } else {
+                                    echo '<option value="">No hay bodegas disponibles</option>';
+                                }
+                                ?>
                             </select>
                         </div>
                     </div>
+
+                     <!--campo de costo unitario del artículos-->
+                     <div class="formLogCampo">
+                        <label for="articles_unit_cost">Costo Unitario:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-arrow-up-1-9"></i>
+                            <input class="btnTxt" type="number" name="articles_unit_cost" id="articles_unit_cost"
+                                pattern="[0-9]{1,7}" max="1000000" placeholder="introduzca la cantidad " required>
+                        </div>
+                    </div>
+
+                    <!--campo de costo total del artículos-->
+                    <div class="formLogCampo">
+                        <label for="articles_total_cost">Costo Unitario:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-arrow-up-1-9"></i>
+                            <input class="btnTxt" type="number" name="articles_total_cost" id="articles_total_cost"
+                                pattern="[0-9]{1,7}" max="1000000" placeholder="introduzca la cantidad " required>
+                        </div>
+                    </div>
+
+                    
 
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
                     <div class="btnSubmitPanel">

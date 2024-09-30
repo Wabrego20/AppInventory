@@ -1,6 +1,7 @@
 <!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
 include_once ("../settings/sessionStart.php");
+include_once ("../settings/conexion.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -8,11 +9,12 @@ include_once ("../settings/sessionStart.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../../img/icon.png" type="image/x-icon">
-    <link rel="stylesheet" href="../../settings/header.css">
-    <link rel="stylesheet" href="../../settings/fontawesome/css/all.min.css">
-    <link rel="stylesheet" href="../../settings/styles.css">
-    <link rel="stylesheet" href="../../css/inventory.css">
+    <link rel="shortcut icon" href="../img/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../settings/header.css">
+    <link rel="stylesheet" href="../settings/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../settings/styles.css">
+    <link rel="stylesheet" href="../css/warehouse.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
     <title>Dashboard | Sist-Inventario</title>
 </head>
 
@@ -146,23 +148,23 @@ include_once ("../settings/sessionStart.php");
         <nav id="menu">
             <span>
                 <i class="fa-solid fa-xmark" onclick="ocultarMenu();"></i>
-                <img src="../../img/logoApp.png" alt="logoAPP" class="logoApp">
+                <img src="../img/logoApp.png" alt="logoAPP" class="logoApp">
             </span>
             <ul>
                 <li>
-                    <a href="../dashboard.php">
+                    <a href="dashboard.php">
                         <i class="fa-solid fa-house"></i>
                         <h5>Inicio</h5>
                     </a>
                 </li>
-                <li class="active">
-                    <a href="#">
+                <li>
+                    <a href="inventory.php">
                         <i class="fa-solid fa-boxes-stacked"></i>
                         <h5>Tipos de Inventarios</h5>
                     </a>
                 </li>
-                <li>
-                    <a href="warehouse.html">
+                <li class="active">
+                    <a href="#">
                         <i class="fa-solid fa-warehouse"></i>
                         <h5>Bodegas</h5>
                     </a>
@@ -180,7 +182,7 @@ include_once ("../settings/sessionStart.php");
                     </a>
                 </li>
                 <li>
-                    <a href="../users.php">
+                    <a href="users.php">
                         <i class="fa-solid fa-users"></i>
                         <h5>Usuarios</h5>
                     </a>
@@ -209,34 +211,83 @@ include_once ("../settings/sessionStart.php");
 
     <!--Ruta que muestra donde se encuentra actualmente-->
     <div class="ruta">
-        <h4>Inventario de Consumo Interno</h4>
+        <h4>Bodegas</h4>
     </div>
 
     <!--Cuerpo Principal-->
     <main>
-        <a class="btn_seccion" href="inventory1.php">
-            <h2>Inventario de Consumo Interno</h2>
-            <img src="../../gif/escritorio.gif" alt="article">
-            <h4>Ver útiles de oficina, útiles de aseo, productos de cafetería, alimentos y bebidas</h4>
-        </a>
+        <h2>Tabla de Bodegas</h2>
+        <table id="tableBodegas">
+            <thead>
+                <tr>
+                    <th>N°</th>
+                    <th>Nombre</th>
+                    <th>Ubicación</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $bodegas = "SELECT * FROM warehouses";
+                $verBodegas = $conn->query($bodegas);
 
-        <a class="btn_seccion" href="inventory2.html">
-            <h2>Inventario de Ayuda Social a Programas</h2>
-            <img src="../../gif/marketing-social.gif" alt="article">
-            <h4>Ver alimentos, implementos médicos, materiales de construcción.</h4>
-        </a>
+                if ($verBodegas->num_rows > 0) {
+                    $counter = 1;
+                    while ($row = $verBodegas->fetch_assoc()) {
+                    }
+                }
+                ?>
+            </tbody>
+        </table>
 
-        <a class="btn_seccion" href="inventory3.html">
-            <h2>Inventario de Bienes Físicos</h2>
-            <img src="../../gif/portapapeles.gif" alt="article">
-            <h4>Solicitado por los diferentes Departamentos para sus operaciones, son adquiridos y registrados en el Sistema Istmo y realiza un acta de entrega al departamento que lo solicito. </h4>
-        </a>
+        <!--Formulario para Crear un usuario-->
+        <div class="modalCreateBodega">
+            <div class="panelCreateBodega">
+                <form method="post" class="formCreateBodega">
+                    <h2>Crear Bodega/Almacén</h2>
 
-        <a class="btn_seccion" href="inventory4.html">
-            <h2>Inventario de Donaciones</h2>
-            <img src="../../gif/donacion-de-alimentos.gif" alt="article">
-            <h4>Entidades benefactoras que brindan bienes los cuales se deben ingresar al sistema para llevar un control los mismos y después distribuirlos.</h4>
-        </a>
+                    <!--campo de nombre de la bodega-->
+                    <div class="formLogCampo">
+                        <label for="articles_name">Nombre:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-signature"></i>
+                            <input class="btnTxt" type="text" name="articles_name" id="articles_name"
+                                pattern="[a-zA-ZñÑ]{3,30}" maxlength="30" placeholder="introduzca un nombre" required
+                                autofocus>
+                        </div>
+                    </div>
+                    <!--campo de ubicación de la bodega-->
+                    <div class="formLogCampo">
+                        <label for="articles_name">Ubicación:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-signature"></i>
+                            <input class="btnTxt" type="text" name="articles_name" id="articles_name"
+                                pattern="[a-zA-ZñÑ]{3,30}" maxlength="30" placeholder="introduzca un nombre" required
+                                autofocus>
+                        </div>
+                    </div>
+                    
+                     <!--campo de descripción de la bodega-->
+                     <div class="formLogCampo">
+                        <label for="articles_description">Descripción:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-file-signature"></i>
+                            <textarea name="articles_description" id="articles_description" class="btnTxt textArea"
+                                maxlength="100" pattern="[a-zñA-ZÑ0-9]"
+                                placeholder="introduzca una descripción para la bodega" required></textarea>
+                        </div>
+                    </div>
+
+                    <!--Botón de crear usuario, botón de cancelar creación de usuario-->
+                    <div class="btnSubmitPanel">
+                        <button type="submit" class="btnSubmit btnCreateUser">
+                            <i class="fa-solid fa-heart-circle-plus"></i> Crear Bodega
+                        </button>
+                        <div class="btnSubmit btnCancel" onclick="ocultarFormCreateBodega()">Cancelar</div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
 
     </main>
 
@@ -245,7 +296,11 @@ include_once ("../settings/sessionStart.php");
         <h6>© 2024 Universidad de Panamá y William Abrego. Todos los derechos reservados.</h6>
     </footer>
 
-    <script src="../../settings/utils.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+    <script src="../settings/utils.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 

@@ -154,6 +154,49 @@ function ocultarFormCreateArticle() {
   document.querySelector(".modalCreateArticle").style.scale = "0";
 }
 
+//FUNCION DE LA TABLA DE ARTÍCULOS
+$(document).ready(function () {
+  $("#tableBodegas").DataTable({
+    language: {
+      processing: "Procesando...",
+      lengthMenu: "Mostrar _MENU_ bodegas",
+      zeroRecords: "No se encontraron bodegas",
+      emptyTable: "Ningúna bodega disponible en esta tabla",
+      info: "Mostrando bodega del _START_ al _END_ de un total de _TOTAL_ bodegas",
+      infoEmpty: "Mostrando bodega del 0 al 0 de un total de 0 bodegas",
+      infoFiltered: "(filtrado de un total de _MAX_ bodegas)",
+      search: "Buscar:",
+      loadingRecords: "Cargando...",
+      paginate: {
+        first: "Primero",
+        last: "Último",
+        next: "Siguiente",
+        previous: "Anterior",
+      },
+      aria: {
+        sortAscending: ": Activar para ordenar la columna de manera ascendente",
+        sortDescending:
+          ": Activar para ordenar la columna de manera descendente",
+      },
+    },
+    dom: "lBfrtip", // 'l' es para el selector de longitud
+    buttons: [
+      {
+        text: '<i class="fa-solid fa-heart-circle-plus"></i> Crear bodega',
+        action: function (e, dt, node, config) {
+          var formu = document.querySelector(".modalCreateBodega");
+          formu.style.scale = "1";
+          // Aquí puedes agregar tu lógica para crear un usuario
+        },
+      },
+    ],
+  });
+});
+//Función para ver formulario de creación de usuarios
+function ocultarFormCreateBodega() {
+  document.querySelector(".modalCreateBodega").style.scale = "0";
+}
+
 
 
 function verFormRecoverPass() {
