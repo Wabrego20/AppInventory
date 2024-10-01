@@ -13,9 +13,9 @@ include_once ("../settings/conexion.php");
     <link rel="stylesheet" href="../settings/header.css">
     <link rel="stylesheet" href="../settings/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="../settings/styles.css">
-    <link rel="stylesheet" href="../css/warehouse.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
-    <title>Dashboard | Sist-Inventario</title>
+    <link rel="stylesheet" href="../css/articles.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <title>Artículos/Productos | Sist-Inventario</title>
 </head>
 
 <body>
@@ -24,7 +24,7 @@ include_once ("../settings/conexion.php");
         <!--Formulario para Editar perfil de usuario-->
         <div class="modalEditUser">
             <div class="panelEditUser">
-                <form action="" class="formEditUser">
+                <form action class="formEditUser">
                     <h2>Editar Perfil</h2>
 
                     <!--Campo para cargar foto de perfil-->
@@ -81,7 +81,7 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-user-secret"></i>
                             <select name="users_rol" class="btnTxt" id="users_rol" required>
-                                <option value="">Seleccione</option>
+                                <option value>Seleccione</option>
                                 <option value="Administrador">Administrador</option>
                                 <option value="Gestor">Gestor</option>
                             </select>
@@ -94,7 +94,7 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-building-user"></i>
                             <select name="departament_name" class="btnTxt" id="departament_name" required>
-                                <option value="">Seleccione</option>
+                                <option value>Seleccione</option>
                                 <option value="Administrador">Informática</option>
                                 <option value="Gestor">RRHH</option>
                                 <option value="Gestor">Contabilidad</option>
@@ -152,19 +152,25 @@ include_once ("../settings/conexion.php");
             </span>
             <ul>
                 <li>
-                    <a href="dashboard.php">
+                    <a href="1_dashboard.php">
                         <i class="fa-solid fa-house"></i>
                         <h5>Inicio</h5>
                     </a>
                 </li>
+                <li class="active">
+                    <a href="#">
+                        <i class="fa-solid fa-box"></i>
+                        <h5>Artículos/Productos</h5>
+                    </a>
+                </li>
                 <li>
-                    <a href="inventory.php">
+                    <a href="3_inventory.php">
                         <i class="fa-solid fa-boxes-stacked"></i>
                         <h5>Tipos de Inventarios</h5>
                     </a>
                 </li>
-                <li class="active">
-                    <a href="#">
+                <li>
+                    <a href="4_warehouse.php">
                         <i class="fa-solid fa-warehouse"></i>
                         <h5>Bodegas</h5>
                     </a>
@@ -211,78 +217,150 @@ include_once ("../settings/conexion.php");
 
     <!--Ruta que muestra donde se encuentra actualmente-->
     <div class="ruta">
-        <h4>Bodegas</h4>
+        <h5>Artículos/Productos</h5>
     </div>
 
     <!--Cuerpo Principal-->
     <main>
-        <h2>Tabla de Bodegas</h2>
-        <table id="tableBodegas">
+        <h2>Tabla de Articulos/Productos</h2>
+        <table id="tableArticles">
             <thead>
                 <tr>
                     <th>N°</th>
                     <th>Nombre</th>
-                    <th>Ubicación</th>
+                    <th>Descripción</th>
+                    <th>Marca</th>
+                    <th>Categoría</th>
+                    <th>Unidad de Medida</th>
+                    <th>Costo Unitario</th>
+                    <th>Foto</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
                 </tr>
             </thead>
             <tbody>
-                <?php
-                $bodegas = "SELECT * FROM warehouses";
-                $verBodegas = $conn->query($bodegas);
+                
 
-                if ($verBodegas->num_rows > 0) {
-                    $counter = 1;
-                    while ($row = $verBodegas->fetch_assoc()) {
-                    }
-                }
-                ?>
             </tbody>
         </table>
 
-        <!--Formulario para Crear un usuario-->
-        <div class="modalCreateBodega">
-            <div class="panelCreateBodega">
-                <form method="post" class="formCreateBodega">
-                    <h2>Crear Bodega/Almacén</h2>
+        <!--Formulario para Crear un articulo-->
+        <div class="modalCreateArticle">
+            <div class="panelCreateArticle">
+                <form method="post" class="formCreateArticle">
+                    <h2>Crear Artículo/Producto</h2>
 
-                    <!--campo de nombre de la bodega-->
+                    <!--campo de nombre de artículo-->
                     <div class="formLogCampo">
                         <label for="articles_name">Nombre:</label>
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
                             <input class="btnTxt" type="text" name="articles_name" id="articles_name"
-                                pattern="[a-zA-ZñÑ]{3,30}" maxlength="30" placeholder="introduzca un nombre" required
-                                autofocus>
+                                pattern="[a-zA-ZñÑ]{3,30}" maxlength="30" placeholder="introduzca nombre del producto"
+                                required>
                         </div>
                     </div>
-                    <!--campo de ubicación de la bodega-->
+
+                    <!--campo de descripción del producto-->
                     <div class="formLogCampo">
-                        <label for="articles_name">Ubicación:</label>
-                        <div class="campo">
-                            <i class="fa-solid fa-signature"></i>
-                            <input class="btnTxt" type="text" name="articles_name" id="articles_name"
-                                pattern="[a-zA-ZñÑ]{3,30}" maxlength="30" placeholder="introduzca un nombre" required
-                                autofocus>
-                        </div>
-                    </div>
-                    
-                     <!--campo de descripción de la bodega-->
-                     <div class="formLogCampo">
                         <label for="articles_description">Descripción:</label>
                         <div class="campo">
                             <i class="fa-solid fa-file-signature"></i>
                             <textarea name="articles_description" id="articles_description" class="btnTxt textArea"
                                 maxlength="100" pattern="[a-zñA-ZÑ0-9]"
-                                placeholder="introduzca una descripción para la bodega" required></textarea>
+                                placeholder="introduzca una descripción del artículo" required></textarea>
+                        </div>
+                    </div>
+
+                    <!--campo de nombre de artículo-->
+                    <div class="formLogCampo">
+                        <label for="articles_mark">Marca:</label>
+                        <div class="campo">
+                            <i class="fa-regular fa-flag"></i>
+                            <input class="btnTxt" type="text" name="articles_mark" id="articles_mark"
+                                pattern="[a-zA-ZñÑ0-9]{3,30}" maxlength="30"
+                                placeholder="introduzca la marca del producto" required autofocus>
+                        </div>
+                    </div>
+
+                    <!--campo de categoría-->
+                    <div class="formLogCampo">
+                        <label for="articles_category">Categoría:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-layer-group"></i>
+                            <select name="articles_category" class="btnTxt" id="articles_category" required>
+                                <option value>Seleccione</option>
+                                <?php
+                                    if ($selectCategory->num_rows > 0) {
+                                    while ($row =
+                                    $selectCategory->fetch_assoc()) {
+                                    echo '<option
+                                        value="' . $row["categories_id"] .
+                                        '">' . $row["categories_name"] . '</option>';
+                                    }
+                                    } else {
+                                    echo '<option value>No hay categorías
+                                        disponibles</option>';
+                                    }
+                                    ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!--campo de unidada de medida-->
+                    <div class="formLogCampo">
+                        <label for="articles_unit_measurement">Unidad de Medida:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-ruler-combined"></i>
+                            <select name="articles_unit_measurement" class="btnTxt" id="articles_unit_measurement"
+                                required>
+                                <option value>Seleccione</option>
+                                <?php
+                                    if ($selectUnit_measurement->num_rows > 0) {
+                                    while ($row =
+                                    $selectUnit_measurement->fetch_assoc()) {
+                                    echo '<option
+                                        value="' . $row["unit_measurement_id"] .
+                                        '">' . $row["unit_measurement_name"] . '</option>';
+                                    }
+                                    } else {
+                                    echo '<option value>No hay unidades
+                                        disponibles</option>';
+                                    }
+                                    ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!--campo de costo unitario del artículos-->
+                    <div class="formLogCampo">
+                        <label for="articles_unit_cost">Costo Unitario:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-sack-dollar"></i>
+                            <input class="btnTxt" type="number" name="articles_unit_cost" id="articles_unit_cost"
+                                pattern="[0-9]{1,7}" max="1000000" placeholder="introduzca la cantidad " required>
+                        </div>
+                    </div>
+
+                    <!--campo para agregar una foto del producto-->
+                    <div class="formLogCampo">
+                        <label for="btnFile">Foto:</label>
+                        <div class="campo">
+                            <input type="file" id="btnFile" accept="image/*" style="display: none;" required />
+                            <div id="fotoBtn">
+                                <i class="fa-solid fa-camera-retro"></i>
+                                <img id="fotoArticle" style="display: none;" />
+                            </div>
                         </div>
                     </div>
 
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
                     <div class="btnSubmitPanel">
                         <button type="submit" class="btnSubmit btnCreateUser">
-                            <i class="fa-solid fa-heart-circle-plus"></i> Crear Bodega
+                            <i class="fa-solid fa-heart-circle-plus"></i>
+                            Crear Artículo
                         </button>
-                        <div class="btnSubmit btnCancel" onclick="ocultarFormCreateBodega()">Cancelar</div>
+                        <div class="btnSubmit btnCancel" onclick="ocultarFormCreateArticle()">Cancelar</div>
                     </div>
 
                 </form>

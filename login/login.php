@@ -26,6 +26,8 @@
       <h2>Iniciar Sesión</h2>
       <img src="../gif/login.gif" alt="loginGif" class="loginGif">
       <h3>Introduzca sus credenciales por favor:</h3>
+
+      <!--Campo de usuario-->
       <div class="formLogCampo">
         <label for="users_user">Usuario:</label>
         <div class="campo">
@@ -34,6 +36,8 @@
             placeholder="introduzca su usuario por favor:" required autofocus>
         </div>
       </div>
+
+      <!--Campo de contraseña-->
       <div class="formLogCampo">
         <label for="users_password">Contraseña:</label>
         <div class="campo">
@@ -44,6 +48,8 @@
           <i class="fa-regular fa-eye" title="Mostrar Contraseña" onclick="passVisibility();"></i>
         </div>
       </div>
+
+      <!--Botón de inicio de sesión y de recuperar contraseña-->
       <input type="submit" value="Iniciar Sesión" class="btnSubmit">
       <h5><a onclick="verFormRecoverPass()">Ir a Recuperar Contraseña</a></h5>
     </form>
@@ -53,6 +59,8 @@
       <h2>Recuperar Contraseña</h2>
       <img src="../gif/recover_pass.gif" alt="loginGif" class="loginGif">
       <h3>Introduzca un correo electrónico por favor:</h3>
+
+      <!--Campo de correo eletronico-->
       <div class="formLogCampo">
         <label for="email">Correo:</label>
         <div class="campo">
@@ -61,6 +69,8 @@
             placeholder="introduzca un correo por favor:" required>
         </div>
       </div>
+
+      <!--Botón de recuperar contraseña y botón para regresar a inicio de sesión-->
       <input type="submit" value="Recuperar Contraseña" class="btnSubmit">
       <h5><a onclick="verFormLogin()">Ir a Iniciar Sesión</a></h5>
     </form>
@@ -74,79 +84,66 @@
   <script src="../settings/utils.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <?php
-  if (isset($_POST['users_user']) && isset($_POST['users_password'])) {
-    include_once ("../settings/conexion.php");
+</body>
 
-    // Obtener datos del usuario (sanitizados)
-    $usuario = htmlspecialchars($_POST['users_user']);
-    $clave = htmlspecialchars($_POST['users_password']);
+</html>
 
-    // Preparar consulta y vincular parámetros
-    $stmt = $conn->prepare("SELECT * FROM users WHERE users_user = ?");
-    $stmt->bind_param("s", $usuario);
-    $stmt->execute();
-    $result = $stmt->get_result();
+<?php
+if (isset($_POST['users_user']) && isset($_POST['users_password'])) {
+  include_once("../settings/conexion.php");
 
-    if ($result->num_rows === 1) {
-      $row = $result->fetch_assoc();
-      $hashGuardado = $row['users_password']; // Obtén el hash almacenado en la base de datos
-      if (password_verify($clave, $hashGuardado)) {
-        // Inicio de sesión exitoso
-        session_start();
-        $_SESSION['users_user'] = $usuario;
-        $_SESSION['users_rol'] = $row['users_rol'];
-        if ($_SESSION['users_rol'] === 'Administrador') {
-          ?>
-          <script>
-            Swal.fire({
-              color: "var(--verde)",
-              icon: "success",
-              iconColor: "var(--verde)",
-              title: '¡Bienvenido!',
-              text: 'Inicio de Sesión Exitosa',
-              showConfirmButton: false,
-            })
-            setTimeout(function () {
-              window.location.href = '../user-adm/dashboard.php';
-            }, 1500);
-          </script>
-          <?php
-        } elseif ($_SESSION['users_rol'] === 'Gestor') {
-          ?>
-          <script>
-            Swal.fire({
-              color: "var(--verde)",
-              icon: "success",
-              iconColor: "var(--verde)",
-              title: '¡Bienvenido!',
-              text: 'Inicio de Sesión Exitosa',
-              showConfirmButton: false,
-            })
-            setTimeout(function () {
-              window.location.href = '../user-gestor/dashboard.php';
-            }, 1500);                
-          </script>
-          <?php
-        }
-        exit;
-      } else {
-        ?>
+  // Obtener datos del usuario (sanitizados)
+  $usuario = htmlspecialchars($_POST['users_user']);
+  $clave = htmlspecialchars($_POST['users_password']);
+
+  // Preparar consulta y vincular parámetros
+  $stmt = $conn->prepare("SELECT * FROM users WHERE users_user = ?");
+  $stmt->bind_param("s", $usuario);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  if ($result->num_rows === 1) {
+    $row = $result->fetch_assoc();
+    $hashGuardado = $row['users_password']; // Obtén el hash almacenado en la base de datos
+    if (password_verify($clave, $hashGuardado)) {
+      // Inicio de sesión exitoso
+      session_start();
+      $_SESSION['users_user'] = $usuario;
+      $_SESSION['users_rol'] = $row['users_rol'];
+      if ($_SESSION['users_rol'] === 'Administrador') {
+?>
         <script>
           Swal.fire({
-            color: "var(--rojo)",
-            icon: "error",
-            iconColor: "var(--rojo)",
-            title: 'Error ',
-            text: 'Contraseña Incorrecta',
+            color: "var(--verde)",
+            icon: "success",
+            iconColor: "var(--verde)",
+            title: '¡Bienvenido!',
+            text: 'Inicio de Sesión Exitosa',
             showConfirmButton: false,
           })
-          setTimeout(function () {
-            window.location.href = window.location.href;
+          setTimeout(function() {
+            window.location.href = '../user-adm/1_dashboard.php';
           }, 1500);
         </script>
-        <?php
+      <?php
+      } elseif ($_SESSION['users_rol'] === 'Gestor') {
+      ?>
+        <script>
+          Swal.fire({
+            color: "var(--verde)",
+            icon: "success",
+            iconColor: "var(--verde)",
+            title: '¡Bienvenido!',
+            text: 'Inicio de Sesión Exitosa',
+            showConfirmButton: false,
+          })
+          setTimeout(function() {
+            window.location.href = '../user-gestor/1_dashboard.php';
+          }, 1500);
+        </script>
+      <?php
       }
+      exit;
     } else {
       ?>
       <script>
@@ -155,21 +152,33 @@
           icon: "error",
           iconColor: "var(--rojo)",
           title: 'Error ',
-          text: 'Usuario Incorrecta',
+          text: 'Contraseña Incorrecta',
           showConfirmButton: false,
         })
-        setTimeout(function () {
+        setTimeout(function() {
           window.location.href = window.location.href;
         }, 1500);
       </script>
-      <?php
+    <?php
     }
-    $stmt->close();
-    $conn->close();
+  } else {
+    ?>
+    <script>
+      Swal.fire({
+        color: "var(--rojo)",
+        icon: "error",
+        iconColor: "var(--rojo)",
+        title: 'Error ',
+        text: 'Usuario Incorrecta',
+        showConfirmButton: false,
+      })
+      setTimeout(function() {
+        window.location.href = window.location.href;
+      }, 1500);
+    </script>
+<?php
   }
-  ?>
-
-
-</body>
-
-</html>
+  $stmt->close();
+  $conn->close();
+}
+?>

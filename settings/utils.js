@@ -174,7 +174,7 @@ function ocultarFormCreateArticle() {
   document.querySelector(".modalCreateArticle").style.scale = "0";
 }
 
-//FUNCION DE LA TABLA DE ARTÍCULOS
+//FUNCION DE LA TABLA DE BODEGAS
 $(document).ready(function () {
   $("#tableBodegas").DataTable({
     language: {

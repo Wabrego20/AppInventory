@@ -41,7 +41,6 @@ main {
   cursor: pointer;
   box-shadow: 0 0 10px var(--azul);
 }
-
 .ruta2 {
   display: flex;
   justify-content: start;
@@ -65,6 +64,7 @@ main {
   }
 }
 
+/*Inventario de Consumo Interno*/
 .dataTables_wrapper {
   background-color: var(--azul);
   max-width: 95%;

@@ -1,7 +1,6 @@
 <!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
-include_once ("../../settings/sessionStart.php");
-include_once ("../../settings/conexion.php");
+include_once("../settings/sessionStart.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -9,12 +8,12 @@ include_once ("../../settings/conexion.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../../img/icon.png" type="image/x-icon">
-    <link rel="stylesheet" href="../../settings/header.css">
-    <link rel="stylesheet" href="../../settings/fontawesome/css/all.min.css">
-    <link rel="stylesheet" href="../../settings/styles.css">
-    <link rel="stylesheet" href="../../css/inventory.css">
-    <title>Dashboard | Sist-Inventario</title>
+    <link rel="shortcut icon" href="img/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../settings/header.css">
+    <link rel="stylesheet" href="../settings/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../settings/styles.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <title>Inicio | Sist-Inventario</title>
 </head>
 
 <body>
@@ -30,8 +29,9 @@ include_once ("../../settings/conexion.php");
                     <input type="file" id="fileInput" accept="image/*" style="display: none;" />
                     <div id="uploadButton">
                         <i class="fa-solid fa-camera-retro"></i>
-                        <img id="foto" style="display: none;" />
+                        <img id="fotoArticle" style="display: none;" />
                     </div>
+                    <img id="fotoArticle" style="display: none;" />
 
                     <!--Campo de cédula-->
                     <div class="formLogCampo">
@@ -147,23 +147,29 @@ include_once ("../../settings/conexion.php");
         <nav id="menu">
             <span>
                 <i class="fa-solid fa-xmark" onclick="ocultarMenu();"></i>
-                <img src="../../img/logoApp.png" alt="logoAPP" class="logoApp">
+                <img src="../img/logoApp.png" alt="logoAPP" class="logoApp">
             </span>
             <ul>
-                <li>
-                    <a href="../dashboard.php">
+                <li class="active">
+                    <a href="#">
                         <i class="fa-solid fa-house"></i>
                         <h5>Inicio</h5>
                     </a>
                 </li>
-                <li class="active">
-                    <a href="#">
-                        <i class="fa-solid fa-boxes-stacked"></i>
-                        <h5>Tipos de Inventarios</h5>
+                <li>
+                    <a href="2_articles.php">
+                        <i class="fa-solid fa-house"></i>
+                        <h5>Artículos/Productos</h5>
                     </a>
                 </li>
                 <li>
-                    <a href="../warehouse.php">
+                    <a href="3_inventory.php">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                        <h5>Tipo de Inventario</h5>
+                    </a>
+                </li>
+                <li>
+                    <a href="4_warehouse.php">
                         <i class="fa-solid fa-warehouse"></i>
                         <h5>Bodegas</h5>
                     </a>
@@ -181,7 +187,7 @@ include_once ("../../settings/conexion.php");
                     </a>
                 </li>
                 <li>
-                    <a href="../users.php">
+                    <a href="users.php">
                         <i class="fa-solid fa-users"></i>
                         <h5>Usuarios</h5>
                     </a>
@@ -210,35 +216,52 @@ include_once ("../../settings/conexion.php");
 
     <!--Ruta que muestra donde se encuentra actualmente-->
     <div class="ruta">
-        <h4>Inventario de Consumo Interno</h4>
+        <h4>Inicio</h4>
     </div>
 
     <!--Cuerpo Principal-->
     <main>
-        <a class="btn_seccion" href="inventory1.php">
-            <h2>Inventario de Consumo Interno</h2>
-            <img src="../../gif/escritorio.gif" alt="article">
-            <h4>Ver útiles de oficina, útiles de aseo, productos de cafetería, alimentos y bebidas</h4>
+
+        <!--Apartado de Artículos o Productos-->
+        <a class="btn_seccion" href="2_articles.php">
+            <h2>Artículos o Productos</h2>
+            <img src="../gif/boxes.gif" alt="article">
+            <h4>Crear atículos, para luego inventariarlos en los diferentes tipos de inventario</h4>
         </a>
 
-        <a class="btn_seccion" href="inventory2.html">
-            <h2>Inventario de Ayuda Social a Programas</h2>
-            <img src="../../gif/marketing-social.gif" alt="article">
-            <h4>Ver alimentos, implementos médicos, materiales de construcción.</h4>
+        <!--Apartado de Tipos de inventarios-->
+        <a class="btn_seccion" href="3_inventory.php">
+            <h2>Tipos de Inventarios</h2>
+            <img src="../gif/inventario.gif" alt="article">
+            <h4>Ver inventario de consumo interno, material operativo, Donaciones, Compras para ayuda social y material en tránsito.</h4>
         </a>
 
-        <a class="btn_seccion" href="inventory3.html">
-            <h2>Inventario de Bienes Físicos</h2>
-            <img src="../../gif/portapapeles.gif" alt="article">
-            <h4>Solicitado por los diferentes Departamentos para sus operaciones, son adquiridos y registrados en el Sistema Istmo y realiza un acta de entrega al departamento que lo solicito. </h4>
+        <!--Apartado de Bodegas-->
+        <a class="btn_seccion" href="4_warehouse.php">
+            <h2>Bodegas</h2>
+            <img src="../gif/deposito.gif" alt="bodega">
+            <h4>Se añaden opciones para ver los artículos por bodegas.</h4>
         </a>
 
-        <a class="btn_seccion" href="inventory4.html">
-            <h2>Inventario de Donaciones</h2>
-            <img src="../../gif/donacion-de-alimentos.gif" alt="article">
-            <h4>Entidades benefactoras que brindan bienes los cuales se deben ingresar al sistema para llevar un control los mismos y después distribuirlos.</h4>
+        <!--Apartado de Tipos usuarios-->
+        <a class="btn_seccion" href="users.php">
+            <h2>Usuarios</h2>
+            <img src="../gif/users.gif" alt="users">
+            <h4>Se añaden opciones para administrar usuarios,de la aplicación</h4>
         </a>
 
+        <a class="btn_seccion" href="orders.html">
+            <h2>Ordenes o Solicitudes</h2>
+            <img src="../gif/cumplimiento.gif" alt="ordenes">
+            <h4>Filtros o etiquetas para diferenciar las órdenes de compra según el tipo de inventario.</h4>
+        </a>
+
+        <a class="btn_seccion" href="notices.html">
+            <h2>Notificaciones</h2>
+            <img src="../gif/bell.gif" alt="bell">
+            <h4>Configurar alertas específicas para cada tipo de inventario, como niveles bajos o fechas de caducidad.
+            </h4>
+        </a>
     </main>
 
     <!--Pie de Página-->
@@ -246,7 +269,7 @@ include_once ("../../settings/conexion.php");
         <h6>© 2024 Universidad de Panamá y William Abrego. Todos los derechos reservados.</h6>
     </footer>
 
-    <script src="../../settings/utils.js"></script>
+    <script src="../settings/utils.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 

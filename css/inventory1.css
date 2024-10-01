@@ -1,15 +1,40 @@
 main {
   width: 1000px;
+  display: flex;
+  flex-direction: column;
   max-width: 95%;
   align-items: center;
-  flex-direction: column;
-  margin: 5px auto;
   justify-content: start;
+  h2{
+    color: var(--azul);
+    margin: 10px auto;
+    max-width: 95%;
+  }
 }
-h2{
-  color: var(--azul);
-  margin: 10px auto;
+.ruta2 {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  border: 1px solid var(--gris);
+  flex-wrap: wrap;
+  h4 {
+    color: var(--azul);
+    margin: 5px;
+  }
+  a {
+    margin-left: 10px;
+    text-decoration: none;
+    color: var(--azul);
+    transition: 0.2s ease-in-out;
+    :hover {
+      text-decoration: underline;
+      color: var(--negro);
+    }
+  }
 }
+
+/*Inventario de Consumo Interno*/
 .dataTables_wrapper {
   background-color: var(--azul);
   max-width: 95%;
@@ -17,11 +42,9 @@ h2{
   overflow: auto;
   border-radius: 5px;
   font-weight: bold;
-
   .dt-buttons {
     float: inline-end;
     margin: 5px;
-
     .dt-button {
       color: var(--blanco);
       background-color: var(--verde);
@@ -30,7 +53,6 @@ h2{
       height: 40px;
       padding: 0 10px;
     }
-
     .dt-button:hover {
       color: var(--verde);
       background-color: var(--blanco);
@@ -42,7 +64,6 @@ h2{
   .dataTables_length {
     float: left;
     margin: 5px;
-
     select {
       width: 40px;
       height: 40px;
@@ -50,16 +71,13 @@ h2{
       border-radius: 5px;
       cursor: pointer;
     }
-
     label {
       color: var(--blanco);
     }
   }
-
   .dataTables_filter {
     margin: 5px;
   }
-
   input {
     height: 40px;
     border-radius: 5px;
@@ -67,21 +85,17 @@ h2{
     font-size: 16px;
     color: var(--azul);
   }
-
   label {
     color: var(--blanco);
   }
-
   .dataTable thead th {
     color: var(--blanco);
     text-align: center;
   }
-
   .dataTable tbody tr {
     color: var(--azul);
     text-align: center;
   }
-
   .dataTable tbody .even {
     background-color: var(--even);
   }
@@ -89,19 +103,17 @@ h2{
   .dataTables_empty {
     color: var(--rojo);
   }
-
   .dataTables_paginate span a.current {
     border-radius: 5px;
   }
 }
-
 .dataTables_info {
   color: var(--blanco) !important;
   margin: 5px;
 }
 
 /*Formulario para crear usuarios*/
-.modalCreateArticle {
+.modalCreateArticle, .modCreateConsumo {
   background-color: var(--fondo);
   width: 100%;
   min-height: 100vh;
@@ -113,11 +125,9 @@ h2{
   justify-content: center;
   align-items: center;
 }
-
 .panelCreateArticle {
   width: 800px;
   max-width: 95%;
-  margin: 10px auto;
   overflow: auto;
   position: relative;
 }
@@ -131,7 +141,6 @@ h2{
   border-radius: 5px;
   box-shadow: 0 0 10px var(--azul);
   flex-wrap: wrap;
-
   h2 {
     border-radius: 5px 5px 0 0;
     margin: auto;
@@ -141,7 +150,6 @@ h2{
     background-color: var(--azul);
     color: var(--blanco);
   }
-
   .formLogCampo {
     width: 350px;
     max-width: 95%;
@@ -151,25 +159,21 @@ h2{
     flex-wrap: wrap;
     flex-direction: column;
     margin: 5px;
-
     label {
       color: var(--azul);
       font-weight: bold;
     }
-
     .campo {
       display: flex;
       align-items: center;
       justify-content: start;
       width: 100%;
       position: relative;
-
       .fa-file-signature {
         height: 60px;
         line-height: 60px;
         width: 60px;
       }
-
       i {
         height: 40px;
         line-height: 40px;
@@ -179,7 +183,6 @@ h2{
         color: var(--blanco);
         border-radius: 5px 0 0 5px;
       }
-
       .btnTxt {
         width: 100%;
         height: 40px;
@@ -189,57 +192,13 @@ h2{
         color: var(--azul);
         font-weight: bold;
       }
-
       .btnTxt:focus {
         box-shadow: 0 0 5px var(--azul);
         outline: 1px solid var(--azul);
       }
-
       .textArea {
         resize: none;
         height: 60px;
-      }
-      #fotoArticle{
-        text-align: center;
-        justify-content: center;
-        align-items: center;
-        top: 0;
-      }
-
-      /*editar imagen*/
-      #fotoBtn {
-        width: 100%;
-        border-radius: 5px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: var(--azul);
-        color: var(--blanco);
-        border: none;
-        cursor: pointer;
-        margin: 5px auto;
-        transition: 0.2s ease-in-out;
-
-        img {
-          width: 100%;
-          text-align: center;
-          border-radius: 5px;
-        }
-
-        i {
-          font-size: 50px;
-          margin: 10px auto;
-        }
-      }
-
-      #fotoBtn:hover {
-        background-color: var(--blanco);
-        color: var(--azul);
-        box-shadow: 0 0 5px var(--azul);
-        i{
-          color: var(--azul);
-          background-color: var(--blanco);
-        }
       }
     }
   }
