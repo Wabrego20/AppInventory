@@ -32,8 +32,9 @@ include_once ("../settings/sessionStart.php");
                     <input type="file" id="fileInput" accept="image/*" style="display: none;" />
                     <div id="uploadButton">
                         <i class="fa-solid fa-camera-retro"></i>
-                        <img id="foto" style="display: none;" />
+                        <img id="fotoArticle" style="display: none;" />
                     </div>
+                    <img id="fotoArticle" style="display: none;" />
 
                     <!--Campo de cédula-->
                     <div class="formLogCampo">

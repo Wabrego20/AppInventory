@@ -65,6 +65,26 @@ document
     }
   });
 
+  //Cargar foto de articulo
+document.getElementById("fotoBtn").addEventListener("click", function () {
+  document.getElementById("btnFile").click();
+});
+document
+  .getElementById("btnFile")
+  .addEventListener("change", function (event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        document.querySelector("#fotoBtn .fa-camera-retro").style.display = "none";
+        const preview = document.getElementById("fotoArticle");
+        preview.src = e.target.result;
+        preview.style.display = "flex";
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
 
 
 //FUNCION DE LA TABLA DE USUARIOS
