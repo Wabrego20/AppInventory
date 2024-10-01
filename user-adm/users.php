@@ -157,19 +157,25 @@ $selectDepartament = $conn->query($selectDepartament);
             </span>
             <ul>
                 <li>
-                    <a href="dashboard.php">
+                    <a href="1_dashboard.php">
                         <i class="fa-solid fa-house"></i>
                         <h5>Inicio</h5>
                     </a>
                 </li>
                 <li>
-                    <a href="typeInventory/inventory.php">
+                    <a href="2_articles.php">
+                        <i class="fa-solid fa-house"></i>
+                        <h5>Artículos/Productos</h5>
+                    </a>
+                </li>
+                <li>
+                    <a href="3_inventory.php">
                         <i class="fa-solid fa-boxes-stacked"></i>
                         <h5>Tipos de Inventarios</h5>
                     </a>
                 </li>
                 <li>
-                    <a href="warehouse.html">
+                    <a href="4_warehouse.php">
                         <i class="fa-solid fa-warehouse"></i>
                         <h5>Bodegas</h5>
                     </a>

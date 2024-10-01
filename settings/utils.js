@@ -176,7 +176,7 @@ function ocultarFormCreateArticle() {
 
 //FUNCION DE LA TABLA DE BODEGAS
 $(document).ready(function () {
-  $("#tableBodegas").DataTable({
+  $("#tableWarehouse").DataTable({
     language: {
       processing: "Procesando...",
       lengthMenu: "Mostrar _MENU_ bodegas",

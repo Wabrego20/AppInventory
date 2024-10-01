@@ -217,7 +217,7 @@ include_once ("../settings/conexion.php");
     <!--Cuerpo Principal-->
     <main>
         <h2>Tabla de Bodegas</h2>
-        <table id="tableBodegas">
+        <table id="tableWarehouse">
             <thead>
                 <tr>
                     <th>N°</th>
@@ -226,16 +226,7 @@ include_once ("../settings/conexion.php");
                 </tr>
             </thead>
             <tbody>
-                <?php
-                $bodegas = "SELECT * FROM warehouses";
-                $verBodegas = $conn->query($bodegas);
-
-                if ($verBodegas->num_rows > 0) {
-                    $counter = 1;
-                    while ($row = $verBodegas->fetch_assoc()) {
-                    }
-                }
-                ?>
+               
             </tbody>
         </table>
 
@@ -255,6 +246,7 @@ include_once ("../settings/conexion.php");
                                 autofocus>
                         </div>
                     </div>
+                    
                     <!--campo de ubicación de la bodega-->
                     <div class="formLogCampo">
                         <label for="articles_name">Ubicación:</label>
