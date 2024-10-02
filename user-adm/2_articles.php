@@ -237,6 +237,8 @@ include_once ("../settings/conexion.php");
                     <th>Categoría</th>
                     <th>Unidad de Medida</th>
                     <th>Costo Unitario</th>
+                    <th>Fecha de LLegada</th>
+                    <th>Fecha de Vencimiento</th>
                     <th>Foto</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
@@ -341,6 +343,24 @@ include_once ("../settings/conexion.php");
                             <i class="fa-solid fa-sack-dollar"></i>
                             <input class="btnTxt" type="text" name="articles_unit_cost" id="articles_unit_cost" oninput="removeNonNumeric(this)" onblur="formatCurrency(this)"
                                 pattern="[0-9]{1,7}" max="1000000" placeholder="introduzca la cantidad $0.00" required>
+                        </div>
+                    </div>
+
+                    <!--campo de fecha de llegada del artículos-->
+                    <div class="formLogCampo">
+                        <label for="articles_arrival_date">Fecha de Llegada:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-sack-dollar"></i>
+                           <input type="datetime-local" name="articles_arrival_date" id="articles_arrival_date" class="btnTxt">
+                        </div>
+                    </div>
+
+                    <!--campo de fecha de vencimiento del artículos-->
+                    <div class="formLogCampo">
+                        <label for="articles_due_date">Fecha de Vencimiento:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-sack-dollar"></i>
+                           <input type="datetime-local" name="articles_due_date" id="articles_due_date" class="btnTxt">
                         </div>
                     </div>
 
