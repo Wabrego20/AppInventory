@@ -188,7 +188,7 @@ include_once ("../settings/conexion.php");
                 <li>
                     <a href="notices.html">
                         <i class="fa-solid fa-bell"></i>
-                        <h5>Notificaciones</h5>
+                        <h5>Solicitudes</h5>
                     </a>
                 </li>
                 <li>
