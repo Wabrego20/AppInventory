@@ -1,3 +1,48 @@
+/*
+************************************ENCABEZADO*********************************
+*/
+//Cerrar Sesión
+function cerrarSesion() {
+  Swal.fire({
+    color: "var(--azul)",
+    title: "Cerrar Sesión",
+    text: "¿Desea Cerrar Sesión?",
+    icon: "question",
+    iconColor: "var(--azul)",
+    showCancelButton: true,
+    confirmButtonText: "Cerrar sesión",
+    cancelButtonText: "Cancelar",
+    customClass: {
+      confirmButton: "btn-confirm",
+      cancelButton: "btn-cancel",
+    },
+    allowOutsideClick: false,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      fetch("../settings/sessionEnd.php", {
+        method: "POST",
+      })
+        .then((response) => response.text())
+        .then((data) => {
+          console.log(data);
+          Swal.fire({
+            color: "var(--verde)",
+            title: "Sesión Cerrada",
+            text: "¡Vuelve Pronto!",
+            icon: "success",
+            iconColor: "var(--verde)",
+            showCancelButton: false,
+            showConfirmButton: false,
+            allowOutsideClick: false,
+          });
+          setTimeout(() => {
+            window.location.href = "../login/login.php";
+          }, 1500);
+        })
+        .catch((error) => console.error("Error:", error));
+    }
+  });
+}
 //FUNCIÓN PARA VER Y OCULTAR EL BOTÓN DE CERRAR SESIÓN
 var isAtTop = true;
 var verBtn1 = document.querySelector(".btnLogOut");
@@ -52,7 +97,7 @@ document.querySelector(".btnEditUser").addEventListener("click", function () {
 
 });
 
-//Editar imagen de perfil
+//Editar imagen de perfil FALTA POR EDITAR
 document.getElementById("uploadButton").addEventListener("click", function () {
   document.getElementById("fileInput").click();
 });
@@ -71,6 +116,16 @@ document
       reader.readAsDataURL(file);
     }
   });
+/*
+********************************FIN DE  ENCABEZADO*********************************
+*/
+
+
+
+
+
+
+
 
 //Cargar foto de articulo
 document.getElementById("fotoBtn").addEventListener("click", function () {
@@ -94,7 +149,9 @@ document
 
 
 
-//FUNCION DE LA TABLA DE USUARIOS
+  
+
+//--------------------------------------------------FUNCION DE LA TABLA DE USUARIOS
 $(document).ready(function () {
   $("#tableUsers").DataTable({
     language: {
@@ -138,7 +195,7 @@ function ocultarFormCreateUser() {
   document.querySelector(".modalCreateUser").style.scale = "0";
 }
 
-//FUNCION DE LA TABLA DE ARTÍCULOS
+//---------------------------------------------------FUNCION DE LA TABLA DE ARTÍCULOS
 $(document).ready(function () {
   $("#tableArticles").DataTable({
     language: {
@@ -179,18 +236,10 @@ $(document).ready(function () {
     ],
   });
 });
-//Función para ver formulario de creación de usuarios
-function ocultarFormCreateArticle() {
-  var modal = document.querySelector('.modalCreateArticle');
-  modal.classList.remove('show');
-  modal.classList.add('hide');
-  setTimeout(function () {
-    modal.style.display = 'none';
-    modal.classList.remove('hide');
-  }, 500);
-}
 
-//FUNCION DE LA TABLA DE BODEGAS
+
+
+//---------------------------------------------------FUNCION DE LA TABLA DE BODEGAS
 $(document).ready(function () {
   $("#tableWarehouse").DataTable({
     language: {
@@ -228,9 +277,20 @@ $(document).ready(function () {
     ],
   });
 });
-//Función para ver formulario de creación de usuarios
 function ocultarFormCreateBodega() {
   document.querySelector(".modalCreateBodega").style.scale = "0";
+}
+//---------------------------------------------------------------------------------
+
+//Función para ver formulario de creación de usuarios
+function ocultarFormCreateArticle() {
+  var modal = document.querySelector('.modalCreateArticle');
+  modal.classList.remove('show');
+  modal.classList.add('hide');
+  setTimeout(function () {
+    modal.style.display = 'none';
+    modal.classList.remove('hide');
+  }, 500);
 }
 
 
@@ -272,48 +332,7 @@ function passVisibility() {
   }
 }
 
-//Cerrar Sesión
-function cerrarSesion() {
-  Swal.fire({
-    color: "var(--azul)",
-    title: "Cerrar Sesión",
-    text: "¿Desea Cerrar Sesión?",
-    icon: "question",
-    iconColor: "var(--azul)",
-    showCancelButton: true,
-    confirmButtonText: "Cerrar sesión",
-    cancelButtonText: "Cancelar",
-    customClass: {
-      confirmButton: "btn-confirm",
-      cancelButton: "btn-cancel",
-    },
-    allowOutsideClick: false,
-  }).then((result) => {
-    if (result.isConfirmed) {
-      fetch("../settings/sessionEnd.php", {
-        method: "POST",
-      })
-        .then((response) => response.text())
-        .then((data) => {
-          console.log(data);
-          Swal.fire({
-            color: "var(--verde)",
-            title: "Sesión Cerrada",
-            text: "¡Vuelve Pronto!",
-            icon: "success",
-            iconColor: "var(--verde)",
-            showCancelButton: false,
-            showConfirmButton: false,
-            allowOutsideClick: false,
-          });
-          setTimeout(() => {
-            window.location.href = "../login/login.php";
-          }, 1500);
-        })
-        .catch((error) => console.error("Error:", error));
-    }
-  });
-}
+
 
 //Eliminar usuario
 

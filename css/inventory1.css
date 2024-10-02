@@ -8,7 +8,7 @@ main {
   h2{
     color: var(--azul);
     margin: 10px auto;
-    max-width: 95%;
+    max-width: 100%;
   }
 }
 .ruta2 {
@@ -113,17 +113,20 @@ main {
 }
 
 /*Formulario para crear usuarios*/
-.modalCreateArticle, .modCreateConsumo {
+.modalCreateArticle {
   background-color: var(--fondo);
   width: 100%;
   min-height: 100vh;
   position: absolute;
   top: 0;
   transition: 0.2s ease-in-out;
-  scale: 0;
-  display: flex;
+  opacity: 0;
+  display: none;
   justify-content: center;
   align-items: center;
+}
+.modalCreateArticle.show {
+  opacity: 1;
 }
 .panelCreateArticle {
   width: 800px;

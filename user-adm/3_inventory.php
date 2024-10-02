@@ -14,7 +14,7 @@ include_once ("../settings/conexion.php");
     <link rel="stylesheet" href="../settings/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="../settings/styles.css">
     <link rel="stylesheet" href="../css/inventory.css">
-    <title>Tipos de Inventarios | Sist-Inventario</title>
+    <title>Inventarios | Sist-Inventario</title>
 </head>
 
 <body>
@@ -220,7 +220,7 @@ include_once ("../settings/conexion.php");
 
     <!--Ruta que muestra donde se encuentra actualmente-->
     <div class="ruta">
-        <h4>Tipos de Inventarios</h4>
+        <h4>Inventarios</h4>
     </div>
 
     <!--Cuerpo Principal-->
