@@ -39,10 +39,17 @@ function ocultarFormEditUser() {
   menu__bar.style.right = "-100%";
   document.querySelector(".btnSaveUser").style.pointerEvents = "none";
   document.querySelector(".btnSaveUser").style.opacity = 0.5;
+  document.querySelectorAll(".btnTxt").forEach(function (element) {
+    element.style.pointerEvents = "none";
+  });
 }
 document.querySelector(".btnEditUser").addEventListener("click", function () {
   document.querySelector(".btnSaveUser").style.opacity = 1;
   document.querySelector(".btnSaveUser").style.pointerEvents = "auto";
+  document.querySelectorAll(".btnTxt").forEach(function (element) {
+    element.style.pointerEvents = "auto";
+  });
+
 });
 
 //Editar imagen de perfil
@@ -65,7 +72,7 @@ document
     }
   });
 
-  //Cargar foto de articulo
+//Cargar foto de articulo
 document.getElementById("fotoBtn").addEventListener("click", function () {
   document.getElementById("btnFile").click();
 });
@@ -162,7 +169,10 @@ $(document).ready(function () {
         text: '<i class="fa-solid fa-heart-circle-plus"></i> Crear articulo',
         action: function (e, dt, node, config) {
           var formu = document.querySelector(".modalCreateArticle");
-          formu.style.scale = "1";
+          formu.style.display = 'flex';
+          setTimeout(function () {
+            formu.classList.add('show');
+          }, 10);
           // Aquí puedes agregar tu lógica para crear un usuario
         },
       },
@@ -171,7 +181,13 @@ $(document).ready(function () {
 });
 //Función para ver formulario de creación de usuarios
 function ocultarFormCreateArticle() {
-  document.querySelector(".modalCreateArticle").style.scale = "0";
+  var modal = document.querySelector('.modalCreateArticle');
+  modal.classList.remove('show');
+  modal.classList.add('hide');
+  setTimeout(function () {
+    modal.style.display = 'none';
+    modal.classList.remove('hide');
+  }, 500);
 }
 
 //FUNCION DE LA TABLA DE BODEGAS
@@ -341,3 +357,26 @@ function deleteUser(userId) {
     }
   });
 }
+
+
+
+//Mostrar moneda en campo cantidad
+function removeNonNumeric(input) {
+  // Elimina cualquier carácter que no sea un número o un punto decimal
+  input.value = input.value.replace(/[^0-9.]/g, '');
+}
+
+function formatCurrency(input) {
+  // Convierte el valor a un número flotante y lo fija a dos decimales
+  let value = parseFloat(input.value).toFixed(2);
+
+  // Si el valor no es un número, establece el valor a 0.00
+  if (isNaN(value)) {
+    value = '0.00';
+  }
+
+  // Agrega el signo de dólar al valor formateado
+  input.value = `$${value}`;
+}
+
+

@@ -108,10 +108,13 @@ h2{
   position: absolute;
   top: 0;
   transition: 0.2s ease-in-out;
-  scale: 0;
-  display: flex;
+  opacity: 0;
+  display: none;
   justify-content: center;
   align-items: center;
+}
+.modalCreateArticle.show {
+  opacity: 1;
 }
 
 .panelCreateArticle {

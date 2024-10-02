@@ -28,7 +28,7 @@ include_once ("../settings/conexion.php");
                     <h2>Editar Perfil</h2>
 
                     <!--Campo para cargar foto de perfil-->
-                    <input type="file" id="fileInput" accept="image/*" style="display: none;" />
+                    <input type="file" id="fileInput" accept="image/*" name="users_foto" style="display: none;" />
                     <div id="uploadButton">
                         <i class="fa-solid fa-camera-retro"></i>
                         <img id="foto" style="display: none;" />
@@ -41,7 +41,7 @@ include_once ("../settings/conexion.php");
                             <i class="fa-regular fa-address-card"></i>
                             <input class="btnTxt" type="text" name="users_dni" id="users_dni"
                                 pattern="[a-zA-Z0-9]{1,2}-[0-9]{2,4}-[0-9]{2,4}" maxlength="14"
-                                placeholder="introduzca cédula con guiones" required>
+                                placeholder="Editar su cédula" required>
                         </div>
                     </div>
 
@@ -51,7 +51,7 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
                             <input class="btnTxt" type="text" name="users_name" id="users_name" pattern="[a-zA-Z]{4,15}"
-                                maxlength="15" placeholder="introduzca un nombre" required>
+                                maxlength="15" placeholder="Editar su nombre" required>
                         </div>
                     </div>
 
@@ -61,7 +61,7 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-file-signature"></i>
                             <input class="btnTxt" type="text" name="users_last_name" id="users_last_name"
-                                pattern="[a-zA-Z]{4,15}" maxlength="15" placeholder="introduzca un apellido" required>
+                                pattern="[a-zA-Z]{4,15}" maxlength="15" placeholder="Editar su apellido" required>
                         </div>
                     </div>
 
@@ -71,7 +71,7 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-regular fa-envelope"></i>
                             <input class="btnTxt" type="email" name="users_email" id="users_email" maxlength="20"
-                                placeholder="introduzca un correo por favor" required>
+                                placeholder="Editar su correo electrónico" required>
                         </div>
                     </div>
 
@@ -80,11 +80,7 @@ include_once ("../settings/conexion.php");
                         <label for="users_rol">Rol:</label>
                         <div class="campo">
                             <i class="fa-solid fa-user-secret"></i>
-                            <select name="users_rol" class="btnTxt" id="users_rol" required>
-                                <option value>Seleccione</option>
-                                <option value="Administrador">Administrador</option>
-                                <option value="Gestor">Gestor</option>
-                            </select>
+                            <label class="btnTxt"></label>
                         </div>
                     </div>
 
@@ -93,13 +89,7 @@ include_once ("../settings/conexion.php");
                         <label for="departament_name">Departamento:</label>
                         <div class="campo">
                             <i class="fa-solid fa-building-user"></i>
-                            <select name="departament_name" class="btnTxt" id="departament_name" required>
-                                <option value>Seleccione</option>
-                                <option value="Administrador">Informática</option>
-                                <option value="Gestor">RRHH</option>
-                                <option value="Gestor">Contabilidad</option>
-                                <option value="Gestor">Finanzas</option>
-                            </select>
+                            <label class="btnTxt"></label>
                         </div>
                     </div>
 
@@ -109,7 +99,7 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-user-tie"></i>
                             <input class="btnTxt" type="text" name="users_user" id="users_user" pattern="[a-zA-Z]{4,15}"
-                                maxlength="15" placeholder="introduzca su usuario por favor:" required>
+                                maxlength="15" placeholder="Editar su usuario:" required>
                         </div>
                     </div>
 
@@ -119,7 +109,21 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-key"></i>
                             <input class="btnTxt" type="password" name="users_password" id="users_password"
-                                pattern=".{8,15}" maxlength="15" placeholder="introduzca su contraseña por favor:"
+                                pattern=".{8,15}" maxlength="15" placeholder="Nueva contraseña"
+                                required>
+                            <i class="fa-regular fa-eye-slash" title="Ocultar Contraseña"
+                                onclick="passVisibility();"></i>
+                            <i class="fa-regular fa-eye" title="Mostrar Contraseña" onclick="passVisibility();"></i>
+                        </div>
+                    </div>
+
+                    <!--Campo de contraseña-->
+                    <div class="formLogCampo">
+                        <label for="users_password_r">Repita Contraseña:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-key"></i>
+                            <input class="btnTxt" type="password" name="users_password_r" id="users_password_r"
+                                pattern=".{8,15}" maxlength="15" placeholder="Repita nueva contraseña"
                                 required>
                             <i class="fa-regular fa-eye-slash" title="Ocultar Contraseña"
                                 onclick="passVisibility();"></i>
@@ -160,7 +164,7 @@ include_once ("../settings/conexion.php");
                 <li class="active">
                     <a href="#">
                         <i class="fa-solid fa-box"></i>
-                        <h5>Artículos/Productos</h5>
+                        <h5>Artículos</h5>
                     </a>
                 </li>
                 <li>
@@ -239,8 +243,6 @@ include_once ("../settings/conexion.php");
                 </tr>
             </thead>
             <tbody>
-                
-
             </tbody>
         </table>
 
@@ -337,8 +339,8 @@ include_once ("../settings/conexion.php");
                         <label for="articles_unit_cost">Costo Unitario:</label>
                         <div class="campo">
                             <i class="fa-solid fa-sack-dollar"></i>
-                            <input class="btnTxt" type="number" name="articles_unit_cost" id="articles_unit_cost"
-                                pattern="[0-9]{1,7}" max="1000000" placeholder="introduzca la cantidad " required>
+                            <input class="btnTxt" type="text" name="articles_unit_cost" id="articles_unit_cost" oninput="removeNonNumeric(this)" onblur="formatCurrency(this)"
+                                pattern="[0-9]{1,7}" max="1000000" placeholder="introduzca la cantidad $0.00" required>
                         </div>
                     </div>
 

@@ -159,7 +159,7 @@ include_once("../settings/sessionStart.php");
                 <li>
                     <a href="2_articles.php">
                         <i class="fa-solid fa-house"></i>
-                        <h5>Artículos/Productos</h5>
+                        <h5>Artículos</h5>
                     </a>
                 </li>
                 <li>
