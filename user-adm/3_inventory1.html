@@ -239,13 +239,13 @@ include_once ("../settings/conexion.php");
                     <th>N°</th>
                     <th>Nombre</th>
                     <th>Categoría</th>
-                    <th>Descripción</th>
                     <th>Cantidad</th>
                     <th>Unidad de Medida</th>
                     <th>Fecha de Registro</th>
                     <th>Bodega</th>
                     <th>Costo Unitario</th>
                     <th>Costo Total</th>
+                    <th>Editar</th>
                 </tr>
             </thead>
             <tbody>
@@ -261,29 +261,18 @@ include_once ("../settings/conexion.php");
 
                     <!--campo de nombre de artículo-->
                     <div class="formLogCampo">
-                        <label for="articles_name">Nombre:</label>
-                        <div class="campo">
-                            <i class="fa-solid fa-signature"></i>
-                            <input class="btnTxt" type="text" name="articles_name" id="articles_name"
-                                pattern="[a-zA-ZñÑ]{3,30}" maxlength="30" placeholder="introduzca un nombre" required
-                                autofocus>
-                        </div>
-                    </div>
-
-                    <!--campo de categoría-->
-                    <div class="formLogCampo">
-                        <label for="articles_category">Categoría:</label>
+                        <label for="articles_category">Nombre:</label>
                         <div class="campo">
                             <i class="fa-solid fa-layer-group"></i>
                             <select name="articles_category" class="btnTxt" id="articles_category" required>
                                 <option value="">Seleccione</option>
                                 <?php
-                                if ($selectDepartament->num_rows > 0) {
-                                    while ($row = $selectDepartament->fetch_assoc()) {
-                                        echo '<option value="' . $row["categories_id"] . '">' . $row["categories_name"] . '</option>';
+                                if ($selectArticles->num_rows > 0) {
+                                    while ($row = $selectArticles->fetch_assoc()) {
+                                        echo '<option value="' . $row["articles_id"] . '">' . $row["articles_name"] . '</option>';
                                     }
                                 } else {
-                                    echo '<option value="">No hay categorías disponibles</option>';
+                                    echo '<option value="">No hay arículo disponible</option>';
                                 }
                                 ?>
                             </select>
@@ -295,22 +284,7 @@ include_once ("../settings/conexion.php");
                         <label for="articles_category">Categoría:</label>
                         <div class="campo">
                             <i class="fa-solid fa-layer-group"></i>
-                            <select name="articles_category" class="btnTxt" id="articles_category" required>
-                                <option value>Seleccione</option>
-                                <?php
-                                    if ($selectCategory->num_rows > 0) {
-                                    while ($row =
-                                    $selectCategory->fetch_assoc()) {
-                                    echo '<option
-                                        value="' . $row["categories_id"] .
-                                        '">' . $row["categories_name"] . '</option>';
-                                    }
-                                    } else {
-                                    echo '<option value>No hay categorías
-                                        disponibles</option>';
-                                    }
-                                    ?>
-                            </select>
+                            <label class="btnTxt" id="articles_category"></label>
                         </div>
                     </div>
 
