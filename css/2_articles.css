@@ -6,11 +6,13 @@ main {
   margin: 5px auto;
   justify-content: start;
 }
-h2{
+
+h2 {
   color: var(--azul);
   margin: 10px auto;
   max-width: 100%;
 }
+
 .dataTables_wrapper {
   background-color: var(--azul);
   max-width: 100%;
@@ -105,8 +107,8 @@ h2{
 .modalCreateArticle {
   background-color: var(--fondo);
   width: 100%;
-  min-height: 100vh;
-  position: absolute;
+  height: 100vh;
+  position: fixed;
   top: 0;
   transition: 0.2s ease-in-out;
   opacity: 0;
@@ -114,20 +116,23 @@ h2{
   justify-content: center;
   align-items: center;
 }
+
 .modalCreateArticle.show {
   opacity: 1;
 }
 
 .panelCreateArticle {
   width: 800px;
-  max-width: 95%;
-  margin: 10px auto;
+  max-height: 100%;
+  max-width: 100%;
   overflow: auto;
-  position: relative;
+  border-radius: 5px;
 }
 
 .formCreateArticle {
-  width: 100%;
+  width: 99%;
+  height: 99%;
+  margin: 10px auto;
   background-color: var(--blanco);
   display: flex;
   justify-content: space-around;
@@ -139,7 +144,8 @@ h2{
   h2 {
     border-radius: 5px 5px 0 0;
     margin: auto;
-    padding: 5px;
+    height: 40px;
+    line-height: 40px;
     width: 100%;
     text-align: center;
     background-color: var(--azul);
@@ -203,7 +209,8 @@ h2{
         resize: none;
         height: 60px;
       }
-      #fotoArticle{
+
+      #fotoArticle {
         text-align: center;
         justify-content: center;
         align-items: center;
@@ -240,7 +247,8 @@ h2{
         background-color: var(--blanco);
         color: var(--azul);
         box-shadow: 0 0 5px var(--azul);
-        i{
+
+        i {
           color: var(--azul);
           background-color: var(--blanco);
         }

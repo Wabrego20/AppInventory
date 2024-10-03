@@ -194,11 +194,11 @@ nav ul li:hover {
   .panelEditUser {
     width: 800px;
     max-height: 100%;
-    max-width: 95%;
+    max-width: 100%;
     overflow: auto;
     .formEditUser {
-      width: 95%;
-      height: 95%;
+      width: 99%;
+      height: 99%;
       margin: 10px auto;
       background-color: var(--blanco);
       display: flex;
