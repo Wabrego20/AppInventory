@@ -318,7 +318,7 @@ nav ul li:hover {
       font-size: 50px;
     }
   }
-  #uploadButton:hover {
+  .btnEditPhoto:hover {
     background-color: var(--blanco);
     color: var(--azul);
     box-shadow: 0 0 5px var(--azul);

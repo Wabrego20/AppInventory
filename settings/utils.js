@@ -1,7 +1,9 @@
 /*
 ************************************ENCABEZADO*********************************
 */
-//Cerrar Sesión
+/*
+*Función para cerrar sesión
+*/
 function cerrarSesion() {
   Swal.fire({
     color: "var(--azul)",
@@ -43,11 +45,13 @@ function cerrarSesion() {
     }
   });
 }
-//FUNCIÓN PARA VER Y OCULTAR EL BOTÓN DE CERRAR SESIÓN
+/*
+*Función para ver y ocultar el botón de cerrar sesión
+*/
 var isAtTop = true;
-var verBtn1 = document.querySelector(".btnLogOut");
-var verBtn2 = document.querySelector(".btnSett");
 function verBtnLogout() {
+  var verBtn1 = document.querySelector(".btnLogOut");
+  var verBtn2 = document.querySelector(".btnSett");
   if (isAtTop) {
     verBtn1.style.top = "35px";
     verBtn1.style.scale = "1";
@@ -63,8 +67,9 @@ function verBtnLogout() {
   }
   isAtTop = !isAtTop; // Alterna el estado
 }
-
-//FUNCIÓN PARA VER Y OCULTAR EL MENU DE OPCIONES
+/*
+*Función para ver y ocultar el menú de navegación responsive
+*/
 function verMenu() {
   var menu__bar = document.getElementById("menu");
   menu__bar.style.left = "0";
@@ -73,8 +78,9 @@ function ocultarMenu() {
   var menu__bar = document.getElementById("menu");
   menu__bar.style.left = "-100%";
 }
-
-//FUNCIÓN PARA VER Y OCULTAR EL PANEL DE EDITAR PERFIL
+/*
+*Función para ver y ocultar el modal de editar perfil
+*/
 function verEditUser() {
   var menu__bar = document.querySelector(".modalEditUser");
   menu__bar.style.right = "0";
@@ -89,29 +95,30 @@ function ocultarFormEditUser() {
     element.style.pointerEvents = "none";
   });
 }
-document.querySelector(".btnEditUser").addEventListener("click", function () {
+/*
+*Función para habilitar la edición del perfil del usuario 
+*/
+function btnEditUser() {
   document.querySelector(".btnSaveUser").style.opacity = 1;
   document.querySelector(".btnSaveUser").style.pointerEvents = "auto";
   document.querySelector(".btnEditPhoto").style.pointerEvents = "auto";
   document.querySelectorAll(".btnTxt").forEach(function (element) {
     element.style.pointerEvents = "auto";
   });
-
-});
-
-//Editar imagen de perfil FALTA POR EDITAR
-document.getElementById("uploadButton").addEventListener("click", function () {
+}
+/*
+*Función para editar la imagen de perfil del usuario
+*/
+function btnEditPhotoProfile() {
   document.getElementById("fileInput").click();
-});
-document
-  .getElementById("fileInput")
-  .addEventListener("change", function (event) {
+}
+document.getElementById("fileInput").addEventListener("change", function (event) {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = function (e) {
         document.querySelector(".fa-camera-retro").style.display = "none";
-        const preview = document.getElementById("foto");
+        const preview = document.getElementById("users_profile_picture");
         preview.src = e.target.result;
         preview.style.display = "block";
       };
@@ -151,7 +158,7 @@ document
 
 
 
-  
+
 
 //--------------------------------------------------FUNCION DE LA TABLA DE USUARIOS
 $(document).ready(function () {
