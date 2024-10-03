@@ -12,7 +12,7 @@ include_once("../settings/sessionStart.php");
     <link rel="stylesheet" href="../settings/header.css">
     <link rel="stylesheet" href="../settings/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="../settings/styles.css">
-    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/1_dashboard.css">
     <title>Inicio | Sist-Inventario</title>
 </head>
 
@@ -22,16 +22,17 @@ include_once("../settings/sessionStart.php");
         <!--Formulario para Editar perfil de usuario-->
         <div class="modalEditUser">
             <div class="panelEditUser">
-                <form action="" class="formEditUser">
-                    <h2>Editar Perfil</h2>
+                <form action class="formEditUser">
+                    <h2>Editar Mi Perfil</h2>
 
                     <!--Campo para cargar foto de perfil-->
-                    <input type="file" id="fileInput" accept="image/*" style="display: none;" />
-                    <div id="uploadButton">
-                        <i class="fa-solid fa-camera-retro"></i>
-                        <img id="fotoArticle" style="display: none;" />
+                    <div class="formImgCampo">
+                        <input type="file" id="fileInput" accept="image/*" name="users_foto" style="display: none;" />
+                        <button id="uploadButton" class="btnEditPhoto">
+                            <i class="fa-solid fa-camera-retro"></i>
+                            <img id="foto" style="display: none;"/>
+                        </button>
                     </div>
-                    <img id="fotoArticle" style="display: none;" />
 
                     <!--Campo de cédula-->
                     <div class="formLogCampo">
@@ -40,7 +41,7 @@ include_once("../settings/sessionStart.php");
                             <i class="fa-regular fa-address-card"></i>
                             <input class="btnTxt" type="text" name="users_dni" id="users_dni"
                                 pattern="[a-zA-Z0-9]{1,2}-[0-9]{2,4}-[0-9]{2,4}" maxlength="14"
-                                placeholder="introduzca cédula con guiones" required>
+                                placeholder="Editar su cédula" required>
                         </div>
                     </div>
 
@@ -49,8 +50,8 @@ include_once("../settings/sessionStart.php");
                         <label for="users_name">Nombre:</label>
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
-                            <input class="btnTxt" type="text" name="users_name" id="users_name" pattern="[a-zA-Z]{4,15}"
-                                maxlength="15" placeholder="introduzca un nombre" required>
+                            <input class="btnTxt" type="text" name="users_name" id="users_name" pattern="[a-zñA-ZÑ]{3,15}"
+                                maxlength="15" placeholder="Editar su nombre" required>
                         </div>
                     </div>
 
@@ -60,7 +61,7 @@ include_once("../settings/sessionStart.php");
                         <div class="campo">
                             <i class="fa-solid fa-file-signature"></i>
                             <input class="btnTxt" type="text" name="users_last_name" id="users_last_name"
-                                pattern="[a-zA-Z]{4,15}" maxlength="15" placeholder="introduzca un apellido" required>
+                                pattern="[a-zñA-ZÑ]{3,15}" maxlength="15" placeholder="Editar su apellido" required>
                         </div>
                     </div>
 
@@ -69,8 +70,8 @@ include_once("../settings/sessionStart.php");
                         <label for="users_email">Correo:</label>
                         <div class="campo">
                             <i class="fa-regular fa-envelope"></i>
-                            <input class="btnTxt" type="email" name="users_email" id="users_email" maxlength="20"
-                                placeholder="introduzca un correo por favor" required>
+                            <input class="btnTxt" type="email" name="users_email" id="users_email" maxlength="30"
+                                placeholder="Editar su correo electrónico" required>
                         </div>
                     </div>
 
@@ -79,11 +80,7 @@ include_once("../settings/sessionStart.php");
                         <label for="users_rol">Rol:</label>
                         <div class="campo">
                             <i class="fa-solid fa-user-secret"></i>
-                            <select name="users_rol" class="btnTxt" id="users_rol" required>
-                                <option value="">Seleccione</option>
-                                <option value="Administrador">Administrador</option>
-                                <option value="Gestor">Gestor</option>
-                            </select>
+                            <label class="btnTxt"></label>
                         </div>
                     </div>
 
@@ -92,13 +89,54 @@ include_once("../settings/sessionStart.php");
                         <label for="departament_name">Departamento:</label>
                         <div class="campo">
                             <i class="fa-solid fa-building-user"></i>
-                            <select name="departament_name" class="btnTxt" id="departament_name" required>
-                                <option value="">Seleccione</option>
-                                <option value="Administrador">Informática</option>
-                                <option value="Gestor">RRHH</option>
-                                <option value="Gestor">Contabilidad</option>
-                                <option value="Gestor">Finanzas</option>
-                            </select>
+                            <label class="btnTxt"></label>
+                        </div>
+                    </div>
+
+                    <!--Campo de cumple años-->
+                    <div class="formLogCampo">
+                        <label for="users_birthday_date">Cumple Años:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-cake-candles"></i>
+                            <input type="date" class="btnTxt" ame="users_birthday_date" id="users_birthday_date" required>
+                        </div>
+                    </div>
+
+                    <!--Campo de Edad-->
+                    <div class="formLogCampo">
+                        <label for="users_age">Edad:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-arrow-up-9-1"></i>
+                           <input type="text" class="btnTxt" name="users_age" id="users_age" placeholder="Editar su edad" pattern="[0-9]{1,2}" maxlength="2" required>
+                        </div>
+                    </div>
+
+                    <!--Campo de telefono de oficina-->
+                    <div class="formLogCampo">
+                        <label for="users_office_phone">Teléfono de Oficina:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-phone-volume"></i>
+                           <input type="tel" class="btnTxt" name="users_office_phone" placeholder="Editar su teléfono" id="users_office_phone" required>
+                        </div>
+                    </div>
+
+                     <!--Campo de celular-->
+                     <div class="formLogCampo">
+                        <label for="users_cell_phone">Teléfono Celular:</label>
+                        <div class="campo">
+                            <i class="fa-brands fa-whatsapp"></i>
+                           <input type="tel" class="btnTxt" name="users_cell_phone" placeholder="Editar su celular" id="users_cell_phone" required>
+                        </div>
+                    </div>
+
+                    <!--Campo de dirección-->
+                    <div class="formLogCampo">
+                        <label for="users_address">Dirección:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <textarea name="users_address" id="users_address" class="textArea btnTxt"
+                                maxlength="100" pattern="[a-zñA-ZÑ0-9]"
+                                placeholder="Editar dirección" required></textarea>
                         </div>
                     </div>
 
@@ -108,7 +146,7 @@ include_once("../settings/sessionStart.php");
                         <div class="campo">
                             <i class="fa-solid fa-user-tie"></i>
                             <input class="btnTxt" type="text" name="users_user" id="users_user" pattern="[a-zA-Z]{4,15}"
-                                maxlength="15" placeholder="introduzca su usuario por favor:" required>
+                                maxlength="15" placeholder="Editar su usuario:" required>
                         </div>
                     </div>
 
@@ -118,11 +156,24 @@ include_once("../settings/sessionStart.php");
                         <div class="campo">
                             <i class="fa-solid fa-key"></i>
                             <input class="btnTxt" type="password" name="users_password" id="users_password"
-                                pattern=".{8,15}" maxlength="15" placeholder="introduzca su contraseña por favor:"
-                                required>
+                                pattern=".{8,15}" maxlength="15" placeholder="Nueva contraseña" required>
                             <i class="fa-regular fa-eye-slash" title="Ocultar Contraseña"
                                 onclick="passVisibility();"></i>
                             <i class="fa-regular fa-eye" title="Mostrar Contraseña" onclick="passVisibility();"></i>
+                        </div>
+                    </div>
+
+                    <!--Campo de repetir contraseña-->
+                    <div class="formLogCampo">
+                        <label for="users_password_r">Repita Contraseña:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-key"></i>
+                            <input class="btnTxt" type="password" name="users_password_r" id="users_password_r"
+                                pattern=".{8,15}" maxlength="15" placeholder="Repita nueva contraseña" required>
+                            <i class="fa-regular fa-eye-slash fa-eye-slash-r" title="Ocultar Contraseña"
+                                onclick="passVisibilityR();"></i>
+                            <i class="fa-regular fa-eye fa-eye-r" title="Mostrar Contraseña"
+                                onclick="passVisibilityR();"></i>
                         </div>
                     </div>
 
@@ -199,7 +250,9 @@ include_once("../settings/sessionStart.php");
         <div class="formUserLogOut">
             <button class="btnUser" onclick="verBtnLogout();">
                 <i class="fa-solid fa-user-check"></i>
-                <h5><?php echo $_SESSION['users_user']; ?></h5>
+                <h5>
+                    <?php echo $_SESSION['users_user']; ?>
+                </h5>
                 <i class="fa-solid fa-angle-down"></i>
             </button>
             <button class="btnLogOut" id="logout" onclick="cerrarSesion();">
@@ -233,7 +286,8 @@ include_once("../settings/sessionStart.php");
         <a class="btn_seccion" href="3_inventory.php">
             <h2>Tipos de Inventarios</h2>
             <img src="../gif/inventario.gif" alt="article">
-            <h4>Ver inventario de consumo interno, material operativo, Donaciones, Compras para ayuda social y material en tránsito.</h4>
+            <h4>Ver inventario de consumo interno, material operativo, Donaciones, Compras para ayuda social y material
+                en tránsito.</h4>
         </a>
 
         <!--Apartado de Bodegas-->

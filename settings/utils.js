@@ -83,6 +83,7 @@ function ocultarFormEditUser() {
   var menu__bar = document.querySelector(".modalEditUser");
   menu__bar.style.right = "-100%";
   document.querySelector(".btnSaveUser").style.pointerEvents = "none";
+  document.querySelector(".btnEditPhoto").style.pointerEvents = "none";
   document.querySelector(".btnSaveUser").style.opacity = 0.5;
   document.querySelectorAll(".btnTxt").forEach(function (element) {
     element.style.pointerEvents = "none";
@@ -91,6 +92,7 @@ function ocultarFormEditUser() {
 document.querySelector(".btnEditUser").addEventListener("click", function () {
   document.querySelector(".btnSaveUser").style.opacity = 1;
   document.querySelector(".btnSaveUser").style.pointerEvents = "auto";
+  document.querySelector(".btnEditPhoto").style.pointerEvents = "auto";
   document.querySelectorAll(".btnTxt").forEach(function (element) {
     element.style.pointerEvents = "auto";
   });
@@ -316,10 +318,30 @@ function verFormLogin() {
   formRecover.classList.add("scale__off");
 }
 
+
+/*
+*Ver y ocultar contraseña del campo contraseña y repitac  contraseña
+*/
 function passVisibility() {
   const passwordField = document.getElementById("users_password");
   const eyeIcon = document.querySelector(".fa-eye");
   const eyeSlashIcon = document.querySelector(".fa-eye-slash");
+
+  if (passwordField.type === "password") {
+    eyeSlashIcon.style.display = "block";
+    passwordField.type = "text";
+    eyeIcon.style.display = "none";
+  } else {
+    passwordField.type = "password";
+    eyeIcon.style.display = "block";
+    eyeSlashIcon.style.display = "none";
+  }
+  exit;
+}
+function passVisibilityR() {
+  const passwordField = document.getElementById("users_password_r");
+  const eyeIcon = document.querySelector(".fa-eye-r");
+  const eyeSlashIcon = document.querySelector(".fa-eye-slash-r");
 
   if (passwordField.type === "password") {
     eyeSlashIcon.style.display = "block";
