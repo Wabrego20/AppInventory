@@ -20,19 +20,19 @@ include_once ("../settings/conexion.php");
 <body>
     <header>
 
-        <!--Formulario para Editar perfil de usuario-->
-        <div class="modalEditUser">
+         <!--Formulario para Editar perfil de usuario-->
+         <div class="modalEditUser">
             <div class="panelEditUser">
                 <form action class="formEditUser">
                     <h2>Editar Mi Perfil</h2>
 
                     <!--Campo para cargar foto de perfil-->
                     <div class="formImgCampo">
-                        <input type="file" id="fileInput" accept="image/*" name="users_foto" style="display: none;" />
-                        <button id="uploadButton" class="btnEditPhoto">
+                        <input type="file" id="btnEditPhotoProfile" accept="image/*" name="users_foto" style="display: none;" />
+                        <div class="btnEditPhoto" onclick="btnEditPhotoProfile();">
                             <i class="fa-solid fa-camera-retro"></i>
-                            <img id="foto" style="display: none;"/>
-                        </button>
+                            <img id="users_profile_picture" name="users_profile_picture" style="display: none;"/>
+                        </div>
                     </div>
 
                     <!--Campo de cédula-->
@@ -180,7 +180,7 @@ include_once ("../settings/conexion.php");
 
                     <!--Botón de editar, guardar y Cancelar-->
                     <div class="btnSubmitPanel">
-                        <div class="btnSubmit btnEditUser">
+                        <div class="btnSubmit btnEditUser" onclick="btnEditUser();">
                             <i class="fa-solid fa-user-pen"></i> Editar
                         </div>
                         <button type="submit" class="btnSubmit btnSaveUser">
