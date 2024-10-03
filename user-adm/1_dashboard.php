@@ -165,7 +165,7 @@ include_once("../settings/sessionStart.php");
                 <li>
                     <a href="3_inventory.php">
                         <i class="fa-solid fa-boxes-stacked"></i>
-                        <h5>Tipo de Inventario</h5>
+                        <h5>Inventarios</h5>
                     </a>
                 </li>
                 <li>
