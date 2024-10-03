@@ -336,14 +336,28 @@ include_once ("../settings/conexion.php");
                         </div>
                     </div>
 
-                     <!--campo de descripción del producto-->
-                     <div class="formLogCampo">
-                        <label for="articles_description">Descripción:</label>
+                     <!--campo de unidada de medida-->
+                    <div class="formLogCampo">
+                        <label for="articles_unit_measurement">Bodega:</label>
                         <div class="campo">
-                            <i class="fa-solid fa-file-signature"></i>
-                            <textarea name="articles_description" id="articles_description" class="btnTxt textArea"
-                                maxlength="100" pattern="[a-zñA-ZÑ0-9]"
-                                placeholder="introduzca una descripción del artículo" readonly></textarea>
+                            <i class="fa-solid fa-ruler-combined"></i>
+                            <select name="articles_unit_measurement" class="btnTxt" id="articles_unit_measurement"
+                                required>
+                                <option value>Seleccione</option>
+                                <?php
+                                    if ($selectWarehouse->num_rows > 0) {
+                                    while ($row =
+                                    $selectWarehouse->fetch_assoc()) {
+                                    echo '<option
+                                        value="' . $row["warehouse_id"] .
+                                        '">' . $row["warehouse_name"] . '</option>';
+                                    }
+                                    } else {
+                                    echo '<option value>No hay unidades
+                                        disponibles</option>';
+                                    }
+                                    ?>
+                            </select>
                         </div>
                     </div>
 
@@ -363,6 +377,16 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-sack-dollar"></i>
                             <input class="btnTxt" type="number" name="articles_unit_cost" id="articles_unit_cost"
+                                pattern="[0-9]{1,7}" max="1000000" placeholder="introduzca la cantidad " required>
+                        </div>
+                    </div>
+
+                    <!--campo de costo unitario del artículos-->
+                    <div class="formLogCampo">
+                        <label for="articles_total_cost">Costo Total:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-sack-dollar"></i>
+                            <input class="btnTxt" type="number" name="articles_total_cost" id="articles_total_cost"
                                 pattern="[0-9]{1,7}" max="1000000" placeholder="introduzca la cantidad " required>
                         </div>
                     </div>
