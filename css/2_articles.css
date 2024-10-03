@@ -144,8 +144,7 @@ h2 {
   h2 {
     border-radius: 5px 5px 0 0;
     margin: auto;
-    height: 40px;
-    line-height: 40px;
+    padding: 10px 15px;
     width: 100%;
     text-align: center;
     background-color: var(--azul);
@@ -210,15 +209,8 @@ h2 {
         height: 60px;
       }
 
-      #fotoArticle {
-        text-align: center;
-        justify-content: center;
-        align-items: center;
-        top: 0;
-      }
-
       /*editar imagen*/
-      #fotoBtn {
+      .btnArticlesPhoto {
         width: 100%;
         border-radius: 5px;
         display: flex;
@@ -243,7 +235,7 @@ h2 {
         }
       }
 
-      #fotoBtn:hover {
+      .btnArticlesPhoto:hover {
         background-color: var(--blanco);
         color: var(--azul);
         box-shadow: 0 0 5px var(--azul);

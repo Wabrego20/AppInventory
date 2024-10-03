@@ -311,6 +311,8 @@ nav ul li:hover {
     img {
       width: 200px;
       height: 200px;
+      max-width: 95%;
+      max-height: 95%;
       background-size: cover;
       border-radius: 50%;
     }

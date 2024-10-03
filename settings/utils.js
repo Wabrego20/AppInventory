@@ -110,101 +110,27 @@ function btnEditUser() {
 *Función para editar la imagen de perfil del usuario
 */
 function btnEditPhotoProfile() {
-  document.getElementById("fileInput").click();
+  document.getElementById("btnEditPhotoProfile").click();
 }
-document.getElementById("fileInput").addEventListener("change", function (event) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        document.querySelector(".fa-camera-retro").style.display = "none";
-        const preview = document.getElementById("users_profile_picture");
-        preview.src = e.target.result;
-        preview.style.display = "block";
-      };
-      reader.readAsDataURL(file);
-    }
-  });
+document.getElementById("btnEditPhotoProfile").addEventListener("change", function (event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      document.querySelector(".fa-camera-retro").style.display = "none";
+      const preview = document.getElementById("users_profile_picture");
+      preview.src = e.target.result;
+      preview.style.display = "block";
+    };
+    reader.readAsDataURL(file);
+  }
+});
 /*
 ********************************FIN DE  ENCABEZADO*********************************
 */
-
-
-
-
-
-
-
-
-//Cargar foto de articulo
-document.getElementById("fotoBtn").addEventListener("click", function () {
-  document.getElementById("btnFile").click();
-});
-document
-  .getElementById("btnFile")
-  .addEventListener("change", function (event) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        document.querySelector("#fotoBtn .fa-camera-retro").style.display = "none";
-        const preview = document.getElementById("fotoArticle");
-        preview.src = e.target.result;
-        preview.style.display = "flex";
-      };
-      reader.readAsDataURL(file);
-    }
-  });
-
-
-
-
-
-//--------------------------------------------------FUNCION DE LA TABLA DE USUARIOS
-$(document).ready(function () {
-  $("#tableUsers").DataTable({
-    language: {
-      processing: "Procesando...",
-      lengthMenu: "Mostrar _MENU_ usuarios",
-      zeroRecords: "No se encontraron usuarios",
-      emptyTable: "Ningún usuario disponible en esta tabla",
-      info: "Mostrando usuario del _START_ al _END_ de un total de _TOTAL_ usuarios",
-      infoEmpty: "Mostrando usuario del 0 al 0 de un total de 0 usuarios",
-      infoFiltered: "(filtrado de un total de _MAX_ usuarios)",
-      search: "Buscar:",
-      loadingRecords: "Cargando...",
-      paginate: {
-        first: "Primero",
-        last: "Último",
-        next: "Siguiente",
-        previous: "Anterior",
-      },
-      aria: {
-        sortAscending: ": Activar para ordenar la columna de manera ascendente",
-        sortDescending:
-          ": Activar para ordenar la columna de manera descendente",
-      },
-    },
-    dom: "lBfrtip", // 'l' es para el selector de longitud
-    buttons: [
-      {
-        text: '<i class="fas fa-user-plus"></i> Crear usuario',
-        action: function (e, dt, node, config) {
-          var formu = document.querySelector(".modalCreateUser");
-          formu.style.scale = "1";
-          // Aquí puedes agregar tu lógica para crear un usuario
-        },
-      },
-    ],
-  });
-});
-
-//Función para ver formulario de creación de usuarios
-function ocultarFormCreateUser() {
-  document.querySelector(".modalCreateUser").style.scale = "0";
-}
-
-//---------------------------------------------------FUNCION DE LA TABLA DE ARTÍCULOS
+/*
+*Función para visualizar la tabla de los articulos
+*/
 $(document).ready(function () {
   $("#tableArticles").DataTable({
     language: {
@@ -234,17 +160,50 @@ $(document).ready(function () {
       {
         text: '<i class="fa-solid fa-heart-circle-plus"></i> Crear articulo',
         action: function (e, dt, node, config) {
-          var formu = document.querySelector(".modalCreateArticle");
+          var formu = document.querySelector(".modalCreateArticle");//mostrar el modal de crear artículo
           formu.style.display = 'flex';
           setTimeout(function () {
             formu.classList.add('show');
           }, 10);
-          // Aquí puedes agregar tu lógica para crear un usuario
         },
       },
     ],
   });
 });
+/*
+*Función para ocultar el modal de crear artículo
+*/
+function ocultarFormCreateArticle() {
+  var modal = document.querySelector('.modalCreateArticle');
+  modal.classList.remove('show');
+  modal.classList.add('hide');
+  setTimeout(function () {
+    modal.style.display = 'none';
+    modal.classList.remove('hide');
+  }, 500);
+}
+/*
+*Función para cargar foto de articulo
+*/
+function btnArticlesPhoto() {
+  document.getElementById("btnArticlesPhoto").click();
+}
+document.getElementById("btnArticlesPhoto").addEventListener("change", function (event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      document.querySelector(".btnArticlesPhoto .fa-camera-retro").style.display = "none";
+      const preview = document.getElementById("articles_photo");
+      preview.src = e.target.result;
+      preview.style.display = "flex";
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+
+
 
 
 
@@ -291,16 +250,7 @@ function ocultarFormCreateBodega() {
 }
 //---------------------------------------------------------------------------------
 
-//Función para ver formulario de creación de usuarios
-function ocultarFormCreateArticle() {
-  var modal = document.querySelector('.modalCreateArticle');
-  modal.classList.remove('show');
-  modal.classList.add('hide');
-  setTimeout(function () {
-    modal.style.display = 'none';
-    modal.classList.remove('hide');
-  }, 500);
-}
+
 
 
 
@@ -427,4 +377,62 @@ function formatCurrency(input) {
   input.value = `$${value}`;
 }
 
+
+
+
+
+
+
+
+
+
+
+////PENDIENTE//////////////////////////////////////////////////////
+/*
+*Función para ver y ocultar formulario de creación de usuarios
+*/
+
+function ocultarFormCreateUser() {
+  document.querySelector(".modalCreateUser").style.scale = "0";
+}
+/*
+*Función para visualizar la tabla de usuarios
+*/
+$(document).ready(function () {
+  $("#tableUsers").DataTable({
+    language: {
+      processing: "Procesando...",
+      lengthMenu: "Mostrar _MENU_ usuarios",
+      zeroRecords: "No se encontraron usuarios",
+      emptyTable: "Ningún usuario disponible en esta tabla",
+      info: "Mostrando usuario del _START_ al _END_ de un total de _TOTAL_ usuarios",
+      infoEmpty: "Mostrando usuario del 0 al 0 de un total de 0 usuarios",
+      infoFiltered: "(filtrado de un total de _MAX_ usuarios)",
+      search: "Buscar:",
+      loadingRecords: "Cargando...",
+      paginate: {
+        first: "Primero",
+        last: "Último",
+        next: "Siguiente",
+        previous: "Anterior",
+      },
+      aria: {
+        sortAscending: ": Activar para ordenar la columna de manera ascendente",
+        sortDescending:
+          ": Activar para ordenar la columna de manera descendente",
+      },
+    },
+    dom: "lBfrtip", // 'l' es para el selector de longitud
+    buttons: [
+      {
+        text: '<i class="fas fa-user-plus"></i> Crear usuario',
+        action: function (e, dt, node, config) {
+          var formu = document.querySelector(".modalCreateUser");
+          formu.style.scale = "1";
+          // Aquí puedes agregar tu lógica para crear un usuario
+        },
+      },
+    ],
+  });
+});
 
