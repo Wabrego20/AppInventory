@@ -1,14 +1,39 @@
 main {
-  width: 800px;
-  max-width: 95%;
-  align-items: center;
-  flex-wrap: wrap;
-  margin: 5px auto;
+  display: flex;
   flex-direction: column;
+  width: 95%;
+  align-items: center;
+  justify-content: start;
   h2{
     color: var(--azul);
+    margin: 10px auto;
+    max-width: 100%;
   }
 }
+.ruta2 {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  border: 1px solid var(--gris);
+  flex-wrap: wrap;
+  h4 {
+    color: var(--azul);
+    margin: 5px;
+  }
+  a {
+    margin-left: 10px;
+    text-decoration: none;
+    color: var(--azul);
+    transition: 0.2s ease-in-out;
+    :hover {
+      text-decoration: underline;
+      color: var(--negro);
+    }
+  }
+}
+
+/*Inventario de Consumo Interno*/
 .dataTables_wrapper {
   background-color: var(--azul);
   max-width: 95%;
@@ -87,26 +112,29 @@ main {
 }
 
 /*Formulario para crear usuarios*/
-.modalCreateBodega {
+.modalCreateArticle {
   background-color: var(--fondo);
   width: 100%;
-  min-height: 100vh;
-  position: absolute;
+  height: 100vh;
+  position: fixed;
   top: 0;
   transition: 0.2s ease-in-out;
-  scale: 0;
-  display: flex;
+  opacity: 0;
+  display: none;
   justify-content: center;
   align-items: center;
 }
-.panelCreateBodega {
-  width: 400px;
-  max-width: 95%;
-  height: 95%;
-  overflow: auto;
-  position: relative;
+.modalCreateArticle.show {
+  opacity: 1;
 }
-.formCreateBodega {
+.panelCreateArticle {
+  width: 800px;
+  max-height: 99%;
+  max-width: 99%;
+  overflow: auto;
+}
+
+.formCreateArticle {
   width: 100%;
   background-color: var(--blanco);
   display: flex;

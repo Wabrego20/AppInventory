@@ -13,9 +13,9 @@ include_once ("../settings/conexion.php");
     <link rel="stylesheet" href="../settings/header.css">
     <link rel="stylesheet" href="../settings/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="../settings/styles.css">
-    <link rel="stylesheet" href="../css/warehouse.css">
+    <link rel="stylesheet" href="../css/3_inventory1.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
-    <title>Bodegas | Sist-Inventario</title>
+    <title>Consumo Interno | Sist-Inventario</title>
 </head>
 
 <body>
@@ -209,22 +209,20 @@ include_once ("../settings/conexion.php");
                         <h5>Inicio</h5>
                     </a>
                 </li>
-
                 <li>
                     <a href="2_articles.php">
                         <i class="fa-solid fa-box"></i>
-                        <h5>Artículos</h5>
+                        <h5>Artículos/Productos</h5>
                     </a>
                 </li>
                 <li>
-                    
                     <a href="3_inventory.php">
                         <i class="fa-solid fa-boxes-stacked"></i>
-                        <h5>Inventarios</h5>
+                        <h5>Tipos de Inventarios</h5>
                     </a>
                 </li>
-                <li class="active">
-                    <a href="#">
+                <li>
+                    <a href="4_warehouse.php">
                         <i class="fa-solid fa-warehouse"></i>
                         <h5>Bodegas</h5>
                     </a>
@@ -254,7 +252,9 @@ include_once ("../settings/conexion.php");
         <div class="formUserLogOut">
             <button class="btnUser" onclick="verBtnLogout();">
                 <i class="fa-solid fa-user-check"></i>
-                <h5><?php echo $_SESSION['users_user']; ?></h5>
+                <h5>
+                    <?php echo $_SESSION['users_user']; ?>
+                </h5>
                 <i class="fa-solid fa-angle-down"></i>
             </button>
             <button class="btnLogOut" id="logout" onclick="cerrarSesion();">
@@ -270,74 +270,134 @@ include_once ("../settings/conexion.php");
     </header>
 
     <!--Ruta que muestra donde se encuentra actualmente-->
-    <div class="ruta">
-        <h4>Bodegas</h4>
+    <div class="ruta2">
+        <a href="3_inventory.php">
+            <h5>Inventarios</h5>
+        </a>
+        <i class="fa-solid fa-chevron-right"></i>
+        <h4>Inventario de Consumo Interno</h4>
     </div>
 
     <!--Cuerpo Principal-->
     <main>
-        <h2>Tabla de Bodegas</h2>
-        <table id="tableWarehouse">
+        <h2>Tabla de Articulos de Consumo Interno</h2>
+        <table id="tableArticles">
             <thead>
                 <tr>
                     <th>N°</th>
                     <th>Nombre</th>
-                    <th>Ubicación</th>
-                    <th>Artículos en Existencia</th>
+                    <th>Categoría</th>
+                    <th>Cantidad</th>
+                    <th>Unidad de Medida</th>
+                    <th>Fecha de Registro</th>
+                    <th>Bodega</th>
+                    <th>Costo Unitario</th>
+                    <th>Costo Total</th>
                     <th>Editar</th>
-                    <th>Consultar</th>
                 </tr>
             </thead>
             <tbody>
-               
+                
             </tbody>
         </table>
 
-        <!--Formulario para Crear un usuario-->
-        <div class="modalCreateBodega">
-            <div class="panelCreateBodega">
-                <form method="post" class="formCreateBodega">
-                    <h2>Crear Bodega/Almacén</h2>
+        <!--Formulario para Crear un articulo-->
+        <div class="modalCreateArticle">
+            <div class="panelCreateArticle">
+                <form method="post" class="formCreateArticle">
+                    <h2>Crear Artículo de Consumo Interno</h2>
 
-                    <!--campo de nombre de la bodega-->
+                    <!--campo de nombre de artículo-->
                     <div class="formLogCampo">
-                        <label for="articles_name">Nombre:</label>
+                        <label for="articles_category">Nombre:</label>
                         <div class="campo">
-                            <i class="fa-solid fa-signature"></i>
-                            <input class="btnTxt" type="text" name="articles_name" id="articles_name"
-                                pattern="[a-zA-ZñÑ]{3,30}" maxlength="30" placeholder="introduzca un nombre" required
-                                autofocus>
+                            <i class="fa-solid fa-layer-group"></i>
+                            <select name="articles_category" class="btnTxt" id="articles_category" required>
+                                <option value="">Seleccione</option>
+                                <?php
+                                if ($selectArticles->num_rows > 0) {
+                                    while ($row = $selectArticles->fetch_assoc()) {
+                                        echo '<option value="' . $row["articles_id"] . '">' . $row["articles_name"] . '</option>';
+                                    }
+                                } else {
+                                    echo '<option value="">No hay arículo disponible</option>';
+                                }
+                                ?>
+                            </select>
                         </div>
                     </div>
-                    
-                    <!--campo de ubicación de la bodega-->
+
+                    <!--campo de categoría-->
                     <div class="formLogCampo">
-                        <label for="articles_name">Ubicación:</label>
+                        <label for="articles_category">Categoría:</label>
                         <div class="campo">
-                            <i class="fa-solid fa-signature"></i>
-                            <input class="btnTxt" type="text" name="articles_name" id="articles_name"
-                                pattern="[a-zA-ZñÑ]{3,30}" maxlength="30" placeholder="introduzca un nombre" required
-                                autofocus>
+                            <i class="fa-solid fa-layer-group"></i>
+                            <label class="btnTxt" id="articles_category"></label>
                         </div>
                     </div>
-                    
-                     <!--campo de descripción de la bodega-->
-                     <div class="formLogCampo">
-                        <label for="articles_description">Descripción:</label>
+
+                     <!--campo de unidada de medida-->
+                    <div class="formLogCampo">
+                        <label for="articles_unit_measurement">Bodega:</label>
                         <div class="campo">
-                            <i class="fa-solid fa-file-signature"></i>
-                            <textarea name="articles_description" id="articles_description" class="btnTxt textArea"
-                                maxlength="100" pattern="[a-zñA-ZÑ0-9]"
-                                placeholder="introduzca una descripción para la bodega" required></textarea>
+                            <i class="fa-solid fa-ruler-combined"></i>
+                            <select name="articles_unit_measurement" class="btnTxt" id="articles_unit_measurement"
+                                required>
+                                <option value>Seleccione</option>
+                                <?php
+                                    if ($selectWarehouse->num_rows > 0) {
+                                    while ($row =
+                                    $selectWarehouse->fetch_assoc()) {
+                                    echo '<option
+                                        value="' . $row["warehouse_id"] .
+                                        '">' . $row["warehouse_name"] . '</option>';
+                                    }
+                                    } else {
+                                    echo '<option value>No hay unidades
+                                        disponibles</option>';
+                                    }
+                                    ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!--campo de cantidad de artículos-->
+                    <div class="formLogCampo">
+                        <label for="articles_quantity">Cantidad:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-arrow-up-1-9"></i>
+                            <input class="btnTxt" type="number" name="articles_quantity" id="articles_quantity"
+                                pattern="[0-9]{1,7}" max="1000000" placeholder="introduzca la cantidad " required>
+                        </div>
+                    </div>
+
+                    <!--campo de costo unitario del artículos-->
+                    <div class="formLogCampo">
+                        <label for="articles_unit_cost">Costo Unitario:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-sack-dollar"></i>
+                            <input class="btnTxt" type="number" name="articles_unit_cost" id="articles_unit_cost"
+                                pattern="[0-9]{1,7}" max="1000000" placeholder="introduzca la cantidad " required>
+                        </div>
+                    </div>
+
+                    <!--campo de costo unitario del artículos-->
+                    <div class="formLogCampo">
+                        <label for="articles_total_cost">Costo Total:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-sack-dollar"></i>
+                            <input class="btnTxt" type="number" name="articles_total_cost" id="articles_total_cost"
+                                pattern="[0-9]{1,7}" max="1000000" placeholder="introduzca la cantidad " required>
                         </div>
                     </div>
 
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
                     <div class="btnSubmitPanel">
                         <button type="submit" class="btnSubmit btnCreateUser">
-                            <i class="fa-solid fa-heart-circle-plus"></i> Crear Bodega
+                            <i class="fa-solid fa-heart-circle-plus"></i>
+                            Crear Artículo
                         </button>
-                        <div class="btnSubmit btnCancel" onclick="ocultarFormCreateBodega()">Cancelar</div>
+                        <div class="btnSubmit btnCancel" onclick="ocultarFormCreateArticle()">Cancelar</div>
                     </div>
 
                 </form>
