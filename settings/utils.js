@@ -237,16 +237,25 @@ $(document).ready(function () {
       {
         text: '<i class="fa-solid fa-heart-circle-plus"></i> Crear bodega',
         action: function (e, dt, node, config) {
-          var formu = document.querySelector(".modalCreateBodega");
-          formu.style.scale = "1";
+          var modal = document.querySelector(".modalCreateBodega");
+          modal.style.scale = "1";
           // Aquí puedes agregar tu lógica para crear un usuario
         },
       },
     ],
   });
 });
+/*
+*Función para ocultar el modal de crear artículo
+*/
 function ocultarFormCreateBodega() {
-  document.querySelector(".modalCreateBodega").style.scale = "0";
+  var modal = document.querySelector('.modalCreateBodega');
+  modal.classList.remove('show');
+  modal.classList.add('hide');
+  setTimeout(function () {
+    modal.style.display = 'none';
+    modal.classList.remove('hide');
+  }, 500);
 }
 //---------------------------------------------------------------------------------
 
