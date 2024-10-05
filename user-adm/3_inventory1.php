@@ -216,13 +216,13 @@ include_once ("../settings/conexion.php");
                 <li>
                     <a href="2_articles.php">
                         <i class="fa-solid fa-box"></i>
-                        <h5>Artículos/Productos</h5>
+                        <h5>Artículos</h5>
                     </a>
                 </li>
                 <li>
                     <a href="3_inventory.php">
                         <i class="fa-solid fa-boxes-stacked"></i>
-                        <h5>Tipos de Inventarios</h5>
+                        <h5>Inventarios</h5>
                     </a>
                 </li>
                 <li>

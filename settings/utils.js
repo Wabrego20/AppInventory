@@ -129,16 +129,17 @@ document
   });
 /********************************FIN DE  ENCABEZADO**********************************/
 
-/*********************************TABLAS********************************************/
-/*
- *Función para visualizar la tabla de los articulos
+/**
+ * Tablas
  */
 $(document).ready(function () {
   $("#tableArticles").DataTable();
   $("#tableWarehouse").DataTable();
   $("#tableUsers").DataTable();
 });
-
+/*
+ *Función para visualizar la tabla de los articulos
+ */
 $("#tableArticles").DataTable({
   language: {
     processing: "Procesando...",
@@ -217,15 +218,17 @@ $("#tableWarehouse").DataTable({
     {
       text: '<i class="fa-solid fa-heart-circle-plus"></i> Crear bodega',
       action: function (e, dt, node, config) {
-        var modal = document.querySelector(".modalCreateBodega");
-        modal.style.scale = "1";
-        // Aquí puedes agregar tu lógica para crear un usuario
+        var formu = document.querySelector(".modalCreateBodega");
+        formu.style.display = "flex";
+        setTimeout(function () {
+          formu.classList.add("show");
+        }, 10);
       },
     },
   ],
 });
 /*
- *Función para ocultar el modal de crear artículo
+ *Función para ocultar el modal de bodegas
  */
 function ocultarFormCreateBodega() {
   var modal = document.querySelector(".modalCreateBodega");
@@ -266,9 +269,11 @@ $("#tableUsers").DataTable({
     {
       text: '<i class="fas fa-user-plus"></i> Crear usuario',
       action: function (e, dt, node, config) {
-        var formu = document.querySelector(".modalCreateUser");
-        formu.style.scale = "1";
-        // Aquí puedes agregar tu lógica para crear un usuario
+        var modalUser = document.querySelector(".modalCreateUser");
+        modalUser.style.display = "flex";
+        setTimeout(function () {
+          modalUser.classList.add("show");
+        }, 10);
       },
     },
   ],
