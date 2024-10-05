@@ -1,9 +1,9 @@
 /*
-************************************ENCABEZADO*********************************
-*/
+ ************************************ENCABEZADO*********************************
+ */
 /*
-*Función para cerrar sesión
-*/
+ *Función para cerrar sesión
+ */
 function cerrarSesion() {
   Swal.fire({
     color: "var(--azul)",
@@ -46,8 +46,8 @@ function cerrarSesion() {
   });
 }
 /*
-*Función para ver y ocultar el botón de cerrar sesión
-*/
+ *Función para ver y ocultar el botón de cerrar sesión
+ */
 var isAtTop = true;
 function verBtnLogout() {
   var verBtn1 = document.querySelector(".btnLogOut");
@@ -68,8 +68,8 @@ function verBtnLogout() {
   isAtTop = !isAtTop; // Alterna el estado
 }
 /*
-*Función para ver y ocultar el menú de navegación responsive
-*/
+ *Función para ver y ocultar el menú de navegación responsive
+ */
 function verMenu() {
   var menu__bar = document.getElementById("menu");
   menu__bar.style.left = "0";
@@ -79,8 +79,8 @@ function ocultarMenu() {
   menu__bar.style.left = "-100%";
 }
 /*
-*Función para ver y ocultar el modal de editar perfil
-*/
+ *Función para ver y ocultar el modal de editar perfil
+ */
 function verEditUser() {
   var menu__bar = document.querySelector(".modalEditUser");
   menu__bar.style.right = "0";
@@ -96,8 +96,8 @@ function ocultarFormEditUser() {
   });
 }
 /*
-*Función para habilitar la edición del perfil del usuario 
-*/
+ *Función para habilitar la edición del perfil del usuario
+ */
 function btnEditUser() {
   document.querySelector(".btnSaveUser").style.opacity = 1;
   document.querySelector(".btnSaveUser").style.pointerEvents = "auto";
@@ -107,166 +107,214 @@ function btnEditUser() {
   });
 }
 /*
-*Función para editar la imagen de perfil del usuario
-*/
+ *Función para editar la imagen de perfil del usuario
+ */
 function btnEditPhotoProfile() {
   document.getElementById("btnEditPhotoProfile").click();
 }
-document.getElementById("btnEditPhotoProfile").addEventListener("change", function (event) {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      document.querySelector(".fa-camera-retro").style.display = "none";
-      const preview = document.getElementById("users_profile_picture");
-      preview.src = e.target.result;
-      preview.style.display = "block";
-    };
-    reader.readAsDataURL(file);
-  }
-});
+document
+  .getElementById("btnEditPhotoProfile")
+  .addEventListener("change", function (event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        document.querySelector(".fa-camera-retro").style.display = "none";
+        const preview = document.getElementById("users_profile_picture");
+        preview.src = e.target.result;
+        preview.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+/********************************FIN DE  ENCABEZADO**********************************/
+
+/*********************************TABLAS********************************************/
 /*
-********************************FIN DE  ENCABEZADO*********************************
-*/
-/*
-*Función para visualizar la tabla de los articulos
-*/
+ *Función para visualizar la tabla de los articulos
+ */
 $(document).ready(function () {
-  $("#tableArticles").DataTable({
-    language: {
-      processing: "Procesando...",
-      lengthMenu: "Mostrar _MENU_ articulos",
-      zeroRecords: "No se encontraron articulos",
-      emptyTable: "Ningún articulo disponible en esta tabla",
-      info: "Mostrando articulo del _START_ al _END_ de un total de _TOTAL_ articulos",
-      infoEmpty: "Mostrando articulo del 0 al 0 de un total de 0 articulos",
-      infoFiltered: "(filtrado de un total de _MAX_ articulos)",
-      search: "Buscar:",
-      loadingRecords: "Cargando...",
-      paginate: {
-        first: "Primero",
-        last: "Último",
-        next: "Siguiente",
-        previous: "Anterior",
-      },
-      aria: {
-        sortAscending: ": Activar para ordenar la columna de manera ascendente",
-        sortDescending:
-          ": Activar para ordenar la columna de manera descendente",
+  $("#tableArticles").DataTable();
+  $("#tableWarehouse").DataTable();
+  $("#tableUsers").DataTable();
+});
+
+$("#tableArticles").DataTable({
+  language: {
+    processing: "Procesando...",
+    lengthMenu: "Mostrar _MENU_ articulos",
+    zeroRecords: "No se encontraron articulos",
+    emptyTable: "Ningún articulo disponible en esta tabla",
+    info: "Mostrando articulo del _START_ al _END_ de un total de _TOTAL_ articulos",
+    infoEmpty: "Mostrando articulo del 0 al 0 de un total de 0 articulos",
+    infoFiltered: "(filtrado de un total de _MAX_ articulos)",
+    search: "Buscar:",
+    loadingRecords: "Cargando...",
+    paginate: {
+      first: "Primero",
+      last: "Último",
+      next: "Siguiente",
+      previous: "Anterior",
+    },
+    aria: {
+      sortAscending: ": Activar para ordenar la columna de manera ascendente",
+      sortDescending: ": Activar para ordenar la columna de manera descendente",
+    },
+  },
+  dom: "lBfrtip", // 'l' es para el selector de longitud
+  buttons: [
+    {
+      text: '<i class="fa-solid fa-heart-circle-plus"></i> Crear articulo',
+      action: function (e, dt, node, config) {
+        var formu = document.querySelector(".modalCreateArticle"); //mostrar el modal de crear artículo
+        formu.style.display = "flex";
+        setTimeout(function () {
+          formu.classList.add("show");
+        }, 10);
       },
     },
-    dom: "lBfrtip", // 'l' es para el selector de longitud
-    buttons: [
-      {
-        text: '<i class="fa-solid fa-heart-circle-plus"></i> Crear articulo',
-        action: function (e, dt, node, config) {
-          var formu = document.querySelector(".modalCreateArticle");//mostrar el modal de crear artículo
-          formu.style.display = 'flex';
-          setTimeout(function () {
-            formu.classList.add('show');
-          }, 10);
-        },
-      },
-    ],
-  });
+  ],
 });
 /*
-*Función para ocultar el modal de crear artículo
-*/
+ *Función para ocultar el modal de crear artículo
+ */
 function ocultarFormCreateArticle() {
-  var modal = document.querySelector('.modalCreateArticle');
-  modal.classList.remove('show');
-  modal.classList.add('hide');
+  var modal = document.querySelector(".modalCreateArticle");
+  modal.classList.remove("show");
+  modal.classList.add("hide");
   setTimeout(function () {
-    modal.style.display = 'none';
-    modal.classList.remove('hide');
+    modal.style.display = "none";
+    modal.classList.remove("hide");
   }, 500);
 }
 /*
-*Función para cargar foto de articulo
-*/
+ *Función para visualizar la tabla de bodegas
+ */
+$("#tableWarehouse").DataTable({
+  language: {
+    processing: "Procesando...",
+    lengthMenu: "Mostrar _MENU_ bodegas",
+    zeroRecords: "No se encontraron bodegas",
+    emptyTable: "Ningúna bodega disponible en esta tabla",
+    info: "Mostrando bodega del _START_ al _END_ de un total de _TOTAL_ bodegas",
+    infoEmpty: "Mostrando bodega del 0 al 0 de un total de 0 bodegas",
+    infoFiltered: "(filtrado de un total de _MAX_ bodegas)",
+    search: "Buscar:",
+    loadingRecords: "Cargando...",
+    paginate: {
+      first: "Primero",
+      last: "Último",
+      next: "Siguiente",
+      previous: "Anterior",
+    },
+    aria: {
+      sortAscending: ": Activar para ordenar la columna de manera ascendente",
+      sortDescending: ": Activar para ordenar la columna de manera descendente",
+    },
+  },
+  dom: "lBfrtip", // 'l' es para el selector de longitud
+  buttons: [
+    {
+      text: '<i class="fa-solid fa-heart-circle-plus"></i> Crear bodega',
+      action: function (e, dt, node, config) {
+        var modal = document.querySelector(".modalCreateBodega");
+        modal.style.scale = "1";
+        // Aquí puedes agregar tu lógica para crear un usuario
+      },
+    },
+  ],
+});
+/*
+ *Función para ocultar el modal de crear artículo
+ */
+function ocultarFormCreateBodega() {
+  var modal = document.querySelector(".modalCreateBodega");
+  modal.classList.remove("show");
+  modal.classList.add("hide");
+  setTimeout(function () {
+    modal.style.display = "none";
+    modal.classList.remove("hide");
+  }, 500);
+}
+/*
+ *Función para visualizar la tabla de usuarios
+ */
+$("#tableUsers").DataTable({
+  language: {
+    processing: "Procesando...",
+    lengthMenu: "Mostrar _MENU_ usuarios",
+    zeroRecords: "No se encontraron usuarios",
+    emptyTable: "Ningún usuario disponible en esta tabla",
+    info: "Mostrando usuario del _START_ al _END_ de un total de _TOTAL_ usuarios",
+    infoEmpty: "Mostrando usuario del 0 al 0 de un total de 0 usuarios",
+    infoFiltered: "(filtrado de un total de _MAX_ usuarios)",
+    search: "Buscar:",
+    loadingRecords: "Cargando...",
+    paginate: {
+      first: "Primero",
+      last: "Último",
+      next: "Siguiente",
+      previous: "Anterior",
+    },
+    aria: {
+      sortAscending: ": Activar para ordenar la columna de manera ascendente",
+      sortDescending: ": Activar para ordenar la columna de manera descendente",
+    },
+  },
+  dom: "lBfrtip", // 'l' es para el selector de longitud
+  buttons: [
+    {
+      text: '<i class="fas fa-user-plus"></i> Crear usuario',
+      action: function (e, dt, node, config) {
+        var formu = document.querySelector(".modalCreateUser");
+        formu.style.scale = "1";
+        // Aquí puedes agregar tu lógica para crear un usuario
+      },
+    },
+  ],
+});
+/*
+ *Función para ocultar formulario de creación de usuarios
+ */
+function ocultarFormCreateUser() {
+  var modal = document.querySelector(".modalCreateUser");
+  modal.classList.remove("show");
+  modal.classList.add("hide");
+  setTimeout(function () {
+    modal.style.display = "none";
+    modal.classList.remove("hide");
+  }, 500);
+}
+/*
+ *Función para cargar foto de articulo
+ */
 function btnArticlesPhoto() {
   document.getElementById("btnArticlesPhoto").click();
 }
-document.getElementById("btnArticlesPhoto").addEventListener("change", function (event) {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      document.querySelector(".btnArticlesPhoto .fa-camera-retro").style.display = "none";
-      const preview = document.getElementById("articles_photo");
-      preview.src = e.target.result;
-      preview.style.display = "flex";
-    };
-    reader.readAsDataURL(file);
-  }
-});
-
-
-
-
-
-
-//---------------------------------------------------FUNCION DE LA TABLA DE BODEGAS
-$(document).ready(function () {
-  $("#tableWarehouse").DataTable({
-    language: {
-      processing: "Procesando...",
-      lengthMenu: "Mostrar _MENU_ bodegas",
-      zeroRecords: "No se encontraron bodegas",
-      emptyTable: "Ningúna bodega disponible en esta tabla",
-      info: "Mostrando bodega del _START_ al _END_ de un total de _TOTAL_ bodegas",
-      infoEmpty: "Mostrando bodega del 0 al 0 de un total de 0 bodegas",
-      infoFiltered: "(filtrado de un total de _MAX_ bodegas)",
-      search: "Buscar:",
-      loadingRecords: "Cargando...",
-      paginate: {
-        first: "Primero",
-        last: "Último",
-        next: "Siguiente",
-        previous: "Anterior",
-      },
-      aria: {
-        sortAscending: ": Activar para ordenar la columna de manera ascendente",
-        sortDescending:
-          ": Activar para ordenar la columna de manera descendente",
-      },
-    },
-    dom: "lBfrtip", // 'l' es para el selector de longitud
-    buttons: [
-      {
-        text: '<i class="fa-solid fa-heart-circle-plus"></i> Crear bodega',
-        action: function (e, dt, node, config) {
-          var modal = document.querySelector(".modalCreateBodega");
-          modal.style.scale = "1";
-          // Aquí puedes agregar tu lógica para crear un usuario
-        },
-      },
-    ],
+document
+  .getElementById("btnArticlesPhoto")
+  .addEventListener("change", function (event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        document.querySelector(
+          ".btnArticlesPhoto .fa-camera-retro"
+        ).style.display = "none";
+        const preview = document.getElementById("articles_photo");
+        preview.src = e.target.result;
+        preview.style.display = "flex";
+      };
+      reader.readAsDataURL(file);
+    }
   });
-});
+
 /*
-*Función para ocultar el modal de crear artículo
-*/
-function ocultarFormCreateBodega() {
-  var modal = document.querySelector('.modalCreateBodega');
-  modal.classList.remove('show');
-  modal.classList.add('hide');
-  setTimeout(function () {
-    modal.style.display = 'none';
-    modal.classList.remove('hide');
-  }, 500);
-}
-//---------------------------------------------------------------------------------
-
-
-
-
-
+ * Función para ver formulario de login y recuperar contraseña
+ */
 function verFormRecoverPass() {
   var formLogin = document.querySelector(".login");
   var formRecover = document.querySelector(".recover");
-
   setTimeout(function () {
     formRecover.classList.add("scale__on");
     formRecover.classList.remove("scale__off");
@@ -284,10 +332,9 @@ function verFormLogin() {
   formRecover.classList.add("scale__off");
 }
 
-
 /*
-*Ver y ocultar contraseña del campo contraseña y repitac  contraseña
-*/
+ *Ver y ocultar contraseña del campo contraseña y repita  contraseña
+ */
 function passVisibility() {
   const passwordField = document.getElementById("users_password");
   const eyeIcon = document.querySelector(".fa-eye");
@@ -320,10 +367,9 @@ function passVisibilityR() {
   }
 }
 
-
-
-//Eliminar usuario
-
+/*
+ *Función para eliminar usuario
+ */
 function deleteUser(userId) {
   Swal.fire({
     color: "var(--azul)",
@@ -365,83 +411,21 @@ function deleteUser(userId) {
   });
 }
 
-
-
-//Mostrar moneda en campo cantidad
+/**
+ * Función para ponerle el signo $ al campo costo unitario y redondear a dos decimales
+ * @param {*} input - es un número
+ */
 function removeNonNumeric(input) {
   // Elimina cualquier carácter que no sea un número o un punto decimal
-  input.value = input.value.replace(/[^0-9.]/g, '');
+  input.value = input.value.replace(/[^0-9.]/g, "");
 }
-
 function formatCurrency(input) {
   // Convierte el valor a un número flotante y lo fija a dos decimales
   let value = parseFloat(input.value).toFixed(2);
-
   // Si el valor no es un número, establece el valor a 0.00
   if (isNaN(value)) {
-    value = '0.00';
+    value = "0.00";
   }
-
   // Agrega el signo de dólar al valor formateado
   input.value = `$${value}`;
 }
-
-
-
-
-
-
-
-
-
-
-
-////PENDIENTE//////////////////////////////////////////////////////
-/*
-*Función para ver y ocultar formulario de creación de usuarios
-*/
-
-function ocultarFormCreateUser() {
-  document.querySelector(".modalCreateUser").style.scale = "0";
-}
-/*
-*Función para visualizar la tabla de usuarios
-*/
-$(document).ready(function () {
-  $("#tableUsers").DataTable({
-    language: {
-      processing: "Procesando...",
-      lengthMenu: "Mostrar _MENU_ usuarios",
-      zeroRecords: "No se encontraron usuarios",
-      emptyTable: "Ningún usuario disponible en esta tabla",
-      info: "Mostrando usuario del _START_ al _END_ de un total de _TOTAL_ usuarios",
-      infoEmpty: "Mostrando usuario del 0 al 0 de un total de 0 usuarios",
-      infoFiltered: "(filtrado de un total de _MAX_ usuarios)",
-      search: "Buscar:",
-      loadingRecords: "Cargando...",
-      paginate: {
-        first: "Primero",
-        last: "Último",
-        next: "Siguiente",
-        previous: "Anterior",
-      },
-      aria: {
-        sortAscending: ": Activar para ordenar la columna de manera ascendente",
-        sortDescending:
-          ": Activar para ordenar la columna de manera descendente",
-      },
-    },
-    dom: "lBfrtip", // 'l' es para el selector de longitud
-    buttons: [
-      {
-        text: '<i class="fas fa-user-plus"></i> Crear usuario',
-        action: function (e, dt, node, config) {
-          var formu = document.querySelector(".modalCreateUser");
-          formu.style.scale = "1";
-          // Aquí puedes agregar tu lógica para crear un usuario
-        },
-      },
-    ],
-  });
-});
-
