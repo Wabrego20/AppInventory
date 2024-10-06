@@ -2,8 +2,6 @@
 <?php
 include_once ("../settings/sessionStart.php");
 include_once ("../settings/conexion.php");
-$selectDepartament = "SELECT departament_id, departament_name FROM departament";
-$selectDepartament = $conn->query($selectDepartament);
 ?>
 
 <!DOCTYPE html>
@@ -33,10 +31,11 @@ $selectDepartament = $conn->query($selectDepartament);
 
                     <!--Campo para cargar foto de perfil-->
                     <div class="formImgCampo">
-                        <input type="file" id="btnEditPhotoProfile" accept="image/*" name="users_foto" style="display: none;" />
+                        <input type="file" id="btnEditPhotoProfile" accept="image/*" name="users_foto"
+                            style="display: none;" />
                         <div class="btnEditPhoto" onclick="btnEditPhotoProfile();">
                             <i class="fa-solid fa-camera-retro"></i>
-                            <img id="users_profile_picture" name="users_profile_picture" style="display: none;"/>
+                            <img id="users_profile_picture" name="users_profile_picture" style="display: none;" />
                         </div>
                     </div>
 
@@ -56,8 +55,8 @@ $selectDepartament = $conn->query($selectDepartament);
                         <label for="users_name">Nombre:</label>
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
-                            <input class="btnTxt" type="text" name="users_name" id="users_name" pattern="[a-zñA-ZÑ]{3,15}"
-                                maxlength="15" placeholder="Editar su nombre" required>
+                            <input class="btnTxt" type="text" name="users_name" id="users_name"
+                                pattern="[a-zñA-ZÑ]{3,15}" maxlength="15" placeholder="Editar su nombre" required>
                         </div>
                     </div>
 
@@ -104,7 +103,8 @@ $selectDepartament = $conn->query($selectDepartament);
                         <label for="users_birthday_date">Cumple Años:</label>
                         <div class="campo">
                             <i class="fa-solid fa-cake-candles"></i>
-                            <input type="date" class="btnTxt" ame="users_birthday_date" id="users_birthday_date" required>
+                            <input type="date" class="btnTxt" ame="users_birthday_date" id="users_birthday_date"
+                                required>
                         </div>
                     </div>
 
@@ -113,7 +113,8 @@ $selectDepartament = $conn->query($selectDepartament);
                         <label for="users_age">Edad:</label>
                         <div class="campo">
                             <i class="fa-solid fa-arrow-up-9-1"></i>
-                           <input type="text" class="btnTxt" name="users_age" id="users_age" placeholder="Editar su edad" pattern="[0-9]{1,2}" maxlength="2" required>
+                            <input type="text" class="btnTxt" name="users_age" id="users_age"
+                                placeholder="Editar su edad" pattern="[0-9]{1,2}" maxlength="2" required>
                         </div>
                     </div>
 
@@ -122,16 +123,18 @@ $selectDepartament = $conn->query($selectDepartament);
                         <label for="users_office_phone">Teléfono de Oficina:</label>
                         <div class="campo">
                             <i class="fa-solid fa-phone-volume"></i>
-                           <input type="tel" class="btnTxt" name="users_office_phone" placeholder="Editar su teléfono" id="users_office_phone" required>
+                            <input type="tel" class="btnTxt" name="users_office_phone" placeholder="Editar su teléfono"
+                                id="users_office_phone" required>
                         </div>
                     </div>
 
-                     <!--Campo de celular-->
-                     <div class="formLogCampo">
+                    <!--Campo de celular-->
+                    <div class="formLogCampo">
                         <label for="users_cell_phone">Teléfono Celular:</label>
                         <div class="campo">
                             <i class="fa-brands fa-whatsapp"></i>
-                           <input type="tel" class="btnTxt" name="users_cell_phone" placeholder="Editar su celular" id="users_cell_phone" required>
+                            <input type="tel" class="btnTxt" name="users_cell_phone" placeholder="Editar su celular"
+                                id="users_cell_phone" required>
                         </div>
                     </div>
 
@@ -140,9 +143,8 @@ $selectDepartament = $conn->query($selectDepartament);
                         <label for="users_address">Dirección:</label>
                         <div class="campo">
                             <i class="fa-solid fa-location-dot"></i>
-                            <textarea name="users_address" id="users_address" class="textArea btnTxt"
-                                maxlength="100" pattern="[a-zñA-ZÑ0-9]"
-                                placeholder="Editar dirección" required></textarea>
+                            <textarea name="users_address" id="users_address" class="textArea btnTxt" maxlength="100"
+                                pattern="[a-zñA-ZÑ0-9]" placeholder="Editar dirección" required></textarea>
                         </div>
                     </div>
 
@@ -426,6 +428,8 @@ $selectDepartament = $conn->query($selectDepartament);
                             <select name="departament_id" class="btnTxt" id="departament_id" required>
                                 <option value="">Seleccione</option>
                                 <?php
+                                $selectDepartament = "SELECT departament_id, departament_name FROM departament";
+                                $selectDepartament = $conn->query($selectDepartament);
                                 if ($selectDepartament->num_rows > 0) {
                                     while ($row = $selectDepartament->fetch_assoc()) {
                                         echo '<option value="' . $row["departament_id"] . '">' . $row["departament_name"] . '</option>';
@@ -508,12 +512,16 @@ if (isset($_POST['users_dni']) && isset($_POST['users_name']) && isset($_POST['u
                 icon: "error",
                 iconColor: "var(--rojo)",
                 title: '¡Error!',
-                text: 'Usuario no registrado, La cédula o el correo ya existen',
+                text: 'La cédula o el correo ya existen',
                 showConfirmButton: true,
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },
                 confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = window.location.href;
+                }
             });
         </script>
         <?php
@@ -531,20 +539,23 @@ if (isset($_POST['users_dni']) && isset($_POST['users_name']) && isset($_POST['u
                     iconColor: "var(--verde)",
                     title: '!Éxito!',
                     text: 'Usuario Creado',
-                    showConfirmButton: false,
+                    showConfirmButton: true,
+                    customClass: {
+                        confirmButton: 'btn-confirm'
+                    },
+                    confirmButtonText: "Aceptar",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = window.location.href;
+                    }
                 });
-                setTimeout(function () {
-                    window.location.href = 'users.php';
-                }, 1500);
             </script>
             <?php
         } else {
             echo "Error: " . $stmt->error;
         }
-
         $stmt->close();
     }
-
     $checkQuery->close();
     $conn->close();
 }

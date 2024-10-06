@@ -292,7 +292,7 @@ include_once ("../settings/conexion.php");
                     <th>Unidad de Medida</th>
                     <th>Costo Unitario</th>
                     <th>Fecha de LLegada</th>
-                    <th>Fecha de Vencimiento</th>
+                    <th>Fecha de Expiración</th>
                     <th>Foto</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
@@ -314,8 +314,8 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
                             <input class="btnTxt" type="text" name="articles_name" id="articles_name"
-                                pattern="[a-zA-ZñÑ]{3,30}" maxlength="30" placeholder="introduzca nombre del artículo"
-                                autofocus required>
+                                pattern="[a-zA-ZñÑ.-0-9]{3,30}" maxlength="30"
+                                placeholder="introduzca nombre del artículo" autofocus required>
                         </div>
                     </div>
 
@@ -325,7 +325,7 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-file-signature"></i>
                             <textarea name="articles_description" id="articles_description" class="btnTxt textArea"
-                                maxlength="100" pattern="[a-zñA-ZÑ0-9]"
+                                maxlength="100" pattern="[a-zñA-ZÑ0-9]{4,100}"
                                 placeholder="introduzca una descripción del artículo" required></textarea>
                         </div>
                     </div>
@@ -336,7 +336,7 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-regular fa-flag"></i>
                             <input class="btnTxt" type="text" name="articles_brand" id="articles_brand"
-                                pattern="[a-zA-ZñÑ0-9]{3,30}" maxlength="30"
+                                pattern="[a-zA-ZñÑ0-9 ]{3,30}" maxlength="30"
                                 placeholder="introduzca la marca del producto">
                         </div>
                     </div>
@@ -396,9 +396,10 @@ include_once ("../settings/conexion.php");
                         <label for="articles_unit_cost">Costo Unitario:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-sack-dollar"></i>
-                            <input class="btnTxt" type="text" name="articles_unit_cost" id="articles_unit_cost"
-                                oninput="removeNonNumeric(this)" onblur="formatCurrency(this)" max="1000000" placeholder="introduzca precio del artículo" required>
+                            <input class="btnTxt" type="number" name="articles_unit_cost" id="articles_unit_cost"
+                                step="0.01" max="1000000" placeholder="introduzca precio del artículo" required>
                         </div>
+                            <!--oninput="removeNonNumeric(this)" onblur="formatCurrency(this)"-->
                     </div>
 
                     <!--campo de fecha de llegada del artículos-->
@@ -406,7 +407,8 @@ include_once ("../settings/conexion.php");
                         <label for="articles_arrival_date">Fecha de Llegada:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-calendar-check"></i>
-                            <input type="date" name="articles_arrival_date" id="articles_arrival_date" class="btnTxt" max="<?php echo date('Y-m-d');?>" required>
+                            <input type="date" name="articles_arrival_date" id="articles_arrival_date" class="btnTxt"
+                                max="<?php echo date('Y-m-d'); ?>" required>
                         </div>
                     </div>
 
@@ -415,19 +417,20 @@ include_once ("../settings/conexion.php");
                         <label for="articles_expiration_date">Fecha de Expiración:</label>
                         <div class="campo">
                             <i class="fa-solid fa-calendar-xmark"></i>
-                            <input type="date" name="articles_expiration_date" min="<?php echo date('Y-m-d');?>" id="articles_expiration_date"
-                                class="btnTxt">
+                            <input type="date" name="articles_expiration_date" min="<?php echo date('Y-m-d'); ?>"
+                                id="articles_expiration_date" class="btnTxt">
                         </div>
                     </div>
 
                     <!--campo para agregar una foto del producto-->
                     <div class="formLogCampo">
-                        <label for="articles_photo">Cargar foto del artículo:<i class="fa-solid fa-asterisk"></i></label>
+                        <label for="articles_photo">Cargar foto del artículo:<i
+                                class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <input type="file" id="btnArticlesPhoto" accept="image/*" style="display: none;" required />
                             <div class="btnArticlesPhoto" onclick="btnArticlesPhoto();">
                                 <i class="fa-solid fa-camera-retro"></i>
-                                <img id="articles_photo" name="articles_photo" style="display: none;"/>
+                                <img id="articles_photo" name="articles_photo" style="display: none;" />
                             </div>
                         </div>
                     </div>
@@ -435,8 +438,7 @@ include_once ("../settings/conexion.php");
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
                     <div class="btnSubmitPanel">
                         <button type="submit" class="btnSubmit btnCreateUser">
-                            <i class="fa-solid fa-heart-circle-plus"></i>
-                            Crear Artículo
+                            <i class="fa-solid fa-heart-circle-plus"></i> Crear Artículo
                         </button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormCreateArticle()">Cancelar</div>
                     </div>
@@ -461,3 +463,100 @@ include_once ("../settings/conexion.php");
 </body>
 
 </html>
+
+<?php
+/**
+ * crear artículo
+ */
+if (isset($_POST['articles_name']) && isset($_POST['articles_description']) && isset($_POST['articles_brand']) && isset($_POST['articles_unit_cost']) && isset($_POST['articles_arrival_date']) && isset($_POST['articles_photo']) && isset($_POST['categories_id']) && isset($_POST['units_id'])) {
+    // Todos los campos están presentes
+    $articles_name = $_POST['articles_name'];
+    $articles_description = $_POST['articles_description'];
+    $articles_brand = $_POST['articles_brand'];
+    $articles_unit_cost = $_POST['articles_unit_cost'];
+    $articles_arrival_date = $_POST['articles_arrival_date'];
+    $articles_expiration_date = $_POST['articles_expiration_date'];
+    $articles_photo = $_POST['articles_photo'];
+    $categories_id = $_POS['categories_id'];
+    $units_id = $_POST['units_id'];
+
+    // Verificar si el artículo ya existe
+    $check_stmt = $conn->prepare("SELECT * FROM `articles` WHERE `articles_name` = ? AND `articles_brand` = ?");
+    $check_stmt->bind_param("ss", $articles_name, $articles_brand);
+    $check_stmt->execute();
+    $result = $check_stmt->get_result();
+    if ($result->num_rows > 0) {
+        ?>
+        <script>
+            Swal.fire({
+                color: "var(--rojo)",
+                icon: "error",
+                iconColor: "var(--rojo)",
+                title: '¡Error!',
+                text: 'Artículo existente de la misma marca',
+                showConfirmButton: true,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = window.location.href;
+                }
+            });
+        </script>
+        <?php
+    } else {
+        $stmt = $conn->prepare("INSERT INTO `articles`(`articles_name`, `articles_description`, `articles_brand`, `articles_unit_cost`, `articles_arrival_date`, `articles_expiration_date`, `articles_photo`, `categories_id`, `units_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssdssbii", $articles_name, $articles_description, $articles_brand, $articles_unit_cost, $articles_arrival_date, $articles_expiration_date, $articles_photo, $categories_id, $units_id);
+
+        // Ejecutar la sentencia
+        if ($stmt->execute()) {
+            ?>
+            <script>
+                Swal.fire({
+                    color: "var(--verde)",
+                    icon: "success",
+                    iconColor: "var(--verde)",
+                    title: '!Éxito!',
+                    text: 'Artículo Creado',
+                    showConfirmButton: true,
+                    customClass: {
+                        confirmButton: 'btn-confirm'
+                    },
+                    confirmButtonText: "Aceptar",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = window.location.href;
+                    }
+                });
+            </script>
+            <?php
+        } else {
+            ?>
+            <script>
+                Swal.fire({
+                    color: "var(--rojo)",
+                    icon: "error",
+                    iconColor: "var(--rojo)",
+                    title: '¡Error!',
+                    text: 'No se ejecutó la sentencia',
+                    showConfirmButton: true,
+                    customClass: {
+                        confirmButton: 'btn-confirm'
+                    },
+                    confirmButtonText: "Aceptar",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = window.location.href;
+                    }
+                });
+            </script>
+            <?php
+        }
+        $stmt->close();
+    }
+    $check_stmt->close();
+    $conn->close();
+}
+?>

@@ -190,7 +190,6 @@ function ocultarFormCreateArticle() {
     modal.classList.remove("hide");
   }, 500);
 }
-
 /*
  *Función para visualizar la tabla de los articulos
  */
@@ -242,8 +241,6 @@ function ocultarFormAddArticle() {
     modal.classList.remove("hide");
   }, 500);
 }
-
-
 /*
  *Función para visualizar la tabla de bodegas
  */
@@ -513,25 +510,41 @@ function deleteUser(userId) {
   });
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * Función para ponerle el signo $ al campo costo unitario y redondear a dos decimales
  * @param {*} input - es un número
  */
-function removeNonNumeric(input) {
+/* function removeNonNumeric(input) {
   // Elimina cualquier carácter que no sea un número o un punto decimal
   input.value = input.value.replace(/[^0-9.]/g, "");
 }
 function formatCurrency(input) {
-  // Convierte el valor a un número flotante y lo fija a dos decimales
   let value = parseFloat(input.value).toFixed(2);
-  // Si el valor no es un número, establece el valor a 0.00
   if (isNaN(value)) {
     value = "0.00";
   }
-  // Agrega el signo de dólar al valor formateado
   input.value = `$${value}`;
 }
-
+ 
 
 
 
