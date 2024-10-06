@@ -29,10 +29,11 @@ include_once ("../settings/conexion.php");
 
                     <!--Campo para cargar foto de perfil-->
                     <div class="formImgCampo">
-                        <input type="file" id="btnEditPhotoProfile" accept="image/*" name="users_foto" style="display: none;" />
+                        <input type="file" id="btnEditPhotoProfile" accept="image/*" name="users_foto"
+                            style="display: none;" />
                         <div class="btnEditPhoto" onclick="btnEditPhotoProfile();">
                             <i class="fa-solid fa-camera-retro"></i>
-                            <img id="users_profile_picture" name="users_profile_picture" style="display: none;"/>
+                            <img id="users_profile_picture" name="users_profile_picture" style="display: none;" />
                         </div>
                     </div>
 
@@ -52,8 +53,8 @@ include_once ("../settings/conexion.php");
                         <label for="users_name">Nombre:</label>
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
-                            <input class="btnTxt" type="text" name="users_name" id="users_name" pattern="[a-zñA-ZÑ]{3,15}"
-                                maxlength="15" placeholder="Editar su nombre" required>
+                            <input class="btnTxt" type="text" name="users_name" id="users_name"
+                                pattern="[a-zñA-ZÑ]{3,15}" maxlength="15" placeholder="Editar su nombre" required>
                         </div>
                     </div>
 
@@ -100,7 +101,8 @@ include_once ("../settings/conexion.php");
                         <label for="users_birthday_date">Cumple Años:</label>
                         <div class="campo">
                             <i class="fa-solid fa-cake-candles"></i>
-                            <input type="date" class="btnTxt" ame="users_birthday_date" id="users_birthday_date" required>
+                            <input type="date" class="btnTxt" ame="users_birthday_date" id="users_birthday_date"
+                                required>
                         </div>
                     </div>
 
@@ -109,7 +111,8 @@ include_once ("../settings/conexion.php");
                         <label for="users_age">Edad:</label>
                         <div class="campo">
                             <i class="fa-solid fa-arrow-up-9-1"></i>
-                           <input type="text" class="btnTxt" name="users_age" id="users_age" placeholder="Editar su edad" pattern="[0-9]{1,2}" maxlength="2" required>
+                            <input type="text" class="btnTxt" name="users_age" id="users_age"
+                                placeholder="Editar su edad" pattern="[0-9]{1,2}" maxlength="2" required>
                         </div>
                     </div>
 
@@ -118,16 +121,18 @@ include_once ("../settings/conexion.php");
                         <label for="users_office_phone">Teléfono de Oficina:</label>
                         <div class="campo">
                             <i class="fa-solid fa-phone-volume"></i>
-                           <input type="tel" class="btnTxt" name="users_office_phone" placeholder="Editar su teléfono" id="users_office_phone" required>
+                            <input type="tel" class="btnTxt" name="users_office_phone" placeholder="Editar su teléfono"
+                                id="users_office_phone" required>
                         </div>
                     </div>
 
-                     <!--Campo de celular-->
-                     <div class="formLogCampo">
+                    <!--Campo de celular-->
+                    <div class="formLogCampo">
                         <label for="users_cell_phone">Teléfono Celular:</label>
                         <div class="campo">
                             <i class="fa-brands fa-whatsapp"></i>
-                           <input type="tel" class="btnTxt" name="users_cell_phone" placeholder="Editar su celular" id="users_cell_phone" required>
+                            <input type="tel" class="btnTxt" name="users_cell_phone" placeholder="Editar su celular"
+                                id="users_cell_phone" required>
                         </div>
                     </div>
 
@@ -136,9 +141,8 @@ include_once ("../settings/conexion.php");
                         <label for="users_address">Dirección:</label>
                         <div class="campo">
                             <i class="fa-solid fa-location-dot"></i>
-                            <textarea name="users_address" id="users_address" class="textArea btnTxt"
-                                maxlength="100" pattern="[a-zñA-ZÑ0-9]"
-                                placeholder="Editar dirección" required></textarea>
+                            <textarea name="users_address" id="users_address" class="textArea btnTxt" maxlength="100"
+                                pattern="[a-zñA-ZÑ0-9]" placeholder="Editar dirección" required></textarea>
                         </div>
                     </div>
 
@@ -227,14 +231,14 @@ include_once ("../settings/conexion.php");
                         <h5>Bodegas</h5>
                     </a>
                 </li>
-                
+
                 <li>
                     <a href="5_request.php">
                         <i class="fa-solid fa-list-check"></i>
                         <h5>Solicitudes</h5>
                     </a>
                 </li>
-                
+
                 <li>
                     <a href="notices.html">
                         <i class="fa-solid fa-bell"></i>
@@ -328,10 +332,10 @@ include_once ("../settings/conexion.php");
 
                     <!--campo de nombre de artículo-->
                     <div class="formLogCampo">
-                        <label for="articles_mark">Marca:</label>
+                        <label for="articles_brand">Marca:</label>
                         <div class="campo">
                             <i class="fa-regular fa-flag"></i>
-                            <input class="btnTxt" type="text" name="articles_mark" id="articles_mark"
+                            <input class="btnTxt" type="text" name="articles_brand" id="articles_brand"
                                 pattern="[a-zA-ZñÑ0-9]{3,30}" maxlength="30"
                                 placeholder="introduzca la marca del producto" required autofocus>
                         </div>
@@ -339,49 +343,50 @@ include_once ("../settings/conexion.php");
 
                     <!--campo de categoría-->
                     <div class="formLogCampo">
-                        <label for="articles_category">Categoría:</label>
+                        <label for="categories_name">Categoría:</label>
                         <div class="campo">
                             <i class="fa-solid fa-layer-group"></i>
-                            <select name="articles_category" class="btnTxt" id="articles_category" required>
-                                <option value>Seleccione</option>
+                            <select name="categories_name" class="btnTxt" id="categories_name" required>
+                                <option value="">Seleccione</option>
                                 <?php
-                                    if ($selectCategory->num_rows > 0) {
-                                    while ($row =
-                                    $selectCategory->fetch_assoc()) {
-                                    echo '<option
-                                        value="' . $row["categories_id"] .
-                                        '">' . $row["categories_name"] . '</option>';
+                                $selectCategory = $conn->query("SELECT categories_id, categories_name FROM categories");
+                                if ($selectCategory->num_rows > 0) {
+                                    while ($row = $selectCategory->fetch_assoc()) {
+                                        echo '<option value="' . $row["categories_id"] . '">' . $row["categories_name"] . '</option>';
                                     }
-                                    } else {
-                                    echo '<option value>No hay categorías
-                                        disponibles</option>';
-                                    }
-                                    ?>
+                                } else {
+                                    echo '<option value="">No hay categorías disponibles</option>';
+                                }
+                                ?>
+                            </select>
+
                             </select>
                         </div>
                     </div>
 
                     <!--campo de unidada de medida-->
                     <div class="formLogCampo">
-                        <label for="articles_unit_measurement">Unidad de Medida:</label>
+                        <label for="units_name">Unidad de Medida:</label>
                         <div class="campo">
                             <i class="fa-solid fa-ruler-combined"></i>
-                            <select name="articles_unit_measurement" class="btnTxt" id="articles_unit_measurement"
-                                required>
+                            <select name="units_name" class="btnTxt" id="units_name" required>
                                 <option value>Seleccione</option>
                                 <?php
-                                    if ($selectUnit_measurement->num_rows > 0) {
-                                    while ($row =
-                                    $selectUnit_measurement->fetch_assoc()) {
-                                    echo '<option
-                                        value="' . $row["unit_measurement_id"] .
-                                        '">' . $row["unit_measurement_name"] . '</option>';
+                                $selectUnits = $conn->query("SELECT units_id, units_name FROM units_of_measure");
+                                if ($selectUnits->num_rows > 0) {
+                                    while (
+                                        $row =
+                                        $selectUnits->fetch_assoc()
+                                    ) {
+                                        echo '<option
+                                        value="' . $row["units_id"] .
+                                            '">' . $row["units_name"] . '</option>';
                                     }
-                                    } else {
+                                } else {
                                     echo '<option value>No hay unidades
                                         disponibles</option>';
-                                    }
-                                    ?>
+                                }
+                                ?>
                             </select>
                         </div>
                     </div>
@@ -391,8 +396,9 @@ include_once ("../settings/conexion.php");
                         <label for="articles_unit_cost">Costo Unitario:</label>
                         <div class="campo">
                             <i class="fa-solid fa-sack-dollar"></i>
-                            <input class="btnTxt" type="text" name="articles_unit_cost" id="articles_unit_cost" oninput="removeNonNumeric(this)" onblur="formatCurrency(this)"
-                                pattern="[0-9]{1,7}" max="1000000" placeholder="introduzca la cantidad $0.00" required>
+                            <input class="btnTxt" type="text" name="articles_unit_cost" id="articles_unit_cost"
+                                oninput="removeNonNumeric(this)" onblur="formatCurrency(this)" pattern="[0-9]{1,7}"
+                                max="1000000" placeholder="introduzca la cantidad $0.00" required>
                         </div>
                     </div>
 
@@ -401,16 +407,17 @@ include_once ("../settings/conexion.php");
                         <label for="articles_arrival_date">Fecha de Llegada:</label>
                         <div class="campo">
                             <i class="fa-solid fa-calendar-check"></i>
-                           <input type="datetime-local" name="articles_arrival_date" id="articles_arrival_date" class="btnTxt">
+                            <input type="date" name="articles_arrival_date" id="articles_arrival_date" class="btnTxt">
                         </div>
                     </div>
 
                     <!--campo de fecha de vencimiento del artículos-->
                     <div class="formLogCampo">
-                        <label for="articles_due_date">Fecha de Vencimiento:</label>
+                        <label for="articles_expiration_date">Fecha de Expiración:</label>
                         <div class="campo">
                             <i class="fa-solid fa-calendar-xmark"></i>
-                           <input type="datetime-local" name="articles_due_date" id="articles_due_date" class="btnTxt">
+                            <input type="date" name="articles_expiration_date" id="articles_expiration_date"
+                                class="btnTxt">
                         </div>
                     </div>
 
@@ -418,7 +425,7 @@ include_once ("../settings/conexion.php");
                     <div class="formLogCampo">
                         <label for="articles_photo">Foto:</label>
                         <div class="campo">
-                            <input type="file" id="btnArticlesPhoto" accept="image/*" style="display: none;" required/>
+                            <input type="file" id="btnArticlesPhoto" accept="image/*" style="display: none;" required />
                             <div class="btnArticlesPhoto" onclick="btnArticlesPhoto();">
                                 <i class="fa-solid fa-camera-retro"></i>
                                 <img id="articles_photo" name="articles_photo" style="display: none;" />
