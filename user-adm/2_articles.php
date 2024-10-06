@@ -310,18 +310,18 @@ include_once ("../settings/conexion.php");
 
                     <!--campo de nombre de artículo-->
                     <div class="formLogCampo">
-                        <label for="articles_name">Nombre:</label>
+                        <label for="articles_name">Nombre:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
                             <input class="btnTxt" type="text" name="articles_name" id="articles_name"
-                                pattern="[a-zA-ZñÑ]{3,30}" maxlength="30" placeholder="introduzca nombre del producto"
-                                required>
+                                pattern="[a-zA-ZñÑ]{3,30}" maxlength="30" placeholder="introduzca nombre del artículo"
+                                autofocus required>
                         </div>
                     </div>
 
                     <!--campo de descripción del producto-->
                     <div class="formLogCampo">
-                        <label for="articles_description">Descripción:</label>
+                        <label for="articles_description">Descripción:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-file-signature"></i>
                             <textarea name="articles_description" id="articles_description" class="btnTxt textArea"
@@ -337,13 +337,13 @@ include_once ("../settings/conexion.php");
                             <i class="fa-regular fa-flag"></i>
                             <input class="btnTxt" type="text" name="articles_brand" id="articles_brand"
                                 pattern="[a-zA-ZñÑ0-9]{3,30}" maxlength="30"
-                                placeholder="introduzca la marca del producto" required autofocus>
+                                placeholder="introduzca la marca del producto">
                         </div>
                     </div>
 
                     <!--campo de categoría-->
                     <div class="formLogCampo">
-                        <label for="categories_name">Categoría:</label>
+                        <label for="categories_name">Categoría:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-layer-group"></i>
                             <select name="categories_name" class="btnTxt" id="categories_name" required>
@@ -366,7 +366,7 @@ include_once ("../settings/conexion.php");
 
                     <!--campo de unidada de medida-->
                     <div class="formLogCampo">
-                        <label for="units_name">Unidad de Medida:</label>
+                        <label for="units_name">Unidad de Medida:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-ruler-combined"></i>
                             <select name="units_name" class="btnTxt" id="units_name" required>
@@ -393,21 +393,20 @@ include_once ("../settings/conexion.php");
 
                     <!--campo de costo unitario del artículos-->
                     <div class="formLogCampo">
-                        <label for="articles_unit_cost">Costo Unitario:</label>
+                        <label for="articles_unit_cost">Costo Unitario:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-sack-dollar"></i>
                             <input class="btnTxt" type="text" name="articles_unit_cost" id="articles_unit_cost"
-                                oninput="removeNonNumeric(this)" onblur="formatCurrency(this)" pattern="[0-9]{1,7}"
-                                max="1000000" placeholder="introduzca la cantidad $0.00" required>
+                                oninput="removeNonNumeric(this)" onblur="formatCurrency(this)" max="1000000" placeholder="introduzca precio del artículo" required>
                         </div>
                     </div>
 
                     <!--campo de fecha de llegada del artículos-->
                     <div class="formLogCampo">
-                        <label for="articles_arrival_date">Fecha de Llegada:</label>
+                        <label for="articles_arrival_date">Fecha de Llegada:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-calendar-check"></i>
-                            <input type="date" name="articles_arrival_date" id="articles_arrival_date" class="btnTxt">
+                            <input type="date" name="articles_arrival_date" id="articles_arrival_date" class="btnTxt" max="<?php echo date('Y-m-d');?>" required>
                         </div>
                     </div>
 
@@ -416,19 +415,19 @@ include_once ("../settings/conexion.php");
                         <label for="articles_expiration_date">Fecha de Expiración:</label>
                         <div class="campo">
                             <i class="fa-solid fa-calendar-xmark"></i>
-                            <input type="date" name="articles_expiration_date" id="articles_expiration_date"
+                            <input type="date" name="articles_expiration_date" min="<?php echo date('Y-m-d');?>" id="articles_expiration_date"
                                 class="btnTxt">
                         </div>
                     </div>
 
                     <!--campo para agregar una foto del producto-->
                     <div class="formLogCampo">
-                        <label for="articles_photo">Foto:</label>
+                        <label for="articles_photo">Cargar foto del artículo:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <input type="file" id="btnArticlesPhoto" accept="image/*" style="display: none;" required />
                             <div class="btnArticlesPhoto" onclick="btnArticlesPhoto();">
                                 <i class="fa-solid fa-camera-retro"></i>
-                                <img id="articles_photo" name="articles_photo" style="display: none;" />
+                                <img id="articles_photo" name="articles_photo" style="display: none;"/>
                             </div>
                         </div>
                     </div>

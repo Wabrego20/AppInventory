@@ -531,3 +531,21 @@ function formatCurrency(input) {
   // Agrega el signo de dólar al valor formateado
   input.value = `$${value}`;
 }
+
+
+
+
+
+
+
+
+
+
+/**
+ * Deshabilitar dias posteriores a la actual para
+ */
+/* document.addEventListener('DOMContentLoaded', (event) => {
+  const dateInput = document.getElementById('articles_arrival_date');
+  const today = new Date().toISOString().split('T')[0];
+  dateInput.setAttribute('max', today);
+}); */

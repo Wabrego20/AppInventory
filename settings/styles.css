@@ -166,3 +166,11 @@ main {
   margin: 0 2px 0 0;
   padding: 0;
 }
+
+
+
+.fa-asterisk{
+  color: var(--rojo);
+  margin-left: 5px;
+  font-size: 12px;
+}
