@@ -232,9 +232,9 @@ include_once ("../settings/conexion.php");
                     </a>
                 </li>
                 <li>
-                    <a href="orders.html">
+                    <a href="5_request.php">
                         <i class="fa-solid fa-list-check"></i>
-                        <h5>Ordenes</h5>
+                        <h5>Solicitudes</h5>
                     </a>
                 </li>
                 <li>
@@ -285,7 +285,7 @@ include_once ("../settings/conexion.php");
     <!--Cuerpo Principal-->
     <main>
         <h2>Tabla de Articulos de Consumo Interno</h2>
-        <table id="tableArticles">
+        <table id="tableInventory">
             <thead>
                 <tr>
                     <th>N°</th>
@@ -306,16 +306,16 @@ include_once ("../settings/conexion.php");
         </table>
 
         <!--Formulario para Crear un articulo-->
-        <div class="modalCreateArticle">
-            <div class="panelCreateArticle">
-                <form method="post" class="formCreateArticle">
-                    <h2>Crear Artículo de Consumo Interno</h2>
+        <div class="modalAddArticle">
+            <div class="panelAddArticle">
+                <form method="post" class="formAddArticle">
+                    <h2>Agregar Artículo de Consumo Interno</h2>
 
                     <!--campo de nombre de artículo-->
                     <div class="formLogCampo">
                         <label for="articles_name">Nombre:</label>
                         <div class="campo">
-                            <i class="fa-solid fa-layer-group"></i>
+                            <i class="fa-solid fa-signature"></i>
                             <select name="articles_name" class="btnTxt" id="articles_name" required>
                                 <option value="">Seleccione</option>
                                 <?php
@@ -345,8 +345,7 @@ include_once ("../settings/conexion.php");
                         <label for="warehouse_name">Bodega:</label>
                         <div class="campo">
                             <i class="fa-solid fa-ruler-combined"></i>
-                            <select name="warehouse_name" class="btnTxt" id="warehouse_name"
-                                required>
+                            <select name="warehouse_name" class="btnTxt" id="warehouse_name" required>
                                 <option value="">Seleccione</option>
                                 <?php
                                 if ($selectWarehouse->num_rows > 0) {
@@ -396,7 +395,7 @@ include_once ("../settings/conexion.php");
                             <i class="fa-solid fa-heart-circle-plus"></i>
                             Crear Artículo
                         </button>
-                        <div class="btnSubmit btnCancel" onclick="ocultarFormCreateArticle()">Cancelar</div>
+                        <div class="btnSubmit btnCancel" onclick="ocultarFormAddArticle()">Cancelar</div>
                     </div>
 
                 </form>

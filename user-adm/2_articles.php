@@ -227,12 +227,14 @@ include_once ("../settings/conexion.php");
                         <h5>Bodegas</h5>
                     </a>
                 </li>
+                
                 <li>
-                    <a href="orders.html">
+                    <a href="5_request.php">
                         <i class="fa-solid fa-list-check"></i>
-                        <h5>Ordenes</h5>
+                        <h5>Solicitudes</h5>
                     </a>
                 </li>
+                
                 <li>
                     <a href="notices.html">
                         <i class="fa-solid fa-bell"></i>

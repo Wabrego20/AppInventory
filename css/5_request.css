@@ -1,49 +1,25 @@
 main {
-  display: flex;
-  flex-direction: column;
   width: 95%;
   align-items: center;
-  justify-content: start;
+  flex-wrap: wrap;
+  margin: 5px auto;
+  flex-direction: column;
   h2{
     color: var(--azul);
-    margin: 10px auto;
-    max-width: 100%;
   }
 }
-.ruta2 {
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  width: 100%;
-  border: 1px solid var(--gris);
-  flex-wrap: wrap;
-  h4 {
-    color: var(--azul);
-    margin: 5px;
-  }
-  a {
-    margin-left: 10px;
-    text-decoration: none;
-    color: var(--azul);
-    transition: 0.2s ease-in-out;
-    :hover {
-      text-decoration: underline;
-      color: var(--negro);
-    }
-  }
-}
-
-/*Inventario de Consumo Interno*/
 .dataTables_wrapper {
   background-color: var(--azul);
-  max-width: 95%;
+  max-width: 100%;
   margin: 5px auto;
   overflow: auto;
   border-radius: 5px;
   font-weight: bold;
+
   .dt-buttons {
     float: inline-end;
     margin: 5px;
+
     .dt-button {
       color: var(--blanco);
       background-color: var(--verde);
@@ -52,6 +28,7 @@ main {
       height: 40px;
       padding: 0 10px;
     }
+
     .dt-button:hover {
       color: var(--verde);
       background-color: var(--blanco);
@@ -63,6 +40,7 @@ main {
   .dataTables_length {
     float: left;
     margin: 5px;
+
     select {
       width: 40px;
       height: 40px;
@@ -70,13 +48,16 @@ main {
       border-radius: 5px;
       cursor: pointer;
     }
+
     label {
       color: var(--blanco);
     }
   }
+
   .dataTables_filter {
     margin: 5px;
   }
+
   input {
     height: 40px;
     border-radius: 5px;
@@ -84,17 +65,21 @@ main {
     font-size: 16px;
     color: var(--azul);
   }
+
   label {
     color: var(--blanco);
   }
+
   .dataTable thead th {
     color: var(--blanco);
     text-align: center;
   }
+
   .dataTable tbody tr {
     color: var(--azul);
     text-align: center;
   }
+
   .dataTable tbody .even {
     background-color: var(--even);
   }
@@ -102,17 +87,19 @@ main {
   .dataTables_empty {
     color: var(--rojo);
   }
+
   .dataTables_paginate span a.current {
     border-radius: 5px;
   }
 }
+
 .dataTables_info {
   color: var(--blanco) !important;
   margin: 5px;
 }
 
 /*Formulario para crear usuarios*/
-.modalAddArticle {
+.modalProcessRequest {
   background-color: var(--fondo);
   width: 100%;
   height: 100vh;
@@ -124,17 +111,16 @@ main {
   justify-content: center;
   align-items: center;
 }
-.modalAddArticle.show {
+.modalProcessRequest.show {
   opacity: 1;
 }
-.panelAddArticle {
-  width: 800px;
+.panelProcessRequest {
+  width: 400px;
   max-height: 99%;
   max-width: 99%;
   overflow: auto;
 }
-
-.formAddArticle {
+.formProcessRequest {
   width: 100%;
   background-color: var(--blanco);
   display: flex;
@@ -171,7 +157,7 @@ main {
       justify-content: start;
       width: 100%;
       position: relative;
-      .fa-file-signature {
+      .fa-location-dot {
         height: 60px;
         line-height: 60px;
         width: 60px;

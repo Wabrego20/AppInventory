@@ -234,9 +234,9 @@ include_once ("../settings/conexion.php");
                     </a>
                 </li>
                 <li>
-                    <a href="orders.html">
+                    <a href="5_request.php">
                         <i class="fa-solid fa-list-check"></i>
-                        <h5>Ordenes</h5>
+                        <h5>Solicitudes</h5>
                     </a>
                 </li>
                 <li>
@@ -340,9 +340,7 @@ include_once ("../settings/conexion.php");
                         </div>
                     </div>
 
-
-
-                    <!--Botón de crear usuario, botón de cancelar creación de usuario-->
+                    <!--Botón de crear bodega, botón de cancelar creación de bodega-->
                     <div class="btnSubmitPanel">
                         <button type="submit" class="btnSubmit btnCreateUser">
                             <i class="fa-solid fa-heart-circle-plus"></i> Crear Bodega

@@ -1,6 +1,7 @@
 <!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
-include_once("../settings/sessionStart.php");
+include_once ("../settings/sessionStart.php");
+include_once ("../settings/conexion.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -8,12 +9,13 @@ include_once("../settings/sessionStart.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="img/icon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../img/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="../settings/header.css">
     <link rel="stylesheet" href="../settings/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="../settings/styles.css">
-    <link rel="stylesheet" href="../css/1_dashboard.css">
-    <title>Inicio | Sist-Inventario</title>
+    <link rel="stylesheet" href="../css/5_request.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <title>Solicitudes | Sist-Inventario</title>
 </head>
 
 <body>
@@ -27,11 +29,12 @@ include_once("../settings/sessionStart.php");
 
                     <!--Campo para cargar foto de perfil-->
                     <div class="formImgCampo">
-                        <input type="file" id="fileInput" accept="image/*" name="users_foto" style="display: none;" />
-                        <button id="uploadButton" class="btnEditPhoto">
+                        <input type="file" id="btnEditPhotoProfile" accept="image/*" name="users_foto"
+                            style="display: none;" />
+                        <div class="btnEditPhoto" onclick="btnEditPhotoProfile();">
                             <i class="fa-solid fa-camera-retro"></i>
-                            <img id="foto" style="display: none;"/>
-                        </button>
+                            <img id="users_profile_picture" name="users_profile_picture" style="display: none;" />
+                        </div>
                     </div>
 
                     <!--Campo de cédula-->
@@ -50,8 +53,8 @@ include_once("../settings/sessionStart.php");
                         <label for="users_name">Nombre:</label>
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
-                            <input class="btnTxt" type="text" name="users_name" id="users_name" pattern="[a-zñA-ZÑ]{3,15}"
-                                maxlength="15" placeholder="Editar su nombre" required>
+                            <input class="btnTxt" type="text" name="users_name" id="users_name"
+                                pattern="[a-zñA-ZÑ]{3,15}" maxlength="15" placeholder="Editar su nombre" required>
                         </div>
                     </div>
 
@@ -98,7 +101,8 @@ include_once("../settings/sessionStart.php");
                         <label for="users_birthday_date">Cumple Años:</label>
                         <div class="campo">
                             <i class="fa-solid fa-cake-candles"></i>
-                            <input type="date" class="btnTxt" ame="users_birthday_date" id="users_birthday_date" required>
+                            <input type="date" class="btnTxt" ame="users_birthday_date" id="users_birthday_date"
+                                required>
                         </div>
                     </div>
 
@@ -107,7 +111,8 @@ include_once("../settings/sessionStart.php");
                         <label for="users_age">Edad:</label>
                         <div class="campo">
                             <i class="fa-solid fa-arrow-up-9-1"></i>
-                           <input type="text" class="btnTxt" name="users_age" id="users_age" placeholder="Editar su edad" pattern="[0-9]{1,2}" maxlength="2" required>
+                            <input type="text" class="btnTxt" name="users_age" id="users_age"
+                                placeholder="Editar su edad" pattern="[0-9]{1,2}" maxlength="2" required>
                         </div>
                     </div>
 
@@ -116,16 +121,18 @@ include_once("../settings/sessionStart.php");
                         <label for="users_office_phone">Teléfono de Oficina:</label>
                         <div class="campo">
                             <i class="fa-solid fa-phone-volume"></i>
-                           <input type="tel" class="btnTxt" name="users_office_phone" placeholder="Editar su teléfono" id="users_office_phone" required>
+                            <input type="tel" class="btnTxt" name="users_office_phone" placeholder="Editar su teléfono"
+                                id="users_office_phone" required>
                         </div>
                     </div>
 
-                     <!--Campo de celular-->
-                     <div class="formLogCampo">
+                    <!--Campo de celular-->
+                    <div class="formLogCampo">
                         <label for="users_cell_phone">Teléfono Celular:</label>
                         <div class="campo">
                             <i class="fa-brands fa-whatsapp"></i>
-                           <input type="tel" class="btnTxt" name="users_cell_phone" placeholder="Editar su celular" id="users_cell_phone" required>
+                            <input type="tel" class="btnTxt" name="users_cell_phone" placeholder="Editar su celular"
+                                id="users_cell_phone" required>
                         </div>
                     </div>
 
@@ -134,9 +141,8 @@ include_once("../settings/sessionStart.php");
                         <label for="users_address">Dirección:</label>
                         <div class="campo">
                             <i class="fa-solid fa-location-dot"></i>
-                            <textarea name="users_address" id="users_address" class="textArea btnTxt"
-                                maxlength="100" pattern="[a-zñA-ZÑ0-9]"
-                                placeholder="Editar dirección" required></textarea>
+                            <textarea name="users_address" id="users_address" class="textArea btnTxt" maxlength="100"
+                                pattern="[a-zñA-ZÑ0-9]" placeholder="Editar dirección" required></textarea>
                         </div>
                     </div>
 
@@ -179,7 +185,7 @@ include_once("../settings/sessionStart.php");
 
                     <!--Botón de editar, guardar y Cancelar-->
                     <div class="btnSubmitPanel">
-                        <div class="btnSubmit btnEditUser">
+                        <div class="btnSubmit btnEditUser" onclick="btnEditUser();">
                             <i class="fa-solid fa-user-pen"></i> Editar
                         </div>
                         <button type="submit" class="btnSubmit btnSaveUser">
@@ -201,19 +207,21 @@ include_once("../settings/sessionStart.php");
                 <img src="../img/logoApp.png" alt="logoAPP" class="logoApp">
             </span>
             <ul>
-                <li class="active">
-                    <a href="#">
+                <li>
+                    <a href="1_dashboard.php">
                         <i class="fa-solid fa-house"></i>
                         <h5>Inicio</h5>
                     </a>
                 </li>
+
                 <li>
                     <a href="2_articles.php">
-                        <i class="fa-solid fa-house"></i>
+                        <i class="fa-solid fa-box"></i>
                         <h5>Artículos</h5>
                     </a>
                 </li>
                 <li>
+
                     <a href="3_inventory.php">
                         <i class="fa-solid fa-boxes-stacked"></i>
                         <h5>Inventarios</h5>
@@ -225,8 +233,8 @@ include_once("../settings/sessionStart.php");
                         <h5>Bodegas</h5>
                     </a>
                 </li>
-                <li>
-                    <a href="5_request.php">
+                <li class="active">
+                    <a href="#">
                         <i class="fa-solid fa-list-check"></i>
                         <h5>Solicitudes</h5>
                     </a>
@@ -250,9 +258,7 @@ include_once("../settings/sessionStart.php");
         <div class="formUserLogOut">
             <button class="btnUser" onclick="verBtnLogout();">
                 <i class="fa-solid fa-user-check"></i>
-                <h5>
-                    <?php echo $_SESSION['users_user']; ?>
-                </h5>
+                <h5><?php echo $_SESSION['users_user']; ?></h5>
                 <i class="fa-solid fa-angle-down"></i>
             </button>
             <button class="btnLogOut" id="logout" onclick="cerrarSesion();">
@@ -269,53 +275,78 @@ include_once("../settings/sessionStart.php");
 
     <!--Ruta que muestra donde se encuentra actualmente-->
     <div class="ruta">
-        <h4>Inicio</h4>
+        <h4>Solicitudes</h4>
     </div>
 
     <!--Cuerpo Principal-->
     <main>
+        <h2>Tabla de Solicitudes</h2>
+        <table id="tableRequest">
+            <thead>
+                <tr>
+                    <th>N°</th>
+                    <th>Departamento</th>
+                    <th>Artículo</th>
+                    <th>Usuario</th>
+                    <th>Cantidad</th>
+                    <th>Fecha de Solicitud</th>
+                    <th>Estado</th>
+                    <th>Prioridad</th>
+                    <th>Asignar</th>
+                    <th>Procesar</th>
+                    <th>Rechazar</th>
+                </tr>
+            </thead>
+            <tbody>
 
-        <!--Apartado de Artículos o Productos-->
-        <a class="btn_seccion" href="2_articles.php">
-            <h2>Artículos o Productos</h2>
-            <img src="../gif/boxes.gif" alt="article">
-            <h4>Crear atículos, para luego inventariarlos en los diferentes tipos de inventario</h4>
-        </a>
+            </tbody>
+        </table>
 
-        <!--Apartado de Tipos de inventarios-->
-        <a class="btn_seccion" href="3_inventory.php">
-            <h2>Tipos de Inventarios</h2>
-            <img src="../gif/inventario.gif" alt="article">
-            <h4>Ver inventario de consumo interno, material operativo, Donaciones, Compras para ayuda social y material
-                en tránsito.</h4>
-        </a>
+        <!--Formulario para Crear un usuario-->
+        <div class="modalProcessRequest">
+            <div class="panelProcessRequest">
+                <form method="post" class="formProcessRequest">
+                    <h2>Solicitudes</h2>
 
-        <!--Apartado de Bodegas-->
-        <a class="btn_seccion" href="4_warehouse.php">
-            <h2>Bodegas</h2>
-            <img src="../gif/deposito.gif" alt="bodega">
-            <h4>Se añaden opciones para ver los artículos por bodegas.</h4>
-        </a>
+                    <!--campo de nombre de la solicitud-->
+                    <div class="formLogCampo">
+                        <label for="warehouse_name">Nombre:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-signature"></i>
+                            <input class="btnTxt" type="text" name="warehouse_name" id="warehouse_name"
+                                pattern="[a-zA-ZñÑ]{3,30}" maxlength="30" placeholder="introduzca un nombre" required
+                                autofocus>
+                        </div>
+                    </div>
 
-        <!--Apartado de Tipos usuarios-->
-        <a class="btn_seccion" href="users.php">
-            <h2>Usuarios</h2>
-            <img src="../gif/users.gif" alt="users">
-            <h4>Se añaden opciones para administrar usuarios,de la aplicación</h4>
-        </a>
+                    <!--campo de provincia de la solicitud-->
+                    <div class="formLogCampo">
+                        <label for="warehouse_name">Provincia:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                            <select name="warehouse_country" id="warehouse_country" class="btnTxt" required>
+                                <option value="">Seleccione</option>
+                                <option value="">Panamá</option>
+                                <option value="">Colón</option>
+                                <option value="">Chiriquí</option>
+                            </select>
+                        </div>
+                    </div>
 
-        <a class="btn_seccion" href="5_request.php">
-            <h2>Ordenes o Solicitudes</h2>
-            <img src="../gif/cumplimiento.gif" alt="ordenes">
-            <h4>Filtros o etiquetas para diferenciar las órdenes de compra según el tipo de inventario.</h4>
-        </a>
+                    <!--campo de ubicación de la solicitud-->
+                    <div class="formLogCampo">
+                        <label for="warehouse_location">Dirección:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <textarea name="articles_description" id="articles_description" class="btnTxt textArea"
+                                maxlength="100" pattern="[a-zñA-ZÑ0-9]"
+                                placeholder="introduzca la dirección de la bodega" required></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
 
-        <a class="btn_seccion" href="notices.html">
-            <h2>Notificaciones</h2>
-            <img src="../gif/bell.gif" alt="bell">
-            <h4>Configurar alertas específicas para cada tipo de inventario, como niveles bajos o fechas de caducidad.
-            </h4>
-        </a>
     </main>
 
     <!--Pie de Página-->
@@ -323,6 +354,10 @@ include_once("../settings/sessionStart.php");
         <h6>© 2024 Universidad de Panamá y William Abrego. Todos los derechos reservados.</h6>
     </footer>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
     <script src="../settings/utils.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
