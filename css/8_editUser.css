@@ -1,0 +1,106 @@
+main {
+  width: 95%;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 5px auto;
+  flex-direction: column;
+
+  h2 {
+    color: var(--azul);
+    margin: 5px auto;
+  }
+}
+
+/*Formulario para Editar pefil de usuarios*/
+.formEditUser{
+  width: 800px;
+  max-width: 95%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  box-shadow: 0 0 5px var(--azul);
+  border-radius: 5px;
+  margin: 10px auto;
+}
+.formLogCampo {
+  width: 350px;
+  max-width: 95%;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  flex-wrap: wrap;
+  flex-direction: column;
+  margin: 5px auto;
+
+  label {
+    color: var(--azul);
+    font-weight: bold;
+  }
+
+  .campo {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    position: relative;
+
+    .fa-location-dot {
+      height: 60px;
+      line-height: 60px;
+      width: 60px;
+    }
+
+    i {
+      height: 40px;
+      line-height: 40px;
+      width: 40px;
+      text-align: center;
+      background-color: var(--azul);
+      color: var(--blanco);
+      border-radius: 5px 0 0 5px;
+    }
+
+    .fa-eye,
+    .fa-eye-slash {
+      position: absolute;
+      right: 0;
+      transition: 0.2s ease-in-out;
+      border-radius: 0 5px 5px 0;
+    }
+
+    .fa-eye:hover,
+    .fa-eye-slash:hover {
+      cursor: pointer;
+      box-shadow: 0 0 5px var(--azul);
+      background-color: var(--blanco);
+      color: var(--azul);
+    }
+
+    .btnTxt {
+      width: 100%;
+      height: 40px;
+      border-radius: 0 5px 5px 0;
+      border: 1px solid var(--azul);
+      font-size: 16px;
+      color: var(--azul);
+      font-weight: bold;
+      pointer-events: none;
+    }
+
+    .btnTxt:focus {
+      box-shadow: 0 0 5px var(--azul);
+      outline: 1px solid var(--azul);
+    }
+
+    .textArea {
+      resize: none;
+      height: 60px;
+    }
+  }
+}
+
+.btnCancelEdit{
+  pointer-events: none;
+  opacity: 0.5;
+}

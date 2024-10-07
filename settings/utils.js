@@ -51,19 +51,12 @@ function cerrarSesion() {
 var isAtTop = true;
 function verBtnLogout() {
   var verBtn1 = document.querySelector(".btnLogOut");
-  var verBtn2 = document.querySelector(".btnSett");
   if (isAtTop) {
     verBtn1.style.top = "35px";
     verBtn1.style.scale = "1";
-
-    verBtn2.style.top = "70px";
-    verBtn2.style.scale = "1";
   } else {
     verBtn1.style.top = "0";
     verBtn1.style.scale = "0";
-
-    verBtn2.style.top = "0";
-    verBtn2.style.scale = "0";
   }
   isAtTop = !isAtTop; // Alterna el estado
 }
@@ -81,13 +74,12 @@ function ocultarMenu() {
 /*
  *Función para ver y ocultar el modal de editar perfil
  */
-function verEditUser() {
-  var menu__bar = document.querySelector(".modalEditUser");
-  menu__bar.style.right = "0";
-}
-function ocultarFormEditUser() {
-  var menu__bar = document.querySelector(".modalEditUser");
-  menu__bar.style.right = "-100%";
+
+function cancelEditUser() {
+  document.querySelector(".btnEditUser").style.pointerEvents = "auto";
+  document.querySelector(".btnEditUser").style.opacity = 1;
+  document.querySelector(".btnCancelEdit").style.pointerEvents = "none";
+  document.querySelector(".btnCancelEdit").style.opacity = 0.5;
   document.querySelector(".btnSaveUser").style.pointerEvents = "none";
   document.querySelector(".btnEditPhoto").style.pointerEvents = "none";
   document.querySelector(".btnSaveUser").style.opacity = 0.5;
@@ -99,6 +91,10 @@ function ocultarFormEditUser() {
  *Función para habilitar la edición del perfil del usuario
  */
 function btnEditUser() {
+  document.querySelector(".btnEditUser").style.pointerEvents = "none";
+  document.querySelector(".btnEditUser").style.opacity = 0.5;
+  document.querySelector(".btnCancelEdit").style.pointerEvents = "auto";
+  document.querySelector(".btnCancelEdit").style.opacity = 1;
   document.querySelector(".btnSaveUser").style.opacity = 1;
   document.querySelector(".btnSaveUser").style.pointerEvents = "auto";
   document.querySelector(".btnEditPhoto").style.pointerEvents = "auto";

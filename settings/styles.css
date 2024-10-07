@@ -65,7 +65,7 @@ main {
   display: none;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1000px) {
   .ruta{
     display: flex;
     justify-content: start;
@@ -176,5 +176,5 @@ main {
 .fa-asterisk{
   color: var(--rojo);
   margin-left: 5px;
-  font-size: 12px;
+  font-size: 8px;
 }

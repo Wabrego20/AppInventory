@@ -3,7 +3,7 @@ main {
   align-items: center;
   flex-direction: column;
   margin: 5px auto;
-  justify-content: start;
+  justify-content: center;
 }
 
 h2 {
@@ -110,8 +110,8 @@ h2 {
   position: fixed;
   top: 0;
   transition: 0.2s ease-in-out;
-  opacity: 0;
-  display: none;
+  opacity: 1;
+  display: flex;
   justify-content: center;
   align-items: center;
 }

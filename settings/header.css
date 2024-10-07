@@ -99,19 +99,8 @@ nav ul li:hover {
   background-color: var(--blanco);
   box-shadow: 0 0 5px var(--rojo);
 }
-.btnSett {
-  top: 0;
-  scale: 0;
-  color: var(--blanco);
-  background-color: var(--gris);
-}
-.btnSett:hover {
-  color: var(--gris);
-  background-color: var(--blanco);
-  box-shadow: 0 0 5px var(--gris);
-}
 
-@media screen and (max-width: 950px) {
+@media screen and (max-width: 1000px) {
   nav {
     z-index: 2;
     background-color: var(--fondo);
@@ -178,116 +167,7 @@ nav ul li:hover {
   }
 }
 
-/*Formulario para Editar pefil de usuarios*/
-.modalEditUser {
-  z-index: 2;
-  background-color: var(--fondo);
-  width: 100%;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  right: -100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: 0.2s ease-in-out;
-  .panelEditUser {
-    width: 800px;
-    max-height: 100%;
-    max-width: 100%;
-    overflow: auto;
-    .formEditUser {
-      width: 99%;
-      height: 99%;
-      margin: 10px auto;
-      background-color: var(--blanco);
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      border-radius: 5px 0 0 5px;
-      box-shadow: 0 0 10px var(--azul);
-      border-radius: 5px;
-      h2 {
-        border-radius: 5px 5px 0 0;
-        margin: 0;
-        height: 40px;
-        line-height: 40px;
-        width: 100%;
-        text-align: center;
-        background-color: var(--azul);
-        color: var(--blanco);
-      }
-      .formLogCampo {
-        width: 350px;
-        max-width: 95%;
-        display: flex;
-        justify-content: space-between;
-        align-items: start;
-        flex-wrap: wrap;
-        flex-direction: column;
-        margin: 5px auto;
-        label {
-          color: var(--azul);
-          font-weight: bold;
-        }
-        .campo {
-          display: flex;
-          align-items: center;
-          justify-content: start;
-          width: 100%;
-          position: relative;
-          .fa-location-dot {
-            height: 60px;
-            line-height: 60px;
-            width: 60px;
-          }
-          i {
-            height: 40px;
-            line-height: 40px;
-            width: 40px;
-            text-align: center;
-            background-color: var(--azul);
-            color: var(--blanco);
-            border-radius: 5px 0 0 5px;
-          }
-          .fa-eye,
-          .fa-eye-slash {
-            position: absolute;
-            right: 0;
-            transition: 0.2s ease-in-out;
-            border-radius: 0 5px 5px 0;
-          }
-          .fa-eye:hover,
-          .fa-eye-slash:hover {
-            cursor: pointer;
-            box-shadow: 0 0 5px var(--azul);
-            background-color: var(--blanco);
-            color: var(--azul);
-          }
-          .btnTxt {
-            width: 100%;
-            height: 40px;
-            border-radius: 0 5px 5px 0;
-            border: 1px solid var(--azul);
-            font-size: 16px;
-            color: var(--azul);
-            font-weight: bold;
-            pointer-events: none;
-          }
-          .btnTxt:focus {
-            box-shadow: 0 0 5px var(--azul);
-            outline: 1px solid var(--azul);
-          }
-          .textArea {
-            resize: none;
-            height: 60px;
-          }
-        }
-      }
-    }
-  }
-}
+
 
 
 /*editar imagen*/
