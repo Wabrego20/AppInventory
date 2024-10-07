@@ -55,18 +55,18 @@ include_once ("../settings/conexion.php");
                 
                 <li>
                     <a href="5_request.php">
-                        <i class="fa-solid fa-list-check"></i>
-                        <h5>Solicitudes</h5>
-                    </a>
-                </li>
-                <li>
-                    <a href="notices.html">
                         <i class="fa-solid fa-bell"></i>
                         <h5>Solicitudes</h5>
                     </a>
                 </li>
                 <li>
-                    <a href="users.php">
+                    <a href="6_reports.php">
+                        <i class="fa-solid fa-chart-simple"></i>
+                        <h5>Reportes</h5>
+                    </a>
+                </li>
+                <li>
+                    <a href="7_users.php">
                         <i class="fa-solid fa-users"></i>
                         <h5>Usuarios</h5>
                     </a>
@@ -132,7 +132,7 @@ include_once ("../settings/conexion.php");
     <footer>
         <h6>© 2024 Universidad de Panamá y William Abrego. Todos los derechos reservados.</h6>
     </footer>
-
+    <script src="../settings/header.js"></script>
     <script src="../settings/utils.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>

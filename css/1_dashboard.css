@@ -9,7 +9,7 @@ main{
     background-color: var(--azul);
     color: var(--blanco);
     width: 400px;
-    height: 250px;
+    min-height: 250px;
     max-width: 95%;
     margin: 10px;
     display: flex;

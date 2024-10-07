@@ -56,7 +56,7 @@ include_once ("../settings/conexion.php");
 
                 <li>
                     <a href="5_request.php">
-                        <i class="fa-solid fa-list-check"></i>
+                        <<i class="fa-solid fa-bell"></i>
                         <h5>Solicitudes</h5>
                     </a>
                 </li>
@@ -283,6 +283,7 @@ include_once ("../settings/conexion.php");
     <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
     <script src="../settings/utils.js"></script>
+    <script src="../settings/header.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 

@@ -135,7 +135,6 @@ nav ul li:hover {
       padding: 0;
       width: 320px;
       border-radius: 0 5px 5px 0;
-      background-color: var(--blanco);
       li {
         width: 99%;
         a {

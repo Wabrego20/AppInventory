@@ -73,6 +73,12 @@ include_once("../settings/conexion.php");
                         <h5>Usuarios</h5>
                     </a>
                 </li>
+                <li>
+                    <a href="8_editUser.html">
+                        <i class="fa-solid fa-user-gear"></i>
+                        <h5>Mi Perfil</h5>
+                    </a>
+                </li>
             </ul>
         </nav>
 
