@@ -110,8 +110,8 @@ h2 {
   position: fixed;
   top: 0;
   transition: 0.2s ease-in-out;
-  opacity: 1;
-  display: flex;
+  opacity: 0;
+  display: none;
   justify-content: center;
   align-items: center;
 }
