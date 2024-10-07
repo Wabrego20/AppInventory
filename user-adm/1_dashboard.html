@@ -39,11 +39,23 @@ include_once("../settings/sessionStart.php");
                         <h5>Artículos</h5>
                     </a>
                 </li>
-                <li>
+                <li class="menuInventory">
                     <a href="3_inventory.php">
                         <i class="fa-solid fa-boxes-stacked"></i>
-                        <h5>Inventarios</h5>
+                        <h5>Inventarios <i class="fa-solid fa-angle-down"></i></h5>
                     </a>
+                    <h5 class="subMenu sub1">
+                        <a href="">Consumo Interno</a>
+                    </h5>
+                    <h5 class="subMenu sub2">
+                        <a href="">Ayuda Social</a>
+                    </h5>
+                    <h5 class="subMenu sub3">
+                        <a href="">Bienes Físicos</a>
+                    </h5>
+                    <h5 class="subMenu sub4">
+                        <a href="">Donaciones</a>
+                    </h5>
                 </li>
                 <li>
                     <a href="4_warehouse.php">
@@ -159,6 +171,7 @@ include_once("../settings/sessionStart.php");
 
     <script src="../settings/utils.js"></script>
     <script src="../settings/header.js"></script>
+    <script src="../js/1_dashboard.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 

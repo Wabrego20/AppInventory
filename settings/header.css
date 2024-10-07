@@ -206,3 +206,27 @@ nav ul li:hover {
   }
 }
 
+
+.menuInventory{
+  position: relative;
+}
+
+.subMenu{
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: brown;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 5px;
+  a{
+    display: none;
+    border-top: 1px solid var(--fondo);
+    width: 95%;
+    text-align: center;
+  }
+}
+
+
