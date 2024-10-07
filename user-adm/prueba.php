@@ -242,7 +242,7 @@ include_once ("../settings/conexion.php");
                 <li>
                     <a href="notices.html">
                         <i class="fa-solid fa-bell"></i>
-                        <h5>Reportes</h5>
+                        <h5>Solicitudes</h5>
                     </a>
                 </li>
                 <li>
@@ -295,7 +295,7 @@ include_once ("../settings/conexion.php");
                     <th>Fecha de Expiración</th>
                     <th>Foto</th>
                     <th>Editar</th>
-                    <th>Eliminar</th>
+                    <th>Eliminar</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -320,12 +320,12 @@ include_once ("../settings/conexion.php");
                     </div>
 
                     <!--campo de descripción del producto-->
-                    <div class="formLogCampo">
+                   <div class="formLogCampo">
                         <label for="articles_description">Descripción:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-file-signature"></i>
                             <textarea name="articles_description" id="articles_description" class="btnTxt textArea"
-                                maxlength="100" pattern="[a-zñA-ZÑ0-9]{4,100}"
+                                maxlength="100" pattern="[a-zñA-ZÑ.-0-9 ]{4,100}"
                                 placeholder="introduzca una descripción del artículo" required></textarea>
                         </div>
                     </div>
@@ -342,7 +342,7 @@ include_once ("../settings/conexion.php");
                     </div>
 
                     <!--campo de categoría-->
-                    <div class="formLogCampo">
+                    <!-- <div class="formLogCampo">
                         <label for="categories_name">Categoría:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-layer-group"></i>
@@ -362,10 +362,10 @@ include_once ("../settings/conexion.php");
 
                             </select>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!--campo de unidada de medida-->
-                    <div class="formLogCampo">
+                    <!-- <div class="formLogCampo">
                         <label for="units_name">Unidad de Medida:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-ruler-combined"></i>
@@ -389,7 +389,7 @@ include_once ("../settings/conexion.php");
                                 ?>
                             </select>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!--campo de costo unitario del artículos-->
                     <div class="formLogCampo">
@@ -399,31 +399,31 @@ include_once ("../settings/conexion.php");
                             <input class="btnTxt" type="number" name="articles_unit_cost" id="articles_unit_cost"
                                 step="0.01" max="1000000" placeholder="introduzca precio del artículo" required>
                         </div>
-                            <!--oninput="removeNonNumeric(this)" onblur="formatCurrency(this)"-->
+                           
                     </div>
 
                     <!--campo de fecha de llegada del artículos-->
-                    <div class="formLogCampo">
+                    <!-- <div class="formLogCampo">
                         <label for="articles_arrival_date">Fecha de Llegada:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-calendar-check"></i>
                             <input type="date" name="articles_arrival_date" id="articles_arrival_date" class="btnTxt"
                                 max="<?php echo date('Y-m-d'); ?>" required>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!--campo de fecha de vencimiento del artículos-->
-                    <div class="formLogCampo">
+                    <!-- <div class="formLogCampo">
                         <label for="articles_expiration_date">Fecha de Expiración:</label>
                         <div class="campo">
                             <i class="fa-solid fa-calendar-xmark"></i>
                             <input type="date" name="articles_expiration_date" min="<?php echo date('Y-m-d'); ?>"
                                 id="articles_expiration_date" class="btnTxt">
                         </div>
-                    </div>
+                    </div> -->
 
                     <!--campo para agregar una foto del producto-->
-                    <div class="formLogCampo">
+                   <!--  <div class="formLogCampo">
                         <label for="articles_photo">Cargar foto del artículo:<i
                                 class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
@@ -433,7 +433,7 @@ include_once ("../settings/conexion.php");
                                 <img id="articles_photo" name="articles_photo" style="display: none;" />
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
                     <div class="btnSubmitPanel">
@@ -468,20 +468,23 @@ include_once ("../settings/conexion.php");
 /**
  * crear artículo
  */
-if (isset($_POST['articles_name']) && isset($_POST['articles_description']) && isset($_POST['articles_brand']) && isset($_POST['articles_unit_cost']) && isset($_POST['articles_arrival_date']) && isset($_POST['articles_photo']) && isset($_POST['categories_id']) && isset($_POST['units_id'])) {
+/**
+ * if (isset($_POST['articles_name']) && isset($_POST['articles_description']) && isset($_POST['articles_brand']) && isset($_POST['articles_unit_cost']) && isset($_POST['articles_arrival_date']) && isset($_POST['articles_photo']) && isset($_POST['categories_id']) && isset($_POST['units_id'])) {
+ */
+if (isset($_POST['articles_name']) && isset($_POST['articles_description']) && isset($_POST['articles_brand']) && isset($_POST['articles_unit_cost'])) {
     // Todos los campos están presentes
     $articles_name = $_POST['articles_name'];
     $articles_description = $_POST['articles_description'];
     $articles_brand = $_POST['articles_brand'];
     $articles_unit_cost = $_POST['articles_unit_cost'];
-    $articles_arrival_date = $_POST['articles_arrival_date'];
+   /* $articles_arrival_date = $_POST['articles_arrival_date'];
     $articles_expiration_date = $_POST['articles_expiration_date'];
     $articles_photo = $_POST['articles_photo'];
-    $categories_id = $_POS['categories_id'];
-    $units_id = $_POST['units_id'];
+    $categories_id = $_POST['categories_id'];
+    $units_id = $_POST['units_id']; */
 
     // Verificar si el artículo ya existe
-    $check_stmt = $conn->prepare("SELECT * FROM `articles` WHERE `articles_name` = ? AND `articles_brand` = ?");
+    $check_stmt = $conn->prepare("SELECT * FROM `prueba` WHERE `articles_name` = ? AND `articles_brand` = ?");
     $check_stmt->bind_param("ss", $articles_name, $articles_brand);
     $check_stmt->execute();
     $result = $check_stmt->get_result();
@@ -507,8 +510,12 @@ if (isset($_POST['articles_name']) && isset($_POST['articles_description']) && i
         </script>
         <?php
     } else {
-        $stmt = $conn->prepare("INSERT INTO `articles`(`articles_name`, `articles_description`, `articles_brand`, `articles_unit_cost`, `articles_arrival_date`, `articles_expiration_date`, `articles_photo`, `categories_id`, `units_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        /**
+         * $stmt = $conn->prepare("INSERT INTO `articles`(`articles_name`, `articles_description`, `articles_brand`, `articles_unit_cost`, `articles_arrival_date`, `articles_expiration_date`, `articles_photo`, `categories_id`, `units_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("sssdssbii", $articles_name, $articles_description, $articles_brand, $articles_unit_cost, $articles_arrival_date, $articles_expiration_date, $articles_photo, $categories_id, $units_id);
+         */
+        $stmt = $conn->prepare("INSERT INTO `prueba`(`articles_name`, `articles_description`, `articles_brand`, `articles_unit_cost`) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("sssd", $articles_name, $articles_description, $articles_brand, $articles_unit_cost);
 
         // Ejecutar la sentencia
         if ($stmt->execute()) {
