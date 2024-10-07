@@ -12,9 +12,9 @@ $user_id = $_GET['users_id'];
 $sql = "DELETE FROM users WHERE users_id = $user_id";
 
 if ($conn->query($sql) === TRUE) {
-  echo("usuario eliminado");
+  echo "<script>console.log('usuario eliminado');</script>";
 } else {
-  echo("error al eliminado");
+  echo "<script>console.log('error al eliminar');</script>";
 }
 
 // Cerrar la conexión

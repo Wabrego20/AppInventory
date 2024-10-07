@@ -1,4 +1,4 @@
-<!--Inicio de sesión y cierre de sesión por inactividad-->
+<!-- Inicio de sesión y cierre de sesión por inactividad -->
 <?php
 include_once("../settings/sessionStart.php");
 ?>

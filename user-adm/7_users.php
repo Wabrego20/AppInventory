@@ -14,8 +14,8 @@ include_once ("../settings/conexion.php");
     <link rel="stylesheet" href="../settings/header.css">
     <link rel="stylesheet" href="../settings/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="../settings/styles.css">
-    <link rel="stylesheet" href="../css/users.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="../css/7_users.css">
     <title>Usuarios | Sist-Inventario</title>
 </head>
 
@@ -57,14 +57,14 @@ include_once ("../settings/conexion.php");
                 </li>
                 <li>
                     <a href="5_request.php">
-                        <i class="fa-solid fa-list-check"></i>
+                        <i class="fa-solid fa-bell"></i>
                         <h5>Solicitudes</h5>
                     </a>
                 </li>
                 <li>
-                    <a href="notices.html">
-                        <i class="fa-solid fa-bell"></i>
-                        <h5>Notificaciones</h5>
+                    <a href="6_reports.php">
+                        <i class="fa-solid fa-chart-simple"></i>
+                        <h5>Reportes</h5>
                     </a>
                 </li>
                 <li class="active">
@@ -141,7 +141,7 @@ include_once ("../settings/conexion.php");
                         //echo "<td><img src='path/to/images/" . $row['users_photo'] . "' alt='Foto' width='50'></td>";
                         echo "<td>" . $row['users_registration_date'] . "</td>";
                         ?>
-                        <style>
+                     <style>
                             .fa-user-pen,
                             .fa-user-minus {
                                 color: var(--blanco);
@@ -186,14 +186,14 @@ include_once ("../settings/conexion.php");
                                 <i class="fa-solid fa-user-minus"></i>
                             </a>
 
-                        </td>
+                        </td> 
 
-                        <?php
+                     <?php
                         echo "</tr>";
                         $counter++;
                     }
                 }
-                ?>
+                ?> 
             </tbody>
         </table>
 
@@ -302,7 +302,8 @@ include_once ("../settings/conexion.php");
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
-    <script src="../settings/utils.js"></script>
+    <script src="../settings/header.js"></script>
+    <script src="../js/7_users.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 

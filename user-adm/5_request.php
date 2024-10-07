@@ -57,18 +57,18 @@ include_once ("../settings/conexion.php");
                 </li>
                 <li class="active">
                     <a href="#">
-                        <i class="fa-solid fa-list-check"></i>
+                        <i class="fa-solid fa-bell"></i>
                         <h5>Solicitudes</h5>
                     </a>
                 </li>
                 <li>
-                    <a href="notices.html">
-                        <i class="fa-solid fa-bell"></i>
+                    <a href="6_reports.php">
+                        <i class="fa-solid fa-chart-simple"></i>
                         <h5>Reportes</h5>
                     </a>
                 </li>
                 <li>
-                    <a href="users.php">
+                    <a href="7_users.php">
                         <i class="fa-solid fa-users"></i>
                         <h5>Usuarios</h5>
                     </a>

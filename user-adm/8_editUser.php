@@ -1,7 +1,7 @@
 <!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
-include_once ("../settings/sessionStart.php");
-include_once ("../settings/conexion.php");
+include_once("../settings/sessionStart.php");
+include_once("../settings/conexion.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -15,7 +15,7 @@ include_once ("../settings/conexion.php");
     <link rel="stylesheet" href="../settings/styles.css">
     <link rel="stylesheet" href="../css/8_editUser.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
-    <title>Solicitudes | Sist-Inventario</title>
+    <title>Mi Perfil | Sist-Inventario</title>
 </head>
 
 <body>
@@ -57,18 +57,18 @@ include_once ("../settings/conexion.php");
                 </li>
                 <li>
                     <a href="5_request.php">
-                        <i class="fa-solid fa-list-check"></i>
+                        <i class="fa-solid fa-bell"></i>
                         <h5>Solicitudes</h5>
                     </a>
                 </li>
                 <li>
-                    <a href="notices.html">
-                        <i class="fa-solid fa-bell"></i>
-                        <h5>Notificaciones</h5>
+                    <a href="6_reports.php">
+                        <i class="fa-solid fa-chart-simple"></i>
+                        <h5>Reportes</h5>
                     </a>
                 </li>
                 <li>
-                    <a href="users.php">
+                    <a href="7_users.php">
                         <i class="fa-solid fa-users"></i>
                         <h5>Usuarios</h5>
                     </a>
@@ -265,7 +265,7 @@ include_once ("../settings/conexion.php");
 
             <!--Botón de editar, guardar y Cancelar-->
             <div class="btnSubmitPanel">
-                <div class="btnSubmit btnEditUser" onclick="btnEditUser();">
+                <div class="btnSubmit btnEditUser" onclick="EditUser();">
                     <i class="fa-solid fa-user-pen"></i> Editar
                 </div>
                 <button type="submit" class="btnSubmit btnSaveUser">
@@ -277,19 +277,15 @@ include_once ("../settings/conexion.php");
 
         </form>
 
-
     </main>
 
     <!--Pie de Página-->
     <footer>
         <h6>© 2024 Universidad de Panamá y William Abrego. Todos los derechos reservados.</h6>
     </footer>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
     <script src="../settings/utils.js"></script>
+    <script src="../settings/header.js"></script>
+    <script src="../js/8_editUser.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
