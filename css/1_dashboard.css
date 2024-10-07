@@ -1,9 +1,9 @@
 main{
-    width: 1300px;
-    max-width: 95%;
-    align-items: center;
+    width: 95%;
+    align-content: space-evenly;
+    justify-content: center;
     flex-wrap: wrap;
-    margin: 5px auto;
+    margin: auto;
 }
 .btn_seccion{
     background-color: var(--azul);
@@ -47,6 +47,6 @@ main{
 }
 .btn_seccion:hover{
     cursor: pointer;
-    box-shadow: 0 0 15px var(--fondo);
+    box-shadow: 0 0 20px var(--fondo);
     scale: 0.99;
 }
