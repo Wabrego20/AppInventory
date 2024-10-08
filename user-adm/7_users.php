@@ -67,7 +67,7 @@ include_once("../settings/conexion.php");
                                 <h5>Ayuda Social</h5>
                             </a>
                         </li>
-                        
+
                         <li>
                             <a href="">
                                 <i class="fa-solid fa-hand-holding-heart"></i>
@@ -167,52 +167,52 @@ include_once("../settings/conexion.php");
                 $verUsuarios = $stmt->get_result();
 
                 if ($verUsuarios->num_rows > 0) {
-                    $counter = 1;
+                    $fila = 1;
                     while ($row = $verUsuarios->fetch_assoc()) {
                 ?>
-                <tr>
-                    <td>
-                        <?php echo $counter; ?>
-                    </td>
-                    <td>
-                        <?php echo $row['users_dni']; ?>
-                    </td>
-                    <td>
-                        <?php echo $row['users_name']; ?>
-                    </td>
-                    <td>
-                        <?php echo $row['users_last_name']; ?>
-                    </td>
-                    <td>
-                        <?php echo $row['users_email']; ?>
-                    </td>
-                    <td>
-                        <?php echo $row['users_rol']; ?>
-                    </td>
-                    <td>
-                        <img src="path/to/images/<?php echo $row['users_photo']; ?>" alt="" width="50">
-                        <i class="fa-solid fa-id-badge"></i>
-                    </td>
-                    <td>
-                        <?php echo $row['users_registration_date']; ?>
-                    </td>
-                    <td>
-                        <a href="javascript:void(0);" onclick="editUserUser(<?php echo $row['users_id']; ?>)">
-                            <i class="fa-solid fa-user-pen"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <a href="javascript:void(0);" onclick="deleteUser(<?php echo $row['users_id']; ?>)">
-                            <i class="fa-solid fa-user-minus"></i>
-                        </a>
-                    </td>
-                </tr>
+                        <tr>
+                            <td>
+                                <?php echo $fila; ?>
+                            </td>
+                            <td>
+                                <?php echo $row['users_dni']; ?>
+                            </td>
+                            <td>
+                                <?php echo $row['users_name']; ?>
+                            </td>
+                            <td>
+                                <?php echo $row['users_last_name']; ?>
+                            </td>
+                            <td>
+                                <?php echo $row['users_email']; ?>
+                            </td>
+                            <td>
+                                <?php echo $row['users_rol']; ?>
+                            </td>
+                            <td>
+                                <img src="path/to/images/<?php echo $row['users_photo']; ?>" alt="" width="50">
+                                <i class="fa-solid fa-id-badge"></i>
+                            </td>
+                            <td>
+                                <?php echo $row['users_registration_date']; ?>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0);" onclick="editUserUser(<?php echo $row['users_id']; ?>)">
+                                    <i class="fa-solid fa-user-pen"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0);" onclick="deleteUser(<?php echo $row['users_id']; ?>)">
+                                    <i class="fa-solid fa-user-minus"></i>
+                                </a>
+                            </td>
+                        </tr>
 
                 <?php
-                        $counter++;
+                        $fila++;
                     }
                 }
-                    ?>
+                ?>
             </tbody>
         </table>
 
@@ -350,25 +350,25 @@ if (isset($_POST['users_dni']) && isset($_POST['users_name']) && isset($_POST['u
 
     if ($result->num_rows > 0) {
 ?>
-<script>
-    Swal.fire({
-        color: "var(--rojo)",
-        icon: "error",
-        iconColor: "var(--rojo)",
-        title: '¡Error!',
-        text: 'La cédula o el correo ya existen',
-        showConfirmButton: true,
-        customClass: {
-            confirmButton: 'btn-confirm'
-        },
-        confirmButtonText: "Aceptar",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location.href = window.location.href;
-        }
-    });
-</script>
-<?php
+        <script>
+            Swal.fire({
+                color: "var(--rojo)",
+                icon: "error",
+                iconColor: "var(--rojo)",
+                title: '¡Error!',
+                text: 'La cédula o el correo ya existen',
+                showConfirmButton: true,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = window.location.href;
+                }
+            });
+        </script>
+        <?php
     } else {
         $stmt = $conn->prepare("INSERT INTO users (users_dni, users_name, users_last_name, users_email, users_user, users_password, users_rol, users_registration_date, departament_id) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -376,24 +376,24 @@ if (isset($_POST['users_dni']) && isset($_POST['users_name']) && isset($_POST['u
 
         if ($stmt->execute()) {
         ?>
-<script>
-    Swal.fire({
-        color: "var(--verde)",
-        icon: "success",
-        iconColor: "var(--verde)",
-        title: '!Éxito!',
-        text: 'Usuario Creado',
-        showConfirmButton: true,
-        customClass: {
-            confirmButton: 'btn-confirm'
-        },
-        confirmButtonText: "Aceptar",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location.href = window.location.href;
-        }
-    });
-</script>
+            <script>
+                Swal.fire({
+                    color: "var(--verde)",
+                    icon: "success",
+                    iconColor: "var(--verde)",
+                    title: '!Éxito!',
+                    text: 'Usuario Creado',
+                    showConfirmButton: true,
+                    customClass: {
+                        confirmButton: 'btn-confirm'
+                    },
+                    confirmButtonText: "Aceptar",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = window.location.href;
+                    }
+                });
+            </script>
 <?php
         } else {
             echo "Error: " . $stmt->error;
