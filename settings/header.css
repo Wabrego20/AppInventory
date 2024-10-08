@@ -13,17 +13,20 @@ nav {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+
   ul {
     display: flex;
     justify-content: center;
     align-items: center;
     list-style: none;
     margin: 5px;
+
     li {
       margin: 2px;
       background-color: var(--azul);
       border-radius: 5px;
       transition: 0.2s ease-in-out;
+
       a {
         color: var(--blanco);
         display: flex;
@@ -36,17 +39,21 @@ nav {
     }
   }
 }
+
 .active {
   pointer-events: none;
   background-color: var(--blanco);
   border: 2px solid var(--azul);
+
   a {
     color: var(--azul);
   }
 }
+
 nav ul li:hover {
   box-shadow: 0 0 5px var(--azul);
   background-color: var(--blanco);
+
   a {
     color: var(--azul);
   }
@@ -59,6 +66,7 @@ nav ul li:hover {
   margin: 5px;
   position: relative;
   min-width: 120px;
+
   button {
     display: flex;
     justify-content: space-between;
@@ -69,6 +77,7 @@ nav ul li:hover {
     border-radius: 5px;
     transition: 0.2s ease-in-out;
     width: 100%;
+
     h5 {
       margin: 5px;
     }
@@ -79,21 +88,25 @@ nav ul li:hover {
   color: var(--blanco);
   background-color: var(--azul);
 }
+
 .btnUser:hover {
   color: var(--azul);
   background-color: var(--blanco);
   box-shadow: 0 0 5px var(--azul);
 }
+
 .btnLogOut,
 .btnSett {
   position: absolute;
 }
+
 .btnLogOut {
   top: 0;
   scale: 0;
   color: var(--blanco);
   background-color: var(--rojo);
 }
+
 .btnLogOut:hover {
   color: var(--rojo);
   background-color: var(--blanco);
@@ -116,33 +129,41 @@ nav ul li:hover {
     flex-wrap: nowrap;
     transition: 0.2s ease-in-out;
     overflow: auto;
+
     span {
+      background-color: var(--blanco);
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background-color: var(--blanco);
       position: relative;
+
       .fa-xmark {
         display: block;
       }
     }
+
     ul {
       margin: 0;
       flex-direction: column;
       align-items: start;
       justify-content: start;
       padding: 0;
-      width: 320px;
+      width: 300px;
+      max-width: 95%;
+      background-color: var(--blanco);
       border-radius: 0 5px 5px 0;
+
       li {
         width: 99%;
+
         a {
           width: 100%;
         }
       }
     }
   }
+
   header .fa-bars,
   header .fa-xmark {
     display: block;
@@ -157,6 +178,7 @@ nav ul li:hover {
     transition: 0.2s ease-in-out;
     margin: 5px;
   }
+
   header .fa-bars:hover,
   header .fa-xmark:hover {
     box-shadow: 0 0 5px var(--azul);
@@ -164,15 +186,27 @@ nav ul li:hover {
     background-color: var(--blanco);
     cursor: pointer;
   }
+
+  .subMenu {
+    width: 150px;
+    top: 0;
+    left: 100%;
+    display: flex;
+    li {
+      width: 98%;
+    }
+  }
+
 }
 
 
 
 
 /*editar imagen*/
-.formImgCampo{
+.formImgCampo {
   width: 95%;
   margin: 5px auto;
+
   .btnEditPhoto {
     width: 200px;
     height: 200px;
@@ -187,6 +221,7 @@ nav ul li:hover {
     margin: 5px auto;
     transition: 0.2s ease-in-out;
     pointer-events: none;
+
     img {
       width: 200px;
       height: 200px;
@@ -195,10 +230,12 @@ nav ul li:hover {
       background-size: cover;
       border-radius: 50%;
     }
+
     i {
       font-size: 50px;
     }
   }
+
   .btnEditPhoto:hover {
     background-color: var(--blanco);
     color: var(--azul);
@@ -207,47 +244,25 @@ nav ul li:hover {
 }
 
 
-.menuInventory{
-  position: relative;
-}
 
-.subMenu{
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: brown;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  border-radius: 5px;
-  a{
-    display: none;
-    border-top: 1px solid var(--fondo);
-    width: 95%;
-    text-align: center;
-  }
-}
-
-.panelMenuInventory{
+.panelMenuInventory {
   position: relative;
   text-align: center;
-  z-index: 2;
 }
-.subMenu{
+
+.subMenu {
   position: absolute;
   transition: 0.2s ease-in-out;
   display: none;
-  background-color: var(--blanco);
   border-radius: 5px;
-  top: 50px;
 }
+
 .panelMenuInventory:hover .subMenu {
   display: block;
+
 }
-.menuInventory a, .subMenu a {
+
+.menuInventory a,
+.subMenu a {
   display: block;
-  border: none;
 }
-
-

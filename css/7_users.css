@@ -1,87 +1,101 @@
-main{
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+main {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-main h2{
+
+main h2 {
   width: 95%;
   text-align: center;
   color: var(--azul);
   margin: 10px auto;
 }
 
-.dataTables_wrapper{
+.dataTables_wrapper {
   background-color: var(--azul);
   max-width: 95%;
   margin: 5px auto;
   overflow: auto;
   border-radius: 5px;
   font-weight: bold;
+
   .dt-buttons {
     float: inline-end;
-     margin: 5px;
-     .dt-button{
-     color: var(--blanco);
-     background-color: var(--verde);
-     border-radius: 5px;
-     border: none;
-     height: 40px;
-     padding: 0 10px;
-     }
-     .dt-button:hover{
-     color: var(--verde);
-     background-color: var(--blanco);
-     cursor: pointer;
-     box-shadow: 0 0 5px var(--verde);
-     }
+    margin: 5px;
+
+    .dt-button {
+      color: var(--blanco);
+      background-color: var(--verde);
+      border-radius: 5px;
+      border: none;
+      height: 40px;
+      padding: 0 10px;
+    }
+
+    .dt-button:hover {
+      color: var(--verde);
+      background-color: var(--blanco);
+      cursor: pointer;
+      box-shadow: 0 0 5px var(--verde);
+    }
   }
-  
+
   .dataTables_length {
     float: left;
     margin: 5px;
-    select{
+
+    select {
       width: 40px;
       height: 40px;
       color: blue;
       border-radius: 5px;
       cursor: pointer;
     }
+
     label {
       color: var(--blanco);
     }
   }
+
   .dataTables_filter {
     margin: 5px;
   }
-  input{
+
+  input {
     height: 40px;
     border-radius: 5px;
     border: none;
     font-size: 16px;
     color: var(--azul);
   }
+
   label {
     color: var(--blanco);
   }
+
   .dataTable thead th {
     color: var(--blanco);
     text-align: center;
   }
+
   .dataTable tbody tr {
     color: var(--azul);
     text-align: center;
   }
-  .dataTable tbody .even{
+
+  .dataTable tbody .even {
     background-color: var(--even);
   }
-  
-  .dataTables_empty{
-    color:var(--rojo)
+
+  .dataTables_empty {
+    color: var(--rojo)
+  }
+
+  .dataTables_paginate span a.current {
+    border-radius: 5px;
+  }
 }
-.dataTables_paginate span a.current {
-  border-radius: 5px;
-}
-}
+
 .dataTables_info {
   color: var(--blanco) !important;
   margin: 5px;
@@ -89,7 +103,7 @@ main h2{
 
 
 /*Formulario para crear usuarios*/
-.modalCreateUser{
+.modalCreateUser {
   background-color: var(--fondo);
   width: 100%;
   height: 100vh;
@@ -101,17 +115,20 @@ main h2{
   justify-content: center;
   align-items: center;
 }
+
 .modalCreateUser.show {
   opacity: 1;
 }
-.panelCreateUser{
+
+.panelCreateUser {
   width: 400px;
   max-height: 100%;
   max-width: 100%;
   overflow: auto;
   border-radius: 5px;
 }
-.formCreateUser{
+
+.formCreateUser {
   width: 99%;
   height: 99%;
   margin: 10px auto;
@@ -122,7 +139,8 @@ main h2{
   flex-direction: column;
   border-radius: 5px;
   box-shadow: 0 0 10px var(--azul);
-  h2{
+
+  h2 {
     border-radius: 5px 5px 0 0;
     margin: auto;
     padding: 5px;
@@ -131,7 +149,8 @@ main h2{
     background-color: var(--azul);
     color: var(--blanco);
   }
-  .formLogCampo{
+
+  .formLogCampo {
     width: 95%;
     display: flex;
     justify-content: space-between;
@@ -139,17 +158,20 @@ main h2{
     flex-wrap: wrap;
     flex-direction: column;
     margin: 5px auto;
-    label{
+
+    label {
       color: var(--azul);
       font-weight: bold;
     }
-    .campo{
+
+    .campo {
       display: flex;
       align-items: center;
       justify-content: start;
       width: 100%;
       position: relative;
-      i{
+
+      i {
         height: 40px;
         line-height: 40px;
         width: 40px;
@@ -158,7 +180,8 @@ main h2{
         color: var(--blanco);
         border-radius: 5px 0 0 5px;
       }
-      .btnTxt{
+
+      .btnTxt {
         width: 100%;
         height: 40px;
         border-radius: 0 5px 5px 0;
@@ -167,10 +190,57 @@ main h2{
         color: var(--azul);
         font-weight: bold;
       }
-      .btnTxt:focus{
+
+      .btnTxt:focus {
         box-shadow: 0 0 5px var(--azul);
         outline: 1px solid var(--azul);
       }
     }
   }
+}
+
+.fa-id-badge,
+.fa-user-pen,
+.fa-user-minus {
+  color: var(--blanco);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  transition: 0.2s ease-in-out;
+}
+
+.fa-id-badge:hover,
+.fa-user-pen:hover,
+.fa-user-minus:hover {
+  background-color: var(--blanco);
+}
+
+.fa-id-badge{
+  background-color: var(--azul);
+}
+.fa-user-pen {
+  background-color: var(--naranja);
+}
+
+.fa-user-pen:hover {
+  color: var(--naranja);
+  box-shadow: 0 0 5px var(--naranja);
+}
+
+.fa-user-minus {
+  background-color: var(--rojo);
+}
+
+.fa-user-minus:hover {
+  color: var(--rojo);
+  box-shadow: 0 0 5px var(--rojo);
+}
+
+.fa-id-badge:hover{
+  cursor: pointer;
+  color: var(--azul);
+  box-shadow: 0 0 5px var(--azul);
+  
 }

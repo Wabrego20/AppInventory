@@ -1,7 +1,7 @@
 <!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
-include_once ("../settings/sessionStart.php");
-include_once ("../settings/conexion.php");
+include_once("../settings/sessionStart.php");
+include_once("../settings/conexion.php");
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +43,7 @@ include_once ("../settings/conexion.php");
                         <h5>Artículos</h5>
                     </a>
                 </li>
-                
+
                 <!--Menú de tipo de inventarios-->
                 <span class="panelMenuInventory">
                     <li class="menuInventory">
@@ -53,19 +53,21 @@ include_once ("../settings/conexion.php");
                         </a>
                     </li>
                     <span class="subMenu">
-                        
+
                         <li class="subMenu1">
                             <a href="">
                                 <i class="fa-solid fa-stapler"></i>
                                 <h5>Consumo Interno</h5>
                             </a>
                         </li>
+
                         <li>
                             <a href="">
                                 <i class="fa-solid fa-handshake-angle"></i>
                                 <h5>Ayuda Social</h5>
                             </a>
                         </li>
+                        
                         <li>
                             <a href="">
                                 <i class="fa-solid fa-hand-holding-heart"></i>
@@ -79,8 +81,8 @@ include_once ("../settings/conexion.php");
                             </a>
                         </li>
                     </span>
-                </span >
-                
+                </span>
+
                 <li>
                     <a href="4_warehouse.php">
                         <i class="fa-solid fa-warehouse"></i>
@@ -111,6 +113,7 @@ include_once ("../settings/conexion.php");
                         <h5>Mi Perfil</h5>
                     </a>
                 </li>
+
             </ul>
         </nav>
 
@@ -118,7 +121,9 @@ include_once ("../settings/conexion.php");
         <div class="formUserLogOut">
             <button class="btnUser" onclick="verBtnLogout();">
                 <i class="fa-solid fa-user-check"></i>
-                <h5><?php echo $_SESSION['users_user']; ?></h5>
+                <h5>
+                    <?php echo $_SESSION['users_user']; ?>
+                </h5>
                 <i class="fa-solid fa-angle-down"></i>
             </button>
             <button class="btnLogOut" id="logout" onclick="cerrarSesion();">
@@ -146,6 +151,7 @@ include_once ("../settings/conexion.php");
                     <th>Apellido</th>
                     <th>Correo</th>
                     <th>Rol</th>
+                    <th>Foto</th>
                     <th>Día de Registro</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
@@ -163,69 +169,50 @@ include_once ("../settings/conexion.php");
                 if ($verUsuarios->num_rows > 0) {
                     $counter = 1;
                     while ($row = $verUsuarios->fetch_assoc()) {
-                        echo "<tr>";
-                        echo "<td>" . $counter . "</td>";
-                        echo "<td>" . $row['users_dni'] . "</td>";
-                        echo "<td>" . $row['users_name'] . "</td>";
-                        echo "<td>" . $row['users_last_name'] . "</td>";
-                        echo "<td>" . $row['users_email'] . "</td>";
-                        echo "<td>" . $row['users_rol'] . "</td>";
-                        //echo "<td><img src='path/to/images/" . $row['users_photo'] . "' alt='Foto' width='50'></td>";
-                        echo "<td>" . $row['users_registration_date'] . "</td>";
-                        ?>
-                        <style>
-                            .fa-user-pen,
-                            .fa-user-minus {
-                                color: var(--blanco);
-                                border-radius: 50%;
-                                width: 40px;
-                                height: 40px;
-                                line-height: 40px;
-                                text-align: center;
-                                transition: 0.2s ease-in-out;
-                            }
+                ?>
+                <tr>
+                    <td>
+                        <?php echo $counter; ?>
+                    </td>
+                    <td>
+                        <?php echo $row['users_dni']; ?>
+                    </td>
+                    <td>
+                        <?php echo $row['users_name']; ?>
+                    </td>
+                    <td>
+                        <?php echo $row['users_last_name']; ?>
+                    </td>
+                    <td>
+                        <?php echo $row['users_email']; ?>
+                    </td>
+                    <td>
+                        <?php echo $row['users_rol']; ?>
+                    </td>
+                    <td>
+                        <img src="path/to/images/<?php echo $row['users_photo']; ?>" alt="" width="50">
+                        <i class="fa-solid fa-id-badge"></i>
+                    </td>
+                    <td>
+                        <?php echo $row['users_registration_date']; ?>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0);" onclick="editUserUser(<?php echo $row['users_id']; ?>)">
+                            <i class="fa-solid fa-user-pen"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0);" onclick="deleteUser(<?php echo $row['users_id']; ?>)">
+                            <i class="fa-solid fa-user-minus"></i>
+                        </a>
+                    </td>
+                </tr>
 
-                            .fa-user-pen:hover,
-                            .fa-user-minus:hover {
-                                background-color: var(--blanco);
-                            }
-
-                            .fa-user-pen {
-                                background-color: var(--naranja);
-                            }
-
-                            .fa-user-pen:hover {
-                                color: var(--naranja);
-                                box-shadow: 0 0 5px var(--naranja);
-                            }
-
-                            .fa-user-minus {
-                                background-color: var(--rojo);
-                            }
-
-                            .fa-user-minus:hover {
-                                color: var(--rojo);
-                                box-shadow: 0 0 5px var(--rojo);
-                            }
-                        </style>
-                        <td>
-                            <a href="edit_user.php?id=<?php echo $row['users_id']; ?>">
-                                <i class="fa-solid fa-user-pen"></i>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="javascript:void(0);" onclick="deleteUser(<?php echo $row['users_id']; ?>)">
-                                <i class="fa-solid fa-user-minus"></i>
-                            </a>
-
-                        </td>
-
-                        <?php
-                        echo "</tr>";
+                <?php
                         $counter++;
                     }
                 }
-                ?>
+                    ?>
             </tbody>
         </table>
 
@@ -362,52 +349,52 @@ if (isset($_POST['users_dni']) && isset($_POST['users_name']) && isset($_POST['u
     $result = $checkQuery->get_result();
 
     if ($result->num_rows > 0) {
-        ?>
-        <script>
-            Swal.fire({
-                color: "var(--rojo)",
-                icon: "error",
-                iconColor: "var(--rojo)",
-                title: '¡Error!',
-                text: 'La cédula o el correo ya existen',
-                showConfirmButton: true,
-                customClass: {
-                    confirmButton: 'btn-confirm'
-                },
-                confirmButtonText: "Aceptar",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = window.location.href;
-                }
-            });
-        </script>
-        <?php
+?>
+<script>
+    Swal.fire({
+        color: "var(--rojo)",
+        icon: "error",
+        iconColor: "var(--rojo)",
+        title: '¡Error!',
+        text: 'La cédula o el correo ya existen',
+        showConfirmButton: true,
+        customClass: {
+            confirmButton: 'btn-confirm'
+        },
+        confirmButtonText: "Aceptar",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = window.location.href;
+        }
+    });
+</script>
+<?php
     } else {
         $stmt = $conn->prepare("INSERT INTO users (users_dni, users_name, users_last_name, users_email, users_user, users_password, users_rol, users_registration_date, departament_id) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("sssssssss", $dni, $name, $lastName, $email, $user, $password, $rol, $registration_date, $departament);
 
         if ($stmt->execute()) {
-            ?>
-            <script>
-                Swal.fire({
-                    color: "var(--verde)",
-                    icon: "success",
-                    iconColor: "var(--verde)",
-                    title: '!Éxito!',
-                    text: 'Usuario Creado',
-                    showConfirmButton: true,
-                    customClass: {
-                        confirmButton: 'btn-confirm'
-                    },
-                    confirmButtonText: "Aceptar",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = window.location.href;
-                    }
-                });
-            </script>
-            <?php
+        ?>
+<script>
+    Swal.fire({
+        color: "var(--verde)",
+        icon: "success",
+        iconColor: "var(--verde)",
+        title: '!Éxito!',
+        text: 'Usuario Creado',
+        showConfirmButton: true,
+        customClass: {
+            confirmButton: 'btn-confirm'
+        },
+        confirmButtonText: "Aceptar",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = window.location.href;
+        }
+    });
+</script>
+<?php
         } else {
             echo "Error: " . $stmt->error;
         }
