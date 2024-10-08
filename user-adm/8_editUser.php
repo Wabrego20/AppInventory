@@ -42,12 +42,44 @@ include_once("../settings/conexion.php");
                         <h5>Artículos</h5>
                     </a>
                 </li>
-                <li>
-                    <a href="3_inventory.php">
-                        <i class="fa-solid fa-boxes-stacked"></i>
-                        <h5>Inventarios</h5>
-                    </a>
-                </li>
+                
+                <!--Menú de tipo de inventarios-->
+                <span class="panelMenuInventory">
+                    <li class="menuInventory">
+                        <a href="3_inventory.php">
+                            <i class="fa-solid fa-boxes-stacked"></i>
+                            <h5>Inventarios <i class="fa-solid fa-angle-down"></i></h5>
+                        </a>
+                    </li>
+                    <span class="subMenu">
+                        
+                        <li class="subMenu1">
+                            <a href="">
+                                <i class="fa-solid fa-stapler"></i>
+                                <h5>Consumo Interno</h5>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa-solid fa-handshake-angle"></i>
+                                <h5>Ayuda Social</h5>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa-solid fa-hand-holding-heart"></i>
+                                <h5>Donaciones</h5>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa-solid fa-computer"></i>
+                                <h5>Bienes Físicos</h5>
+                            </a>
+                        </li>
+                    </span>
+                </span >
+                
                 <li>
                     <a href="4_warehouse.php">
                         <i class="fa-solid fa-warehouse"></i>

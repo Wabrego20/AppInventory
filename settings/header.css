@@ -229,4 +229,25 @@ nav ul li:hover {
   }
 }
 
+.panelMenuInventory{
+  position: relative;
+  text-align: center;
+  z-index: 2;
+}
+.subMenu{
+  position: absolute;
+  transition: 0.2s ease-in-out;
+  display: none;
+  background-color: var(--blanco);
+  border-radius: 5px;
+  top: 50px;
+}
+.panelMenuInventory:hover .subMenu {
+  display: block;
+}
+.menuInventory a, .subMenu a {
+  display: block;
+  border: none;
+}
+
 
