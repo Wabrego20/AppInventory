@@ -49,19 +49,21 @@ include_once("../settings/sessionStart.php");
                         </a>
                     </li>
                     <span class="subMenu">
-                        
+
                         <li class="subMenu1">
                             <a href="">
                                 <i class="fa-solid fa-stapler"></i>
                                 <h5>Consumo Interno</h5>
                             </a>
                         </li>
+
                         <li>
                             <a href="">
                                 <i class="fa-solid fa-handshake-angle"></i>
                                 <h5>Ayuda Social</h5>
                             </a>
                         </li>
+                        
                         <li>
                             <a href="">
                                 <i class="fa-solid fa-hand-holding-heart"></i>
@@ -75,7 +77,7 @@ include_once("../settings/sessionStart.php");
                             </a>
                         </li>
                     </span>
-                </span >
+                </span>
                 
                 <li>
                     <a href="4_warehouse.php">
