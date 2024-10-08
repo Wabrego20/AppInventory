@@ -74,7 +74,7 @@ include_once ("../settings/conexion.php");
                     </a>
                 </li>
                 <li>
-                    <a href="8_editUser.html">
+                    <a href="8_editUser.php">
                         <i class="fa-solid fa-user-gear"></i>
                         <h5>Mi Perfil</h5>
                     </a>

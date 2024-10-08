@@ -46,7 +46,6 @@ include_once("../settings/conexion.php");
                     <a href="3_inventory.php">
                         <i class="fa-solid fa-boxes-stacked"></i>
                         <h5>Inventarios</h5>
-                        <i class="fa-solid fa-angle-down"></i>
                     </a>
                 </li>
                 <li>

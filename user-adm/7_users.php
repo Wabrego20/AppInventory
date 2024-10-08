@@ -39,7 +39,7 @@ include_once ("../settings/conexion.php");
                 </li>
                 <li>
                     <a href="2_articles.php">
-                        <i class="fa-solid fa-house"></i>
+                        <i class="fa-solid fa-box"></i>
                         <h5>Artículos</h5>
                     </a>
                 </li>
@@ -74,7 +74,7 @@ include_once ("../settings/conexion.php");
                     </a>
                 </li>
                 <li>
-                    <a href="8_editUser.html">
+                    <a href="8_editUser.php">
                         <i class="fa-solid fa-user-gear"></i>
                         <h5>Mi Perfil</h5>
                     </a>
@@ -141,7 +141,7 @@ include_once ("../settings/conexion.php");
                         //echo "<td><img src='path/to/images/" . $row['users_photo'] . "' alt='Foto' width='50'></td>";
                         echo "<td>" . $row['users_registration_date'] . "</td>";
                         ?>
-                     <style>
+                        <style>
                             .fa-user-pen,
                             .fa-user-minus {
                                 color: var(--blanco);
@@ -186,14 +186,14 @@ include_once ("../settings/conexion.php");
                                 <i class="fa-solid fa-user-minus"></i>
                             </a>
 
-                        </td> 
+                        </td>
 
-                     <?php
+                        <?php
                         echo "</tr>";
                         $counter++;
                     }
                 }
-                ?> 
+                ?>
             </tbody>
         </table>
 

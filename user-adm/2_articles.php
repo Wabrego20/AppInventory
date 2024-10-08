@@ -56,14 +56,14 @@ include_once ("../settings/conexion.php");
 
                 <li>
                     <a href="5_request.php">
-                        <<i class="fa-solid fa-bell"></i>
+                        <i class="fa-solid fa-bell"></i>
                         <h5>Solicitudes</h5>
                     </a>
                 </li>
 
                 <li>
-                    <a href="notices.html">
-                        <i class="fa-solid fa-bell"></i>
+                    <a href="6_reports.php">
+                        <i class="fa-solid fa-chart-simple"></i>
                         <h5>Reportes</h5>
                     </a>
                 </li>
@@ -74,7 +74,7 @@ include_once ("../settings/conexion.php");
                     </a>
                 </li>
                 <li>
-                    <a href="8_editUser.html">
+                    <a href="8_editUser.php">
                         <i class="fa-solid fa-user-gear"></i>
                         <h5>Mi Perfil</h5>
                     </a>
@@ -223,7 +223,7 @@ include_once ("../settings/conexion.php");
                             <input class="btnTxt" type="number" name="articles_unit_cost" id="articles_unit_cost"
                                 step="0.01" max="1000000" placeholder="introduzca precio del artículo" required>
                         </div>
-                            <!--oninput="removeNonNumeric(this)" onblur="formatCurrency(this)"-->
+                        <!--oninput="removeNonNumeric(this)" onblur="formatCurrency(this)"-->
                     </div>
 
                     <!--campo de fecha de llegada del artículos-->
