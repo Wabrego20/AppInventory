@@ -310,6 +310,16 @@ include_once("../settings/conexion.php");
             </div>
         </div>
 
+        <!-- Formulario para editar usuario -->
+        <form id="editUserForm" style="display:none;">
+            <input type="hidden" id="userId" name="userId">
+            <label for="userName">Nombre:</label>
+            <input type="text" id="userName" name="userName">
+            <label for="userEmail">Email:</label>
+            <input type="email" id="userEmail" name="userEmail">
+            <button type="button" onclick="submitEditUserForm()">Guardar Cambios</button>
+        </form>
+
     </main>
 
     <!--Pie de Página-->

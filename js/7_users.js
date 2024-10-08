@@ -94,3 +94,35 @@ function deleteUser(userId) {
         }
     });
 }
+/*
+*Función para mostrar el formulario de edición con los datos del usuario
+*/
+function editUser(userId) {
+    // Aquí puedes hacer una llamada AJAX para obtener los datos del usuario
+    // y rellenar el formulario. Por ahora, solo mostraremos el formulario.
+    document.getElementById('editUserForm').style.display = 'block';
+    document.getElementById('users_id').value = userId;
+
+    // Supongamos que obtuviste los datos del usuario
+    var userName = "Nombre de Ejemplo"; // Reemplaza con el nombre real del usuario
+    var userEmail = "email@ejemplo.com"; // Reemplaza con el email real del usuario
+
+    document.getElementById('users_name').value = userName;
+    document.getElementById('users_email').value = userEmail;
+}
+
+/*
+*Función para enviar el formulario de edición
+*/
+function submitEditUserForm() {
+    var userId = document.getElementById('users_id').value;
+    var userName = document.getElementById('users_name').value;
+    var userEmail = document.getElementById('users_email').value;
+
+    // Aquí puedes hacer una llamada AJAX para enviar los datos actualizados al servidor
+    console.log("Enviando datos actualizados del usuario:", userId, userName, userEmail);
+
+    // Ocultar el formulario después de enviar los datos
+    document.getElementById('editUserForm').style.display = 'none';
+}
+
