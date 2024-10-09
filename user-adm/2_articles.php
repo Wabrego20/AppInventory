@@ -131,12 +131,12 @@ include_once ("../settings/conexion.php");
 
     <!--Ruta que muestra donde se encuentra actualmente-->
     <div class="ruta">
-        <h5>Artículos/Productos</h5>
+        <h4>Artículos / Productos</h4>
     </div>
 
     <!--Cuerpo Principal-->
     <main>
-        <h2>Tabla de Articulos/Productos</h2>
+        <h2>Tabla de Articulos / Productos</h2>
         <table id="tableArticles">
             <thead>
                 <tr>

@@ -127,7 +127,7 @@ include_once("../settings/conexion.php");
 
     </header>
     <div class="ruta">
-        <h4>Notificaciones</h4>
+        <h4>Reportes</h4>
     </div>
     <main>
 

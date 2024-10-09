@@ -1,7 +1,29 @@
-<!--Inicio de sesión y cierre de sesión por inactividad-->
+<!--Apartado para editar el perfil editUser.php-->
 <?php
-include_once("../settings/sessionStart.php");
-include_once("../settings/conexion.php");
+include_once ("../settings/sessionStart.php");
+include_once ("../settings/conexion.php");
+$usuario = $_SESSION['users_user'];
+$stmt = $conn->prepare("SELECT users.*, departament.* 
+    FROM users 
+    JOIN departament ON users.departament_id = departament.departament_id 
+    WHERE users.users_user = ?");
+$stmt->bind_param("s", $usuario);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Obtener los datos del usuario
+if ($row = $result->fetch_assoc()) {
+    $name = $row["users_name"];
+    $dni = $row["users_dni"];
+    $lastName = $row["users_last_name"];
+    $email = $row["users_email"];
+    $rol = $row["users_rol"];
+    $departament = $row["departament_name"];
+}
+
+// Cerrar la conexión
+$stmt->close();
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -29,6 +51,8 @@ include_once("../settings/conexion.php");
                 <img src="../img/logoApp.png" alt="logoAPP" class="logoApp">
             </span>
             <ul>
+
+                <!--Pestaña de Inicio-->
                 <li>
                     <a href="1_dashboard.php">
                         <i class="fa-solid fa-house"></i>
@@ -36,13 +60,14 @@ include_once("../settings/conexion.php");
                     </a>
                 </li>
 
+                <!--Pestaña de artículos-->
                 <li>
                     <a href="2_articles.php">
                         <i class="fa-solid fa-box"></i>
                         <h5>Artículos</h5>
                     </a>
                 </li>
-                
+
                 <!--Menú de tipo de inventarios-->
                 <span class="panelMenuInventory">
                     <li class="menuInventory">
@@ -52,25 +77,32 @@ include_once("../settings/conexion.php");
                         </a>
                     </li>
                     <span class="subMenu">
-                        
+
+                        <!--Pestaña de consumo interno-->
                         <li class="subMenu1">
                             <a href="">
                                 <i class="fa-solid fa-stapler"></i>
                                 <h5>Consumo Interno</h5>
                             </a>
                         </li>
+
+                        <!--Pestaña de Ayuda Social-->
                         <li>
                             <a href="">
                                 <i class="fa-solid fa-handshake-angle"></i>
                                 <h5>Ayuda Social</h5>
                             </a>
                         </li>
+
+                        <!--Pestaña de Donaciones-->
                         <li>
                             <a href="">
                                 <i class="fa-solid fa-hand-holding-heart"></i>
                                 <h5>Donaciones</h5>
                             </a>
                         </li>
+
+                        <!--Pestaña de Bienes Físicos-->
                         <li>
                             <a href="">
                                 <i class="fa-solid fa-computer"></i>
@@ -78,32 +110,41 @@ include_once("../settings/conexion.php");
                             </a>
                         </li>
                     </span>
-                </span >
-                
+                </span>
+
+                <!--Pestaña de Bodegas-->
                 <li>
                     <a href="4_warehouse.php">
                         <i class="fa-solid fa-warehouse"></i>
                         <h5>Bodegas</h5>
                     </a>
                 </li>
+
+                <!--Pestaña de Solicitudes-->
                 <li>
                     <a href="5_request.php">
                         <i class="fa-solid fa-bell"></i>
                         <h5>Solicitudes</h5>
                     </a>
                 </li>
+
+                <!--Pestaña de Reportes-->
                 <li>
                     <a href="6_reports.php">
                         <i class="fa-solid fa-chart-simple"></i>
                         <h5>Reportes</h5>
                     </a>
                 </li>
+
+                <!--Pestaña de Usuarios-->
                 <li>
                     <a href="7_users.php">
                         <i class="fa-solid fa-users"></i>
                         <h5>Usuarios</h5>
                     </a>
                 </li>
+
+                <!--Pestaña de Mi Perfil-->
                 <li class="active">
                     <a href="#">
                         <i class="fa-solid fa-user-gear"></i>
@@ -137,6 +178,7 @@ include_once("../settings/conexion.php");
 
     <!--Cuerpo Principal-->
     <main>
+
         <h2>Mis Datos Personales</h2>
         <!--Formulario para Editar perfil de usuario-->
 
@@ -158,7 +200,7 @@ include_once("../settings/conexion.php");
                     <i class="fa-regular fa-address-card"></i>
                     <input class="btnTxt" type="text" name="users_dni" id="users_dni"
                         pattern="[a-zA-Z0-9]{1,2}-[0-9]{2,4}-[0-9]{2,4}" maxlength="14" placeholder="Editar su cédula"
-                        required>
+                        value="<?php echo htmlspecialchars($dni); ?>" required>
                 </div>
             </div>
 
@@ -168,7 +210,8 @@ include_once("../settings/conexion.php");
                 <div class="campo">
                     <i class="fa-solid fa-signature"></i>
                     <input class="btnTxt" type="text" name="users_name" id="users_name" pattern="[a-zñA-ZÑ]{3,15}"
-                        maxlength="15" placeholder="Editar su nombre" required>
+                        maxlength="15" placeholder="Editar su nombre" value="<?php echo htmlspecialchars($name); ?>"
+                        required>
                 </div>
             </div>
 
@@ -178,7 +221,8 @@ include_once("../settings/conexion.php");
                 <div class="campo">
                     <i class="fa-solid fa-file-signature"></i>
                     <input class="btnTxt" type="text" name="users_last_name" id="users_last_name"
-                        pattern="[a-zñA-ZÑ]{3,15}" maxlength="15" placeholder="Editar su apellido" required>
+                        pattern="[a-zñA-ZÑ]{3,15}" maxlength="15" placeholder="Editar su apellido"
+                        value="<?php echo htmlspecialchars($lastName); ?>" required>
                 </div>
             </div>
 
@@ -188,7 +232,8 @@ include_once("../settings/conexion.php");
                 <div class="campo">
                     <i class="fa-regular fa-envelope"></i>
                     <input class="btnTxt" type="email" name="users_email" id="users_email" maxlength="30"
-                        placeholder="Editar su correo electrónico" required>
+                        placeholder="Editar su correo electrónico" value="<?php echo htmlspecialchars($email); ?>"
+                        required>
                 </div>
             </div>
 
@@ -197,7 +242,8 @@ include_once("../settings/conexion.php");
                 <label for="users_rol">Rol:</label>
                 <div class="campo">
                     <i class="fa-solid fa-user-secret"></i>
-                    <label class="btnTxt"></label>
+                    <label class="btnTxt"
+                        title="No esta autorizado a editar este campo"><?php echo htmlspecialchars($rol); ?></label>
                 </div>
             </div>
 
@@ -206,7 +252,8 @@ include_once("../settings/conexion.php");
                 <label for="departament_name">Departamento:</label>
                 <div class="campo">
                     <i class="fa-solid fa-building-user"></i>
-                    <label class="btnTxt"></label>
+                    <label class="btnTxt"
+                        title="No esta autorizado a editar este campo"><?php echo htmlspecialchars($departament); ?></label>
                 </div>
             </div>
 
@@ -265,7 +312,8 @@ include_once("../settings/conexion.php");
                 <div class="campo">
                     <i class="fa-solid fa-user-tie"></i>
                     <input class="btnTxt" type="text" name="users_user" id="users_user" pattern="[a-zA-Z]{4,15}"
-                        maxlength="15" placeholder="Editar su usuario:" required>
+                        maxlength="15" placeholder="Editar su usuario:"
+                        value="<?php echo htmlspecialchars($usuario); ?>" required>
                 </div>
             </div>
 
@@ -275,7 +323,7 @@ include_once("../settings/conexion.php");
                 <div class="campo">
                     <i class="fa-solid fa-key"></i>
                     <input class="btnTxt" type="password" name="users_password" id="users_password" pattern=".{8,15}"
-                        maxlength="15" placeholder="Nueva contraseña" required>
+                        maxlength="15" placeholder="Nueva contraseña" value="" required>
                     <i class="fa-regular fa-eye-slash" title="Ocultar Contraseña" onclick="passVisibility();"></i>
                     <i class="fa-regular fa-eye" title="Mostrar Contraseña" onclick="passVisibility();"></i>
                 </div>

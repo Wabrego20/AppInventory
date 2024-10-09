@@ -1,4 +1,4 @@
-<!--Inicio de Sesión-->
+<!--Inicio de Sesión sessionStart.php-->
 <?php
 session_start();
 // Tiempo de inactividad en segundos (por ejemplo, 600 segundos = 10 minutos)
@@ -20,8 +20,9 @@ if (isset($_SESSION['ultimoAcceso'])) {
 $_SESSION['ultimoAcceso'] = time();
 
 //error_reporting(0);
-$sesion = $_SESSION['users_user'];
-if ($sesion == null || $sesion == '') {
+ini_set('display_errors', 1);
+$usuario = $_SESSION['users_user'];
+if ($usuario == null || $usuario == '') {
     echo "<script>alert('No tiene autorización para ingresar.');</script>";
     echo "<script>window.location.href = '../login/login.php';</script>";
     die();

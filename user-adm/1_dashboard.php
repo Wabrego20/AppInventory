@@ -1,6 +1,6 @@
 <!-- Inicio de sesión y cierre de sesión por inactividad -->
 <?php
-include_once("../settings/sessionStart.php");
+include_once ("../settings/sessionStart.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -27,12 +27,16 @@ include_once("../settings/sessionStart.php");
                 <img src="../img/logoApp.png" alt="logoAPP" class="logoApp">
             </span>
             <ul>
+                
+                <!--Pestaña de Inicio-->
                 <li class="active">
                     <a href="#">
                         <i class="fa-solid fa-house"></i>
                         <h5>Inicio</h5>
                     </a>
                 </li>
+
+                <!--Pestaña de artículos-->
                 <li>
                     <a href="2_articles.php">
                         <i class="fa-solid fa-box"></i>
@@ -50,26 +54,31 @@ include_once("../settings/sessionStart.php");
                     </li>
                     <span class="subMenu">
 
+                        <!--Pestaña de consumo interno-->
                         <li class="subMenu1">
-                            <a href="">
+                            <a href="3_inventory1.php">
                                 <i class="fa-solid fa-stapler"></i>
                                 <h5>Consumo Interno</h5>
                             </a>
                         </li>
 
+                        <!--Pestaña de Ayuda Social-->
                         <li>
                             <a href="">
                                 <i class="fa-solid fa-handshake-angle"></i>
                                 <h5>Ayuda Social</h5>
                             </a>
                         </li>
-                        
+
+                        <!--Pestaña de Donaciones-->
                         <li>
                             <a href="">
                                 <i class="fa-solid fa-hand-holding-heart"></i>
                                 <h5>Donaciones</h5>
                             </a>
                         </li>
+
+                        <!--Pestaña de Bienes Físicos-->
                         <li>
                             <a href="">
                                 <i class="fa-solid fa-computer"></i>
@@ -78,31 +87,40 @@ include_once("../settings/sessionStart.php");
                         </li>
                     </span>
                 </span>
-                
+
+                <!--Pestaña de Bodegas-->
                 <li>
                     <a href="4_warehouse.php">
                         <i class="fa-solid fa-warehouse"></i>
                         <h5>Bodegas</h5>
                     </a>
                 </li>
+
+                <!--Pestaña de Solicitudes-->
                 <li>
                     <a href="5_request.php">
                         <i class="fa-solid fa-bell"></i>
                         <h5>Solicitudes</h5>
                     </a>
                 </li>
+
+                <!--Pestaña de Reportes-->
                 <li>
                     <a href="6_reports.php">
                         <i class="fa-solid fa-chart-simple"></i>
                         <h5>Reportes</h5>
                     </a>
                 </li>
+
+                <!--Pestaña de Usuarios-->
                 <li>
                     <a href="7_users.php">
                         <i class="fa-solid fa-users"></i>
                         <h5>Usuarios</h5>
                     </a>
                 </li>
+
+                <!--Pestaña de Mi Perfil-->
                 <li>
                     <a href="8_editUser.php">
                         <i class="fa-solid fa-user-gear"></i>
@@ -141,14 +159,16 @@ include_once("../settings/sessionStart.php");
         <a class="btn_seccion" href="2_articles.php">
             <h2>Artículos o Productos</h2>
             <img src="../gif/boxes.gif" alt="article">
-            <h4>Se añade este aparatado para crear, editar y consultar atículos para luego inventariarlos en los diferentes tipos de inventario</h4>
+            <h4>Se añade este aparatado para crear, editar y consultar atículos para luego inventariarlos en los
+                diferentes tipos de inventario</h4>
         </a>
 
         <!--Apartado de Tipos de inventarios-->
         <a class="btn_seccion" href="3_inventory.php">
             <h2>Tipos de Inventarios</h2>
             <img src="../gif/inventario.gif" alt="inventario">
-            <h4>Agregar y consultar inventario de consumo interno, material operativo, Donaciones, Compras para ayuda social y material en tránsito.</h4>
+            <h4>Agregar y consultar inventario de consumo interno, material operativo, Donaciones, Compras para ayuda
+                social y material en tránsito.</h4>
         </a>
 
         <!--Apartado de Bodegas-->
@@ -162,7 +182,8 @@ include_once("../settings/sessionStart.php");
         <a class="btn_seccion" href="5_request.php">
             <h2>Ordenes o Solicitudes</h2>
             <img src="../gif/sos.gif" alt="solicitud">
-            <h4>Filtros o etiquetas para diferenciar las órdenes de compra según el tipo de inventario, ver las solicitudes realizadas por los clientes. Aprobar, asignar o rechazar</h4>
+            <h4>Filtros o etiquetas para diferenciar las órdenes de compra según el tipo de inventario, ver las
+                solicitudes realizadas por los clientes. Aprobar, asignar o rechazar</h4>
         </a>
 
         <!--Apartado de reportes-->
@@ -179,6 +200,7 @@ include_once("../settings/sessionStart.php");
             <h4>Se añaden opciones para administrar usuarios, de la aplicación, asignar roles entre otros</h4>
         </a>
 
+        <!--Apartado de Mi Perfil-->
         <a class="btn_seccion" href="8_editUser.php">
             <h2>Mi Perfil</h2>
             <img src="../gif/usuario.gif" alt="bell">
