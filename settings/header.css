@@ -202,46 +202,6 @@ nav ul li:hover {
 
 
 
-/*editar imagen*/
-.formImgCampo {
-  width: 95%;
-  margin: 5px auto;
-
-  .btnEditPhoto {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--azul);
-    color: var(--blanco);
-    border: none;
-    cursor: pointer;
-    margin: 5px auto;
-    transition: 0.2s ease-in-out;
-    pointer-events: none;
-
-    img {
-      width: 200px;
-      height: 200px;
-      max-width: 95%;
-      max-height: 95%;
-      background-size: cover;
-      border-radius: 50%;
-    }
-
-    i {
-      font-size: 50px;
-    }
-  }
-
-  .btnEditPhoto:hover {
-    background-color: var(--blanco);
-    color: var(--azul);
-    box-shadow: 0 0 5px var(--azul);
-  }
-}
 
 
 

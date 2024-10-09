@@ -28,7 +28,7 @@ function cancelEditUser() {
  *Función para habilitar la edición del perfil del usuario
  */
 function EditUser() {
-    document
+  document
     .querySelectorAll(".fa-eye, .fa-eye-slash")
     .forEach(function (element) {
       element.style.pointerEvents = "auto";
@@ -55,6 +55,7 @@ function EditUser() {
 function btnEditPhotoProfile() {
   document.getElementById("btnEditPhotoProfile").click();
 }
+
 document
   .getElementById("btnEditPhotoProfile")
   .addEventListener("change", function (event) {
