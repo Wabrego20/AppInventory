@@ -238,7 +238,7 @@ include_once("../settings/conexion.php");
                         <label for="user">Nombre:</label>
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
-                            <input class="btnTxt" type="text" name="users_name" id="users_name" pattern="[a-zA-Z]{3,15}"
+                            <input class="btnTxt" type="text" name="users_name" id="users_name" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,15}"
                                 maxlength="15" placeholder="introduzca un nombre" required>
                         </div>
                     </div>
@@ -249,7 +249,7 @@ include_once("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-file-signature"></i>
                             <input class="btnTxt" type="text" name="users_last_name" id="users_last_name"
-                                pattern="[a-zA-Z]{4,15}" maxlength="15" placeholder="introduzca un apellido" required>
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{4,15}" maxlength="15" placeholder="introduzca un apellido" required>
                         </div>
                     </div>
 

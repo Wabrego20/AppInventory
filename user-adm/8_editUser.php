@@ -19,6 +19,12 @@ if ($row = $result->fetch_assoc()) {
     $email = $row["users_email"];
     $rol = $row["users_rol"];
     $departament = $row["departament_name"];
+    $cumple = $row["users_birthday_date"];
+    $edad = $row["users_age"];
+    $phone = $row["users_office_phone"];
+    $cell = $row["users_cell_phone"];
+    $adress = $row["users_adress"];
+    $clave = $row["users_password"];
 }
 
 // Cerrar la conexión
@@ -199,7 +205,7 @@ $conn->close();
                 <div class="campo">
                     <i class="fa-regular fa-address-card"></i>
                     <input class="btnTxt" type="text" name="users_dni" id="users_dni"
-                        pattern="[a-zA-Z0-9]{1,2}-[0-9]{2,4}-[0-9]{2,4}" maxlength="14" placeholder="Editar su cédula"
+                        pattern="E-\d-\d{4}-\d{4}|\d{1,2}-\d{1,4}-\d{1,5}" maxlength="14" placeholder="Editar su cédula"
                         value="<?php echo htmlspecialchars($dni); ?>" required>
                 </div>
             </div>
@@ -209,7 +215,7 @@ $conn->close();
                 <label for="users_name">Nombre:</label>
                 <div class="campo">
                     <i class="fa-solid fa-signature"></i>
-                    <input class="btnTxt" type="text" name="users_name" id="users_name" pattern="[a-zñA-ZÑ]{3,15}"
+                    <input class="btnTxt" type="text" name="users_name" id="users_name" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,15}"
                         maxlength="15" placeholder="Editar su nombre" value="<?php echo htmlspecialchars($name); ?>"
                         required>
                 </div>
@@ -221,7 +227,7 @@ $conn->close();
                 <div class="campo">
                     <i class="fa-solid fa-file-signature"></i>
                     <input class="btnTxt" type="text" name="users_last_name" id="users_last_name"
-                        pattern="[a-zñA-ZÑ]{3,15}" maxlength="15" placeholder="Editar su apellido"
+                        pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,15}" maxlength="15" placeholder="Editar su apellido"
                         value="<?php echo htmlspecialchars($lastName); ?>" required>
                 </div>
             </div>
@@ -242,8 +248,7 @@ $conn->close();
                 <label for="users_rol">Rol:</label>
                 <div class="campo">
                     <i class="fa-solid fa-user-secret"></i>
-                    <label class="btnTxt"
-                        title="No esta autorizado a editar este campo"><?php echo htmlspecialchars($rol); ?></label>
+                    <label class="btnTxt" title="No esta autorizado a editar este campo"><?php echo htmlspecialchars($rol); ?></label>
                 </div>
             </div>
 
@@ -252,8 +257,7 @@ $conn->close();
                 <label for="departament_name">Departamento:</label>
                 <div class="campo">
                     <i class="fa-solid fa-building-user"></i>
-                    <label class="btnTxt"
-                        title="No esta autorizado a editar este campo"><?php echo htmlspecialchars($departament); ?></label>
+                    <label class="btnTxt" title="No esta autorizado a editar este campo"><?php echo htmlspecialchars($departament); ?></label>
                 </div>
             </div>
 
@@ -262,17 +266,17 @@ $conn->close();
                 <label for="users_birthday_date">Cumple Años:</label>
                 <div class="campo">
                     <i class="fa-solid fa-cake-candles"></i>
-                    <input type="date" class="btnTxt" ame="users_birthday_date" id="users_birthday_date" required>
+                    <input type="date" class="btnTxt" name="users_birthday_date" id="users_birthday_date" value="<?php echo htmlspecialchars($cumple); ?>" required>
                 </div>
             </div>
 
             <!--Campo de Edad-->
             <div class="formLogCampo">
-                <label for="users_age">Edad:</label>
+                <label for="users_age">Edad en años:</label>
                 <div class="campo">
                     <i class="fa-solid fa-arrow-up-9-1"></i>
                     <input type="text" class="btnTxt" name="users_age" id="users_age" placeholder="Editar su edad"
-                        pattern="[0-9]{1,2}" maxlength="2" required>
+                        pattern="[1-9][0-9]" maxlength="2" value="<?php echo htmlspecialchars($edad); ?>" required>
                 </div>
             </div>
 
@@ -282,7 +286,7 @@ $conn->close();
                 <div class="campo">
                     <i class="fa-solid fa-phone-volume"></i>
                     <input type="tel" class="btnTxt" name="users_office_phone" placeholder="Editar su teléfono"
-                        id="users_office_phone" required>
+                        id="users_office_phone" pattern="[1-9][0-9]{2}-[0-9]{4}" value="<?php echo htmlspecialchars($phone); ?>" required>
                 </div>
             </div>
 
@@ -292,17 +296,17 @@ $conn->close();
                 <div class="campo">
                     <i class="fa-brands fa-whatsapp"></i>
                     <input type="tel" class="btnTxt" name="users_cell_phone" placeholder="Editar su celular"
-                        id="users_cell_phone" required>
+                        id="users_cell_phone" pattern="[6][0-9]{3}-[0-9]{4}" value="<?php echo htmlspecialchars($cell); ?>" required>
                 </div>
             </div>
 
             <!--Campo de dirección-->
             <div class="formLogCampo">
-                <label for="users_address">Dirección:</label>
+                <label for="users_adress">Dirección:</label>
                 <div class="campo">
                     <i class="fa-solid fa-location-dot"></i>
-                    <textarea name="users_address" id="users_address" class="textArea btnTxt" maxlength="100"
-                        pattern="[a-zñA-ZÑ0-9]" placeholder="Editar dirección" required></textarea>
+                    <textarea name="users_adress" id="users_adress" class="textArea btnTxt" maxlength="100"
+                        pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]+" placeholder="Editar dirección" required><?php echo htmlspecialchars($adress); ?></textarea>
                 </div>
             </div>
 
@@ -311,7 +315,7 @@ $conn->close();
                 <label for="users_user">Usuario:</label>
                 <div class="campo">
                     <i class="fa-solid fa-user-tie"></i>
-                    <input class="btnTxt" type="text" name="users_user" id="users_user" pattern="[a-zA-Z]{4,15}"
+                    <input class="btnTxt" type="text" name="users_user" id="users_user" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{4,15}"
                         maxlength="15" placeholder="Editar su usuario:"
                         value="<?php echo htmlspecialchars($usuario); ?>" required>
                 </div>
@@ -319,7 +323,7 @@ $conn->close();
 
             <!--Campo de contraseña-->
             <div class="formLogCampo">
-                <label for="users_password">Contraseña:</label>
+                <label for="users_password">Cambiar Contraseña:</label>
                 <div class="campo">
                     <i class="fa-solid fa-key"></i>
                     <input class="btnTxt" type="password" name="users_password" id="users_password" pattern=".{8,15}"
