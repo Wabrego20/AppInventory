@@ -16,7 +16,7 @@ function ocultarMenu() {
  function verBtnLogout() {
    var verBtn1 = document.querySelector(".btnLogOut");
    if (isAtTop) {
-     verBtn1.style.top = "35px";
+     verBtn1.style.top = "40px";
      verBtn1.style.scale = "1";
    } else {
      verBtn1.style.top = "0";

@@ -8,17 +8,17 @@ main h2 {
   width: 95%;
   text-align: center;
   color: var(--azul);
-  margin: 10px auto;
+  margin-top: 10px;
 }
 
 .dataTables_wrapper {
   background-color: var(--azul);
   max-width: 95%;
-  margin: 5px auto;
+  margin: 10px auto;
   overflow: auto;
   border-radius: 5px;
   font-weight: bold;
-
+  box-shadow: 0 0 15px var(--fondo);
   .dt-buttons {
     float: inline-end;
     margin: 5px;

@@ -13,6 +13,9 @@ $result = $stmt->get_result();
 
 // Obtener los datos del usuario
 if ($row = $result->fetch_assoc()) {
+    $imageData = $row['users_photo'];
+    // Codificar la imagen en base64
+    $base64Image = base64_encode($imageData);
     $name = $row["users_name"];
     $dni = $row["users_dni"];
     $lastName = $row["users_last_name"];
@@ -192,10 +195,10 @@ $conn->close();
 
             <!--Campo para cargar foto de perfil-->
             <div class="formImgCampo">
-                <input type="file" id="btnEditPhotoProfile" accept="image/*" name="users_foto" style="display: none;" />
+                <input type="file" id="btnEditPhotoProfile" accept="image/gif, image/*" name="users_foto" style="display: none;" />
                 <div class="btnEditPhoto" onclick="btnEditPhotoProfile();">
                     <i class="fa-solid fa-camera-retro"></i>
-                    <img id="users_profile_picture" name="users_profile_picture" style="display: none;" />
+                    <img id="users_profile_picture" name="users_profile_picture" style="display: none;"  />
                 </div>
             </div>
 
