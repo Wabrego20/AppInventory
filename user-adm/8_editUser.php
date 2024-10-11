@@ -277,7 +277,7 @@ if ($row = $result->fetch_assoc()) {
                 <label for="users_age">Edad en años:</label>
                 <div class="campo">
                     <i class="fa-solid fa-arrow-up-9-1"></i>
-                    <input type="text" class="btnTxt" name="users_age" id="users_age" placeholder="Editar su edad"
+                    <input type="number" class="btnTxt" name="users_age" id="users_age" placeholder="Editar su edad"
                         pattern="[1-9][0-9]" maxlength="2" value="<?php echo htmlspecialchars($edad); ?>">
                 </div>
             </div>
@@ -463,7 +463,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $lastName = isset($_POST["users_last_name"]) ? $_POST["users_last_name"] : null;
             $email = isset($_POST["users_email"]) ? $_POST["users_email"] : null;
             $cumple = isset($_POST["users_birthday_date"]) ? $_POST["users_birthday_date"] : null;
-            $edad = isset($_POST["users_age"]) ? $_POST["users_age"] : null;
+            $edad = isset($_POST["users_age"]) ? $_POST["users_age"] : '';
             $phone = isset($_POST["users_office_phone"]) ? $_POST["users_office_phone"] : null;
             $cell = isset($_POST["users_cell_phone"]) ? $_POST["users_cell_phone"] : null;
             $adress = isset($_POST["users_adress"]) ? $_POST["users_adress"] : null;
