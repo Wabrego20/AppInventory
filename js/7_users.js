@@ -102,13 +102,6 @@ function editUser(userId) {
     // y rellenar el formulario. Por ahora, solo mostraremos el formulario.
     document.getElementById('editUserForm').style.display = 'block';
     document.getElementById('users_id').value = userId;
-
-    // Supongamos que obtuviste los datos del usuario
-    var userName = "Nombre de Ejemplo"; // Reemplaza con el nombre real del usuario
-    var userEmail = "email@ejemplo.com"; // Reemplaza con el email real del usuario
-
-    document.getElementById('users_name').value = userName;
-    document.getElementById('users_email').value = userEmail;
 }
 
 /*

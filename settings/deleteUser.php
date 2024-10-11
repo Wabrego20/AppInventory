@@ -1,4 +1,4 @@
-<!--Eliminar usuario-->
+<!--Eliminar usuario deleteUSer.php-->
 <?php
 header('Content-Type: application/json'); // Asegúrate de que la respuesta sea JSON
 
