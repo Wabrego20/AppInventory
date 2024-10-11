@@ -32,8 +32,8 @@
         <label for="users_user">Usuario:</label>
         <div class="campo">
           <i class="fa-solid fa-user-tie"></i>
-          <input class="btnTxt" type="text" name="users_user" id="users_user" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{4,15}" maxlength="15"
-            placeholder="introduzca su usuario por favor:" required autofocus>
+          <input class="btnTxt" type="text" name="users_user" id="users_user" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{4,15}"
+            maxlength="15" placeholder="introduzca su usuario por favor:" required autofocus>
         </div>
       </div>
 
@@ -90,8 +90,8 @@
 
 <?php
 if (isset($_POST['users_user']) && isset($_POST['users_password'])) {
-  include_once("../settings/conexion.php");
-
+  include_once ("../settings/conexion.php");
+  session_start();
   // Obtener datos del usuario (sanitizados)
   $usuario = htmlspecialchars($_POST['users_user']);
   $clave = htmlspecialchars($_POST['users_password']);
@@ -107,11 +107,10 @@ if (isset($_POST['users_user']) && isset($_POST['users_password'])) {
     $hashGuardado = $row['users_password']; // Obtén el hash almacenado en la base de datos
     if (password_verify($clave, $hashGuardado)) {
       // Inicio de sesión exitoso
-      session_start();
       $_SESSION['users_user'] = $usuario;
       $_SESSION['users_rol'] = $row['users_rol'];
       if ($_SESSION['users_rol'] === 'Administrador') {
-?>
+        ?>
         <script>
           Swal.fire({
             color: "var(--verde)",
@@ -121,13 +120,13 @@ if (isset($_POST['users_user']) && isset($_POST['users_password'])) {
             text: 'Inicio de Sesión Exitosa',
             showConfirmButton: false,
           })
-          setTimeout(function() {
+          setTimeout(function () {
             window.location.href = '../user-adm/1_dashboard.php';
           }, 1500);
         </script>
-      <?php
+        <?php
       } elseif ($_SESSION['users_rol'] === 'Gestor') {
-      ?>
+        ?>
         <script>
           Swal.fire({
             color: "var(--verde)",
@@ -137,11 +136,11 @@ if (isset($_POST['users_user']) && isset($_POST['users_password'])) {
             text: 'Inicio de Sesión Exitosa',
             showConfirmButton: false,
           })
-          setTimeout(function() {
+          setTimeout(function () {
             window.location.href = '../user-gestor/1_dashboard.php';
           }, 1500);
         </script>
-      <?php
+        <?php
       }
       exit;
     } else {
@@ -155,11 +154,11 @@ if (isset($_POST['users_user']) && isset($_POST['users_password'])) {
           text: 'Contraseña Incorrecta',
           showConfirmButton: false,
         })
-        setTimeout(function() {
+        setTimeout(function () {
           window.location.href = window.location.href;
         }, 1500);
       </script>
-    <?php
+      <?php
     }
   } else {
     ?>
@@ -172,11 +171,11 @@ if (isset($_POST['users_user']) && isset($_POST['users_password'])) {
         text: 'Usuario Incorrecta',
         showConfirmButton: false,
       })
-      setTimeout(function() {
+      setTimeout(function () {
         window.location.href = window.location.href;
       }, 1500);
     </script>
-<?php
+    <?php
   }
   $stmt->close();
   $conn->close();

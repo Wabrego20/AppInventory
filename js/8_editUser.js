@@ -52,22 +52,41 @@ function EditUser() {
 /*
  *Función para editar o cargar la imagen de perfil del usuario
  */
-function btnEditPhotoProfile() {
+
+document.querySelector(".btnEditPhoto").addEventListener("click", function () {
   document.getElementById("btnEditPhotoProfile").click();
-}
+});
 
 document
   .getElementById("btnEditPhotoProfile")
   .addEventListener("change", function (event) {
-    const file = event.target.files[0];
+    var file = event.target.files[0];
     if (file) {
-      const reader = new FileReader();
+      var reader = new FileReader();
       reader.onload = function (e) {
         document.querySelector(".fa-camera-retro").style.display = "none";
-        const preview = document.getElementById("users_profile_picture");
+        const preview = document.getElementById("users_photo");
         preview.src = e.target.result;
         preview.style.display = "block";
       };
       reader.readAsDataURL(file);
     }
   });
+
+window.addEventListener("load", function () {
+  var imgElement = document.getElementById("users_photo");
+  if (imgElement.src && imgElement.src.startsWith("data:image")) {
+    var base64Image = imgElement.src.split(",")[1];
+    var byteString = atob(base64Image);
+    var arrayBuffer = new ArrayBuffer(byteString.length);
+    var intArray = new Uint8Array(arrayBuffer);
+    for (var i = 0; i < byteString.length; i++) {
+      intArray[i] = byteString.charCodeAt(i);
+    }
+    var blob = new Blob([intArray], { type: "image/jpeg" });
+    var file = new File([blob], "profile.jpg", { type: "image/jpeg" });
+    var dataTransfer = new DataTransfer();
+    dataTransfer.items.add(file);
+    document.getElementById("btnEditPhotoProfile").files = dataTransfer.files;
+  }
+});

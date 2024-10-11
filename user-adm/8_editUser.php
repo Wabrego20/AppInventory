@@ -13,26 +13,22 @@ $result = $stmt->get_result();
 
 // Obtener los datos del usuario
 if ($row = $result->fetch_assoc()) {
-    $imageData = $row['users_photo'];
-    // Codificar la imagen en base64
-    $base64Image = base64_encode($imageData);
-    $name = $row["users_name"];
-    $dni = $row["users_dni"];
-    $lastName = $row["users_last_name"];
-    $email = $row["users_email"];
-    $rol = $row["users_rol"];
-    $departament = $row["departament_name"];
-    $cumple = $row["users_birthday_date"];
-    $edad = $row["users_age"];
-    $phone = $row["users_office_phone"];
-    $cell = $row["users_cell_phone"];
-    $adress = $row["users_adress"];
-    $clave = $row["users_password"];
+    $imageData = isset($row['users_foto']['tmp_name']) ? file_get_contents($row['users_foto']['tmp_name']) : null;
+    $base64Image = isset($row['users_photo']) ? $row['users_photo'] : null;
+    $name = isset($row["users_name"]) ? $row["users_name"] : '';
+    $dni = isset($row["users_dni"]) ? $row["users_dni"] : '';
+    $lastName = isset($row["users_last_name"]) ? $row["users_last_name"] : '';
+    $email = isset($row["users_email"]) ? $row["users_email"] : '';
+    $rol = isset($row["users_rol"]) ? $row["users_rol"] : '';
+    $departament = isset($row["departament_name"]) ? $row["departament_name"] : '';
+    $cumple = isset($row["users_birthday_date"]) ? $row["users_birthday_date"] : '';
+    $edad = isset($row["users_age"]) ? $row["users_age"] : '';
+    $phone = isset($row["users_office_phone"]) ? $row["users_office_phone"] : '';
+    $cell = isset($row["users_cell_phone"]) ? $row["users_cell_phone"] : '';
+    $adress = isset($row["users_adress"]) ? $row["users_adress"] : '';
+    $stmt->close();
 }
 
-// Cerrar la conexión
-$stmt->close();
-$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -190,21 +186,17 @@ $conn->close();
 
         <h2>Mis Datos Personales</h2>
         <!--Formulario para Editar perfil de usuario-->
-
-        <form method="post" class="formEditUser">
-
-            <!--Campo para cargar foto de perfil-->
-
+        <form method="post" class="formEditUser" enctype="multipart/form-data">
 
             <div class="formImgCampo">
                 <input type="file" id="btnEditPhotoProfile" accept="image/gif, image/*" name="users_foto"
                     style="display: none;" />
-                <div class="btnEditPhoto" onclick="btnEditPhotoProfile();">
-                    <i class="fa-solid fa-camera-retro"></i>
-
-                    <img id="users_profile_picture" name="users_profile_picture"
-                        src="<?php echo $base64Image ? 'data:image/jpeg;base64,' . $base64Image : 'path/to/placeholder.png'; ?>" />
-                </div>
+                <?php if ($base64Image): ?>
+                    <img id="users_photo" name="users_photo" class="btnEditPhoto" style="display: block;"
+                        src="data:image/jpeg;base64,<?php echo $base64Image; ?>" />
+                <?php else: ?>
+                    <i class="fa-solid fa-camera-retro btnEditPhoto"></i>
+                <?php endif; ?>
             </div>
 
             <!--Campo de cédula-->
@@ -214,7 +206,7 @@ $conn->close();
                     <i class="fa-regular fa-address-card"></i>
                     <input class="btnTxt" type="text" name="users_dni" id="users_dni"
                         pattern="E-\d-\d{4}-\d{4}|\d{1,2}-\d{1,4}-\d{1,5}" maxlength="14" placeholder="Editar su cédula"
-                        value="<?php echo htmlspecialchars($dni); ?>" required>
+                        value="<?php echo htmlspecialchars($dni); ?>">
                 </div>
             </div>
 
@@ -225,7 +217,7 @@ $conn->close();
                     <i class="fa-solid fa-signature"></i>
                     <input class="btnTxt" type="text" name="users_name" id="users_name"
                         pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,15}" maxlength="15" placeholder="Editar su nombre"
-                        value="<?php echo htmlspecialchars($name); ?>" required>
+                        value="<?php echo htmlspecialchars($name); ?>">
                 </div>
             </div>
 
@@ -236,7 +228,7 @@ $conn->close();
                     <i class="fa-solid fa-file-signature"></i>
                     <input class="btnTxt" type="text" name="users_last_name" id="users_last_name"
                         pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,15}" maxlength="15" placeholder="Editar su apellido"
-                        value="<?php echo htmlspecialchars($lastName); ?>" required>
+                        value="<?php echo htmlspecialchars($lastName); ?>">
                 </div>
             </div>
 
@@ -246,8 +238,7 @@ $conn->close();
                 <div class="campo">
                     <i class="fa-regular fa-envelope"></i>
                     <input class="btnTxt" type="email" name="users_email" id="users_email" maxlength="30"
-                        placeholder="Editar su correo electrónico" value="<?php echo htmlspecialchars($email); ?>"
-                        required>
+                        placeholder="Editar su correo electrónico" value="<?php echo htmlspecialchars($email); ?>">
                 </div>
             </div>
 
@@ -277,7 +268,7 @@ $conn->close();
                 <div class="campo">
                     <i class="fa-solid fa-cake-candles"></i>
                     <input type="date" class="btnTxt" name="users_birthday_date" id="users_birthday_date"
-                        value="<?php echo htmlspecialchars($cumple); ?>" required>
+                        value="<?php echo htmlspecialchars($cumple); ?>">
                 </div>
             </div>
 
@@ -287,7 +278,7 @@ $conn->close();
                 <div class="campo">
                     <i class="fa-solid fa-arrow-up-9-1"></i>
                     <input type="text" class="btnTxt" name="users_age" id="users_age" placeholder="Editar su edad"
-                        pattern="[1-9][0-9]" maxlength="2" value="<?php echo htmlspecialchars($edad); ?>" required>
+                        pattern="[1-9][0-9]" maxlength="2" value="<?php echo htmlspecialchars($edad); ?>">
                 </div>
             </div>
 
@@ -298,7 +289,7 @@ $conn->close();
                     <i class="fa-solid fa-phone-volume"></i>
                     <input type="tel" class="btnTxt" name="users_office_phone" placeholder="Editar su teléfono"
                         id="users_office_phone" pattern="[1-9][0-9]{2}-[0-9]{4}"
-                        value="<?php echo htmlspecialchars($phone); ?>" required>
+                        value="<?php echo htmlspecialchars($phone); ?>">
                 </div>
             </div>
 
@@ -309,7 +300,7 @@ $conn->close();
                     <i class="fa-brands fa-whatsapp"></i>
                     <input type="tel" class="btnTxt" name="users_cell_phone" placeholder="Editar su celular"
                         id="users_cell_phone" pattern="[6][0-9]{3}-[0-9]{4}"
-                        value="<?php echo htmlspecialchars($cell); ?>" required>
+                        value="<?php echo htmlspecialchars($cell); ?>">
                 </div>
             </div>
 
@@ -319,8 +310,8 @@ $conn->close();
                 <div class="campo">
                     <i class="fa-solid fa-location-dot"></i>
                     <textarea name="users_adress" id="users_adress" class="textArea btnTxt" maxlength="100"
-                        pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]+" placeholder="Editar dirección"
-                        required><?php echo htmlspecialchars($adress); ?></textarea>
+                        pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]+"
+                        placeholder="Editar dirección"><?php echo htmlspecialchars($adress); ?></textarea>
                 </div>
             </div>
 
@@ -335,25 +326,25 @@ $conn->close();
                 </div>
             </div>
 
-            <!--Campo de contraseña-->
+            <!--Campo de nueva contraseña-->
             <div class="formLogCampo">
                 <label for="users_password">Cambiar Contraseña:</label>
                 <div class="campo">
                     <i class="fa-solid fa-key"></i>
                     <input class="btnTxt" type="password" name="users_password" id="users_password" pattern=".{8,15}"
-                        maxlength="15" placeholder="Nueva contraseña" value="" required>
+                        maxlength="15" placeholder="Nueva contraseña">
                     <i class="fa-regular fa-eye-slash" title="Ocultar Contraseña" onclick="passVisibility();"></i>
                     <i class="fa-regular fa-eye" title="Mostrar Contraseña" onclick="passVisibility();"></i>
                 </div>
             </div>
 
-            <!--Campo de repetir contraseña-->
+            <!--Campo de repetir nueva contraseña-->
             <div class="formLogCampo">
                 <label for="users_password_r">Repita Contraseña:</label>
                 <div class="campo">
                     <i class="fa-solid fa-key"></i>
                     <input class="btnTxt" type="password" name="users_password_r" id="users_password_r"
-                        pattern=".{8,15}" maxlength="15" placeholder="Repita nueva contraseña" required>
+                        pattern=".{8,15}" maxlength="15" placeholder="Repita nueva contraseña">
                     <i class="fa-regular fa-eye-slash fa-eye-slash-r" title="Ocultar Contraseña"
                         onclick="passVisibilityR();"></i>
                     <i class="fa-regular fa-eye fa-eye-r" title="Mostrar Contraseña" onclick="passVisibilityR();"></i>
@@ -387,3 +378,137 @@ $conn->close();
 </body>
 
 </html>
+
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $clave = $_POST['users_password'];
+    $clave_r = $_POST['users_password_r'];
+    if (!empty($clave) || !empty($clave_r)) {
+        if ($clave === $clave_r) {
+            // Encriptar la nueva contraseña
+            $nueva_contraseña_encriptada = password_hash($clave, PASSWORD_DEFAULT);
+            $stmt = $conn->prepare("UPDATE users SET users_password=? WHERE users_user=?");
+            $stmt->bind_param("ss", $nueva_contraseña_encriptada, $usuario);
+            if ($stmt->execute()) {
+                ?>
+                <script>
+                    Swal.fire({
+                        color: "var(--verde)",
+                        icon: "success",
+                        iconColor: "var(--verde)",
+                        title: '¡Éxito!',
+                        text: 'Contraseña actualizada correctamente',
+                        showConfirmButton: false,
+                    })
+                    setTimeout(function () {
+                        window.location.href = window.location.href;
+                    }, 1500);
+                </script>
+                <?php
+            } else {
+                ?>
+                <script>
+                    Swal.fire({
+                        color: "var(--rojo)",
+                        icon: "error",
+                        iconColor: "var(--rojo)",
+                        title: 'Error ',
+                        text: 'No se actualizó la contraseña',
+                        showConfirmButton: false,
+                    })
+                    setTimeout(function () {
+                        window.location.href = window.location.href;
+                    }, 1500);
+                </script>
+                <?php
+            }
+            $stmt->close();
+        } else {
+            ?>
+            <script>
+                Swal.fire({
+                    color: "var(--rojo)",
+                    icon: "error",
+                    iconColor: "var(--rojo)",
+                    title: 'Error ',
+                    text: 'Las contraseñas no coinciden',
+                    showConfirmButton: false,
+                })
+                setTimeout(function () {
+                    window.location.href = window.location.href;
+                }, 1500);
+            </script>
+            <?php
+        }
+        $conn->close();
+    } else {
+        if (
+            isset($_POST['users_photo']) ||
+            isset($_POST["users_dni"]) ||
+            isset($_POST["users_name"]) ||
+            isset($_POST["users_last_name"]) ||
+            isset($_POST['users_email']) ||
+            isset($_POST["users_birthday_date"]) ||
+            isset($_POST["users_age"]) ||
+            isset($_POST["users_office_phone"]) ||
+            isset($_POST["users_cell_phone"]) ||
+            isset($_POST["users_adress"]) ||
+            isset($_POST['users_user'])
+        ) {
+            $imageData = file_get_contents($_FILES['users_foto']['tmp_name']);
+            $base64Image = base64_encode($imageData);
+
+            $name = isset($_POST["users_name"]) ? $_POST["users_name"] : null;
+            $dni = isset($_POST["users_dni"]) ? $_POST["users_dni"] : null;
+            $lastName = isset($_POST["users_last_name"]) ? $_POST["users_last_name"] : null;
+            $email = isset($_POST["users_email"]) ? $_POST["users_email"] : null;
+            $cumple = isset($_POST["users_birthday_date"]) ? $_POST["users_birthday_date"] : null;
+            $edad = isset($_POST["users_age"]) ? $_POST["users_age"] : null;
+            $phone = isset($_POST["users_office_phone"]) ? $_POST["users_office_phone"] : null;
+            $cell = isset($_POST["users_cell_phone"]) ? $_POST["users_cell_phone"] : null;
+            $adress = isset($_POST["users_adress"]) ? $_POST["users_adress"] : null;
+            $usuario = isset($_POST['users_user']) ? $_POST['users_user'] : null;
+
+            $stmt = $conn->prepare("UPDATE users SET users_photo=?, users_name=?, users_dni=?, users_last_name=?, users_email=?, users_birthday_date=?, users_age=?, users_office_phone=?, users_cell_phone=?, users_adress=? WHERE users_user=?");
+            $stmt->bind_param("ssssssissss", $base64Image, $name, $dni, $lastName, $email, $cumple, $edad, $phone, $cell, $adress, $usuario);
+
+            if ($stmt->execute()) {
+                ?>
+                <script>
+                    Swal.fire({
+                        color: "var(--verde)",
+                        icon: "success",
+                        iconColor: "var(--verde)",
+                        title: '¡Éxito!',
+                        text: 'Datos actualizados correctamente',
+                        showConfirmButton: false,
+                    })
+                    setTimeout(function () {
+                        window.location.href = window.location.href;
+                    }, 1500);
+                </script>
+                <?php
+            } else {
+                ?>
+                <script>
+                    Swal.fire({
+                        color: "var(--rojo)",
+                        icon: "error",
+                        iconColor: "var(--rojo)",
+                        title: 'Error ',
+                        text: 'No se actualizó el correo',
+                        showConfirmButton: false,
+                    })
+                    setTimeout(function () {
+                        window.location.href = window.location.href;
+                    }, 1500);
+                </script>
+                <?php
+            }
+            $stmt->close();
+        }
+    }
+    $conn->close();
+    exit();
+}
+?>
