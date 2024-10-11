@@ -42,7 +42,7 @@ include_once ("../settings/conexion.php");
                         <h5>Artículos</h5>
                     </a>
                 </li>
-                
+
                 <!--Menú de tipo de inventarios-->
                 <span class="panelMenuInventory">
                     <li class="menuInventory">
@@ -52,7 +52,7 @@ include_once ("../settings/conexion.php");
                         </a>
                     </li>
                     <span class="subMenu">
-                        
+
                         <li class="subMenu1">
                             <a href="3_inventory1.php">
                                 <i class="fa-solid fa-stapler"></i>
@@ -78,8 +78,8 @@ include_once ("../settings/conexion.php");
                             </a>
                         </li>
                     </span>
-                </span >
-                
+                </span>
+
                 <li class="active">
                     <a href="#">
                         <i class="fa-solid fa-warehouse"></i>
@@ -145,10 +145,44 @@ include_once ("../settings/conexion.php");
                     <th>Dirección</th>
                     <th>Artículos en Existencia</th>
                     <th>Editar</th>
-                    <th>Consultar</th>
+                    <th>Elimitar</th>
                 </tr>
             </thead>
             <tbody>
+                <?php
+                $stmt = $conn->prepare("SELECT * FROM warehouses");
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if ($result->num_rows > 0) {
+                    $fila = 1;
+                    while ($row = $result->fetch_assoc()) {
+                        ?>
+                        <tr>
+                            <td>
+                                <?php echo $fila; ?>
+                            </td>
+                            <td><?php echo $row['warehouses_name']; ?></td>
+                            <td><?php echo $row['warehouses_province']; ?></td>
+                            <td><?php echo $row['warehouses_location']; ?></td>
+                            <td><?php echo $row['articles_warehouses']; ?></td>
+                            <td>
+                                <a href="javascript:void(0);" onclick="editBodega(<?php echo $row['warehouses_id']; ?>)">
+                                    <i class="fa-solid fa-user-pen"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0);" onclick="deleteBodega(<?php echo $row['warehouses_id']; ?>)">
+                                    <i class="fa-solid fa-user-minus"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        <?php
+                        $fila++;
+                    }
+                }
+                ?>
 
             </tbody>
         </table>
@@ -161,36 +195,36 @@ include_once ("../settings/conexion.php");
 
                     <!--campo de nombre de la bodega-->
                     <div class="formLogCampo">
-                        <label for="warehouse_name">Nombre:</label>
+                        <label for="warehouses_name">Nombre:</label>
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
-                            <input class="btnTxt" type="text" name="warehouse_name" id="warehouse_name"
-                                pattern="[a-zA-ZñÑ]{3,30}" maxlength="30" placeholder="introduzca un nombre" required
-                                autofocus>
+                            <input class="btnTxt" type="text" name="warehouses_name" id="warehouses_name"
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]+" maxlength="30" placeholder="introduzca un nombre"
+                                required autofocus>
                         </div>
                     </div>
 
                     <!--campo de provincia de la bodega-->
                     <div class="formLogCampo">
-                        <label for="warehouse_name">Provincia:</label>
+                        <label for="warehouses_province">Provincia:</label>
                         <div class="campo">
                             <i class="fa-solid fa-map-location-dot"></i>
-                            <select name="warehouse_country" id="warehouse_country" class="btnTxt" required>
+                            <select name="warehouses_province" id="warehouses_province" class="btnTxt" required>
                                 <option value="">Seleccione</option>
-                                <option value="">Panamá</option>
-                                <option value="">Colón</option>
-                                <option value="">Chiriquí</option>
+                                <option value="Panamá">Panamá</option>
+                                <option value="Colón">Colón</option>
+                                <option value="Chiriquí">Chiriquí</option>
                             </select>
                         </div>
                     </div>
 
                     <!--campo de ubicación de la bodega-->
                     <div class="formLogCampo">
-                        <label for="warehouse_location">Dirección:</label>
+                        <label for="warehouses_location">Dirección:</label>
                         <div class="campo">
                             <i class="fa-solid fa-location-dot"></i>
-                            <textarea name="articles_description" id="articles_description" class="btnTxt textArea"
-                                maxlength="100" pattern="[a-zñA-ZÑ0-9]"
+                            <textarea name="warehouses_location" id="warehouses_location" class="btnTxt textArea"
+                                maxlength="100" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]+"
                                 placeholder="introduzca la dirección de la bodega" required></textarea>
                         </div>
                     </div>
@@ -217,9 +251,85 @@ include_once ("../settings/conexion.php");
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+    <script src="../js/4_warehouses.js"></script>
     <script src="../settings/utils.js"></script>
     <script src="../settings/header.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>
+
+<!--Crear Bodega-->
+<?php
+
+if (
+    isset($_POST['warehouses_name']) &&
+    isset($_POST['warehouses_province']) &&
+    isset($_POST['warehouses_location'])
+) {
+    $name = htmlspecialchars($_POST['warehouses_name']);
+    $provincia = htmlspecialchars($_POST['warehouses_province']);
+    $direccion = htmlspecialchars($_POST['warehouses_location']);
+
+    // Verificar si la cédula o el correo ya existen
+    $checkQuery = $conn->prepare("SELECT * FROM warehouses WHERE warehouses_name = ? OR warehouses_location = ?");
+    $checkQuery->bind_param("ss", $name, $direccion);
+    $checkQuery->execute();
+    $result = $checkQuery->get_result();
+
+    if ($result->num_rows > 0) {
+        ?>
+        <script>
+            Swal.fire({
+                color: "var(--rojo)",
+                icon: "error",
+                iconColor: "var(--rojo)",
+                title: '¡Error!',
+                text: 'La Bodega ya existen',
+                showConfirmButton: true,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = window.location.href;
+                }
+            });
+        </script>
+        <?php
+    } else {
+        $stmt = $conn->prepare("INSERT INTO warehouses (warehouses_name, warehouses_province, warehouses_location) 
+                VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $name, $provincia, $direccion);
+
+        if ($stmt->execute()) {
+            ?>
+            <script>
+                Swal.fire({
+                    color: "var(--verde)",
+                    icon: "success",
+                    iconColor: "var(--verde)",
+                    title: '!Éxito!',
+                    text: 'Bodega Creada',
+                    showConfirmButton: true,
+                    customClass: {
+                        confirmButton: 'btn-confirm'
+                    },
+                    confirmButtonText: "Aceptar",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = window.location.href;
+                    }
+                });
+            </script>
+            <?php
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+        $stmt->close();
+    }
+    $checkQuery->close();
+    $conn->close();
+}
+?>

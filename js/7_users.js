@@ -7,7 +7,7 @@ $(document).ready(function () {
             processing: "Procesando...",
             lengthMenu: "Mostrar _MENU_ usuarios",
             zeroRecords: "No se encontraron usuarios",
-            emptyTable: "Ningún usuario disponible en esta tabla",
+            emptyTable: "Ningún usuario disponible",
             info: "Mostrando usuario del _START_ al _END_ de un total de _TOTAL_ usuarios",
             infoEmpty: "Mostrando usuario del 0 al 0 de un total de 0 usuarios",
             infoFiltered: "(filtrado de un total de _MAX_ usuarios)",

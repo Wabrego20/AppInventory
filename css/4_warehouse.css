@@ -178,3 +178,37 @@ main {
     }
   }
 }
+
+
+.fa-user-pen {
+  background-color: var(--naranja);
+}
+
+.fa-user-pen:hover {
+  color: var(--naranja);
+  box-shadow: 0 0 5px var(--naranja);
+}
+
+.fa-user-minus {
+  background-color: var(--rojo);
+}
+
+.fa-user-minus:hover {
+  color: var(--rojo);
+  box-shadow: 0 0 5px var(--rojo);
+}
+
+.fa-user-pen:hover,
+.fa-user-minus:hover {
+  background-color: var(--blanco);
+}
+.fa-user-pen,
+.fa-user-minus {
+  color: var(--blanco);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  transition: 0.2s ease-in-out;
+}

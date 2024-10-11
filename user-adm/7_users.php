@@ -1,7 +1,7 @@
 <!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
-include_once("../settings/sessionStart.php");
-include_once("../settings/conexion.php");
+include_once ("../settings/sessionStart.php");
+include_once ("../settings/conexion.php");
 ?>
 
 <!DOCTYPE html>
@@ -151,49 +151,33 @@ include_once("../settings/conexion.php");
                     <th>Apellido</th>
                     <th>Correo</th>
                     <th>Rol</th>
-                    <th>Foto</th>
                     <th>Día de Registro</th>
                     <th>Eliminar</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                $session = $_SESSION['users_user']; // Define la variable después de incluir sessionStart.php
+                $session = $_SESSION['users_user'];
                 $usuarios = "SELECT * FROM users WHERE users_user != ?";
                 $stmt = $conn->prepare($usuarios);
-                $stmt->bind_param("s", $session); // Asumiendo que users_user es una cadena de texto
+                $stmt->bind_param("s", $session);
                 $stmt->execute();
                 $verUsuarios = $stmt->get_result();
 
                 if ($verUsuarios->num_rows > 0) {
                     $fila = 1;
                     while ($row = $verUsuarios->fetch_assoc()) {
-                ?>
+                        ?>
                         <tr>
                             <td>
                                 <?php echo $fila; ?>
                             </td>
-                            <td>
-                                <?php echo $row['users_dni']; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['users_name']; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['users_last_name']; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['users_email']; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['users_rol']; ?>
-                            </td>
-                            <td>
-                                <img src="path/to/images/<?php echo $row['users_photo']; ?>" alt="" width="50">
-                                <i class="fa-solid fa-id-badge"></i>
-                            </td>
-                            <td>
-                                <?php echo $row['users_registration_date']; ?>
+                            <td><?php echo $row['users_dni']; ?></td>
+                            <td><?php echo $row['users_name']; ?></td>
+                            <td><?php echo $row['users_last_name']; ?></td>
+                            <td><?php echo $row['users_email']; ?></td>
+                            <td><?php echo $row['users_rol']; ?></td>
+                            <td><?php echo $row['users_registration_date']; ?>
                             </td>
                             <td>
                                 <a href="javascript:void(0);" onclick="deleteUser(<?php echo $row['users_id']; ?>)">
@@ -202,11 +186,12 @@ include_once("../settings/conexion.php");
                             </td>
                         </tr>
 
-                <?php
+                        <?php
                         $fila++;
                     }
                 }
                 ?>
+
             </tbody>
         </table>
 
@@ -232,8 +217,9 @@ include_once("../settings/conexion.php");
                         <label for="user">Nombre:</label>
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
-                            <input class="btnTxt" type="text" name="users_name" id="users_name" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,15}"
-                                maxlength="15" placeholder="introduzca un nombre" required>
+                            <input class="btnTxt" type="text" name="users_name" id="users_name"
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,15}" maxlength="15" placeholder="introduzca un nombre"
+                                required>
                         </div>
                     </div>
 
@@ -243,7 +229,8 @@ include_once("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-file-signature"></i>
                             <input class="btnTxt" type="text" name="users_last_name" id="users_last_name"
-                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{4,15}" maxlength="15" placeholder="introduzca un apellido" required>
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{4,15}" maxlength="15" placeholder="introduzca un apellido"
+                                required>
                         </div>
                     </div>
 
@@ -353,7 +340,7 @@ if (isset($_POST['users_dni']) && isset($_POST['users_name']) && isset($_POST['u
     $result = $checkQuery->get_result();
 
     if ($result->num_rows > 0) {
-?>
+        ?>
         <script>
             Swal.fire({
                 color: "var(--rojo)",
@@ -374,12 +361,37 @@ if (isset($_POST['users_dni']) && isset($_POST['users_name']) && isset($_POST['u
         </script>
         <?php
     } else {
+        function generateUniqueUsername($conn, $user)
+        {
+            $originalUser = $user;
+            $counter = 1;
+
+            // Verificar si el nombre de usuario existe
+            $sql = "SELECT * FROM users WHERE users_user = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("s", $user);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            // Si el nombre de usuario existe, agregar un número
+            while ($result->num_rows > 0) {
+                $user = $originalUser . $counter;
+                $stmt->bind_param("s", $user);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $counter++;
+            }
+
+            return $user;
+        }
+        $uniqueUser = generateUniqueUsername($conn, $user);
+
         $stmt = $conn->prepare("INSERT INTO users (users_dni, users_name, users_last_name, users_email, users_user, users_password, users_rol, users_registration_date, departament_id) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssssss", $dni, $name, $lastName, $email, $user, $password, $rol, $registration_date, $departament);
+        $stmt->bind_param("sssssssss", $dni, $name, $lastName, $email, $uniqueUser, $password, $rol, $registration_date, $departament);
 
         if ($stmt->execute()) {
-        ?>
+            ?>
             <script>
                 Swal.fire({
                     color: "var(--verde)",
@@ -398,7 +410,7 @@ if (isset($_POST['users_dni']) && isset($_POST['users_name']) && isset($_POST['u
                     }
                 });
             </script>
-<?php
+            <?php
         } else {
             echo "Error: " . $stmt->error;
         }
