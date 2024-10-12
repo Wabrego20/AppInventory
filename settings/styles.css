@@ -8,7 +8,7 @@
   --even: #ebe7e7;
   --fondo: #00000066;
   --azul: #004b99;
-  --grisClaro:#c3c3c3;
+  --grisClaro: #c3c3c3;
   --gris: #808080;
   --blanco: #ffffff;
   --negro: #000000;
@@ -27,7 +27,8 @@ body {
   flex-direction: column;
   overflow-x: hidden;
 }
-header, footer{
+header,
+footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -35,8 +36,9 @@ header, footer{
   width: 100%;
   background-color: var(--blanco);
   box-shadow: 0 0 10px var(--azul);
+  z-index: 2;
 }
-footer h6{
+footer h6 {
   width: 95%;
   margin: 5px auto;
   text-align: center;
@@ -47,6 +49,7 @@ main {
   width: 100%;
   justify-content: center;
   flex: 1;
+  z-index: 1;
 }
 /*Imagen de Fondo*/
 .fondo {
@@ -61,18 +64,18 @@ main {
   min-height: 100vh;
   z-index: -2;
 }
-.ruta{
+.ruta {
   display: none;
 }
 
 @media screen and (max-width: 1000px) {
-  .ruta{
+  .ruta {
     display: flex;
     justify-content: start;
     align-items: center;
     width: 100%;
     border: 1px solid var(--gris);
-    h4{
+    h4 {
       color: var(--azul);
       margin: 5px;
     }
@@ -80,40 +83,40 @@ main {
 }
 
 /*Botones del switalet2*/
-.btn-confirm{
+.btn-confirm {
   background-color: var(--azul);
   color: var(--blanco);
   font-weight: bold;
   transition: 0.2s ease-in-out;
 }
-.btn-confirm:focus{
+.btn-confirm:focus {
   box-shadow: 0 0 5px var(--azul);
   outline: none;
 }
-.btn-confirm:hover{
+.btn-confirm:hover {
   background-color: var(--blanco);
   color: var(--azul);
   box-shadow: 0 0 5px var(--azul);
 }
-.btn-cancel{
+.btn-cancel {
   background-color: var(--gris);
   color: var(--blanco);
   transition: 0.2s ease-in-out;
   font-weight: bold;
 }
-.btn-cancel:hover{
+.btn-cancel:hover {
   background-color: var(--blanco);
   color: var(--gris);
   box-shadow: 0 0 5px var(--gris);
 }
-.btnSubmitPanel{
+.btnSubmitPanel {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   width: 95%;
 }
-.btnSubmit{
+.btnSubmit {
   height: 40px;
   padding: 0 10px;
   border: none;
@@ -122,59 +125,154 @@ main {
   transition: 0.3s ease-in-out;
   margin: 10px 5px;
 }
-.btnSubmit:hover{
+.btnSubmit:hover {
   cursor: pointer;
 }
-.btnCancel{
+.btnCancel {
   color: var(--blanco);
   background-color: var(--gris);
   line-height: 40px;
 }
-.btnCreateUser{
+.btnCreateUser {
   color: var(--blanco);
   background-color: var(--verde);
 }
-.btnEditUser{
+.btnEditUser {
   color: var(--blanco);
   background-color: var(--naranja);
   line-height: 40px;
 }
-.btnSaveUser{
+.btnSaveUser {
   color: var(--blanco);
   background-color: var(--verde);
-  pointer-events: none; 
-  opacity: 0.5; 
+  pointer-events: none;
+  opacity: 0.5;
 }
-.btnCancel:hover{
+.btnCancel:hover {
   color: var(--gris);
   background-color: var(--blanco);
   box-shadow: 0 0 5px var(--gris);
 }
-.btnCreateUser:hover{
+.btnCreateUser:hover {
   color: var(--verde);
   background-color: var(--blanco);
   box-shadow: 0 0 5px var(--verde);
 }
-.btnEditUser:hover{
+.btnEditUser:hover {
   color: var(--naranja);
   background-color: var(--blanco);
   box-shadow: 0 0 5px var(--naranja);
 }
-.btnSaveUser:hover{
+.btnSaveUser:hover {
   color: var(--verde);
   background-color: var(--blanco);
   box-shadow: 0 0 5px var(--verde);
 }
-.fa-floppy-disk{
+.fa-floppy-disk {
   font-size: 12px;
   margin: 0 2px 0 0;
   padding: 0;
 }
 
-
-
-.fa-asterisk{
+.fa-asterisk {
   color: var(--rojo);
   margin-left: 5px;
   font-size: 8px;
+}
+
+.btnTxt::placeholder {
+  opacity: 1;
+}
+
+
+
+/*Tabla*/
+.dataTables_wrapper {
+  background-color: var(--azul);
+  max-width: 95%;
+  margin: 10px auto;
+  overflow: auto;
+  border-radius: 5px;
+  font-weight: bold;
+  box-shadow: 0 0 15px var(--fondo);
+  .dt-buttons {
+    float: inline-end;
+    margin: 5px;
+
+    .dt-button {
+      color: var(--blanco);
+      background-color: var(--verde);
+      border-radius: 5px;
+      border: none;
+      height: 40px;
+      padding: 0 10px;
+    }
+
+    .dt-button:hover {
+      color: var(--verde);
+      background-color: var(--blanco);
+      cursor: pointer;
+      box-shadow: 0 0 5px var(--verde);
+    }
+  }
+
+  .dataTables_length {
+    float: left;
+    margin: 5px;
+
+    select {
+      width: 40px;
+      height: 40px;
+      color: blue;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    label {
+      color: var(--blanco);
+    }
+  }
+
+  .dataTables_filter {
+    margin: 5px;
+  }
+
+  input {
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    color: var(--azul);
+  }
+
+  label {
+    color: var(--blanco);
+  }
+
+  .dataTable thead th {
+    color: var(--blanco);
+    text-align: center;
+  }
+
+  .dataTable tbody tr {
+    color: var(--azul);
+    text-align: center;
+  }
+
+  .dataTable tbody .even {
+    background-color: var(--even);
+  }
+
+  .dataTables_empty {
+    color: var(--rojo)
+  }
+
+  .dataTables_paginate span a.current {
+    border-radius: 5px;
+  }
+}
+
+.dataTables_info {
+  color: var(--blanco) !important;
+  margin: 5px;
 }

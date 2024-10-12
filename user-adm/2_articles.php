@@ -53,7 +53,7 @@ include_once ("../settings/conexion.php");
                     <span class="subMenu">
 
                         <li class="subMenu1">
-                            <a href="">
+                            <a href="3_inventory1.php">
                                 <i class="fa-solid fa-stapler"></i>
                                 <h5>Consumo Interno</h5>
                             </a>
@@ -217,7 +217,7 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
                             <input class="btnTxt" type="text" name="articles_name" id="articles_name"
-                                pattern="[a-zA-ZñÑ.-0-9]{3,30}" maxlength="30"
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]{3,30}" maxlength="30"
                                 placeholder="introduzca nombre del artículo" autofocus required>
                         </div>
                     </div>
@@ -228,7 +228,7 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-file-signature"></i>
                             <textarea name="articles_description" id="articles_description" class="btnTxt textArea"
-                                maxlength="100" pattern="[a-zñA-ZÑ0-9]{4,100}"
+                                maxlength="100" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]{4,100}"
                                 placeholder="introduzca una descripción del artículo" required></textarea>
                         </div>
                     </div>
@@ -239,7 +239,7 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-regular fa-flag"></i>
                             <input class="btnTxt" type="text" name="articles_brand" id="articles_brand"
-                                pattern="[a-zA-ZñÑ0-9 ]{3,30}" maxlength="30"
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]{3,30}" maxlength="30"
                                 placeholder="introduzca la marca del producto">
                         </div>
                     </div>
