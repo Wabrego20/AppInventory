@@ -39,7 +39,6 @@ nav {
     }
   }
 }
-
 .active {
   pointer-events: none;
   background-color: var(--blanco);
@@ -112,7 +111,32 @@ nav ul li:hover {
   background-color: var(--blanco);
   box-shadow: 0 0 5px var(--rojo);
 }
+/*
+*Menu de Tipos de Inventarios
+*/
+.panelMenuInventory {
+  position: relative;
+  text-align: center;
+  z-index: 2;
+}
+.subMenu {
+  position: absolute;
+  transition: 0.2s ease-in-out;
+  display: none;
+  border-radius: 5px;
+  background-color: var(--gris);
+}
+.panelMenuInventory:hover .subMenu {
+  display: block;
+}
+.menuInventory a,
+.subMenu a {
+  display: block;
+}
 
+/*
+*Menú Rsponsive
+*/
 @media screen and (max-width: 1000px) {
   nav {
     z-index: 2;
@@ -129,7 +153,6 @@ nav ul li:hover {
     flex-wrap: nowrap;
     transition: 0.2s ease-in-out;
     overflow: auto;
-
     span {
       background-color: var(--blanco);
       width: 100%;
@@ -163,7 +186,6 @@ nav ul li:hover {
       }
     }
   }
-
   header .fa-bars,
   header .fa-xmark {
     display: block;
@@ -178,7 +200,6 @@ nav ul li:hover {
     transition: 0.2s ease-in-out;
     margin: 5px;
   }
-
   header .fa-bars:hover,
   header .fa-xmark:hover {
     box-shadow: 0 0 5px var(--azul);
@@ -186,37 +207,14 @@ nav ul li:hover {
     background-color: var(--blanco);
     cursor: pointer;
   }
-
   .subMenu {
     width: 150px;
     top: 0;
     left: 100%;
     display: flex;
-    z-index: 1;
     li {
       width: 98%;
     }
   }
 
-}
-/*
-*Menu de Tipos de Inventarios
-*/
-.panelMenuInventory {
-  position: relative;
-  text-align: center;
-}
-.subMenu {
-  position: absolute;
-  transition: 0.2s ease-in-out;
-  display: none;
-  border-radius: 5px;
-  background-color: var(--blanco);
-}
-.panelMenuInventory:hover .subMenu {
-  display: block;
-}
-.menuInventory a,
-.subMenu a {
-  display: block;
 }
