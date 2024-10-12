@@ -157,7 +157,7 @@ include_once ("../settings/conexion.php");
             <tbody>
                 <?php
                 // Declaración SQL
-                $articulos = "SELECT * FROM articles";
+                $articulos = "SELECT articles.*, categories.* FROM articles, categories where articles.categories_id = categories.categories_id ";
                 // Preparar la declaración
                 $stmt = $conn->prepare($articulos);
                 // Ejecutar la declaración
@@ -176,16 +176,16 @@ include_once ("../settings/conexion.php");
                         <td><?php echo !empty($row['articles_description']) ? $row['articles_description'] : 'No disponible'; ?>
                         </td>
                         <td><?php echo !empty($row['articles_brand']) ? $row['articles_brand'] : 'No disponible'; ?></td>
-                        <td><?php echo !empty($row['articles_unit_cost']) ? $row['articles_unit_cost'] : 'No disponible'; ?>
+                        <td><?php echo !empty($row['categories_name']) ? $row['categories_name'] : 'No disponible'; ?></td>
+                        <td><?php echo !empty($row['units_name']) ? $row['units_name'] : 'no disponible'; ?>
                         </td>
-                        <td><?php echo !empty($row['articles_arrival_date']) ? $row['articles_arrival_date'] : 'No disponible'; ?>
+                        <td><?php echo !empty($row['articles_unit_cost']) ? $row['articles_unit_cost'] : '0.00'; ?>
                         </td>
-                        <td><?php echo !empty($row['articles_expiration_date']) ? $row['articles_expiration_date'] : 'No disponible'; ?>
+                        <td><?php echo !empty($row['articles_arrival_date']) ? $row['articles_arrival_date'] : 'dd/mm/aaaa'; ?>
                         </td>
-                        <td><?php echo !empty($row['articles_photo']) ? $row['articles_photo'] : 'No disponible'; ?></td>
-                        <td><?php echo !empty($row['categories_id']) ? $row['categories_id'] : 'No disponible'; ?></td>
-                        <td><?php echo !empty($row['warehouses_id']) ? $row['warehouses_id'] : 'No disponible'; ?></td>
-
+                        <td><?php echo !empty($row['articles_expiration_date']) ? $row['articles_expiration_date'] : 'dd/mm/aaaa'; ?>
+                        </td>
+                        <td><?php echo !empty($row['articles_photo']) ? $row['articles_photo'] : '<i class="fa-solid fa-camera"></i>'; ?></td>
                         <td>
                             <a href="javascript:void(0);" onclick="deleteUser(<?php echo $row['articles_id']; ?>)">
                                 <i class="fa-solid fa-user-pen"></i>
@@ -298,11 +298,11 @@ include_once ("../settings/conexion.php");
                     <div class="formLogCampo">
                         <label for="articles_unit_cost">Costo Unitario:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
-                            <i class="fa-solid fa-sack-dollar"></i>
+                            <i class="fa-solid fa-dollar-sign"></i>
                             <input class="btnTxt" type="number" name="articles_unit_cost" id="articles_unit_cost"
                                 step="0.01" max="1000000" placeholder="introduzca precio del artículo" required>
                         </div>
-                        <!--oninput="removeNonNumeric(this)" onblur="formatCurrency(this)"-->
+                            
                     </div>
 
                     <!--campo de fecha de llegada del artículos-->
