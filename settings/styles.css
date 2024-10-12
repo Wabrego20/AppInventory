@@ -184,9 +184,7 @@ main {
   opacity: 1;
 }
 
-
-
-/*Tabla*/
+/*Tablas*/
 .dataTables_wrapper {
   background-color: var(--azul);
   max-width: 95%;

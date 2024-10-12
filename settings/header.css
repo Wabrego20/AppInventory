@@ -199,18 +199,13 @@ nav ul li:hover {
   }
 
 }
-
-
-
-
-
-
-
+/*
+*Menu de Tipos de Inventarios
+*/
 .panelMenuInventory {
   position: relative;
   text-align: center;
 }
-
 .subMenu {
   position: absolute;
   transition: 0.2s ease-in-out;
@@ -218,12 +213,9 @@ nav ul li:hover {
   border-radius: 5px;
   background-color: var(--blanco);
 }
-
 .panelMenuInventory:hover .subMenu {
   display: block;
-
 }
-
 .menuInventory a,
 .subMenu a {
   display: block;
