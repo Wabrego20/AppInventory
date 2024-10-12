@@ -51,7 +51,7 @@ include_once ("../settings/conexion.php");
                         </a>
                     </li>
                     <span class="subMenu">
-                        
+
                         <li class="subMenu1">
                             <a href="">
                                 <i class="fa-solid fa-stapler"></i>
@@ -77,8 +77,8 @@ include_once ("../settings/conexion.php");
                             </a>
                         </li>
                     </span>
-                </span >
-                
+                </span>
+
                 <li>
                     <a href="4_warehouse.php">
                         <i class="fa-solid fa-warehouse"></i>
@@ -155,6 +155,53 @@ include_once ("../settings/conexion.php");
                 </tr>
             </thead>
             <tbody>
+                <?php
+                // Declaración SQL
+                $articulos = "SELECT * FROM articles";
+                // Preparar la declaración
+                $stmt = $conn->prepare($articulos);
+                // Ejecutar la declaración
+                $stmt->execute();
+                // Obtener los resultados
+                $result = $stmt->get_result();
+                // Procesar los resultados
+                while ($row = $result->fetch_assoc()) {
+                    $fila=1
+                    ?>
+                    <tr>
+                        <td>
+                            <?php echo $fila; ?>
+                        </td>
+                        <td><?php echo !empty($row['articles_name']) ? $row['articles_name'] : 'No disponible'; ?></td>
+                        <td><?php echo !empty($row['articles_description']) ? $row['articles_description'] : 'No disponible'; ?>
+                        </td>
+                        <td><?php echo !empty($row['articles_brand']) ? $row['articles_brand'] : 'No disponible'; ?></td>
+                        <td><?php echo !empty($row['articles_unit_cost']) ? $row['articles_unit_cost'] : 'No disponible'; ?>
+                        </td>
+                        <td><?php echo !empty($row['articles_arrival_date']) ? $row['articles_arrival_date'] : 'No disponible'; ?>
+                        </td>
+                        <td><?php echo !empty($row['articles_expiration_date']) ? $row['articles_expiration_date'] : 'No disponible'; ?>
+                        </td>
+                        <td><?php echo !empty($row['articles_photo']) ? $row['articles_photo'] : 'No disponible'; ?></td>
+                        <td><?php echo !empty($row['categories_id']) ? $row['categories_id'] : 'No disponible'; ?></td>
+                        <td><?php echo !empty($row['warehouses_id']) ? $row['warehouses_id'] : 'No disponible'; ?></td>
+
+                        <td>
+                            <a href="javascript:void(0);" onclick="deleteUser(<?php echo $row['articles_id']; ?>)">
+                                <i class="fa-solid fa-user-pen"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0);" onclick="deleteUser(<?php echo $row['articles_id']; ?>)">
+                                <i class="fa-solid fa-user-minus"></i>
+                            </a>
+                        </td>
+                    </tr>
+
+                    <?php
+                    $fila++;
+                }
+                ?>
             </tbody>
         </table>
 
