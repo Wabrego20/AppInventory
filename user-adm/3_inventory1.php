@@ -174,6 +174,7 @@ include_once ("../settings/conexion.php");
                             <select name="articles_name" class="btnTxt" id="articles_name" required>
                                 <option value="">Seleccione</option>
                                 <?php
+                                 $selectArticles = $conn->query("SELECT articles_id, articles_name FROM articles");
                                 if ($selectArticles->num_rows > 0) {
                                     while ($row = $selectArticles->fetch_assoc()) {
                                         echo '<option value="' . $row["articles_id"] . '">' . $row["articles_name"] . '</option>';
@@ -197,15 +198,16 @@ include_once ("../settings/conexion.php");
 
                     <!--campo de bodega-->
                     <div class="formLogCampo">
-                        <label for="warehouse_name">Bodega:</label>
+                        <label for="warehouses_name">Bodega:</label>
                         <div class="campo">
                             <i class="fa-solid fa-ruler-combined"></i>
-                            <select name="warehouse_name" class="btnTxt" id="warehouse_name" required>
+                            <select name="warehouses_name" class="btnTxt" id="warehouses_name" required>
                                 <option value="">Seleccione</option>
                                 <?php
+                                 $selectWarehouse = $conn->query("SELECT warehouses_id, warehouses_name FROM warehouses");
                                 if ($selectWarehouse->num_rows > 0) {
                                     while ($row = $selectWarehouse->fetch_assoc()) {
-                                        echo '<option value="' . $row["warehouse_id"] . '">' . $row["warehouse_name"] . '</option>';
+                                        echo '<option value="' . $row["warehouses_id"] . '">' . $row["warehouses_name"] . '</option>';
                                     }
                                 } else {
                                     echo '<option value="">No hay unidades disponibles</option>';
@@ -248,7 +250,7 @@ include_once ("../settings/conexion.php");
                     <div class="btnSubmitPanel">
                         <button type="submit" class="btnSubmit btnCreateUser">
                             <i class="fa-solid fa-heart-circle-plus"></i>
-                            Crear Artículo
+                            Agregar Artículo
                         </button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormAddArticle()">Cancelar</div>
                     </div>
