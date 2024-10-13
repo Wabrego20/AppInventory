@@ -41,7 +41,7 @@ include_once ("../settings/conexion.php");
                         <h5>Artículos</h5>
                     </a>
                 </li>
-                
+
                 <!--Menú de tipo de inventarios-->
                 <span class="panelMenuInventory">
                     <li class="menuInventory">
@@ -51,7 +51,7 @@ include_once ("../settings/conexion.php");
                         </a>
                     </li>
                     <span class="subMenu">
-                        
+
                         <li class="active subMenu1">
                             <a href="">
                                 <i class="fa-solid fa-stapler"></i>
@@ -77,7 +77,7 @@ include_once ("../settings/conexion.php");
                             </a>
                         </li>
                     </span>
-                </span >
+                </span>
                 <li>
                     <a href="4_warehouse.php">
                         <i class="fa-solid fa-warehouse"></i>
@@ -174,10 +174,13 @@ include_once ("../settings/conexion.php");
                             <select name="articles_name" class="btnTxt" id="articles_name" required>
                                 <option value="">Seleccione</option>
                                 <?php
-                                 $selectArticles = $conn->query("SELECT articles_id, articles_name FROM articles");
+                                $selectArticles = $conn->query("SELECT articles.*, categories.* 
+                                FROM articles 
+                                JOIN categories 
+                                WHERE articles.categories_id = categories.categories_id");
                                 if ($selectArticles->num_rows > 0) {
                                     while ($row = $selectArticles->fetch_assoc()) {
-                                        echo '<option value="' . $row["articles_id"] . '">' . $row["articles_name"] . '</option>';
+                                        echo '<option value="' . $row["articles_id"] . '" data-category="' . $row["categories_name"] . '" data-cost="' . $row["articles_unit_cost"] . '">' . $row["articles_name"] . '</option>';
                                     }
                                 } else {
                                     echo '<option value="">No hay arículo disponible</option>';
@@ -192,7 +195,7 @@ include_once ("../settings/conexion.php");
                         <label for="articles_category">Categoría:</label>
                         <div class="campo">
                             <i class="fa-solid fa-layer-group"></i>
-                            <label class="btnTxt" id="articles_category"></label>
+                            <input type="text" name="categories_name" id="categories_name" class="btnTxt" readonly>
                         </div>
                     </div>
 
@@ -204,7 +207,7 @@ include_once ("../settings/conexion.php");
                             <select name="warehouses_name" class="btnTxt" id="warehouses_name" required>
                                 <option value="">Seleccione</option>
                                 <?php
-                                 $selectWarehouse = $conn->query("SELECT warehouses_id, warehouses_name FROM warehouses");
+                                $selectWarehouse = $conn->query("SELECT warehouses_id, warehouses_name FROM warehouses");
                                 if ($selectWarehouse->num_rows > 0) {
                                     while ($row = $selectWarehouse->fetch_assoc()) {
                                         echo '<option value="' . $row["warehouses_id"] . '">' . $row["warehouses_name"] . '</option>';
@@ -233,7 +236,7 @@ include_once ("../settings/conexion.php");
                         <label for="articles_unit_cost">Costo Unitario:</label>
                         <div class="campo">
                             <i class="fa-solid fa-sack-dollar"></i>
-                            <label class="btnTxt" id="articles_unit_cost"></label>
+                            <input type="text" name="articles_unit_cost" id="articles_unit_cost" class="btnTxt"readonly>
                         </div>
                     </div>
 
@@ -248,7 +251,7 @@ include_once ("../settings/conexion.php");
 
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
                     <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnCreateUser">
+                        <button type="submit" class="btnSubmit btnCreateUser" name="agregarArtConsumoInterno">
                             <i class="fa-solid fa-heart-circle-plus"></i>
                             Agregar Artículo
                         </button>
@@ -272,6 +275,7 @@ include_once ("../settings/conexion.php");
     <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
     <script src="../settings/utils.js"></script>
     <script src="../settings/header.js"></script>
+    <script src="../js/3_inventory1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
