@@ -168,7 +168,7 @@ include_once ("../settings/conexion.php");
 
                     <!--campo de nombre de artículo-->
                     <div class="formLogCampo">
-                        <label for="articles_name">Nombre:</label>
+                        <label for="articles_name">Nombre:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
                             <select name="articles_name" class="btnTxt" id="articles_name" required>
@@ -201,7 +201,7 @@ include_once ("../settings/conexion.php");
 
                     <!--campo de bodega-->
                     <div class="formLogCampo">
-                        <label for="warehouses_name">Bodega:</label>
+                        <label for="warehouses_name">Bodega:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-ruler-combined"></i>
                             <select name="warehouses_name" class="btnTxt" id="warehouses_name" required>
@@ -223,11 +223,12 @@ include_once ("../settings/conexion.php");
 
                     <!--campo de cantidad de artículos-->
                     <div class="formLogCampo">
-                        <label for="articles_quantity">Cantidad:</label>
+                        <label for="articles_quantity">Cantidad:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-arrow-up-1-9"></i>
                             <input class="btnTxt" type="number" name="articles_quantity" id="articles_quantity"
-                                pattern="[0-9]{1,7}" max="1000000" placeholder="introduzca la cantidad " required>
+                                 pattern="[0-9]{1,7}" min="1" max="1000000" step="1"
+                                placeholder="introduzca la cantidad " required>
                         </div>
                     </div>
 
@@ -235,8 +236,9 @@ include_once ("../settings/conexion.php");
                     <div class="formLogCampo">
                         <label for="articles_unit_cost">Costo Unitario:</label>
                         <div class="campo">
-                            <i class="fa-solid fa-sack-dollar"></i>
-                            <input type="text" name="articles_unit_cost" id="articles_unit_cost" class="btnTxt"readonly>
+                            <i class="fa-solid fa-dollar-sign"></i>
+                            <input type="text" name="articles_unit_cost" id="articles_unit_cost" class="btnTxt"
+                                 readonly>
                         </div>
                     </div>
 
@@ -245,7 +247,8 @@ include_once ("../settings/conexion.php");
                         <label for="articles_total_cost">Costo Total:</label>
                         <div class="campo">
                             <i class="fa-solid fa-sack-dollar"></i>
-                            <label class="btnTxt" id="articles_total_cost"></label>
+                            <input type="text" name="articles_total_cost" id="articles_total_cost" class="btnTxt"
+                                readonly>
                         </div>
                     </div>
 

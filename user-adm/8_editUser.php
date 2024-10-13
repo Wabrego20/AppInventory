@@ -310,7 +310,7 @@ if ($row = $result->fetch_assoc()) {
                 <div class="campo">
                     <i class="fa-solid fa-location-dot"></i>
                     <textarea name="users_adress" id="users_adress" class="textArea btnTxt" maxlength="100"
-                        pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]+"
+                        pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]{4,100}"
                         placeholder="Editar dirección"><?php echo htmlspecialchars($adress); ?></textarea>
                 </div>
             </div>
