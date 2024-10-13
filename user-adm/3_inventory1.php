@@ -223,10 +223,10 @@ include_once ("../settings/conexion.php");
 
                     <!--campo de cantidad de artículos-->
                     <div class="formLogCampo">
-                        <label for="articles_quantity">Cantidad:<i class="fa-solid fa-asterisk"></i></label>
+                        <label for="inventory1_quantity">Cantidad:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-arrow-up-1-9"></i>
-                            <input class="btnTxt" type="number" name="articles_quantity" id="articles_quantity"
+                            <input class="btnTxt" type="number" name="inventory1_quantity" id="inventory1_quantity"
                                  pattern="[0-9]{1,7}" min="1" max="1000000" step="1"
                                 placeholder="introduzca la cantidad " required>
                         </div>
@@ -244,10 +244,10 @@ include_once ("../settings/conexion.php");
 
                     <!--campo de costo unitario del artículos-->
                     <div class="formLogCampo">
-                        <label for="articles_total_cost">Costo Total:</label>
+                        <label for="inventory1_total_cost">Costo Total:</label>
                         <div class="campo">
                             <i class="fa-solid fa-sack-dollar"></i>
-                            <input type="text" name="articles_total_cost" id="articles_total_cost" class="btnTxt"
+                            <input type="text" name="inventory1_total_cost" id="inventory1_total_cost" class="btnTxt"
                                 readonly>
                         </div>
                     </div>

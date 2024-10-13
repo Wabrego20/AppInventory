@@ -16,16 +16,16 @@ document
       ? unitCost
       : "0";
 
-    var quantity = document.getElementById("articles_quantity").value;
+    var quantity = document.getElementById("inventory1_quantity").value;
     var totalCost = quantity * unitCost;
-    document.getElementById("articles_total_cost").value = totalCost.toFixed(2);
+    document.getElementById("inventory1_total_cost").value = totalCost.toFixed(2);
   });
 
 document
-  .getElementById("articles_quantity")
+  .getElementById("inventory1_quantity")
   .addEventListener("input", function () {
     var unitCost = document.getElementById("articles_unit_cost").value;
     var quantity = this.value;
     var totalCost = quantity * unitCost;
-    document.getElementById("articles_total_cost").value = totalCost.toFixed(2);
+    document.getElementById("inventory1_total_cost").value = totalCost.toFixed(2);
   });
