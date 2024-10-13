@@ -147,15 +147,17 @@ include_once ("../settings/conexion.php");
                     <th>Nombre</th>
                     <th>Categoría</th>
                     <th>Cantidad</th>
-                    <th>Unidad de Medida</th>
                     <th>Fecha de Registro</th>
                     <th>Bodega</th>
                     <th>Costo Unitario</th>
                     <th>Costo Total</th>
+                    <th>Re-Orden</th>
                     <th>Editar</th>
                 </tr>
             </thead>
             <tbody>
+
+
 
             </tbody>
         </table>
@@ -168,10 +170,10 @@ include_once ("../settings/conexion.php");
 
                     <!--campo de nombre de artículo-->
                     <div class="formLogCampo">
-                        <label for="articles_name">Nombre:<i class="fa-solid fa-asterisk"></i></label>
+                        <label for="articles_id">Nombre:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
-                            <select name="articles_name" class="btnTxt" id="articles_name" required>
+                            <select name="articles_id" class="btnTxt" id="articles_id" required>
                                 <option value="">Seleccione</option>
                                 <?php
                                 $selectArticles = $conn->query("SELECT articles.*, categories.* 
@@ -192,10 +194,10 @@ include_once ("../settings/conexion.php");
 
                     <!--campo de categoría-->
                     <div class="formLogCampo">
-                        <label for="articles_category">Categoría:</label>
+                        <label for="categories_name">Categoría:</label>
                         <div class="campo">
                             <i class="fa-solid fa-layer-group"></i>
-                            <input type="text" name="categories_name" id="categories_name" class="btnTxt" readonly>
+                            <input type="text" name="categories_id" id="categories_name" class="btnTxt" readonly>
                         </div>
                     </div>
 
@@ -204,7 +206,7 @@ include_once ("../settings/conexion.php");
                         <label for="warehouses_name">Bodega:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-ruler-combined"></i>
-                            <select name="warehouses_name" class="btnTxt" id="warehouses_name" required>
+                            <select name="warehouses_id" class="btnTxt" id="warehouses_name" required>
                                 <option value="">Seleccione</option>
                                 <?php
                                 $selectWarehouse = $conn->query("SELECT warehouses_id, warehouses_name FROM warehouses");
@@ -217,7 +219,6 @@ include_once ("../settings/conexion.php");
                                 }
                                 ?>
                             </select>
-
                         </div>
                     </div>
 
@@ -227,7 +228,7 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-arrow-up-1-9"></i>
                             <input class="btnTxt" type="number" name="inventory1_quantity" id="inventory1_quantity"
-                                 pattern="[0-9]{1,7}" min="1" max="1000000" step="1"
+                                pattern="[0-9]{1,7}" min="1" max="1000000" step="1"
                                 placeholder="introduzca la cantidad " required>
                         </div>
                     </div>
@@ -238,7 +239,7 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-dollar-sign"></i>
                             <input type="text" name="articles_unit_cost" id="articles_unit_cost" class="btnTxt"
-                                 readonly>
+                                readonly>
                         </div>
                     </div>
 
@@ -283,3 +284,84 @@ include_once ("../settings/conexion.php");
 </body>
 
 </html>
+
+<!--Agregar un articulo de consumo interno-->
+<?php
+if (isset($_POST['agregarArtConsumoInterno'])) {
+
+    $articles_id = htmlspecialchars($_POST['articles_id']);
+    $categories_id = htmlspecialchars($_POST['categories_id']);
+    $quantity = htmlspecialchars($_POST['inventory1_quantity']);
+    date_default_timezone_set('America/Panama');
+    $inventory1_registration_date = date("Y-m-d");
+    $warehouses_id = htmlspecialchars($_POST['warehouses_id']);
+    $total_cost = htmlspecialchars($_POST['inventory1_total_cost']);
+    $re_order = 100;
+    // Calcular el porcentaje de reorden
+    $percentage = ($quantity / $re_order) * 100;
+    // Determinar el color según el porcentaje
+    $color = "var(--verde)";
+    if ($percentage <= 30) {
+        $color = "var(--rojo)";
+    } elseif ($percentage <= 60) {
+        $color = "var(--naranja)";
+    }
+    $checkQuery = $conn->prepare("SELECT * FROM inventory1 WHERE articles_id = ?");
+    $checkQuery->bind_param("i", $articles_id);
+    $checkQuery->execute();
+    $result = $checkQuery->get_result();
+    if ($result->num_rows > 0) {
+        ?>
+        <script>
+            Swal.fire({
+                color: "var(--rojo)",
+                icon: "error",
+                iconColor: "var(--rojo)",
+                title: '¡Error!',
+                text: 'El artículo ya fue agregado',
+                showConfirmButton: true,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = window.location.href;
+                }
+            });
+        </script>
+        <?php
+    } else {
+        $stmt = $conn->prepare("INSERT INTO inventory1 (articles_id, categories_id, inventory1_quantity, inventory1_registration_date, warehouses_id, inventory1_total_cost, inventory1_re_order) 
+        VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("iiisidi", $articles_id, $categories_id, $quantity, $inventory1_registration_date, $warehouses_id, $total_cost, $re_order);
+        if ($stmt->execute()) {
+            ?>
+            <script>
+                Swal.fire({
+                    color: "var(--verde)",
+                    icon: "success",
+                    iconColor: "var(--verde)",
+                    title: '!Éxito!',
+                    text: 'Artículo Agregado',
+                    showConfirmButton: true,
+                    customClass: {
+                        confirmButton: 'btn-confirm'
+                    },
+                    confirmButtonText: "Aceptar",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = window.location.href;
+                    }
+                });
+            </script>
+            <?php
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+        $stmt->close();
+    }
+    $checkQuery->close();
+    $conn->close();
+}
+?>

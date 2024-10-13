@@ -3,7 +3,7 @@
  * Calcular costo total de los articulos agregados
  */
 document
-  .getElementById("articles_name")
+  .getElementById("articles_id")
   .addEventListener("change", function () {
     var selectedOption = this.options[this.selectedIndex];
     var categoryName = selectedOption.getAttribute("data-category");
