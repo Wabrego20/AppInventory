@@ -196,4 +196,10 @@ h2 {
   width: 40px;
   border-radius: 50%;
   border: 3px solid var(--azul);
+  transition: 0.2s ease-in-out;
+}
+.fotoArt:hover{
+  box-shadow: 0 0 5px var(--azul);
+  border: none;
+  scale: 5;
 }
