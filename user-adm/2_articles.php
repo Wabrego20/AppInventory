@@ -157,7 +157,7 @@ include_once ("../settings/conexion.php");
             <tbody>
                 <?php
                 // Declaración SQL
-                $articulos = "SELECT articles.*, categories.* FROM articles, categories where articles.categories_id = categories.categories_id ";
+                $articulos = "SELECT articles.*, categories.*, units_of_measure.* FROM articles, categories, units_of_measure where articles.categories_id = categories.categories_id AND articles.units_id = units_of_measure.units_id ";
                 // Preparar la declaración
                 $stmt = $conn->prepare($articulos);
                 // Ejecutar la declaración
@@ -165,41 +165,49 @@ include_once ("../settings/conexion.php");
                 // Obtener los resultados
                 $result = $stmt->get_result();
                 // Procesar los resultados
-                while ($row = $result->fetch_assoc()) {
-                    $fila=1
-                    ?>
-                    <tr>
-                        <td>
-                            <?php echo $fila; ?>
-                        </td>
-                        <td><?php echo !empty($row['articles_name']) ? $row['articles_name'] : 'No disponible'; ?></td>
-                        <td><?php echo !empty($row['articles_description']) ? $row['articles_description'] : 'No disponible'; ?>
-                        </td>
-                        <td><?php echo !empty($row['articles_brand']) ? $row['articles_brand'] : 'No disponible'; ?></td>
-                        <td><?php echo !empty($row['categories_name']) ? $row['categories_name'] : 'No disponible'; ?></td>
-                        <td><?php echo !empty($row['units_name']) ? $row['units_name'] : 'no disponible'; ?>
-                        </td>
-                        <td><?php echo !empty($row['articles_unit_cost']) ? $row['articles_unit_cost'] : '0.00'; ?>
-                        </td>
-                        <td><?php echo !empty($row['articles_arrival_date']) ? $row['articles_arrival_date'] : 'dd/mm/aaaa'; ?>
-                        </td>
-                        <td><?php echo !empty($row['articles_expiration_date']) ? $row['articles_expiration_date'] : 'dd/mm/aaaa'; ?>
-                        </td>
-                        <td><?php echo !empty($row['articles_photo']) ? $row['articles_photo'] : '<i class="fa-solid fa-camera"></i>'; ?></td>
-                        <td>
-                            <a href="javascript:void(0);" onclick="deleteUser(<?php echo $row['articles_id']; ?>)">
-                                <i class="fa-solid fa-user-pen"></i>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="javascript:void(0);" onclick="deleteUser(<?php echo $row['articles_id']; ?>)">
-                                <i class="fa-solid fa-user-minus"></i>
-                            </a>
-                        </td>
-                    </tr>
+                if ($result->num_rows > 0) {
+                    $fila = 1;
+                    while ($row = $result->fetch_assoc()) {
+                        ?>
+                        <tr>
+                            <td>
+                                <?php echo $fila; ?>
+                            </td>
+                            <td><?php echo !empty($row['articles_name']) ? $row['articles_name'] : 'No disponible'; ?></td>
+                            <td><?php echo !empty($row['articles_description']) ? $row['articles_description'] : 'No disponible'; ?>
+                            </td>
+                            <td><?php echo !empty($row['articles_brand']) ? $row['articles_brand'] : 'No disponible'; ?></td>
+                            <td><?php echo !empty($row['categories_name']) ? $row['categories_name'] : 'No disponible'; ?></td>
+                            <td><?php echo !empty($row['units_name']) ? $row['units_name'] : 'no disponible'; ?>
+                            </td>
+                            <td><?php echo !empty($row['articles_unit_cost']) ? $row['articles_unit_cost'] : '0.00'; ?>
+                            </td>
+                            <td><?php echo !empty($row['articles_arrival_date']) ? $row['articles_arrival_date'] : 'dd/mm/aaaa'; ?>
+                            </td>
+                            <td><?php echo !empty($row['articles_expiration_date']) ? $row['articles_expiration_date'] : 'no aplica'; ?>
+                            </td>
+                            <td>
+                                <?php if (!empty($row['articles_photo'])): ?>
+                                    <img src="data:image/jpeg;base64,<?php echo $row['articles_photo']; ?>" class="fotoArt" />
+                                <?php else: ?>
+                                    <i class="fa-solid fa-camera"></i>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0);" onclick="deleteUser(<?php echo $row['articles_id']; ?>)">
+                                    <i class="fa-solid fa-user-pen"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0);" onclick="deleteUser(<?php echo $row['articles_id']; ?>)">
+                                    <i class="fa-solid fa-user-minus"></i>
+                                </a>
+                            </td>
+                        </tr>
 
-                    <?php
-                    $fila++;
+                        <?php
+                        $fila++;
+                    }
                 }
                 ?>
             </tbody>
@@ -208,7 +216,7 @@ include_once ("../settings/conexion.php");
         <!--Formulario para Crear un articulo-->
         <div class="modalCreateArticle">
             <div class="panelCreateArticle">
-                <form method="post" class="formCreateArticle">
+                <form method="post" class="formCreateArticle" enctype="multipart/form-data">
                     <h2>Crear Artículo/Producto</h2>
 
                     <!--campo de nombre de artículo-->
@@ -217,7 +225,7 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
                             <input class="btnTxt" type="text" name="articles_name" id="articles_name"
-                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]{3,30}" maxlength="30"
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s.,0-9]{3,30}" maxlength="30"
                                 placeholder="introduzca nombre del artículo" autofocus required>
                         </div>
                     </div>
@@ -246,10 +254,10 @@ include_once ("../settings/conexion.php");
 
                     <!--campo de categoría-->
                     <div class="formLogCampo">
-                        <label for="categories_name">Categoría:<i class="fa-solid fa-asterisk"></i></label>
+                        <label for="categories_id">Categoría:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-layer-group"></i>
-                            <select name="categories_name" class="btnTxt" id="categories_name" required>
+                            <select name="categories_id" class="btnTxt" id="categories_id" required>
                                 <option value="">Seleccione</option>
                                 <?php
                                 $selectCategory = $conn->query("SELECT categories_id, categories_name FROM categories");
@@ -269,10 +277,10 @@ include_once ("../settings/conexion.php");
 
                     <!--campo de unidada de medida-->
                     <div class="formLogCampo">
-                        <label for="units_name">Unidad de Medida:<i class="fa-solid fa-asterisk"></i></label>
+                        <label for="units_id">Unidad de Medida:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-ruler-combined"></i>
-                            <select name="units_name" class="btnTxt" id="units_name" required>
+                            <select name="units_id" class="btnTxt" id="units_id" required>
                                 <option value>Seleccione</option>
                                 <?php
                                 $selectUnits = $conn->query("SELECT units_id, units_name FROM units_of_measure");
@@ -302,7 +310,7 @@ include_once ("../settings/conexion.php");
                             <input class="btnTxt" type="number" name="articles_unit_cost" id="articles_unit_cost"
                                 step="0.01" max="1000000" placeholder="introduzca precio del artículo" required>
                         </div>
-                            
+
                     </div>
 
                     <!--campo de fecha de llegada del artículos-->
@@ -330,17 +338,18 @@ include_once ("../settings/conexion.php");
                         <label for="articles_photo">Cargar foto del artículo:<i
                                 class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
-                            <input type="file" id="btnArticlesPhoto" accept="image/*" style="display: none;" required />
+                            <input type="file" id="btnArticlesPhoto" accept="image/*" style="display: none;"
+                                name="articles_photo" required />
                             <div class="btnArticlesPhoto" onclick="btnArticlesPhoto();">
                                 <i class="fa-solid fa-camera-retro"></i>
-                                <img id="articles_photo" name="articles_photo" style="display: none;" />
+                                <img id="articles_photo" style="display: none;" />
                             </div>
                         </div>
                     </div>
 
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
                     <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnCreateUser">
+                        <button type="submit" class="btnSubmit btnCreateUser" name="crearArticulo">
                             <i class="fa-solid fa-heart-circle-plus"></i> Crear Artículo
                         </button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormCreateArticle()">Cancelar</div>
@@ -372,17 +381,17 @@ include_once ("../settings/conexion.php");
 /**
  * crear artículo
  */
-if (isset($_POST['articles_name']) && isset($_POST['articles_description']) && isset($_POST['articles_brand']) && isset($_POST['articles_unit_cost']) && isset($_POST['articles_arrival_date']) && isset($_POST['articles_photo']) && isset($_POST['categories_id']) && isset($_POST['units_id'])) {
-    // Todos los campos están presentes
-    $articles_name = $_POST['articles_name'];
-    $articles_description = $_POST['articles_description'];
-    $articles_brand = $_POST['articles_brand'];
-    $articles_unit_cost = $_POST['articles_unit_cost'];
-    $articles_arrival_date = $_POST['articles_arrival_date'];
-    $articles_expiration_date = $_POST['articles_expiration_date'];
-    $articles_photo = $_POST['articles_photo'];
-    $categories_id = $_POS['categories_id'];
-    $units_id = $_POST['units_id'];
+if (isset($_POST['crearArticulo'])) {
+    $articles_name = htmlspecialchars($_POST['articles_name']);
+    $articles_description = htmlspecialchars($_POST['articles_description']);
+    $articles_brand = htmlspecialchars($_POST['articles_brand']);
+    $categories_id = htmlspecialchars($_POST['categories_id']);//tabla categories
+    $units_id = htmlspecialchars($_POST['units_id']);//tabla units_of_measure
+    $articles_unit_cost = htmlspecialchars($_POST['articles_unit_cost']);
+    $articles_arrival_date = htmlspecialchars($_POST['articles_arrival_date']);
+    $articles_expiration_date = htmlspecialchars($_POST['articles_expiration_date']);
+    $imageData = file_get_contents($_FILES['articles_photo']['tmp_name']);
+    $base64Image = base64_encode($imageData);
 
     // Verificar si el artículo ya existe
     $check_stmt = $conn->prepare("SELECT * FROM `articles` WHERE `articles_name` = ? AND `articles_brand` = ?");
@@ -412,7 +421,7 @@ if (isset($_POST['articles_name']) && isset($_POST['articles_description']) && i
         <?php
     } else {
         $stmt = $conn->prepare("INSERT INTO `articles`(`articles_name`, `articles_description`, `articles_brand`, `articles_unit_cost`, `articles_arrival_date`, `articles_expiration_date`, `articles_photo`, `categories_id`, `units_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssdssbii", $articles_name, $articles_description, $articles_brand, $articles_unit_cost, $articles_arrival_date, $articles_expiration_date, $articles_photo, $categories_id, $units_id);
+        $stmt->bind_param("sssdsssii", $articles_name, $articles_description, $articles_brand, $articles_unit_cost, $articles_arrival_date, $articles_expiration_date, $base64Image, $categories_id, $units_id);
 
         // Ejecutar la sentencia
         if ($stmt->execute()) {

@@ -356,7 +356,7 @@ if ($row = $result->fetch_assoc()) {
                 <div class="btnSubmit btnEditUser" onclick="EditUser();">
                     <i class="fa-solid fa-user-pen"></i> Editar
                 </div>
-                <button type="submit" class="btnSubmit btnSaveUser">
+                <button type="submit" class="btnSubmit btnSaveUser" name="editarUsuario">
                     <i class="fa-solid fa-user"></i>
                     <i class="fa-solid fa-floppy-disk"></i> Guardar
                 </button>
@@ -380,7 +380,7 @@ if ($row = $result->fetch_assoc()) {
 </html>
 
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (isset($_POST['editarUsuario'])) {
     $clave = $_POST['users_password'];
     $clave_r = $_POST['users_password_r'];
     if (!empty($clave) || !empty($clave_r)) {
@@ -442,19 +442,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $conn->close();
     } else {
-        if (
-            isset($_POST['users_photo']) ||
-            isset($_POST["users_dni"]) ||
-            isset($_POST["users_name"]) ||
-            isset($_POST["users_last_name"]) ||
-            isset($_POST['users_email']) ||
-            isset($_POST["users_birthday_date"]) ||
-            isset($_POST["users_age"]) ||
-            isset($_POST["users_office_phone"]) ||
-            isset($_POST["users_cell_phone"]) ||
-            isset($_POST["users_adress"]) ||
-            isset($_POST['users_user'])
-        ) {
+        if (isset($_POST['editarUsuario'])) {
             $imageData = file_get_contents($_FILES['users_foto']['tmp_name']);
             $base64Image = base64_encode($imageData);
 
