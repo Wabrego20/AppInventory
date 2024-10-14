@@ -157,8 +157,6 @@ include_once ("../settings/conexion.php");
             </thead>
             <tbody>
 
-
-
             </tbody>
         </table>
 
@@ -182,7 +180,7 @@ include_once ("../settings/conexion.php");
                                 WHERE articles.categories_id = categories.categories_id");
                                 if ($selectArticles->num_rows > 0) {
                                     while ($row = $selectArticles->fetch_assoc()) {
-                                        echo '<option value="' . $row["articles_id"] . '" data-category="' . $row["categories_name"] . '" data-cost="' . $row["articles_unit_cost"] . '">' . $row["articles_name"] . '</option>';
+                                        echo '<option value="' . $row["articles_id"] . '" data-category-id="' . $row["categories_id"] . '" data-category-name="' . $row["categories_name"] . '" data-cost="' . $row["articles_unit_cost"] . '">' . $row["articles_name"] . '</option>';
                                     }
                                 } else {
                                     echo '<option value="">No hay arículo disponible</option>';
@@ -197,7 +195,8 @@ include_once ("../settings/conexion.php");
                         <label for="categories_name">Categoría:</label>
                         <div class="campo">
                             <i class="fa-solid fa-layer-group"></i>
-                            <input type="text" name="categories_id" id="categories_name" class="btnTxt" readonly>
+                            <input type="hidden" name="categories_id" id="categories_id">
+                            <input type="text" name="categories_name" id="categories_name" class="btnTxt" disabled>
                         </div>
                     </div>
 
@@ -239,11 +238,11 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-dollar-sign"></i>
                             <input type="text" name="articles_unit_cost" id="articles_unit_cost" class="btnTxt"
-                                readonly>
+                                disabled>
                         </div>
                     </div>
 
-                    <!--campo de costo unitario del artículos-->
+                    <!--campo de costo total del artículos-->
                     <div class="formLogCampo">
                         <label for="inventory1_total_cost">Costo Total:</label>
                         <div class="campo">
@@ -332,6 +331,7 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
         </script>
         <?php
     } else {
+
         $stmt = $conn->prepare("INSERT INTO inventory1 (articles_id, categories_id, inventory1_quantity, inventory1_registration_date, warehouses_id, inventory1_total_cost, inventory1_re_order) 
         VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("iiisidi", $articles_id, $categories_id, $quantity, $inventory1_registration_date, $warehouses_id, $total_cost, $re_order);

@@ -5,8 +5,14 @@
 document
   .getElementById("articles_id")
   .addEventListener("change", function () {
+
     var selectedOption = this.options[this.selectedIndex];
-    var categoryName = selectedOption.getAttribute("data-category");
+    var category_id = selectedOption.getAttribute("data-category-id");
+    document.getElementById("categories_id").value = category_id
+      ? category_id
+      : "Vacío";
+      
+    var categoryName = selectedOption.getAttribute("data-category-name");
     document.getElementById("categories_name").value = categoryName
       ? categoryName
       : "Vacío";

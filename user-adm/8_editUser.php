@@ -85,7 +85,7 @@ if ($row = $result->fetch_assoc()) {
 
                         <!--Pestaña de consumo interno-->
                         <li class="subMenu1">
-                            <a href="">
+                            <a href="3_inventory1.php">
                                 <i class="fa-solid fa-stapler"></i>
                                 <h5>Consumo Interno</h5>
                             </a>
