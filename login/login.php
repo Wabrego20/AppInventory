@@ -168,7 +168,7 @@ if (isset($_POST['iniciarSesion'])) {
         icon: "error",
         iconColor: "var(--rojo)",
         title: 'Error ',
-        text: 'Usuario Incorrecta',
+        text: 'Usuario Incorrecto',
         showConfirmButton: false,
       })
       setTimeout(function () {
