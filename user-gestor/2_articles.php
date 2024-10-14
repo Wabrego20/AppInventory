@@ -136,11 +136,9 @@ include_once ("../settings/conexion.php");
                     <th>Categoría</th>
                     <th>Unidad de Medida</th>
                     <th>Costo Unitario</th>
+                    <th>Foto</th>
                     <th>Fecha de LLegada</th>
                     <th>Fecha de Expiración</th>
-                    <th>Foto</th>
-                    <th>Editar</th>
-                    <th>Eliminar</th>
                 </tr>
             </thead>
             <tbody>
@@ -171,10 +169,6 @@ include_once ("../settings/conexion.php");
                             </td>
                             <td><?php echo !empty($row['articles_unit_cost']) ? $row['articles_unit_cost'] : '0.00'; ?>
                             </td>
-                            <td><?php echo !empty($row['articles_arrival_date']) ? $row['articles_arrival_date'] : 'dd/mm/aaaa'; ?>
-                            </td>
-                            <td><?php echo !empty($row['articles_expiration_date']) ? $row['articles_expiration_date'] : 'no aplica'; ?>
-                            </td>
                             <td>
                                 <?php if (!empty($row['articles_photo'])): ?>
                                     <img src="data:image/jpeg;base64,<?php echo $row['articles_photo']; ?>" class="fotoArt" />
@@ -183,17 +177,12 @@ include_once ("../settings/conexion.php");
                                 <?php endif; ?>
                             </td>
                             <td>
-                                <a href="javascript:void(0);" onclick="deleteUser(<?php echo $row['articles_id']; ?>)">
-                                    <i class="fa-solid fa-user-pen"></i>
-                                </a>
+                                <?php echo !empty($row['articles_arrival_date']) ? $row['articles_arrival_date'] : 'dd/mm/aaaa'; ?>
                             </td>
                             <td>
-                                <a href="javascript:void(0);" onclick="deleteUser(<?php echo $row['articles_id']; ?>)">
-                                    <i class="fa-solid fa-user-minus"></i>
-                                </a>
+                                <?php echo !empty($row['articles_expiration_date']) ? $row['articles_expiration_date'] : 'no aplica'; ?>
                             </td>
                         </tr>
-
                         <?php
                         $fila++;
                     }

@@ -16,4 +16,5 @@
   background-color: var(--blanco);
   box-shadow: 0 0 5px var(--negro);
   color: var(--negro);
+  scale: 0.99;
 }
