@@ -156,7 +156,81 @@ include_once ("../settings/conexion.php");
                 </tr>
             </thead>
             <tbody>
+                <?php
+                // Declaración SQL
+                $inventario1 = "SELECT inventory1.*, articles.*, categories.*, warehouses.* 
+                FROM inventory1, articles, categories, warehouses
+                WHERE inventory1.articles_id  = articles.articles_id
+                AND inventory1.categories_id  = categories.categories_id
+                AND inventory1.warehouses_id = warehouses.warehouses_id";
+                // Preparar la declaración
+                $stmt = $conn->prepare($inventario1);
+                // Ejecutar la declaración
+                $stmt->execute();
+                // Obtener los resultados
+                $result = $stmt->get_result();
+                // Procesar los resultados
+                if ($result->num_rows > 0) {
+                    $fila = 1;
+                    while ($row = $result->fetch_assoc()) {
+                        ?>
+                        <tr>
+                            <td>
+                                <?php echo $fila; ?>
+                            </td>
+                            <td>
+                                <?php echo !empty($row['articles_name']) ? $row['articles_name'] : 'No disponible'; ?>
+                            </td>
+                            <td>
+                                <?php echo !empty($row['categories_name']) ? $row['categories_name'] : 'No disponible'; ?>
+                            </td>
+                            <td>
+                                <?php echo !empty($row['inventory1_quantity']) ? $row['inventory1_quantity'] : '0'; ?>
+                            </td>
 
+                            <td>
+                                <?php echo !empty($row['inventory1_registration_date']) ? $row['inventory1_registration_date'] : 'dd/mm/aaaa'; ?>
+                            </td>
+                            <td>
+                                <?php echo !empty($row['warehouses_name']) ? $row['warehouses_name'] : 'No disponible'; ?>
+                            </td>
+                            <td>
+                                <?php echo !empty($row['articles_unit_cost']) ? $row['articles_unit_cost'] : '0.00'; ?>
+                            </td>
+                            <td>
+                                <?php echo !empty($row['inventory1_total_cost']) ? $row['inventory1_total_cost'] : '0.00'; ?>
+                            </td>
+                            <td>
+                                <h4 style="color: <?php
+                                $re_order = !empty($row['inventory1_re_order']) ? $row['inventory1_re_order'] : 'N/A';
+                                if ($re_order !== 'N/A') {
+                                    if ($re_order > 80) {
+                                        echo 'var(--verde)';
+                                    } elseif ($re_order >= 60 && $re_order <= 80) {
+                                        echo 'var(--naranja)';
+                                    } elseif ($re_order < 60) {
+                                        echo 'var(--rojo)';
+                                    }
+                                } else {
+                                    echo 'inherit'; // Default color if N/A
+                                }
+                                ?>;">
+                                    <?php echo $re_order; ?>%
+                                </h4>
+                            </td>
+
+                            <td>
+                                <a href="javascript:void(0);" onclick="editArtConsumoInt(<?php echo $row['articles_id']; ?>)">
+                                    <i class="fa-solid fa-user-pen"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        <?php
+                        $fila++;
+                    }
+                }
+                ?>
             </tbody>
         </table>
 
@@ -296,15 +370,6 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
     $warehouses_id = htmlspecialchars($_POST['warehouses_id']);
     $total_cost = htmlspecialchars($_POST['inventory1_total_cost']);
     $re_order = 100;
-    // Calcular el porcentaje de reorden
-    $percentage = ($quantity / $re_order) * 100;
-    // Determinar el color según el porcentaje
-    $color = "var(--verde)";
-    if ($percentage <= 30) {
-        $color = "var(--rojo)";
-    } elseif ($percentage <= 60) {
-        $color = "var(--naranja)";
-    }
     $checkQuery = $conn->prepare("SELECT * 
     FROM inventory1 
     WHERE articles_id = ? 
