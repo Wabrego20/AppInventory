@@ -1,7 +1,6 @@
 /*
  *Función para deshabilitar la edición del perfil del usuario
  */
-
 function cancelEditUser() {
   document
     .querySelectorAll(".fa-eye, .fa-eye-slash")
@@ -90,3 +89,40 @@ window.addEventListener("load", function () {
     document.getElementById("btnEditPhotoProfile").files = dataTransfer.files;
   }
 });
+
+
+
+/*
+ *Ver y ocultar contraseña del campo contraseña y repita  contraseña
+ */
+ function passVisibility() {
+  const passwordField = document.getElementById("users_password");
+  const eyeIcon = document.querySelector(".fa-eye");
+  const eyeSlashIcon = document.querySelector(".fa-eye-slash");
+
+  if (passwordField.type === "password") {
+    eyeSlashIcon.style.display = "block";
+    passwordField.type = "text";
+    eyeIcon.style.display = "none";
+  } else {
+    passwordField.type = "password";
+    eyeIcon.style.display = "block";
+    eyeSlashIcon.style.display = "none";
+  }
+  exit;
+}
+function passVisibilityR() {
+  const passwordField = document.getElementById("users_password_r");
+  const eyeIcon = document.querySelector(".fa-eye-r");
+  const eyeSlashIcon = document.querySelector(".fa-eye-slash-r");
+
+  if (passwordField.type === "password") {
+    eyeSlashIcon.style.display = "block";
+    passwordField.type = "text";
+    eyeIcon.style.display = "none";
+  } else {
+    passwordField.type = "password";
+    eyeIcon.style.display = "block";
+    eyeSlashIcon.style.display = "none";
+  }
+}

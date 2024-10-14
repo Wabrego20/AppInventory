@@ -135,7 +135,6 @@ include_once("../settings/conexion.php");
     <footer>
         <h6>© 2024 Universidad de Panamá y William Abrego. Todos los derechos reservados.</h6>
     </footer>
-    <script src="../settings/utils.js"></script>
     <script src="../settings/header.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>

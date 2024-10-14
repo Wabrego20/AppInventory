@@ -183,7 +183,6 @@ include_once ("../settings/sessionStart.php");
         <h6>© 2024 Universidad de Panamá y William Abrego. Todos los derechos reservados.</h6>
     </footer>
 
-    <script src="../settings/utils.js"></script>
     <script src="../settings/header.js"></script>
     <script src="../js/1_dashboard.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
