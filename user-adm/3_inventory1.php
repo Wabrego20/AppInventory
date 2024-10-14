@@ -305,8 +305,11 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
     } elseif ($percentage <= 60) {
         $color = "var(--naranja)";
     }
-    $checkQuery = $conn->prepare("SELECT * FROM inventory1 WHERE articles_id = ?");
-    $checkQuery->bind_param("i", $articles_id);
+    $checkQuery = $conn->prepare("SELECT * 
+    FROM inventory1 
+    WHERE articles_id = ? 
+    AND warehouses_id = ?");
+    $checkQuery->bind_param("ii", $articles_id, $warehouses_id);
     $checkQuery->execute();
     $result = $checkQuery->get_result();
     if ($result->num_rows > 0) {
