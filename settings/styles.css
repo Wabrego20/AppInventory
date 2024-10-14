@@ -166,6 +166,7 @@ main {
   background-color: var(--blanco);
   box-shadow: 0 0 5px var(--verde);
 }
+/*********************/
 .fa-floppy-disk {
   font-size: 12px;
   margin: 0 2px 0 0;
