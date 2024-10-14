@@ -263,14 +263,29 @@ main {
     color: var(--rojo)
   }
 
-  .dataTables_paginate span a.current {
-    border-radius: 5px;
+  .paging_simple_numbers{
+    color: var(--blanco);
+    a.paginate_button {
+      border-radius: 5px;
+      background-color: var(--blanco);
+      color: var(--azul);
+      height: 40px;
+      line-height: 40px;
+      padding: 5px 10px;
+      margin: 5px;
+    }
+    a.paginate_button:hover{
+      background-color: var(--azul);
+      box-shadow: 0 0 5px var(--blanco);
+      color: var(--blanco);
+    }
+  }
+  .dataTables_info {
+    color: var(--blanco) !important;
+    margin: 5px;
   }
 }
 
-.dataTables_info {
-  color: var(--blanco) !important;
-  margin: 5px;
-}
+
 
 
