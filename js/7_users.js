@@ -75,7 +75,6 @@ function deleteUser(userId) {
                 .then((response) => response.text())
                 .then((data) => {
                     console.log(data); // Verifica la respuesta en la consola
-
                     Swal.fire({
                         color: "var(--verde)",
                         title: "Éxito",

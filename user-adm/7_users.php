@@ -1,7 +1,7 @@
 <!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
-include_once ("../settings/sessionStart.php");
-include_once ("../settings/conexion.php");
+include_once("../settings/sessionStart.php");
+include_once("../settings/conexion.php");
 ?>
 
 <!DOCTYPE html>
@@ -151,7 +151,7 @@ include_once ("../settings/conexion.php");
                     <th>Apellido</th>
                     <th>Correo</th>
                     <th>Rol</th>
-                    <th>Día de Registro</th>
+                    <th>Fecha de Registro</th>
                     <th>Eliminar</th>
                 </tr>
             </thead>
@@ -163,21 +163,31 @@ include_once ("../settings/conexion.php");
                 $stmt->bind_param("s", $session);
                 $stmt->execute();
                 $verUsuarios = $stmt->get_result();
-
                 if ($verUsuarios->num_rows > 0) {
                     $fila = 1;
                     while ($row = $verUsuarios->fetch_assoc()) {
-                        ?>
+                ?>
                         <tr>
                             <td>
                                 <?php echo $fila; ?>
                             </td>
-                            <td><?php echo $row['users_dni']; ?></td>
-                            <td><?php echo $row['users_name']; ?></td>
-                            <td><?php echo $row['users_last_name']; ?></td>
-                            <td><?php echo $row['users_email']; ?></td>
-                            <td><?php echo $row['users_rol']; ?></td>
-                            <td><?php echo $row['users_registration_date']; ?>
+                            <td>
+                                <?php echo $row['users_dni']; ?>
+                            </td>
+                            <td>
+                                <?php echo $row['users_name']; ?>
+                            </td>
+                            <td>
+                                <?php echo $row['users_last_name']; ?>
+                            </td>
+                            <td>
+                                <?php echo $row['users_email']; ?>
+                            </td>
+                            <td>
+                                <?php echo $row['users_rol']; ?>
+                            </td>
+                            <td>
+                                <?php echo $row['users_registration_date']; ?>
                             </td>
                             <td>
                                 <a href="javascript:void(0);" onclick="deleteUser(<?php echo $row['users_id']; ?>)">
@@ -186,12 +196,11 @@ include_once ("../settings/conexion.php");
                             </td>
                         </tr>
 
-                        <?php
+                <?php
                         $fila++;
                     }
                 }
                 ?>
-
             </tbody>
         </table>
 
@@ -281,7 +290,7 @@ include_once ("../settings/conexion.php");
 
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
                     <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnCreateUser">
+                        <button type="submit" class="btnSubmit btnCreateUser" name="crearUsuario">
                             <i class="fas fa-user-plus"></i> Crear Usuario
                         </button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormCreateUser()">Cancelar</div>
@@ -319,9 +328,11 @@ include_once ("../settings/conexion.php");
 
 </html>
 
-<!--Crear Usuario-->
 <?php
-if (isset($_POST['users_dni']) && isset($_POST['users_name']) && isset($_POST['users_last_name']) && isset($_POST['users_email']) && isset($_POST['users_rol']) && isset($_POST['departament_id'])) {
+/**
+ * Crear Usuario
+ */
+if (isset($_POST['crearUsuario'])) {
     $dni = ltrim($_POST['users_dni'], '0'); // Eliminar el primer cero si existe
     $name = $_POST['users_name'];
     $lastName = $_POST['users_last_name'];
@@ -332,7 +343,6 @@ if (isset($_POST['users_dni']) && isset($_POST['users_name']) && isset($_POST['u
     $departament = $_POST['departament_id'];
     date_default_timezone_set('America/Panama');
     $registration_date = date("Y-m-d H:i:s");
-
     // Verificar si la cédula o el correo ya existen
     $checkQuery = $conn->prepare("SELECT * FROM users WHERE users_dni = ? OR users_email = ?");
     $checkQuery->bind_param("ss", $dni, $email);
@@ -340,7 +350,7 @@ if (isset($_POST['users_dni']) && isset($_POST['users_name']) && isset($_POST['u
     $result = $checkQuery->get_result();
 
     if ($result->num_rows > 0) {
-        ?>
+?>
         <script>
             Swal.fire({
                 color: "var(--rojo)",
@@ -365,14 +375,12 @@ if (isset($_POST['users_dni']) && isset($_POST['users_name']) && isset($_POST['u
         {
             $originalUser = $user;
             $counter = 1;
-
             // Verificar si el nombre de usuario existe
             $sql = "SELECT * FROM users WHERE users_user = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("s", $user);
             $stmt->execute();
             $result = $stmt->get_result();
-
             // Si el nombre de usuario existe, agregar un número
             while ($result->num_rows > 0) {
                 $user = $originalUser . $counter;
@@ -381,17 +389,14 @@ if (isset($_POST['users_dni']) && isset($_POST['users_name']) && isset($_POST['u
                 $result = $stmt->get_result();
                 $counter++;
             }
-
             return $user;
         }
         $uniqueUser = generateUniqueUsername($conn, $user);
-
         $stmt = $conn->prepare("INSERT INTO users (users_dni, users_name, users_last_name, users_email, users_user, users_password, users_rol, users_registration_date, departament_id) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("sssssssss", $dni, $name, $lastName, $email, $uniqueUser, $password, $rol, $registration_date, $departament);
-
         if ($stmt->execute()) {
-            ?>
+        ?>
             <script>
                 Swal.fire({
                     color: "var(--verde)",
@@ -410,7 +415,7 @@ if (isset($_POST['users_dni']) && isset($_POST['users_name']) && isset($_POST['u
                     }
                 });
             </script>
-            <?php
+<?php
         } else {
             echo "Error: " . $stmt->error;
         }
