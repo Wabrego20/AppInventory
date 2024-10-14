@@ -50,7 +50,7 @@
       </div>
 
       <!--Botón de inicio de sesión y de recuperar contraseña-->
-      <input type="submit" value="Iniciar Sesión" class="btnSubmit">
+      <input type="submit" value="Iniciar Sesión" class="btnSubmit" name="iniciarSesion">
       <h5><a onclick="verFormRecoverPass()">Ir a Recuperar Contraseña</a></h5>
     </form>
 
@@ -89,7 +89,7 @@
 </html>
 
 <?php
-if (isset($_POST['users_user']) && isset($_POST['users_password'])) {
+if (isset($_POST['iniciarSesion'])) {
   include_once ("../settings/conexion.php");
   session_start();
   // Obtener datos del usuario (sanitizados)

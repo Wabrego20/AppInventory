@@ -36,6 +36,7 @@ $(document).ready(function () {
             formu.classList.add("show");
           }, 10);
         },
+        className: 'oculto'
       },
     ],
   });

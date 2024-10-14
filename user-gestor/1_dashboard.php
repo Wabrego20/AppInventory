@@ -1,7 +1,6 @@
-<!--Inicio de sesión y cierre de sesión por inactividad-->
+<!-- Inicio de sesión y cierre de sesión por inactividad -->
 <?php
 include_once ("../settings/sessionStart.php");
-include_once ("../settings/conexion.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -13,9 +12,8 @@ include_once ("../settings/conexion.php");
     <link rel="stylesheet" href="../settings/header.css">
     <link rel="stylesheet" href="../settings/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="../settings/styles.css">
-    <link rel="stylesheet" href="../css/5_request.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
-    <title>Solicitudes | Sist-Inventario</title>
+    <link rel="stylesheet" href="../css/1_dashboard.css">
+    <title>Inicio | Sist-Inventario</title>
 </head>
 
 <body>
@@ -29,13 +27,16 @@ include_once ("../settings/conexion.php");
                 <img src="../img/logoApp.png" alt="logoAPP" class="logoApp">
             </span>
             <ul>
-                <li>
-                    <a href="1_dashboard.php">
+                
+                <!--Pestaña de Inicio-->
+                <li class="active">
+                    <a href="#">
                         <i class="fa-solid fa-house"></i>
                         <h5>Inicio</h5>
                     </a>
                 </li>
 
+                <!--Pestaña de artículos-->
                 <li>
                     <a href="2_articles.php">
                         <i class="fa-solid fa-box"></i>
@@ -53,6 +54,7 @@ include_once ("../settings/conexion.php");
                     </li>
                     <span class="subMenu">
 
+                        <!--Pestaña de consumo interno-->
                         <li class="subMenu1">
                             <a href="3_inventory1.php">
                                 <i class="fa-solid fa-stapler"></i>
@@ -60,6 +62,7 @@ include_once ("../settings/conexion.php");
                             </a>
                         </li>
 
+                        <!--Pestaña de Ayuda Social-->
                         <li>
                             <a href="">
                                 <i class="fa-solid fa-handshake-angle"></i>
@@ -67,12 +70,15 @@ include_once ("../settings/conexion.php");
                             </a>
                         </li>
 
+                        <!--Pestaña de Donaciones-->
                         <li>
                             <a href="">
                                 <i class="fa-solid fa-hand-holding-heart"></i>
                                 <h5>Donaciones</h5>
                             </a>
                         </li>
+
+                        <!--Pestaña de Bienes Físicos-->
                         <li>
                             <a href="">
                                 <i class="fa-solid fa-computer"></i>
@@ -81,31 +87,24 @@ include_once ("../settings/conexion.php");
                         </li>
                     </span>
                 </span>
-                
+
+                <!--Pestaña de Bodegas-->
                 <li>
                     <a href="4_warehouse.php">
                         <i class="fa-solid fa-warehouse"></i>
                         <h5>Bodegas</h5>
                     </a>
                 </li>
-                <li class="active">
-                    <a href="#">
+
+                <!--Pestaña de Solicitudes-->
+                <li>
+                    <a href="5_request.php">
                         <i class="fa-solid fa-bell"></i>
                         <h5>Solicitudes</h5>
                     </a>
                 </li>
-                <li>
-                    <a href="6_reports.php">
-                        <i class="fa-solid fa-chart-simple"></i>
-                        <h5>Reportes</h5>
-                    </a>
-                </li>
-                <li>
-                    <a href="7_users.php">
-                        <i class="fa-solid fa-users"></i>
-                        <h5>Usuarios</h5>
-                    </a>
-                </li>
+
+                <!--Pestaña de Mi Perfil-->
                 <li>
                     <a href="8_editUser.php">
                         <i class="fa-solid fa-user-gear"></i>
@@ -119,7 +118,9 @@ include_once ("../settings/conexion.php");
         <div class="formUserLogOut">
             <button class="btnUser" onclick="verBtnLogout();">
                 <i class="fa-solid fa-user-check"></i>
-                <h5><?php echo $_SESSION['users_user']; ?></h5>
+                <h5>
+                    <?php echo $_SESSION['users_user']; ?>
+                </h5>
                 <i class="fa-solid fa-angle-down"></i>
             </button>
             <button class="btnLogOut" id="logout" onclick="cerrarSesion();">
@@ -132,77 +133,49 @@ include_once ("../settings/conexion.php");
 
     <!--Ruta que muestra donde se encuentra actualmente-->
     <div class="ruta">
-        <h4>Solicitudes</h4>
+        <h4>Inicio</h4>
     </div>
 
     <!--Cuerpo Principal-->
     <main>
-        <h2>Tabla de Solicitudes</h2>
-        <table id="tableRequest">
-            <thead>
-                <tr>
-                    <th>N°</th>
-                    <th>Departamento</th>
-                    <th>Artículo</th>
-                    <th>Usuario</th>
-                    <th>Cantidad</th>
-                    <th>Fecha de Solicitud</th>
-                    <th>Estado</th>
-                    <th>Tipo de Inventario</th>
-                    <th>Procesar</th>
-                    <th>Rechazar</th>
-                </tr>
-            </thead>
-            <tbody>
 
-            </tbody>
-        </table>
+        <!--Apartado de Artículos o Productos-->
+        <a class="btn_seccion" href="2_articles.php">
+            <h2>Artículos o Productos</h2>
+            <img src="../gif/boxes.gif" alt="article">
+            <h4>Se añade este aparatado para crear, editar y consultar atículos para luego inventariarlos en los
+                diferentes tipos de inventario</h4>
+        </a>
 
-        <!--Formulario para Crear un usuario-->
-        <div class="modalProcessRequest">
-            <div class="panelProcessRequest">
-                <form method="post" class="formProcessRequest">
-                    <h2>Solicitudes</h2>
+        <!--Apartado de Tipos de inventarios-->
+        <a class="btn_seccion" href="3_inventory.php">
+            <h2>Tipos de Inventarios</h2>
+            <img src="../gif/inventario.gif" alt="inventario">
+            <h4>Agregar y consultar inventario de consumo interno, material operativo, Donaciones, Compras para ayuda
+                social y material en tránsito.</h4>
+        </a>
 
-                    <!--campo de nombre de la solicitud-->
-                    <div class="formLogCampo">
-                        <label for="warehouse_name">Nombre:</label>
-                        <div class="campo">
-                            <i class="fa-solid fa-signature"></i>
-                            <input class="btnTxt" type="text" name="warehouse_name" id="warehouse_name"
-                                pattern="[a-zA-ZñÑ]{3,30}" maxlength="30" placeholder="introduzca un nombre" required
-                                autofocus>
-                        </div>
-                    </div>
+        <!--Apartado de Bodegas-->
+        <a class="btn_seccion" href="4_warehouse.php">
+            <h2>Bodegas</h2>
+            <img src="../gif/deposito.gif" alt="bodega">
+            <h4>Se añaden opciones para ver los artículos por bodegas, consultar, crear, editar o eliminar bodegas.</h4>
+        </a>
 
-                    <!--campo de provincia de la solicitud-->
-                    <div class="formLogCampo">
-                        <label for="warehouse_name">Provincia:</label>
-                        <div class="campo">
-                            <i class="fa-solid fa-map-location-dot"></i>
-                            <select name="warehouse_country" id="warehouse_country" class="btnTxt" required>
-                                <option value="">Seleccione</option>
-                                <option value="">Panamá</option>
-                                <option value="">Colón</option>
-                                <option value="">Chiriquí</option>
-                            </select>
-                        </div>
-                    </div>
+        <!--Apartado de Solicitudes-->
+        <a class="btn_seccion" href="5_request.php">
+            <h2>Ordenes o Solicitudes</h2>
+            <img src="../gif/sos.gif" alt="solicitud">
+            <h4>Filtros o etiquetas para diferenciar las órdenes de compra según el tipo de inventario, ver las
+                solicitudes realizadas por los clientes. Aprobar, asignar o rechazar</h4>
+        </a>
 
-                    <!--campo de ubicación de la solicitud-->
-                    <div class="formLogCampo">
-                        <label for="warehouse_location">Dirección:</label>
-                        <div class="campo">
-                            <i class="fa-solid fa-location-dot"></i>
-                            <textarea name="articles_description" id="articles_description" class="btnTxt textArea"
-                                maxlength="100" pattern="[a-zñA-ZÑ0-9]"
-                                placeholder="introduzca la dirección de la bodega" required></textarea>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
+        <!--Apartado de Mi Perfil-->
+        <a class="btn_seccion" href="8_editUser.php">
+            <h2>Mi Perfil</h2>
+            <img src="../gif/usuario.gif" alt="bell">
+            <h4>Se añade un apartado para configurar o editar perfil, datos personales, usuario y contraseña</h4>
+        </a>
     </main>
 
     <!--Pie de Página-->
@@ -210,12 +183,9 @@ include_once ("../settings/conexion.php");
         <h6>© 2024 Universidad de Panamá y William Abrego. Todos los derechos reservados.</h6>
     </footer>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
     <script src="../settings/utils.js"></script>
     <script src="../settings/header.js"></script>
+    <script src="../js/1_dashboard.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 

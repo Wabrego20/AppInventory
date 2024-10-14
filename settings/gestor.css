@@ -1,0 +1,19 @@
+.oculto {
+  display: none;
+  /* Esto ocultará el botón */
+}
+
+.solicitar a{
+  color: var(--blanco);
+  padding: 5px 10px;
+  background-color: var(--negro);
+  border-radius: 5px;
+  text-decoration: none;
+  transition: 0.2s ease-in-out;
+}
+
+.solicitar a:hover{
+  background-color: var(--blanco);
+  box-shadow: 0 0 5px var(--negro);
+  color: var(--negro);
+}

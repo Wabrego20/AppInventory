@@ -94,18 +94,7 @@ include_once ("../settings/conexion.php");
                         <h5>Solicitudes</h5>
                     </a>
                 </li>
-                <li>
-                    <a href="6_reports.php">
-                        <i class="fa-solid fa-chart-simple"></i>
-                        <h5>Reportes</h5>
-                    </a>
-                </li>
-                <li>
-                    <a href="7_users.php">
-                        <i class="fa-solid fa-users"></i>
-                        <h5>Usuarios</h5>
-                    </a>
-                </li>
+               
                 <li>
                     <a href="8_editUser.php">
                         <i class="fa-solid fa-user-gear"></i>
