@@ -105,30 +105,30 @@ main {
 }
 
 
-.fa-user-pen {
+.fa-house-crack {
   background-color: var(--naranja);
 }
 
-.fa-user-pen:hover {
+.fa-house-crack:hover {
   color: var(--naranja);
   box-shadow: 0 0 5px var(--naranja);
 }
 
-.fa-user-minus {
+.fa-house-fire {
   background-color: var(--rojo);
 }
 
-.fa-user-minus:hover {
+.fa-house-fire:hover {
   color: var(--rojo);
   box-shadow: 0 0 5px var(--rojo);
 }
 
-.fa-user-pen:hover,
-.fa-user-minus:hover {
+.fa-house-crack:hover,
+.fa-house-fire:hover {
   background-color: var(--blanco);
 }
-.fa-user-pen,
-.fa-user-minus {
+.fa-house-crack,
+.fa-house-fire {
   color: var(--blanco);
   border-radius: 50%;
   width: 40px;

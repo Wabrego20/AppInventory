@@ -221,12 +221,12 @@ if (isset($_POST['editBodega'])) {
                             <td><?php echo $row['articles_warehouses']; ?></td>
                             <td>
                                 <a href="javascript:void(0);" onclick="editBodega(<?php echo $row['warehouses_id']; ?>)">
-                                    <i class="fa-solid fa-user-pen"></i>
+                                    <i class="fa-solid fa-house-crack"></i>
                                 </a>
                             </td>
                             <td>
                                 <a href="javascript:void(0);" onclick="deleteBodega(<?php echo $row['warehouses_id']; ?>)">
-                                    <i class="fa-solid fa-user-minus"></i>
+                                    <i class="fa-solid fa-house-fire"></i>
                                 </a>
                             </td>
                         </tr>
@@ -285,7 +285,7 @@ if (isset($_POST['editBodega'])) {
                     <!--Botón de crear bodega, botón de cancelar creación de bodega-->
                     <div class="btnSubmitPanel">
                         <button type="submit" class="btnSubmit btnCreateUser" name="crearBodega">
-                            <i class="fa-solid fa-heart-circle-plus"></i> Crear Bodega
+                            <i class="fa-solid fa-house-circle-check"></i> Crear Bodega
                         </button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormCreateBodega()">Cancelar</div>
                     </div>
@@ -305,8 +305,9 @@ if (isset($_POST['editBodega'])) {
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
                             <input class="btnTxt" type="text" name="warehouses_name" id="warehouses_name"
-                                value="<?php echo isset($name) ? htmlspecialchars($name) : ''; ?>" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]+" maxlength="30"
-                                placeholder="Edite el nombre" required autofocus>
+                                value="<?php echo isset($name) ? htmlspecialchars($name) : ''; ?>"
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]+" maxlength="30" placeholder="Edite el nombre"
+                                required autofocus>
                         </div>
                     </div>
 
@@ -316,7 +317,9 @@ if (isset($_POST['editBodega'])) {
                         <div class="campo">
                             <i class="fa-solid fa-map-location-dot"></i>
                             <select name="warehouses_province" id="warehouses_province" class="btnTxt" required>
-                                <option value="<?php echo isset($provincia)  ? htmlspecialchars($provincia) : 'Seleccione'; ?>">Seleccione</option>
+                                <option
+                                    value="<?php echo isset($provincia) ? htmlspecialchars($provincia) : 'Seleccione'; ?>">
+                                    Seleccione</option>
                                 <option value="Panamá">Panamá</option>
                                 <option value="Colón">Colón</option>
                                 <option value="Chiriquí">Chiriquí</option>
@@ -339,7 +342,7 @@ if (isset($_POST['editBodega'])) {
                     <!--Botón de crear bodega, botón de cancelar creación de bodega-->
                     <div class="btnSubmitPanel">
                         <button type="submit" class="btnSubmit btnCreateUser" name="editBodega">
-                            <i class="fa-solid fa-heart-circle-plus"></i> Guardar Bodega
+                            <i class="fa-solid fa-house-circle-check"></i> Guardar Bodega
                         </button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormEditBodega()">Cancelar</div>
                     </div>

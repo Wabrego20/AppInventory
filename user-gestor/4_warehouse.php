@@ -188,8 +188,6 @@ if (isset($_POST['editBodega'])) {
                     <th>Provincia</th>
                     <th>Dirección</th>
                     <th>Artículos en Existencia</th>
-                    <th>Editar</th>
-                    <th>Elimitar</th>
                 </tr>
             </thead>
             <tbody>
@@ -209,16 +207,6 @@ if (isset($_POST['editBodega'])) {
                             <td><?php echo $row['warehouses_province']; ?></td>
                             <td><?php echo $row['warehouses_location']; ?></td>
                             <td><?php echo $row['articles_warehouses']; ?></td>
-                            <td>
-                                <a href="javascript:void(0);" onclick="editBodega(<?php echo $row['warehouses_id']; ?>)">
-                                    <i class="fa-solid fa-user-pen"></i>
-                                </a>
-                            </td>
-                            <td>
-                                <a href="javascript:void(0);" onclick="deleteBodega(<?php echo $row['warehouses_id']; ?>)">
-                                    <i class="fa-solid fa-user-minus"></i>
-                                </a>
-                            </td>
                         </tr>
 
                         <?php

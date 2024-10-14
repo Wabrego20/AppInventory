@@ -130,20 +130,20 @@ main {
 }
 
 
-.fa-user-pen {
+.fa-heart-pulse {
   background-color: var(--naranja);
 }
 
-.fa-user-pen:hover {
+.fa-heart-pulse:hover {
   color: var(--naranja);
   box-shadow: 0 0 5px var(--naranja);
 }
 
-.fa-user-pen:hover,
+.fa-heart-pulse:hover,
 .fa-user-minus:hover {
   background-color: var(--blanco);
 }
-.fa-user-pen,
+.fa-heart-pulse,
 .fa-user-minus {
   color: var(--blanco);
   border-radius: 50%;

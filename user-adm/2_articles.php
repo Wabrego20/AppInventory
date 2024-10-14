@@ -195,12 +195,12 @@ include_once ("../settings/conexion.php");
                             </td>
                             <td>
                                 <a href="javascript:void(0);" onclick="deleteUser(<?php echo $row['articles_id']; ?>)">
-                                    <i class="fa-solid fa-user-pen"></i>
+                                    <i class="fa-solid fa-heart-pulse"></i>
                                 </a>
                             </td>
                             <td>
                                 <a href="javascript:void(0);" onclick="deleteUser(<?php echo $row['articles_id']; ?>)">
-                                    <i class="fa-solid fa-user-minus"></i>
+                                    <i class="fa-solid fa-heart-circle-minus"></i>
                                 </a>
                             </td>
                         </tr>

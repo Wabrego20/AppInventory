@@ -28,7 +28,7 @@ $(document).ready(function () {
     dom: "lBfrtip", // 'l' es para el selector de longitud
     buttons: [
       {
-        text: '<i class="fa-solid fa-heart-circle-plus"></i> Crear bodega',
+        text: '<i class="fa-solid fa-house-circle-check"></i> Crear bodega',
         action: function (e, dt, node, config) {
           var formu = document.querySelector(".modalCreateBodega");
           formu.style.display = "flex";

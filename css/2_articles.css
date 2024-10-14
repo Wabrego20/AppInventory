@@ -159,30 +159,30 @@ h2 {
 }
 
 
-.fa-user-pen {
+.fa-heart-pulse {
   background-color: var(--naranja);
 }
 
-.fa-user-pen:hover {
+.fa-heart-pulse:hover {
   color: var(--naranja);
   box-shadow: 0 0 5px var(--naranja);
 }
 
-.fa-user-minus {
+.fa-heart-circle-minus {
   background-color: var(--rojo);
 }
 
-.fa-user-minus:hover {
+.fa-heart-circle-minus:hover {
   color: var(--rojo);
   box-shadow: 0 0 5px var(--rojo);
 }
 
-.fa-user-pen:hover,
-.fa-user-minus:hover {
+.fa-heart-pulse:hover,
+.fa-heart-circle-minus:hover {
   background-color: var(--blanco);
 }
-.fa-user-pen,
-.fa-user-minus {
+.fa-heart-pulse,
+.fa-heart-circle-minus {
   color: var(--blanco);
   border-radius: 50%;
   width: 40px;
