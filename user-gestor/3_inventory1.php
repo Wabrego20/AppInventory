@@ -190,7 +190,7 @@ include_once ("../settings/conexion.php");
                                 <?php echo !empty($row['inventory1_total_cost']) ? $row['inventory1_total_cost'] : '0.00'; ?>
                             </td>
                             <td class="solicitar">
-                                <a href="">Solicitar</a>
+                            <button onclick="solicitarArt('<?php echo $row['articles_name']; ?>', '<?php echo $row['categories_name']; ?>', '<?php echo $row['warehouses_name']; ?>', '<?php echo $row['inventory1_quantity']; ?>', '<?php echo $row['articles_unit_cost']; ?>', '<?php echo $row['inventory1_total_cost']; ?>')">Solicitar</button>
                             </td>
                         </tr>
                         <?php
@@ -205,29 +205,14 @@ include_once ("../settings/conexion.php");
         <div class="modalAddArticle">
             <div class="panelAddArticle">
                 <form method="post" class="formAddArticle">
-                    <h2>Agregar Artículo de Consumo Interno</h2>
+                    <h2>Solicitar Artículo de Consumo Interno</h2>
 
                     <!--campo de nombre de artículo-->
                     <div class="formLogCampo">
-                        <label for="articles_id">Nombre:<i class="fa-solid fa-asterisk"></i></label>
+                        <label for="articles_name">Nombre:</label>
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
-                            <select name="articles_id" class="btnTxt" id="articles_id" required>
-                                <option value="">Seleccione</option>
-                                <?php
-                                $selectArticles = $conn->query("SELECT articles.*, categories.* 
-                                FROM articles 
-                                JOIN categories 
-                                WHERE articles.categories_id = categories.categories_id");
-                                if ($selectArticles->num_rows > 0) {
-                                    while ($row = $selectArticles->fetch_assoc()) {
-                                        echo '<option value="' . $row["articles_id"] . '" data-category-id="' . $row["categories_id"] . '" data-category-name="' . $row["categories_name"] . '" data-cost="' . $row["articles_unit_cost"] . '">' . $row["articles_name"] . '</option>';
-                                    }
-                                } else {
-                                    echo '<option value="">No hay arículo disponible</option>';
-                                }
-                                ?>
-                            </select>
+                            <input type="text" name="articles_name" id="articles_name" class="btnTxt" disabled>
                         </div>
                     </div>
 
@@ -236,35 +221,22 @@ include_once ("../settings/conexion.php");
                         <label for="categories_name">Categoría:</label>
                         <div class="campo">
                             <i class="fa-solid fa-layer-group"></i>
-                            <input type="hidden" name="categories_id" id="categories_id">
                             <input type="text" name="categories_name" id="categories_name" class="btnTxt" disabled>
                         </div>
                     </div>
 
                     <!--campo de bodega-->
                     <div class="formLogCampo">
-                        <label for="warehouses_name">Bodega:<i class="fa-solid fa-asterisk"></i></label>
+                        <label for="warehouses_name">Bodega:</label>
                         <div class="campo">
                             <i class="fa-solid fa-ruler-combined"></i>
-                            <select name="warehouses_id" class="btnTxt" id="warehouses_name" required>
-                                <option value="">Seleccione</option>
-                                <?php
-                                $selectWarehouse = $conn->query("SELECT warehouses_id, warehouses_name FROM warehouses");
-                                if ($selectWarehouse->num_rows > 0) {
-                                    while ($row = $selectWarehouse->fetch_assoc()) {
-                                        echo '<option value="' . $row["warehouses_id"] . '">' . $row["warehouses_name"] . '</option>';
-                                    }
-                                } else {
-                                    echo '<option value="">No hay unidades disponibles</option>';
-                                }
-                                ?>
-                            </select>
+                            <input type="text" name="warehouses_name" id="warehouses_name" class="btnTxt" disabled>
                         </div>
                     </div>
 
                     <!--campo de cantidad de artículos-->
                     <div class="formLogCampo">
-                        <label for="inventory1_quantity">Cantidad:<i class="fa-solid fa-asterisk"></i></label>
+                        <label for="inventory1_quantity">Cantidad:<i class="fa-solid fa-asterisk">Verifique la cantidad a solicitar</i></label>
                         <div class="campo">
                             <i class="fa-solid fa-arrow-up-1-9"></i>
                             <input class="btnTxt" type="number" name="inventory1_quantity" id="inventory1_quantity"
@@ -289,15 +261,15 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-sack-dollar"></i>
                             <input type="text" name="inventory1_total_cost" id="inventory1_total_cost" class="btnTxt"
-                                readonly>
+                                disabled>
                         </div>
                     </div>
 
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
                     <div class="btnSubmitPanel">
                         <button type="submit" class="btnSubmit btnCreateUser" name="agregarArtConsumoInterno">
-                            <i class="fa-solid fa-heart-circle-plus"></i>
-                            Agregar Artículo
+                            <i class="fa-solid fa-heart-circle-check"></i>
+                            Solicitar
                         </button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormAddArticle()">Cancelar</div>
                     </div>

@@ -87,3 +87,26 @@ document
     var totalCost = quantity * unitCost;
     document.getElementById("inventory1_total_cost").value = totalCost.toFixed(2);
   });
+
+
+
+  /**
+   * Formulario para realizar una solicitud
+   */
+  function solicitarArt(articleName, categoryName, warehouseName, quantity, unitCost, totalCost) {
+    var formu = document.querySelector(".modalAddArticle"); // Mostrar el modal de crear artículo
+    formu.style.display = "flex";
+    setTimeout(function () {
+        formu.classList.add("show");
+    }, 10);
+
+    // Asignar los valores a los campos de entrada del formulario
+    document.getElementById("articles_name").value = articleName;
+    document.getElementById("categories_name").value = categoryName;
+    document.getElementById("warehouses_name").value = warehouseName;
+    document.getElementById("inventory1_quantity").value = quantity;
+    document.getElementById("articles_unit_cost").value = unitCost;
+    document.getElementById("inventory1_total_cost").value = totalCost;
+}
+
+
