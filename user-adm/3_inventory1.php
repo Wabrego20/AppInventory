@@ -402,7 +402,16 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
         $stmt = $conn->prepare("INSERT INTO inventory1 (articles_id, categories_id, inventory1_quantity, inventory1_registration_date, warehouses_id, inventory1_total_cost, inventory1_re_order) 
         VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("iiisidi", $articles_id, $categories_id, $quantity, $inventory1_registration_date, $warehouses_id, $total_cost, $re_order);
-        if ($stmt->execute()) {
+
+        // Actualizar la cantidad total en la tabla warehouses
+        $stmt_update = $conn->prepare("UPDATE warehouses 
+        SET warehouses_total_quantity = warehouses_total_quantity + ? / 2
+        WHERE warehouses_id = ?");
+        $stmt_update->bind_param("ii", $quantity, $warehouses_id);
+        $stmt_update->execute();
+
+
+        if ($stmt->execute() && $stmt_update->execute()) {
             ?>
             <script>
                 Swal.fire({

@@ -218,7 +218,7 @@ if (isset($_POST['editBodega'])) {
                             <td><?php echo $row['warehouses_name']; ?></td>
                             <td><?php echo $row['warehouses_province']; ?></td>
                             <td><?php echo $row['warehouses_location']; ?></td>
-                            <td><?php echo $row['articles_warehouses']; ?></td>
+                            <td><?php echo $row['warehouses_total_quantity']; ?></td>
                             <td>
                                 <a href="javascript:void(0);" onclick="editBodega(<?php echo $row['warehouses_id']; ?>)">
                                     <i class="fa-solid fa-house-crack"></i>

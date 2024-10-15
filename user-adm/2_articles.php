@@ -194,12 +194,12 @@ include_once ("../settings/conexion.php");
                                 <?php endif; ?>
                             </td>
                             <td>
-                                <a href="javascript:void(0);" onclick="deleteUser(<?php echo $row['articles_id']; ?>)">
+                                <a href="javascript:void(0);" title="clic para editar el artículo" onclick="deleteUser(<?php echo $row['articles_id']; ?>)">
                                     <i class="fa-solid fa-heart-pulse"></i>
                                 </a>
                             </td>
                             <td>
-                                <a href="javascript:void(0);" onclick="deleteUser(<?php echo $row['articles_id']; ?>)">
+                                <a href="javascript:void(0);" title="clic para eliminar el artículo" onclick="deleteUser(<?php echo $row['articles_id']; ?>)">
                                     <i class="fa-solid fa-heart-circle-minus"></i>
                                 </a>
                             </td>
@@ -247,7 +247,7 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-regular fa-flag"></i>
                             <input class="btnTxt" type="text" name="articles_brand" id="articles_brand"
-                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]{3,30}" maxlength="30"
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]{2,30}" maxlength="30"
                                 placeholder="introduzca la marca del producto">
                         </div>
                     </div>
