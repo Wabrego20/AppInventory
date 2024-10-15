@@ -206,7 +206,7 @@ if (isset($_POST['editBodega'])) {
                             <td><?php echo $row['warehouses_name']; ?></td>
                             <td><?php echo $row['warehouses_province']; ?></td>
                             <td><?php echo $row['warehouses_location']; ?></td>
-                            <td><?php echo $row['articles_warehouses']; ?></td>
+                            <td><?php echo $row['warehouses_total_quantity']; ?></td>
                         </tr>
 
                         <?php
