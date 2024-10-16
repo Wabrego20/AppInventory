@@ -6,23 +6,23 @@
     <title>Document</title>
 </head>
 <body>
-    <input class="btnTxt" type="number" name="inventory1_quantity" id="inventory1_quantity" pattern="[0-9]{1,7}" min="1" max="1000000" step="1" placeholder="introduzca la cantidad " required>
+    <input class="btnTxt" type="number" name="request_quantity" id="request_quantity" pattern="[0-9]{1,7}" min="1" max="1000000" step="1" placeholder="introduzca la cantidad " required>
 <input type="number" id="articles_unit_cost" name="articles_unit_cost">
-<input type="text" name="inventory1_total_cost" id="inventory1_total_cost" class="btnTxt" readonly>
+<input type="text" name="request_total_cost" id="request_total_cost" class="btnTxt" readonly>
 
 <script>
-    document.getElementById("inventory1_quantity").addEventListener("input", function () {
-        var quantity = document.getElementById("inventory1_quantity").value;
+    document.getElementById("request_quantity").addEventListener("input", function () {
+        var quantity = document.getElementById("request_quantity").value;
         var unitCost = document.getElementById("articles_unit_cost").value;
         var totalCost = quantity * unitCost;
-        document.getElementById("inventory1_total_cost").value = totalCost.toFixed(2);
+        document.getElementById("request_total_cost").value = totalCost.toFixed(2);
     });
 
     document.getElementById("articles_unit_cost").addEventListener("input", function () {
-        var quantity = document.getElementById("inventory1_quantity").value;
+        var quantity = document.getElementById("request_quantity").value;
         var unitCost = document.getElementById("articles_unit_cost").value;
         var totalCost = quantity * unitCost;
-        document.getElementById("inventory1_total_cost").value = totalCost.toFixed(2);
+        document.getElementById("request_total_cost").value = totalCost.toFixed(2);
     });
 </script>
 
