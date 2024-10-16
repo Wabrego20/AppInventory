@@ -81,7 +81,7 @@ include_once ("../settings/conexion.php");
                         </li>
                     </span>
                 </span>
-                
+
                 <li>
                     <a href="4_warehouse.php">
                         <i class="fa-solid fa-warehouse"></i>
@@ -94,7 +94,7 @@ include_once ("../settings/conexion.php");
                         <h5>Solicitudes</h5>
                     </a>
                 </li>
-               
+
                 <li>
                     <a href="8_editUser.php">
                         <i class="fa-solid fa-user-gear"></i>
@@ -137,7 +137,7 @@ include_once ("../settings/conexion.php");
                     <th>Categoría</th>
                     <th>Tipo de Inventario</th>
                     <th>Cantidad</th>
-                    <th>Costo Total</th>           
+                    <th>Costo Total</th>
                     <th>Fecha de Solicitud</th>
                     <th>Estado</th>
                     <th>Procesar</th>
@@ -145,7 +145,78 @@ include_once ("../settings/conexion.php");
                 </tr>
             </thead>
             <tbody>
+                <?php
+                // Declaración SQL
+                $solicitud = "SELECT request.*, departament.*, articles.*, categories.*, inventory1.*, users.*
+              FROM request, departament, articles, categories, inventory1, users
+              WHERE request.users_id = users.users_id
+              AND request.articles_id = articles.articles_id
+              AND request.categories_id = categories.categories_id
+              AND request.inventory1_id = inventory1.inventory1_id
+              AND request.departament_id = departament.departament_id";
 
+                // Preparar la declaración
+                $stmt = $conn->prepare($solicitud);
+                // Ejecutar la declaración
+                $stmt->execute();
+                // Obtener los resultados
+                $result = $stmt->get_result();
+                // Procesar los resultados
+                if ($result->num_rows > 0) {
+                    $fila = 1;
+                    while ($row = $result->fetch_assoc()) {
+                        ?>
+                        <tr>
+                            <td>
+                                <?php echo $fila; ?>
+                            </td>
+                            <td>
+                                <?php echo !empty($row['users_name']) ? $row['users_name'] : 'No disponible'; ?>
+                            </td>
+                            <td>
+                                <?php echo !empty($row['departament_name']) ? $row['departament_name'] : 'No disponible'; ?>
+                            </td>
+                            <td>
+                                <?php echo !empty($row['articles_name']) ? $row['articles_name'] : 'No disponible'; ?>
+                            </td>
+                            <td>
+                                <?php echo !empty($row['categories_name']) ? $row['categories_name'] : 'No disponible'; ?>
+                            </td>
+                            <td>
+                                <?php echo !empty($row['inventory1_name']) ? $row['inventory1_name'] : 'no disponible'; ?>
+                            </td>
+                            <td>
+                                <?php echo !empty($row['request_quantity']) ? $row['request_quantity'] : '0'; ?>
+                            </td>
+                            <td>
+                                <?php echo !empty($row['request_total_cost']) ? $row['request_total_cost'] : '0.00'; ?>
+                            </td>
+                            <td>
+                                <?php echo !empty($row['request_order_date']) ? $row['request_order_date'] : ''; ?>
+                            </td>
+                            <td>
+                                <?php echo !empty($row['request_status']) ? $row['request_status'] : ''; ?>
+                            </td>
+
+                            <td>
+                                <a href="javascript:void(0);" title="estado del pedido"
+                                    onclick="procesar(<?php echo $row['request_id']; ?>)">
+                                    <i class="fa-solid fa-heart-pulse"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0);" title="clic para eliminar el artículo"
+                                    onclick="rechazar(<?php echo $row['request_id']; ?>)">
+                                    <i class="fa-solid fa-heart-circle-minus"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        <?php
+                        $fila++;
+                    }
+                }
+                ?>
             </tbody>
         </table>
 

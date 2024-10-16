@@ -300,32 +300,28 @@ include_once ("../settings/conexion.php");
 
 <!--Agregar un articulo de consumo interno-->
 <?php
-if (isset($_POST['agregarArtConsumoInterno'])) {
+if (isset($_POST['solicitarArtConsumoInterno'])) {
 
-    $articles_id = htmlspecialchars($_POST['articles_id']);
+    $users_id = htmlspecialchars($_POST['users_id']);
     $categories_id = htmlspecialchars($_POST['categories_id']);
-    $quantity = htmlspecialchars($_POST['inventory1_quantity']);
-    $articles_unit_cost = htmlspecialchars($_POST['articles_unit_cost']);
+    $articles_id = htmlspecialchars($_POST['articles_id']);
+    $inventory1_id = htmlspecialchars($_POST['inventory1_id']);
+    $request_quantity = htmlspecialchars($_POST['request_quantity']);
+    $request_total_cost = htmlspecialchars($_POST['request_total_cost']);
     date_default_timezone_set('America/Panama');
-    $inventory1_registration_date = date("Y-m-d");
-    $warehouses_id = htmlspecialchars($_POST['warehouses_id']);
-    $total_cost = htmlspecialchars($_POST['inventory1_total_cost']);
-    $checkQuery = $conn->prepare("SELECT * 
-    FROM inventory1 
-    WHERE articles_id = ? 
-    AND warehouses_id = ?");
-    $checkQuery->bind_param("ii", $articles_id, $warehouses_id);
-    $checkQuery->execute();
-    $result = $checkQuery->get_result();
-    if ($result->num_rows > 0) {
+    
+    $stmt = $conn->prepare("INSERT INTO request (users_id, categories_id, articles_id, inventory1_id, request_quantity, request_total_cost) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("iiiiid", $users_id, $categories_id, $articles_id, $inventory1_id, $request_quantity, $request_total_cost);
+
+   if ($stmt->execute()) {
         ?>
         <script>
             Swal.fire({
-                color: "var(--rojo)",
-                icon: "error",
-                iconColor: "var(--rojo)",
-                title: '¡Error!',
-                text: 'El artículo ya fue agregado',
+                color: "var(--verde)",
+                icon: "success",
+                iconColor: "var(--verde)",
+                title: '!Éxito!',
+                text: 'Se a enviado su solicitud',
                 showConfirmButton: true,
                 customClass: {
                     confirmButton: 'btn-confirm'
@@ -339,36 +335,10 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
         </script>
         <?php
     } else {
-
-        $stmt = $conn->prepare("INSERT INTO inventory1 (articles_id, categories_id, inventory1_quantity, articles_unit_cost, inventory1_registration_date, warehouses_id, inventory1_total_cost, inventory1_re_order) 
-        VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("iiisidi", $articles_id, $categories_id, $quantity, $articles_unit_cost, $inventory1_registration_date, $warehouses_id, $total_cost, $re_order);
-        if ($stmt->execute()) {
-            ?>
-            <script>
-                Swal.fire({
-                    color: "var(--verde)",
-                    icon: "success",
-                    iconColor: "var(--verde)",
-                    title: '!Éxito!',
-                    text: 'Artículo Agregado',
-                    showConfirmButton: true,
-                    customClass: {
-                        confirmButton: 'btn-confirm'
-                    },
-                    confirmButtonText: "Aceptar",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = window.location.href;
-                    }
-                });
-            </script>
-            <?php
-        } else {
-            echo "Error: " . $stmt->error;
-        }
-        $stmt->close();
+        echo "Error: " . $stmt->error;
     }
+    $stmt->close();
+
     $checkQuery->close();
     $conn->close();
 }
