@@ -190,7 +190,7 @@ include_once ("../settings/conexion.php");
                                 <?php echo !empty($row['inventory1_total_cost']) ? $row['inventory1_total_cost'] : '0.00'; ?>
                             </td>
                             <td class="solicitar">
-                            <button onclick="solicitarArt('<?php echo $row['articles_name']; ?>', '<?php echo $row['categories_name']; ?>', '<?php echo $row['warehouses_name']; ?>', '<?php echo $row['inventory1_quantity']; ?>', '<?php echo $row['articles_unit_cost']; ?>', '<?php echo $row['inventory1_total_cost']; ?>')">Solicitar</button>
+                            <button onclick="solicitarArt('<?php echo $row['articles_name']; ?>', '<?php echo $row['categories_name']; ?>', '<?php echo $row['warehouses_name']; ?>', '', '<?php echo $row['articles_unit_cost']; ?>', '')">Solicitar</button>
                             </td>
                         </tr>
                         <?php
@@ -212,7 +212,7 @@ include_once ("../settings/conexion.php");
                         <label for="articles_name">Nombre:</label>
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
-                            <input type="text" name="articles_name" id="articles_name" class="btnTxt" disabled>
+                            <input type="text" name="articles_name" id="articles_name" class="btnTxt" readonly>
                         </div>
                     </div>
 
@@ -221,7 +221,7 @@ include_once ("../settings/conexion.php");
                         <label for="categories_name">Categoría:</label>
                         <div class="campo">
                             <i class="fa-solid fa-layer-group"></i>
-                            <input type="text" name="categories_name" id="categories_name" class="btnTxt" disabled>
+                            <input type="text" name="categories_name" id="categories_name" class="btnTxt" readonly>
                         </div>
                     </div>
 
@@ -230,17 +230,17 @@ include_once ("../settings/conexion.php");
                         <label for="warehouses_name">Bodega:</label>
                         <div class="campo">
                             <i class="fa-solid fa-ruler-combined"></i>
-                            <input type="text" name="warehouses_name" id="warehouses_name" class="btnTxt" disabled>
+                            <input type="text" name="warehouses_name" id="warehouses_name" class="btnTxt" readonly>
                         </div>
                     </div>
 
                     <!--campo de cantidad de artículos-->
                     <div class="formLogCampo">
-                        <label for="inventory1_quantity">Cantidad:<i class="fa-solid fa-asterisk">Verifique la cantidad a solicitar</i></label>
+                        <label for="request_quantity">Cantidad:<i class="fa-solid fa-asterisk">Verifique la cantidad a solicitar</i></label>
                         <div class="campo">
                             <i class="fa-solid fa-arrow-up-1-9"></i>
-                            <input class="btnTxt" type="number" name="inventory1_quantity" id="inventory1_quantity"
-                                pattern="[0-9]{1,7}" min="1" max="1000000" step="1"
+                            <input class="btnTxt" type="number" name="request_quantity" id="request_quantity"
+                                pattern="[0-9]{1,7}" min="0" max="1000000" step="1"
                                 placeholder="introduzca la cantidad " required>
                         </div>
                     </div>
@@ -251,23 +251,23 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-dollar-sign"></i>
                             <input type="text" name="articles_unit_cost" id="articles_unit_cost" class="btnTxt"
-                                disabled>
+                                readonly>
                         </div>
                     </div>
 
                     <!--campo de costo total del artículos-->
                     <div class="formLogCampo">
-                        <label for="inventory1_total_cost">Costo Total:</label>
+                        <label for="request_total_cost">Costo Total:</label>
                         <div class="campo">
                             <i class="fa-solid fa-sack-dollar"></i>
-                            <input type="text" name="inventory1_total_cost" id="inventory1_total_cost" class="btnTxt"
-                                disabled>
+                            <input type="text" name="request_total_cost" id="request_total_cost" class="btnTxt"
+                                readonly>
                         </div>
                     </div>
 
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
                     <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnCreateUser" name="agregarArtConsumoInterno">
+                        <button type="submit" class="btnSubmit btnCreateUser" name="solicitarArtConsumoInterno">
                             <i class="fa-solid fa-heart-circle-check"></i>
                             Solicitar
                         </button>
@@ -303,11 +303,11 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
     $articles_id = htmlspecialchars($_POST['articles_id']);
     $categories_id = htmlspecialchars($_POST['categories_id']);
     $quantity = htmlspecialchars($_POST['inventory1_quantity']);
+    $articles_unit_cost = htmlspecialchars($_POST['articles_unit_cost']);
     date_default_timezone_set('America/Panama');
     $inventory1_registration_date = date("Y-m-d");
     $warehouses_id = htmlspecialchars($_POST['warehouses_id']);
     $total_cost = htmlspecialchars($_POST['inventory1_total_cost']);
-    $re_order = 100;
     $checkQuery = $conn->prepare("SELECT * 
     FROM inventory1 
     WHERE articles_id = ? 
@@ -338,9 +338,9 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
         <?php
     } else {
 
-        $stmt = $conn->prepare("INSERT INTO inventory1 (articles_id, categories_id, inventory1_quantity, inventory1_registration_date, warehouses_id, inventory1_total_cost, inventory1_re_order) 
+        $stmt = $conn->prepare("INSERT INTO inventory1 (articles_id, categories_id, inventory1_quantity, articles_unit_cost, inventory1_registration_date, warehouses_id, inventory1_total_cost, inventory1_re_order) 
         VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("iiisidi", $articles_id, $categories_id, $quantity, $inventory1_registration_date, $warehouses_id, $total_cost, $re_order);
+        $stmt->bind_param("iiisidi", $articles_id, $categories_id, $quantity, $articles_unit_cost, $inventory1_registration_date, $warehouses_id, $total_cost, $re_order);
         if ($stmt->execute()) {
             ?>
             <script>

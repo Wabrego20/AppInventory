@@ -104,9 +104,24 @@ document
     document.getElementById("articles_name").value = articleName;
     document.getElementById("categories_name").value = categoryName;
     document.getElementById("warehouses_name").value = warehouseName;
-    document.getElementById("inventory1_quantity").value = quantity;
+    document.getElementById("request_quantity").value = quantity;
     document.getElementById("articles_unit_cost").value = unitCost;
-    document.getElementById("inventory1_total_cost").value = totalCost;
+    document.getElementById("request_total_cost").value = totalCost;
 }
+
+document.getElementById("request_quantity").addEventListener("input", function () {
+  var quantity = document.getElementById("request_quantity").value;
+  var unitCost = document.getElementById("articles_unit_cost").value;
+  var totalCost = quantity * unitCost;
+  document.getElementById("request_total_cost").value = totalCost.toFixed(2);
+});
+
+document.getElementById("articles_unit_cost").addEventListener("input", function () {
+  var quantity = document.getElementById("inventory1_quantity").value;
+  var unitCost = document.getElementById("articles_unit_cost").value;
+  var totalCost = quantity * unitCost;
+  document.getElementById("request_total_cost").value = totalCost.toFixed(2);
+});
+
 
 

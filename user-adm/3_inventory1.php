@@ -270,7 +270,7 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-layer-group"></i>
                             <input type="hidden" name="categories_id" id="categories_id">
-                            <input type="text" name="categories_name" id="categories_name" class="btnTxt" disabled>
+                            <input type="text" name="categories_name" id="categories_name" class="btnTxt" readonly>
                         </div>
                     </div>
 
@@ -312,7 +312,7 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-dollar-sign"></i>
                             <input type="text" name="articles_unit_cost" id="articles_unit_cost" class="btnTxt"
-                                disabled>
+                                readonly>
                         </div>
                     </div>
 

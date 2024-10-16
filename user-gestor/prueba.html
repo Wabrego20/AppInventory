@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input class="btnTxt" type="number" name="inventory1_quantity" id="inventory1_quantity" pattern="[0-9]{1,7}" min="1" max="1000000" step="1" placeholder="introduzca la cantidad " required>
+<input type="number" id="articles_unit_cost" name="articles_unit_cost">
+<input type="text" name="inventory1_total_cost" id="inventory1_total_cost" class="btnTxt" readonly>
+
+<script>
+    document.getElementById("inventory1_quantity").addEventListener("input", function () {
+        var quantity = document.getElementById("inventory1_quantity").value;
+        var unitCost = document.getElementById("articles_unit_cost").value;
+        var totalCost = quantity * unitCost;
+        document.getElementById("inventory1_total_cost").value = totalCost.toFixed(2);
+    });
+
+    document.getElementById("articles_unit_cost").addEventListener("input", function () {
+        var quantity = document.getElementById("inventory1_quantity").value;
+        var unitCost = document.getElementById("articles_unit_cost").value;
+        var totalCost = quantity * unitCost;
+        document.getElementById("inventory1_total_cost").value = totalCost.toFixed(2);
+    });
+</script>
+
+</body>
+</html>
