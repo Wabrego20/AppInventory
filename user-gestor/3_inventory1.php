@@ -190,7 +190,8 @@ include_once ("../settings/conexion.php");
                                 <?php echo !empty($row['inventory1_total_cost']) ? $row['inventory1_total_cost'] : '0.00'; ?>
                             </td>
                             <td class="solicitar">
-                            <button onclick="solicitarArt('<?php echo $row['articles_name']; ?>', '<?php echo $row['categories_name']; ?>', '<?php echo $row['warehouses_name']; ?>', '', '<?php echo $row['articles_unit_cost']; ?>', '')">Solicitar</button>
+                                <button
+                                    onclick="solicitarArt('<?php echo $row['articles_name']; ?>', '<?php echo $row['categories_name']; ?>', '<?php echo $row['warehouses_name']; ?>', '', '<?php echo $row['articles_unit_cost']; ?>', '')">Solicitar</button>
                             </td>
                         </tr>
                         <?php
@@ -209,9 +210,9 @@ include_once ("../settings/conexion.php");
 
                     <!--campo de nombre de artículo-->
                     <div class="formLogCampo">
-                        <label for="articles_name">Nombre:</label>
+                        <label for="articles_name">Artículo:</label>
                         <div class="campo">
-                            <i class="fa-solid fa-signature"></i>
+                            <i class="fa-solid fa-box-open"></i>
                             <input type="text" name="articles_name" id="articles_name" class="btnTxt" readonly>
                         </div>
                     </div>
@@ -236,7 +237,8 @@ include_once ("../settings/conexion.php");
 
                     <!--campo de cantidad de artículos-->
                     <div class="formLogCampo">
-                        <label for="request_quantity">Cantidad:<i class="fa-solid fa-asterisk">Verifique la cantidad a solicitar</i></label>
+                        <label for="request_quantity">Cantidad:<i class="fa-solid fa-asterisk">Inserte y Verifique la
+                                cantidad</i></label>
                         <div class="campo">
                             <i class="fa-solid fa-arrow-up-1-9"></i>
                             <input class="btnTxt" type="number" name="request_quantity" id="request_quantity"

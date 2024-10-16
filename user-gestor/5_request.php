@@ -131,13 +131,15 @@ include_once ("../settings/conexion.php");
             <thead>
                 <tr>
                     <th>N°</th>
+                    <th>Usuario</th>
                     <th>Departamento</th>
                     <th>Artículo</th>
-                    <th>Usuario</th>
+                    <th>Categoría</th>
+                    <th>Tipo de Inventario</th>
                     <th>Cantidad</th>
+                    <th>Costo Total</th>           
                     <th>Fecha de Solicitud</th>
                     <th>Estado</th>
-                    <th>Tipo de Inventario</th>
                     <th>Procesar</th>
                     <th>Rechazar</th>
                 </tr>

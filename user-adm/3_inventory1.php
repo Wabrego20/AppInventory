@@ -242,9 +242,9 @@ include_once ("../settings/conexion.php");
 
                     <!--campo de nombre de artículo-->
                     <div class="formLogCampo">
-                        <label for="articles_id">Nombre:<i class="fa-solid fa-asterisk"></i></label>
+                        <label for="articles_id">Artículo:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
-                            <i class="fa-solid fa-signature"></i>
+                            <i class="fa-solid fa-box-open"></i>
                             <select name="articles_id" class="btnTxt" id="articles_id" required>
                                 <option value="">Seleccione</option>
                                 <?php
