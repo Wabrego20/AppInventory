@@ -140,8 +140,7 @@ include_once ("../settings/conexion.php");
                     <th>Costo Total</th>
                     <th>Fecha de Solicitud</th>
                     <th>Estado</th>
-                    <th>Procesar</th>
-                    <th>Rechazar</th>
+                    <th>Acta de Entrega</th>
                 </tr>
             </thead>
             <tbody>
@@ -171,7 +170,7 @@ include_once ("../settings/conexion.php");
                                 <?php echo $fila; ?>
                             </td>
                             <td>
-                                <?php echo !empty($row['users_name']) ? $row['users_name'] : 'No disponible'; ?>
+                                <?php echo !empty($row['users_user']) ? $row['users_user'] : 'No disponible'; ?>
                             </td>
                             <td>
                                 <?php echo !empty($row['departament_name']) ? $row['departament_name'] : 'No disponible'; ?>
@@ -194,22 +193,18 @@ include_once ("../settings/conexion.php");
                             <td>
                                 <?php echo !empty($row['request_order_date']) ? $row['request_order_date'] : ''; ?>
                             </td>
-                            <td>
+                            <td class="<?php echo !empty($row['request_status']) ? strtolower($row['request_status']) : ''; ?>">
                                 <?php echo !empty($row['request_status']) ? $row['request_status'] : ''; ?>
                             </td>
 
+
                             <td>
-                                <a href="javascript:void(0);" title="estado del pedido"
+                                <span href="javascript:void(0);" title="Ver acta de entrega"
                                     onclick="procesar(<?php echo $row['request_id']; ?>)">
-                                    <i class="fa-solid fa-heart-pulse"></i>
-                                </a>
+                                    <i class="fa-solid fa-file-pdf"></i>
+                                </span>
                             </td>
-                            <td>
-                                <a href="javascript:void(0);" title="clic para eliminar el artículo"
-                                    onclick="rechazar(<?php echo $row['request_id']; ?>)">
-                                    <i class="fa-solid fa-heart-circle-minus"></i>
-                                </a>
-                            </td>
+
                         </tr>
 
                         <?php
