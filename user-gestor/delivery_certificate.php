@@ -3,40 +3,60 @@
 class FPDF
 {
     protected $y = 0; // Añadir una propiedad para la posición vertical
+    protected $page = 0; // Añadir una propiedad para el número de página
 
-    function __construct($orientation='P', $unit='mm', $size='A4')
+    function __construct($orientation = 'P', $unit = 'mm', $size = 'A4')
     {
         // Inicialización de parámetros
     }
 
-    function AddPage($orientation='', $size='')
+    function AddPage($orientation = '', $size = '')
     {
         // Código para añadir una página
+        $this->page++;
     }
 
-    function SetFont($family, $style='', $size=0)
+    function SetFont($family, $style = '', $size = 0)
     {
         // Código para establecer la fuente
     }
 
-    function Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=false, $link='')
+    function Cell($w, $h = 0, $txt = '', $border = 0, $ln = 0, $align = '', $fill = false, $link = '')
     {
         // Código para crear una celda
         echo $txt . "<br>"; // Para propósitos de depuración
     }
 
-    function Ln($h=null)
+    function Ln($h = null)
     {
         // Código para realizar un salto de línea
-        if($h===null)
+        if ($h === null)
             $h = 10; // Valor por defecto si no se especifica altura
         $this->y += $h;
     }
 
-    function Output($dest='', $name='', $isUTF8=false)
+    function SetY($y)
+    {
+        // Código para establecer la posición vertical
+        $this->y = $y;
+    }
+
+    function Image($file, $x, $y, $w = 0, $h = 0)
+    {
+        // Código para añadir una imagen
+        echo "Imagen añadida: $file en ($x, $y) con tamaño ($w, $h)<br>"; // Para propósitos de depuración
+    }
+
+    function Output($dest = '', $name = '', $isUTF8 = false)
     {
         // Código para generar el PDF
         echo "PDF generado"; // Para propósitos de depuración
+    }
+
+    function PageNo()
+    {
+        // Código para obtener el número de página actual
+        return $this->page;
     }
 }
 
@@ -44,12 +64,31 @@ class FPDF
 $solicitante = "Juan Pérez";
 $elaborado_por = "Ana Gómez";
 $cantidad = 1000;
-$fecha = date("Y-m-d");
+date_default_timezone_set('America/Panama');
 $articulo = 'Papel blanco 8.5x11"';
 $precio_unitario = 0.10; // Precio unitario de ejemplo
 $precio_total = $cantidad * $precio_unitario;
 
-$pdf = new FPDF();
+class PDF extends FPDF
+{
+    function Header()
+    {
+        // Añadir el logo
+        $this->Image('../img/logoApp.png', 10, 6, 30); // Ajusta la ruta y el tamaño según sea necesario
+        $this->SetFont('Arial', 'B', 12);
+        $this->Cell(0, 10, 'Acta de Entrega', 0, 1, 'C');
+        $this->Ln(20);
+    }
+
+    function Footer()
+    {
+        $this->SetY(-15);
+        $this->SetFont('Arial', 'I', 8);
+        $this->Cell(0, 10, 'Page ' . $this->PageNo(), 0, 0, 'C');
+    }
+}
+
+$pdf = new PDF();
 $pdf->AddPage();
 $pdf->SetFont('Arial', '', 12);
 
