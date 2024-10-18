@@ -1,7 +1,7 @@
 <!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
-include_once("../settings/sessionStart.php");
-include_once("../settings/conexion.php");
+include_once ("../settings/sessionStart.php");
+include_once ("../settings/conexion.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -144,6 +144,7 @@ include_once("../settings/conexion.php");
                     <th>Solicitar</th>
                 </tr>
             </thead>
+
             <tbody>
                 <?php
                 $inventario1 = "SELECT inventory1.*, articles.*, categories.*, warehouses.* 
@@ -151,6 +152,7 @@ include_once("../settings/conexion.php");
                 WHERE inventory1.articles_id = articles.articles_id
                 AND inventory1.categories_id = categories.categories_id
                 AND inventory1.warehouses_id = warehouses.warehouses_id";
+
                 // Preparar la declaración
                 $stmt = $conn->prepare($inventario1);
                 // Ejecutar la declaración
@@ -161,7 +163,7 @@ include_once("../settings/conexion.php");
                 if ($result->num_rows > 0) {
                     $fila = 1;
                     while ($row = $result->fetch_assoc()) {
-                ?>
+                        ?>
                         <tr>
                             <td>
                                 <?php echo $fila; ?>
@@ -189,16 +191,19 @@ include_once("../settings/conexion.php");
                                 <?php echo !empty($row['inventory1_total_cost']) ? $row['inventory1_total_cost'] : '0.00'; ?>
                             </td>
                             <td class="btn-request solicitar">
-                                <button onclick="solicitarArt('<?php echo $row['articles_name']; ?>','<?php echo $row['categories_name']; ?>','<?php echo $row['warehouses_name']; ?>','','<?php echo $row['articles_unit_cost']; ?>','')">Solicitar</button>
+                                <button
+                                    onclick="solicitarArt('<?php echo $row['articles_name']; ?>','<?php echo $row['categories_name']; ?>','<?php echo $row['warehouses_name']; ?>','','<?php echo $row['articles_unit_cost']; ?>','')">Solicitar</button>
                             </td>
 
                         </tr>
-                <?php
+                        <?php
                         $fila++;
                     }
                 }
                 ?>
+
             </tbody>
+
         </table>
 
         <!--Formulario para Crear un articulo-->
@@ -275,27 +280,6 @@ include_once("../settings/conexion.php");
                         </button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormAddArticle()">Cancelar</div>
                     </div>
-
-                    <?php
-                    // Suponiendo que $conn es tu conexión a la base de datos
-                    $stmt = $conn->prepare("SELECT request.*, users.*, departament.*, warehouses.*, categories.*, articles.*, inventory1.*
-                    FROM request
-                    JOIN users ON request.users_id = users.users_id
-                    JOIN departament ON request.departament_id = departament.departament_id
-                    JOIN warehouses ON request.warehouses_id = warehouses.warehouses_id
-                    JOIN categories ON request.categories_id = categories.categories_id
-                    JOIN articles ON request.articles_id = articles.articles_id
-                    JOIN inventory1 ON request.inventory1_id = inventory1.inventory1_id");
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    $row = $result->fetch_assoc();
-                    ?>
-                    <input type="text" name="users_id" value="<?php echo $row['users_id']; ?>">
-                    <input type="text" name="departament_id" value="<?php echo $row['departament_id']; ?>">
-                    <input type="text" name="warehouses_id" value="<?php echo $row['warehouses_id']; ?>">
-                    <input type="text" name="categories_id" value="<?php echo $row['categories_id']; ?>">
-                    <input type="text" name="articles_id" value="<?php echo $row['articles_id']; ?>">
-                    <input type="text" name="inventory1_id" value="<?php echo $row['inventory1_id']; ?>">
                 </form>
             </div>
         </div>
@@ -321,7 +305,6 @@ include_once("../settings/conexion.php");
 <!--Agregar un articulo de consumo interno-->
 <?php
 if (isset($_POST['solicitarArtConsumoInterno'])) {
-    $users_id = htmlspecialchars($_POST['users_id']);
     $departament_id = htmlspecialchars($_POST['departament_id']);
     $warehouses_id = htmlspecialchars($_POST['warehouses_id']);
     $articles_id = htmlspecialchars($_POST['articles_id']);
@@ -332,12 +315,12 @@ if (isset($_POST['solicitarArtConsumoInterno'])) {
     date_default_timezone_set('America/Panama');
 
     // Preparar y ejecutar el INSERT statement
-    $stmt_insert = $conn->prepare('INSERT INTO request (users_id, departament_id, warehouses_id, categories_id, articles_id, inventory1_id, request_quantity, request_total_cost) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-    $stmt_insert->bind_param('iiiiiiid', $users_id, $departament_id, $warehouses_id, $categories_id, $articles_id, $inventory1_id, $request_quantity, $request_total_cost);
+    $stmt_insert = $conn->prepare('INSERT INTO request (warehouses_id, categories_id, articles_id, inventory1_id, request_quantity, request_total_cost) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+    $stmt_insert->bind_param('iiiiiid', $users_id, $departament_id, $warehouses_id, $categories_id, $articles_id, $inventory1_id, $request_quantity, $request_total_cost);
 
     // Ejecutar la inserción y manejar errores
     if ($stmt_insert->execute()) {
-?>
+        ?>
         <script>
             Swal.fire({
                 color: "var(--verde)",
@@ -356,7 +339,7 @@ if (isset($_POST['solicitarArtConsumoInterno'])) {
                 }
             });
         </script>
-<?php
+        <?php
     } else {
         echo "Error: " . $stmt->error;
     }

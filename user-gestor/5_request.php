@@ -1,7 +1,7 @@
 <!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
-include_once("../settings/sessionStart.php");
-include_once("../settings/conexion.php");
+include_once ("../settings/sessionStart.php");
+include_once ("../settings/conexion.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -132,7 +132,6 @@ include_once("../settings/conexion.php");
                 <tr>
                     <th>N°</th>
                     <th>Usuario</th>
-                    <th>Departamento</th>
                     <th>Artículo</th>
                     <th>Categoría</th>
                     <th>Tipo de Inventario</th>
@@ -146,13 +145,7 @@ include_once("../settings/conexion.php");
             <tbody>
                 <?php
                 // Declaración SQL
-                $solicitud = "SELECT request.*, departament.*, articles.*, categories.*, inventory1.*, users.*
-              FROM request, departament, articles, categories, inventory1, users
-              WHERE request.users_id = users.users_id
-              AND request.articles_id = articles.articles_id
-              AND request.categories_id = categories.categories_id
-              AND request.inventory1_id = inventory1.inventory1_id
-              AND request.departament_id = departament.departament_id";
+                $solicitud = "SELECT * FROM request";
 
                 // Preparar la declaración
                 $stmt = $conn->prepare($solicitud);
@@ -164,25 +157,23 @@ include_once("../settings/conexion.php");
                 if ($result->num_rows > 0) {
                     $fila = 1;
                     while ($row = $result->fetch_assoc()) {
-                ?>
+                        ?>
                         <tr>
                             <td>
                                 <?php echo $fila; ?>
                             </td>
                             <td>
-                                <?php echo !empty($row['users_user']) ? $row['users_user'] : 'No disponible'; ?>
+                                <?php echo !empty($row['request_user']) ? $row['request_user'] : 'No disponible'; ?>
+                            </td>
+                            
+                            <td>
+                                <?php echo !empty($row['request_article']) ? $row['request_article'] : 'no disponible'; ?>
                             </td>
                             <td>
-                                <?php echo !empty($row['departament_name']) ? $row['departament_name'] : 'No disponible'; ?>
+                                <?php echo !empty($row['request_categorie']) ? $row['request_categorie'] : 'no disponible'; ?>
                             </td>
                             <td>
-                                <?php echo !empty($row['articles_name']) ? $row['articles_name'] : 'No disponible'; ?>
-                            </td>
-                            <td>
-                                <?php echo !empty($row['categories_name']) ? $row['categories_name'] : 'No disponible'; ?>
-                            </td>
-                            <td>
-                                <?php echo !empty($row['inventory1_name']) ? $row['inventory1_name'] : 'no disponible'; ?>
+                                <?php echo !empty($row['request_inventory1']) ? $row['request_inventory1'] : 'no disponible'; ?>
                             </td>
                             <td>
                                 <?php echo !empty($row['request_quantity']) ? $row['request_quantity'] : '0'; ?>
@@ -196,17 +187,15 @@ include_once("../settings/conexion.php");
                             <td class="<?php echo !empty($row['request_status']) ? strtolower($row['request_status']) : ''; ?>">
                                 <?php echo !empty($row['request_status']) ? $row['request_status'] : ''; ?>
                             </td>
-
                             <td>
-                                <span href="javascript:void(0);" title="Ver acta de entrega"
-                                    onclick="procesar(<?php echo $row['request_id']; ?>)">
+                                <span href="javascript:void(0);" title="Ver acta de entrega" onclick="procesar(<?php echo $row['request_id']; ?>)">
                                     <i class="fa-solid fa-file-pdf"></i>
                                 </span>
                             </td>
 
                         </tr>
 
-                <?php
+                        <?php
                         $fila++;
                     }
                 }

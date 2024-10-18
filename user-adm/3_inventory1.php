@@ -1,7 +1,7 @@
 <!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
-include_once("../settings/sessionStart.php");
-include_once("../settings/conexion.php");
+include_once ("../settings/sessionStart.php");
+include_once ("../settings/conexion.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -164,8 +164,8 @@ include_once("../settings/conexion.php");
                 // Declaración SQL
                 $inventario1 = "SELECT inventory1.*, articles.*, categories.*, warehouses.* 
                 FROM inventory1, articles, categories, warehouses
-                WHERE inventory1.articles_id  = articles.articles_id
-                AND inventory1.categories_id  = categories.categories_id
+                WHERE inventory1.articles_id = articles.articles_id
+                AND inventory1.categories_id = categories.categories_id
                 AND inventory1.warehouses_id = warehouses.warehouses_id";
                 // Preparar la declaración
                 $stmt = $conn->prepare($inventario1);
@@ -177,7 +177,7 @@ include_once("../settings/conexion.php");
                 if ($result->num_rows > 0) {
                     $fila = 1;
                     while ($row = $result->fetch_assoc()) {
-                ?>
+                        ?>
                         <tr>
                             <td>
                                 <?php echo $fila; ?>
@@ -206,20 +206,20 @@ include_once("../settings/conexion.php");
                             </td>
                             <td>
                                 <h4 style="color: <?php
-                                                    $re_order = !empty($row['inventory1_re_order']) ? $row['inventory1_re_order'] : 'N/A';
-                                                    if ($re_order !== 'N/A') {
-                                                        if ($re_order > 80) {
-                                                            echo 'var(--verde)';
-                                                        } elseif ($re_order >= 60 && $re_order <= 80) {
-                                                            echo 'var(--naranja)';
-                                                        } elseif ($re_order < 60) {
-                                                            echo 'var(--rojo)';
-                                                        }
-                                                    } else {
-                                                        echo 'inherit'; // Default color if N/A
-                                                    }
-                                                    ?>;">
-                                    <?php echo $re_order; ?>%
+                                $re_order = !empty($row['inventory1_re_order']) ? $row['inventory1_re_order'] : 'N/A';
+                                if ($re_order !== 'N/A') {
+                                    if ($re_order > 80) {
+                                        echo 'var(--verde)';
+                                    } elseif ($re_order >= 60 && $re_order <= 80) {
+                                        echo 'var(--naranja)';
+                                    } elseif ($re_order < 60) {
+                                        echo 'var(--rojo)';
+                                    }
+                                } else {
+                                    echo 'inherit'; // Default color if N/A
+                                }
+                                ?>;">
+                                    <?php echo $re_order; ?>
                                 </h4>
                             </td>
 
@@ -230,7 +230,7 @@ include_once("../settings/conexion.php");
                             </td>
                         </tr>
 
-                <?php
+                        <?php
                         $fila++;
                     }
                 }
@@ -372,7 +372,7 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
     $inventory1_registration_date = date("Y-m-d");
     $warehouses_id = htmlspecialchars($_POST['warehouses_id']);
     $total_cost = htmlspecialchars($_POST['inventory1_total_cost']);
-    $re_order = 100;
+    $re_order = $quantity / 3;
     $checkQuery = $conn->prepare("SELECT * 
     FROM inventory1 
     WHERE articles_id = ? 
@@ -381,7 +381,7 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
     $checkQuery->execute();
     $result = $checkQuery->get_result();
     if ($result->num_rows > 0) {
-?>
+        ?>
         <script>
             Swal.fire({
                 color: "var(--rojo)",
@@ -416,7 +416,7 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
 
 
         if ($stmt->execute() && $stmt_update->execute()) {
-        ?>
+            ?>
             <script>
                 Swal.fire({
                     color: "var(--verde)",
@@ -435,7 +435,7 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
                     }
                 });
             </script>
-<?php
+            <?php
         } else {
             echo "Error: " . $stmt->error;
         }
