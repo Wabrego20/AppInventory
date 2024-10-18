@@ -2,6 +2,19 @@
 <?php
 include_once ("../settings/sessionStart.php");
 include_once ("../settings/conexion.php");
+// Consulta SQL y obtención de resultados
+$seleSol = "SELECT request.*, users.*, departament.*, warehouses.*, categories.*, articles.*, inventory1.*
+            FROM request
+            JOIN users ON request.users_id = users.users_id
+            JOIN departament ON request.departament_id = departament.departament_id
+            JOIN warehouses ON request.warehouses_id = warehouses.warehouses_id
+            JOIN categories ON request.categories_id = categories.categories_id
+            JOIN articles ON request.articles_id = articles.articles_id
+            JOIN inventory1 ON request.inventory1_id = inventory1.inventory1_id";
+
+$stmt = $conn->prepare($seleSol);
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -189,10 +202,16 @@ include_once ("../settings/conexion.php");
                             <td>
                                 <?php echo !empty($row['inventory1_total_cost']) ? $row['inventory1_total_cost'] : '0.00'; ?>
                             </td>
-                            <td class="solicitar">
-                                <button
-                                    onclick="solicitarArt('<?php echo $row['articles_name']; ?>', '<?php echo $row['categories_name']; ?>', '<?php echo $row['warehouses_name']; ?>', '', '<?php echo $row['articles_unit_cost']; ?>', '')">Solicitar</button>
-                            </td>
+                            <<td class="solicitar">
+                                <button onclick="solicitarArt(
+                                    '<?php echo $row['articles_name']; ?>',
+                                    '<?php echo $row['categories_name']; ?>',
+                                    '<?php echo $row['warehouses_name']; ?>',
+                                    '', // Assuming you will handle this in the form
+                                    '<?php echo $row['articles_unit_cost']; ?>',
+                                    '')">Solicitar</button>
+                                </td>
+
                         </tr>
                         <?php
                         $fila++;
@@ -214,6 +233,7 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-box-open"></i>
                             <input type="text" name="articles_name" id="articles_name" class="btnTxt" readonly>
+
                         </div>
                     </div>
 
@@ -276,6 +296,33 @@ include_once ("../settings/conexion.php");
                         <div class="btnSubmit btnCancel" onclick="ocultarFormAddArticle()">Cancelar</div>
                     </div>
 
+                    <?php
+                    // Suponiendo que $conn es tu conexión a la base de datos
+                    $stmt = $conn->prepare("SELECT request.*, users.*, departament.*, warehouses.*, categories.*, articles.*, inventory1.*
+                    FROM request
+                    JOIN users ON request.users_id = users.users_id
+                    JOIN departament ON request.departament_id = departament.departament_id
+                    JOIN warehouses ON request.warehouses_id = warehouses.warehouses_id
+                    JOIN categories ON request.categories_id = categories.categories_id
+                    JOIN articles ON request.articles_id = articles.articles_id
+                    JOIN inventory1 ON request.inventory1_id = inventory1.inventory1_id");
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    while ($row = $result->fetch_assoc()) {
+                        ?>
+                        <input type="text" name="request_id" value="<?php echo $row['request_id']; ?>">
+                        <input type="text" name="users_id" value="<?php echo $row['users_id']; ?>">
+                        <input type="text" name="departament_id" value="<?php echo $row['departament_id']; ?>">
+                        <input type="text" name="warehouses_id" value="<?php echo $row['warehouses_id']; ?>">
+                        <input type="text" name="categories_id" value="<?php echo $row['categories_id']; ?>">
+                        <input type="text" name="articles_id" value="<?php echo $row['articles_id']; ?>">
+                        <input type="text" name="inventory1_id" value="<?php echo $row['inventory1_id']; ?>">
+                        <br>
+                        <?php
+                    }
+                    ?>
+
                 </form>
             </div>
         </div>
@@ -301,19 +348,22 @@ include_once ("../settings/conexion.php");
 <!--Agregar un articulo de consumo interno-->
 <?php
 if (isset($_POST['solicitarArtConsumoInterno'])) {
-
     $users_id = htmlspecialchars($_POST['users_id']);
-    $categories_id = htmlspecialchars($_POST['categories_id']);
+    $departament_id = htmlspecialchars($_POST['departament_id']);
+    $warehouses_id = htmlspecialchars($_POST['warehouses_id']);
     $articles_id = htmlspecialchars($_POST['articles_id']);
+    $categories_id = htmlspecialchars($_POST['categories_id']);
     $inventory1_id = htmlspecialchars($_POST['inventory1_id']);
     $request_quantity = htmlspecialchars($_POST['request_quantity']);
     $request_total_cost = htmlspecialchars($_POST['request_total_cost']);
     date_default_timezone_set('America/Panama');
-    
-    $stmt = $conn->prepare("INSERT INTO request (users_id, categories_id, articles_id, inventory1_id, request_quantity, request_total_cost) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("iiiiid", $users_id, $categories_id, $articles_id, $inventory1_id, $request_quantity, $request_total_cost);
 
-   if ($stmt->execute()) {
+    // Preparar y ejecutar el INSERT statement
+    $stmt_insert = $conn->prepare('INSERT INTO request (users_id, departament_id, warehouses_id, categories_id, articles_id, inventory1_id, request_quantity, request_total_cost) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+    $stmt_insert->bind_param('iiiiiiid', $users_id, $departament_id, $warehouses_id, $categories_id, $articles_id, $inventory1_id, $request_quantity, $request_total_cost);
+
+    // Ejecutar la inserción y manejar errores
+    if ($stmt_insert->execute()) {
         ?>
         <script>
             Swal.fire({
@@ -338,8 +388,6 @@ if (isset($_POST['solicitarArtConsumoInterno'])) {
         echo "Error: " . $stmt->error;
     }
     $stmt->close();
-
-    $checkQuery->close();
     $conn->close();
 }
 ?>
