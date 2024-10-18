@@ -1,7 +1,7 @@
 <!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
-include_once("../settings/sessionStart.php");
-include_once("../settings/conexion.php");
+include_once ("../settings/sessionStart.php");
+include_once ("../settings/conexion.php");
 ?>
 
 <!DOCTYPE html>
@@ -91,11 +91,11 @@ include_once("../settings/conexion.php");
                 </li>
                 <li>
                     <div class="bell">
-                        <i class="fa-solid fa-clipboard-list"></i>
+                        <i class="fa-solid fa-bell"></i>
                         <h6>10</h6>
                     </div>
                     <a href="5_request.php">
-                        <i class="fa-solid fa-bell"></i>
+                        <i class="fa-solid fa-clipboard-list"></i>
                         <h5>Solicitudes</h5>
                     </a>
                 </li>
@@ -171,7 +171,7 @@ include_once("../settings/conexion.php");
                 if ($verUsuarios->num_rows > 0) {
                     $fila = 1;
                     while ($row = $verUsuarios->fetch_assoc()) {
-                ?>
+                        ?>
                         <tr>
                             <td>
                                 <?php echo $fila; ?>
@@ -206,7 +206,7 @@ include_once("../settings/conexion.php");
                             </td>
                         </tr>
 
-                <?php
+                        <?php
                         $fila++;
                     }
                 }
@@ -360,7 +360,7 @@ if (isset($_POST['crearUsuario'])) {
     $result = $checkQuery->get_result();
 
     if ($result->num_rows > 0) {
-?>
+        ?>
         <script>
             Swal.fire({
                 color: "var(--rojo)",
@@ -406,7 +406,7 @@ if (isset($_POST['crearUsuario'])) {
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("sssssssss", $dni, $name, $lastName, $email, $uniqueUser, $password, $rol, $registration_date, $departament);
         if ($stmt->execute()) {
-        ?>
+            ?>
             <script>
                 Swal.fire({
                     color: "var(--verde)",
@@ -425,7 +425,7 @@ if (isset($_POST['crearUsuario'])) {
                     }
                 });
             </script>
-<?php
+            <?php
         } else {
             echo "Error: " . $stmt->error;
         }

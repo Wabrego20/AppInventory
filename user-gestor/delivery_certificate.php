@@ -1,5 +1,5 @@
+<!--// Contenido esencial de fpdf.php-->
 <?php
-// Contenido esencial de fpdf.php
 class FPDF
 {
     protected $y = 0; // Añadir una propiedad para la posición vertical
@@ -65,6 +65,7 @@ $solicitante = "Juan Pérez";
 $elaborado_por = "Ana Gómez";
 $cantidad = 1000;
 date_default_timezone_set('America/Panama');
+$fecha = date('Y-m-d H:i:s');
 $articulo = 'Papel blanco 8.5x11"';
 $precio_unitario = 0.10; // Precio unitario de ejemplo
 $precio_total = $cantidad * $precio_unitario;
@@ -74,7 +75,7 @@ class PDF extends FPDF
     function Header()
     {
         // Añadir el logo
-        $this->Image('../img/logoApp.png', 10, 6, 30); // Ajusta la ruta y el tamaño según sea necesario
+        $this->Image('../img/logoMides.png', 10, 6, 30); // Ajusta la ruta y el tamaño según sea necesario
         $this->SetFont('Arial', 'B', 12);
         $this->Cell(0, 10, 'Acta de Entrega', 0, 1, 'C');
         $this->Ln(20);
