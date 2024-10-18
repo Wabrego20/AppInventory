@@ -1,7 +1,7 @@
 <!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
-include_once ("../settings/sessionStart.php");
-include_once ("../settings/conexion.php");
+include_once("../settings/sessionStart.php");
+include_once("../settings/conexion.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -87,6 +87,10 @@ include_once ("../settings/conexion.php");
                     </a>
                 </li>
                 <li>
+                    <div class="bell">
+                        <i class="fa-solid fa-bell"></i>
+                        <h6>10</h6>
+                    </div>
                     <a href="5_request.php">
                         <i class="fa-solid fa-bell"></i>
                         <h5>Solicitudes</h5>
@@ -156,7 +160,7 @@ include_once ("../settings/conexion.php");
                 if ($result->num_rows > 0) {
                     $fila = 1;
                     while ($row = $result->fetch_assoc()) {
-                        ?>
+                ?>
                         <tr>
                             <td>
                                 <?php echo $fila; ?>
@@ -177,7 +181,7 @@ include_once ("../settings/conexion.php");
                             </td>
                         </tr>
 
-                        <?php
+                <?php
                         $fila++;
                     }
                 }
@@ -328,7 +332,7 @@ if (isset($_POST['crearBodega'])) {
     $result = $checkQuery->get_result();
 
     if ($result->num_rows > 0) {
-        ?>
+?>
         <script>
             Swal.fire({
                 color: "var(--rojo)",
@@ -354,7 +358,7 @@ if (isset($_POST['crearBodega'])) {
         $stmt->bind_param("sss", $name, $provincia, $direccion);
 
         if ($stmt->execute()) {
-            ?>
+        ?>
             <script>
                 Swal.fire({
                     color: "var(--verde)",
@@ -373,7 +377,7 @@ if (isset($_POST['crearBodega'])) {
                     }
                 });
             </script>
-            <?php
+        <?php
         } else {
             echo "Error: " . $stmt->error;
         }
@@ -418,7 +422,7 @@ if (isset($_POST['editBodega'])) {
                 }
             });
         </script>
-        <?php
+<?php
     } else {
         echo "Error actualizando la bodega: " . $conn->error;
     }

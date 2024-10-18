@@ -1,6 +1,6 @@
 <!-- Inicio de sesión y cierre de sesión por inactividad -->
 <?php
-include_once ("../settings/sessionStart.php");
+include_once("../settings/sessionStart.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -27,7 +27,7 @@ include_once ("../settings/sessionStart.php");
                 <img src="../img/logoApp.png" alt="logoAPP" class="logoApp">
             </span>
             <ul>
-                
+
                 <!--Pestaña de Inicio-->
                 <li class="active">
                     <a href="#">
@@ -98,6 +98,10 @@ include_once ("../settings/sessionStart.php");
 
                 <!--Pestaña de Solicitudes-->
                 <li>
+                    <div class="bell">
+                        <i class="fa-solid fa-bell"></i>
+                        <h6>10</h6>
+                    </div>
                     <a href="5_request.php">
                         <i class="fa-solid fa-bell"></i>
                         <h5>Solicitudes</h5>

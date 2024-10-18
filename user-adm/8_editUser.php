@@ -1,7 +1,7 @@
 <!--Apartado para editar el perfil editUser.php-->
 <?php
-include_once ("../settings/sessionStart.php");
-include_once ("../settings/conexion.php");
+include_once("../settings/sessionStart.php");
+include_once("../settings/conexion.php");
 $usuario = $_SESSION['users_user'];
 $stmt = $conn->prepare("SELECT users.*, departament.* 
     FROM users 
@@ -127,6 +127,10 @@ if ($row = $result->fetch_assoc()) {
 
                 <!--Pestaña de Solicitudes-->
                 <li>
+                    <div class="bell">
+                        <i class="fa-solid fa-bell"></i>
+                        <h6>10</h6>
+                    </div>
                     <a href="5_request.php">
                         <i class="fa-solid fa-bell"></i>
                         <h5>Solicitudes</h5>
@@ -389,7 +393,7 @@ if (isset($_POST['editarUsuario'])) {
             $stmt = $conn->prepare("UPDATE users SET users_password=? WHERE users_user=?");
             $stmt->bind_param("ss", $nueva_contraseña_encriptada, $usuario);
             if ($stmt->execute()) {
-                ?>
+?>
                 <script>
                     Swal.fire({
                         color: "var(--verde)",
@@ -399,13 +403,13 @@ if (isset($_POST['editarUsuario'])) {
                         text: 'Contraseña actualizada correctamente',
                         showConfirmButton: false,
                     })
-                    setTimeout(function () {
+                    setTimeout(function() {
                         window.location.href = window.location.href;
                     }, 1500);
                 </script>
-                <?php
+            <?php
             } else {
-                ?>
+            ?>
                 <script>
                     Swal.fire({
                         color: "var(--rojo)",
@@ -415,11 +419,11 @@ if (isset($_POST['editarUsuario'])) {
                         text: 'No se actualizó la contraseña',
                         showConfirmButton: false,
                     })
-                    setTimeout(function () {
+                    setTimeout(function() {
                         window.location.href = window.location.href;
                     }, 1500);
                 </script>
-                <?php
+            <?php
             }
             $stmt->close();
         } else {
@@ -433,7 +437,7 @@ if (isset($_POST['editarUsuario'])) {
                     text: 'Las contraseñas no coinciden',
                     showConfirmButton: false,
                 })
-                setTimeout(function () {
+                setTimeout(function() {
                     window.location.href = window.location.href;
                 }, 1500);
             </script>
@@ -460,7 +464,7 @@ if (isset($_POST['editarUsuario'])) {
             $stmt->bind_param("ssssssissss", $base64Image, $name, $dni, $lastName, $email, $cumple, $edad, $phone, $cell, $adress, $usuario);
 
             if ($stmt->execute()) {
-                ?>
+            ?>
                 <script>
                     Swal.fire({
                         color: "var(--verde)",
@@ -470,13 +474,13 @@ if (isset($_POST['editarUsuario'])) {
                         text: 'Datos actualizados correctamente',
                         showConfirmButton: false,
                     })
-                    setTimeout(function () {
+                    setTimeout(function() {
                         window.location.href = window.location.href;
                     }, 1500);
                 </script>
-                <?php
+            <?php
             } else {
-                ?>
+            ?>
                 <script>
                     Swal.fire({
                         color: "var(--rojo)",
@@ -486,11 +490,11 @@ if (isset($_POST['editarUsuario'])) {
                         text: 'No se actualizó el correo',
                         showConfirmButton: false,
                     })
-                    setTimeout(function () {
+                    setTimeout(function() {
                         window.location.href = window.location.href;
                     }, 1500);
                 </script>
-                <?php
+<?php
             }
             $stmt->close();
         }

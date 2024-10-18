@@ -1,7 +1,7 @@
 <!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
-include_once ("../settings/sessionStart.php");
-include_once ("../settings/conexion.php");
+include_once("../settings/sessionStart.php");
+include_once("../settings/conexion.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -85,6 +85,10 @@ include_once ("../settings/conexion.php");
                     </a>
                 </li>
                 <li>
+                    <div class="bell">
+                        <i class="fa-solid fa-bell"></i>
+                        <h6>10</h6>
+                    </div>
                     <a href="5_request.php">
                         <i class="fa-solid fa-bell"></i>
                         <h5>Solicitudes</h5>
@@ -173,7 +177,7 @@ include_once ("../settings/conexion.php");
                 if ($result->num_rows > 0) {
                     $fila = 1;
                     while ($row = $result->fetch_assoc()) {
-                        ?>
+                ?>
                         <tr>
                             <td>
                                 <?php echo $fila; ?>
@@ -202,19 +206,19 @@ include_once ("../settings/conexion.php");
                             </td>
                             <td>
                                 <h4 style="color: <?php
-                                $re_order = !empty($row['inventory1_re_order']) ? $row['inventory1_re_order'] : 'N/A';
-                                if ($re_order !== 'N/A') {
-                                    if ($re_order > 80) {
-                                        echo 'var(--verde)';
-                                    } elseif ($re_order >= 60 && $re_order <= 80) {
-                                        echo 'var(--naranja)';
-                                    } elseif ($re_order < 60) {
-                                        echo 'var(--rojo)';
-                                    }
-                                } else {
-                                    echo 'inherit'; // Default color if N/A
-                                }
-                                ?>;">
+                                                    $re_order = !empty($row['inventory1_re_order']) ? $row['inventory1_re_order'] : 'N/A';
+                                                    if ($re_order !== 'N/A') {
+                                                        if ($re_order > 80) {
+                                                            echo 'var(--verde)';
+                                                        } elseif ($re_order >= 60 && $re_order <= 80) {
+                                                            echo 'var(--naranja)';
+                                                        } elseif ($re_order < 60) {
+                                                            echo 'var(--rojo)';
+                                                        }
+                                                    } else {
+                                                        echo 'inherit'; // Default color if N/A
+                                                    }
+                                                    ?>;">
                                     <?php echo $re_order; ?>%
                                 </h4>
                             </td>
@@ -226,7 +230,7 @@ include_once ("../settings/conexion.php");
                             </td>
                         </tr>
 
-                        <?php
+                <?php
                         $fila++;
                     }
                 }
@@ -377,7 +381,7 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
     $checkQuery->execute();
     $result = $checkQuery->get_result();
     if ($result->num_rows > 0) {
-        ?>
+?>
         <script>
             Swal.fire({
                 color: "var(--rojo)",
@@ -412,7 +416,7 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
 
 
         if ($stmt->execute() && $stmt_update->execute()) {
-            ?>
+        ?>
             <script>
                 Swal.fire({
                     color: "var(--verde)",
@@ -431,7 +435,7 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
                     }
                 });
             </script>
-            <?php
+<?php
         } else {
             echo "Error: " . $stmt->error;
         }

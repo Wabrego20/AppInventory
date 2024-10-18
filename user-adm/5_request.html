@@ -89,8 +89,12 @@ include_once ("../settings/conexion.php");
                     </a>
                 </li>
                 <li class="active">
-                    <a href="#">
+                    <div class="bell">
                         <i class="fa-solid fa-bell"></i>
+                        <h6>10</h6>
+                    </div>
+                    <a href="#">
+                        <i class="fa-solid fa-clipboard-list"></i>
                         <h5>Solicitudes</h5>
                     </a>
                 </li>
@@ -119,7 +123,9 @@ include_once ("../settings/conexion.php");
         <div class="formUserLogOut">
             <button class="btnUser" onclick="verBtnLogout();">
                 <i class="fa-solid fa-user-check"></i>
-                <h5><?php echo $_SESSION['users_user']; ?></h5>
+                <h5>
+                    <?php echo $_SESSION['users_user']; ?>
+                </h5>
                 <i class="fa-solid fa-angle-down"></i>
             </button>
             <button class="btnLogOut" id="logout" onclick="cerrarSesion();">
@@ -177,46 +183,46 @@ include_once ("../settings/conexion.php");
                     $fila = 1;
                     while ($row = $result->fetch_assoc()) {
                         ?>
-                        <tr>
-                            <td>
-                                <?php echo $fila; ?>
-                            </td>
-                            <td>
-                                <?php echo !empty($row['users_user']) ? $row['users_user'] : 'No disponible'; ?>
-                            </td>
-                            <td>
-                                <?php echo !empty($row['departament_name']) ? $row['departament_name'] : 'No disponible'; ?>
-                            </td>
-                            <td>
-                                <?php echo !empty($row['articles_name']) ? $row['articles_name'] : 'No disponible'; ?>
-                            </td>
-                            <td>
-                                <?php echo !empty($row['categories_name']) ? $row['categories_name'] : 'No disponible'; ?>
-                            </td>
-                            <td>
-                                <?php echo !empty($row['inventory1_name']) ? $row['inventory1_name'] : 'no disponible'; ?>
-                            </td>
-                            <td>
-                                <?php echo !empty($row['request_quantity']) ? $row['request_quantity'] : '0'; ?>
-                            </td>
-                            <td>
-                                <?php echo !empty($row['request_total_cost']) ? $row['request_total_cost'] : '0.00'; ?>
-                            </td>
-                            <td>
-                                <?php echo !empty($row['request_order_date']) ? $row['request_order_date'] : ''; ?>
-                            </td>
-                            <td class="<?php echo !empty($row['request_status']) ? strtolower($row['request_status']) : ''; ?>">
-                                <?php echo !empty($row['request_status']) ? $row['request_status'] : ''; ?>
-                            </td>
-                            <td class="btn-request aprobar">
-                                <button onclick="solicitarArt()">Aprobar</button>
-                            </td>
-                            <td class="btn-request rechazar">
-                                <button onclick="solicitarArt()">Rechazar</button>
-                            </td>
-                        </tr>
+                <tr>
+                    <td>
+                        <?php echo $fila; ?>
+                    </td>
+                    <td>
+                        <?php echo !empty($row['users_user']) ? $row['users_user'] : 'No disponible'; ?>
+                    </td>
+                    <td>
+                        <?php echo !empty($row['departament_name']) ? $row['departament_name'] : 'No disponible'; ?>
+                    </td>
+                    <td>
+                        <?php echo !empty($row['articles_name']) ? $row['articles_name'] : 'No disponible'; ?>
+                    </td>
+                    <td>
+                        <?php echo !empty($row['categories_name']) ? $row['categories_name'] : 'No disponible'; ?>
+                    </td>
+                    <td>
+                        <?php echo !empty($row['inventory1_name']) ? $row['inventory1_name'] : 'no disponible'; ?>
+                    </td>
+                    <td>
+                        <?php echo !empty($row['request_quantity']) ? $row['request_quantity'] : '0'; ?>
+                    </td>
+                    <td>
+                        <?php echo !empty($row['request_total_cost']) ? $row['request_total_cost'] : '0.00'; ?>
+                    </td>
+                    <td>
+                        <?php echo !empty($row['request_order_date']) ? $row['request_order_date'] : ''; ?>
+                    </td>
+                    <td class="<?php echo !empty($row['request_status']) ? strtolower($row['request_status']) : ''; ?>">
+                        <?php echo !empty($row['request_status']) ? $row['request_status'] : ''; ?>
+                    </td>
+                    <td class="btn-request aprobar">
+                        <button onclick="solicitarArt()">Aprobar</button>
+                    </td>
+                    <td class="btn-request rechazar">
+                        <button onclick="solicitarArt()">Rechazar</button>
+                    </td>
+                </tr>
 
-                        <?php
+                <?php
                         $fila++;
                     }
                 }

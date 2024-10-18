@@ -90,6 +90,10 @@ include_once("../settings/conexion.php");
                     </a>
                 </li>
                 <li>
+                    <div class="bell">
+                        <i class="fa-solid fa-bell"></i>
+                        <h6>10</h6>
+                    </div>
                     <a href="5_request.php">
                         <i class="fa-solid fa-bell"></i>
                         <h5>Solicitudes</h5>

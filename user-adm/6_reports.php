@@ -42,9 +42,9 @@ include_once("../settings/conexion.php");
                         <h5>Artículos</h5>
                     </a>
                 </li>
-                
-               <!--Menú de tipo de inventarios-->
-               <span class="panelMenuInventory">
+
+                <!--Menú de tipo de inventarios-->
+                <span class="panelMenuInventory">
                     <li class="menuInventory">
                         <a href="3_inventory.php">
                             <i class="fa-solid fa-boxes-stacked"></i>
@@ -52,7 +52,7 @@ include_once("../settings/conexion.php");
                         </a>
                     </li>
                     <span class="subMenu">
-                        
+
                         <li class="subMenu1">
                             <a href="3_inventory1.php">
                                 <i class="fa-solid fa-stapler"></i>
@@ -78,7 +78,7 @@ include_once("../settings/conexion.php");
                             </a>
                         </li>
                     </span>
-                </span >
+                </span>
                 <li>
                     <a href="4_warehouse.php">
                         <i class="fa-solid fa-warehouse"></i>
@@ -86,6 +86,10 @@ include_once("../settings/conexion.php");
                     </a>
                 </li>
                 <li>
+                    <div class="bell">
+                        <i class="fa-solid fa-bell"></i>
+                        <h6>10</h6>
+                    </div>
                     <a href="5_request.php">
                         <i class="fa-solid fa-bell"></i>
                         <h5>Solicitudes</h5>
