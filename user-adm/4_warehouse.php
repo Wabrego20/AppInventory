@@ -2,60 +2,6 @@
 <?php
 include_once ("../settings/sessionStart.php");
 include_once ("../settings/conexion.php");
-if (isset($_POST['editBodega'])) {
-
-    $name = htmlspecialchars($_POST['warehouses_name']);
-    $provincia = htmlspecialchars($_POST['warehouses_province']);
-    $direccion = htmlspecialchars($_POST['warehouses_location']);
-    $sql = "UPDATE warehouses SET 
-            warehouses_name = ?, 
-            warehouses_province = ?, 
-            warehouses_location = ?
-        WHERE warehouses_id = ?";
-
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssss", $name, $provincia, $direccion);
-
-    if ($stmt->execute()) {
-        ?>
-        <script>
-            Swal.fire({
-                color: "var(--verde)",
-                icon: "success",
-                iconColor: "var(--verde)",
-                title: '!Éxito!',
-                text: 'Bodega actualizada.',
-                showConfirmButton: true,
-                customClass: {
-                    confirmButton: 'btn-confirm'
-                },
-                confirmButtonText: "Aceptar",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = window.location.href;
-                }
-            });
-        </script>
-        <?php
-    } else {
-        echo "Error actualizando la bodega: " . $conn->error;
-    }
-
-    $stmt->close();
-    $conn->close();
-} else {
-    $sql = "SELECT * FROM warehouses WHERE warehouses_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $warehouses_id);
-    if ($stmt->execute()) {
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            $name = htmlspecialchars($_POST['warehouses_name']);
-            $provincia = htmlspecialchars($_POST['warehouses_province']);
-            $direccion = htmlspecialchars($_POST['warehouses_location']);
-        }
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -436,4 +382,61 @@ if (isset($_POST['crearBodega'])) {
     $checkQuery->close();
     $conn->close();
 }
+
+/**Editar Bodega */
+if (isset($_POST['editBodega'])) {
+
+    $name = htmlspecialchars($_POST['warehouses_name']);
+    $provincia = htmlspecialchars($_POST['warehouses_province']);
+    $direccion = htmlspecialchars($_POST['warehouses_location']);
+    $sql = "UPDATE warehouses SET 
+            warehouses_name = ?, 
+            warehouses_province = ?, 
+            warehouses_location = ?
+        WHERE warehouses_id = ?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssss", $name, $provincia, $direccion);
+
+    if ($stmt->execute()) {
+        ?>
+        <script>
+            Swal.fire({
+                color: "var(--verde)",
+                icon: "success",
+                iconColor: "var(--verde)",
+                title: '!Éxito!',
+                text: 'Bodega actualizada.',
+                showConfirmButton: true,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = window.location.href;
+                }
+            });
+        </script>
+        <?php
+    } else {
+        echo "Error actualizando la bodega: " . $conn->error;
+    }
+
+    $stmt->close();
+    $conn->close();
+} else {
+    $sql = "SELECT * FROM warehouses WHERE warehouses_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $warehouses_id);
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            $name = htmlspecialchars($_POST['warehouses_name']);
+            $provincia = htmlspecialchars($_POST['warehouses_province']);
+            $direccion = htmlspecialchars($_POST['warehouses_location']);
+        }
+    }
+}
+
 ?>

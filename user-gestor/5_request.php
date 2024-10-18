@@ -197,7 +197,6 @@ include_once ("../settings/conexion.php");
                                 <?php echo !empty($row['request_status']) ? $row['request_status'] : ''; ?>
                             </td>
 
-
                             <td>
                                 <span href="javascript:void(0);" title="Ver acta de entrega"
                                     onclick="procesar(<?php echo $row['request_id']; ?>)">

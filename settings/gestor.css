@@ -3,22 +3,4 @@
   /* Esto ocultará el botón */
 }
 
-.solicitar button{
-  color: var(--blanco);
-  height: 40px;
-  line-height: 40px;
-  background-color: var(--negro);
-  border-radius: 5px;
-  padding: 0 10px;
-  transition: 0.2s ease-in-out;
-  border: none;
-  font-weight: bold;
-}
 
-.solicitar button:hover{
-  background-color: var(--blanco);
-  box-shadow: 0 0 5px var(--negro);
-  color: var(--negro);
-  scale: 0.99;
-  cursor: pointer;
-}

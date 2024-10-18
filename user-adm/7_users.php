@@ -152,6 +152,7 @@ include_once("../settings/conexion.php");
                     <th>Correo</th>
                     <th>Rol</th>
                     <th>Fecha de Registro</th>
+                    <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>
             </thead>
@@ -188,6 +189,11 @@ include_once("../settings/conexion.php");
                             </td>
                             <td>
                                 <?php echo $row['users_registration_date']; ?>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0);" onclick="editUser(<?php echo $row['users_id']; ?>)">
+                                    <i class="fa-solid fa-user-pen"></i>
+                                </a>
                             </td>
                             <td>
                                 <a href="javascript:void(0);" onclick="deleteUser(<?php echo $row['users_id']; ?>)">

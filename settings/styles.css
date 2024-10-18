@@ -126,11 +126,7 @@ main {
 .btnSubmit:hover {
   cursor: pointer;
 }
-.btnCancel {
-  color: var(--blanco);
-  background-color: var(--gris);
-  line-height: 40px;
-}
+
 .btnCreateUser {
   color: var(--blanco);
   background-color: var(--verde);
@@ -145,6 +141,11 @@ main {
   background-color: var(--verde);
   pointer-events: none;
   opacity: 0.5;
+}
+.btnCancel{
+  line-height: 40px;
+  background-color: var(--gris);
+  color: var(--blanco);
 }
 .btnCancel:hover {
   color: var(--gris);
@@ -179,9 +180,47 @@ main {
   font-size: 10px;
 }
 
-.btnTxt::placeholder {
-  opacity: 1;
+.btn-request button{
+  color: var(--blanco);
+  height: 40px;
+  line-height: 40px;
+  border-radius: 5px;
+  padding: 0 10px;
+  transition: 0.2s ease-in-out;
+  border: none;
+  font-weight: bold;
 }
+
+.solicitar button{
+  background-color: var(--negro);
+}
+.aprobar button{
+  background-color: var(--verde);
+}
+.rechazar button{
+  background-color: var(--rojo);
+}
+
+.btn-request button:hover{
+  background-color: var(--blanco);
+  scale: 0.99;
+  cursor: pointer;
+}
+
+.solicitar button:hover{
+  color: var(--negro);
+  box-shadow: 0 0 5px var(--negro);
+}
+.aprobar button:hover{
+  color: var(--verde);
+  box-shadow: 0 0 5px var(--verde);
+}
+.rechazar button:hover{
+  color: var(--rojo);
+  box-shadow: 0 0 5px var(--rojo);
+}
+
+
 
 /*Tablas*/
 .dataTables_wrapper {

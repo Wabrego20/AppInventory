@@ -188,15 +188,9 @@ include_once ("../settings/conexion.php");
                             <td>
                                 <?php echo !empty($row['inventory1_total_cost']) ? $row['inventory1_total_cost'] : '0.00'; ?>
                             </td>
-                            <<td class="solicitar">
-                                <button onclick="solicitarArt(
-                                    '<?php echo $row['articles_name']; ?>',
-                                    '<?php echo $row['categories_name']; ?>',
-                                    '<?php echo $row['warehouses_name']; ?>',
-                                    '',
-                                    '<?php echo $row['articles_unit_cost']; ?>',
-                                    '')">Solicitar</button>
-                                </td>
+                            <td class="btn-request solicitar">
+                                <button onclick="solicitarArt('<?php echo $row['articles_name']; ?>','<?php echo $row['categories_name']; ?>','<?php echo $row['warehouses_name']; ?>','','<?php echo $row['articles_unit_cost']; ?>','')">Solicitar</button>
+                            </td>
 
                         </tr>
                         <?php
