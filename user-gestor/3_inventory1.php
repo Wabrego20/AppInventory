@@ -1,7 +1,7 @@
 <!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
-include_once ("../settings/sessionStart.php");
-include_once ("../settings/conexion.php");
+include_once("../settings/sessionStart.php");
+include_once("../settings/conexion.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -87,7 +87,7 @@ include_once ("../settings/conexion.php");
                 </li>
                 <li>
                     <a href="5_request.php">
-                        <i class="fa-solid fa-bell"></i>
+                        <i class="fa-solid fa-clipboard-list"></i>
                         <h5>Solicitudes</h5>
                     </a>
                 </li>
@@ -161,7 +161,7 @@ include_once ("../settings/conexion.php");
                 if ($result->num_rows > 0) {
                     $fila = 1;
                     while ($row = $result->fetch_assoc()) {
-                        ?>
+                ?>
                         <tr>
                             <td>
                                 <?php echo $fila; ?>
@@ -193,7 +193,7 @@ include_once ("../settings/conexion.php");
                             </td>
 
                         </tr>
-                        <?php
+                <?php
                         $fila++;
                     }
                 }
@@ -337,7 +337,7 @@ if (isset($_POST['solicitarArtConsumoInterno'])) {
 
     // Ejecutar la inserción y manejar errores
     if ($stmt_insert->execute()) {
-        ?>
+?>
         <script>
             Swal.fire({
                 color: "var(--verde)",
@@ -356,7 +356,7 @@ if (isset($_POST['solicitarArtConsumoInterno'])) {
                 }
             });
         </script>
-        <?php
+<?php
     } else {
         echo "Error: " . $stmt->error;
     }

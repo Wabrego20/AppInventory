@@ -1,7 +1,7 @@
 <!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
-include_once ("../settings/sessionStart.php");
-include_once ("../settings/conexion.php");
+include_once("../settings/sessionStart.php");
+include_once("../settings/conexion.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -89,7 +89,7 @@ include_once ("../settings/conexion.php");
 
                 <li>
                     <a href="5_request.php">
-                        <i class="fa-solid fa-bell"></i>
+                        <i class="fa-solid fa-clipboard-list"></i>
                         <h5>Solicitudes</h5>
                     </a>
                 </li>
@@ -155,7 +155,7 @@ include_once ("../settings/conexion.php");
                 if ($result->num_rows > 0) {
                     $fila = 1;
                     while ($row = $result->fetch_assoc()) {
-                        ?>
+                ?>
                         <tr>
                             <td>
                                 <?php echo $fila; ?>
@@ -183,7 +183,7 @@ include_once ("../settings/conexion.php");
                                 <?php echo !empty($row['articles_expiration_date']) ? $row['articles_expiration_date'] : 'no aplica'; ?>
                             </td>
                         </tr>
-                        <?php
+                <?php
                         $fila++;
                     }
                 }
@@ -363,8 +363,8 @@ if (isset($_POST['crearArticulo'])) {
     $articles_name = htmlspecialchars($_POST['articles_name']);
     $articles_description = htmlspecialchars($_POST['articles_description']);
     $articles_brand = htmlspecialchars($_POST['articles_brand']);
-    $categories_id = htmlspecialchars($_POST['categories_id']);//tabla categories
-    $units_id = htmlspecialchars($_POST['units_id']);//tabla units_of_measure
+    $categories_id = htmlspecialchars($_POST['categories_id']); //tabla categories
+    $units_id = htmlspecialchars($_POST['units_id']); //tabla units_of_measure
     $articles_unit_cost = htmlspecialchars($_POST['articles_unit_cost']);
     $articles_arrival_date = htmlspecialchars($_POST['articles_arrival_date']);
     $articles_expiration_date = htmlspecialchars($_POST['articles_expiration_date']);
@@ -377,7 +377,7 @@ if (isset($_POST['crearArticulo'])) {
     $check_stmt->execute();
     $result = $check_stmt->get_result();
     if ($result->num_rows > 0) {
-        ?>
+?>
         <script>
             Swal.fire({
                 color: "var(--rojo)",
@@ -403,7 +403,7 @@ if (isset($_POST['crearArticulo'])) {
 
         // Ejecutar la sentencia
         if ($stmt->execute()) {
-            ?>
+        ?>
             <script>
                 Swal.fire({
                     color: "var(--verde)",
@@ -422,9 +422,9 @@ if (isset($_POST['crearArticulo'])) {
                     }
                 });
             </script>
-            <?php
+        <?php
         } else {
-            ?>
+        ?>
             <script>
                 Swal.fire({
                     color: "var(--rojo)",
@@ -443,7 +443,7 @@ if (isset($_POST['crearArticulo'])) {
                     }
                 });
             </script>
-            <?php
+<?php
         }
         $stmt->close();
     }

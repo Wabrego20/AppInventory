@@ -103,7 +103,7 @@ include_once("../settings/sessionStart.php");
                         <h6>10</h6>
                     </div>
                     <a href="5_request.php">
-                        <i class="fa-solid fa-bell"></i>
+                        <i class="fa-solid fa-clipboard-list"></i>
                         <h5>Solicitudes</h5>
                     </a>
                 </li>

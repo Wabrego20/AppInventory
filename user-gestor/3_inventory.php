@@ -1,7 +1,7 @@
 <!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
-include_once ("../settings/sessionStart.php");
-include_once ("../settings/conexion.php");
+include_once("../settings/sessionStart.php");
+include_once("../settings/conexion.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -50,7 +50,7 @@ include_once ("../settings/conexion.php");
                         </a>
                     </li>
                     <span class="subMenu">
-                        
+
                         <li class="subMenu1">
                             <a href="3_inventory1.php">
                                 <i class="fa-solid fa-stapler"></i>
@@ -76,22 +76,22 @@ include_once ("../settings/conexion.php");
                             </a>
                         </li>
                     </span>
-                </span >
-                
+                </span>
+
                 <li>
                     <a href="4_warehouse.php">
                         <i class="fa-solid fa-warehouse"></i>
                         <h5>Bodegas</h5>
                     </a>
                 </li>
-                
+
                 <li>
                     <a href="5_request.php">
-                        <i class="fa-solid fa-bell"></i>
+                        <i class="fa-solid fa-clipboard-list"></i>
                         <h5>Solicitudes</h5>
                     </a>
                 </li>
-               
+
                 <li>
                     <a href="8_editUser.php">
                         <i class="fa-solid fa-user-gear"></i>

@@ -91,7 +91,7 @@ include_once("../settings/conexion.php");
                 </li>
                 <li>
                     <div class="bell">
-                        <i class="fa-solid fa-bell"></i>
+                        <i class="fa-solid fa-clipboard-list"></i>
                         <h6>10</h6>
                     </div>
                     <a href="5_request.php">
