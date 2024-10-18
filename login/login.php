@@ -118,12 +118,19 @@ if (isset($_POST['iniciarSesion'])) {
             iconColor: "var(--verde)",
             title: '¡Bienvenido!',
             text: 'Inicio de Sesión Exitosa',
-            showConfirmButton: false,
-          })
-          setTimeout(function () {
-            window.location.href = '../user-adm/1_dashboard.php';
-          }, 1500);
+            showConfirmButton: true,
+            allowOutsideClick: false,
+                        customClass: {
+              confirmButton: 'btn-confirm'
+            },
+            confirmButtonText: "Aceptar",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = '../user-adm/1_dashboard.php';
+            }
+          });
         </script>
+
         <?php
       } elseif ($_SESSION['users_rol'] === 'Gestor') {
         ?>
@@ -134,11 +141,17 @@ if (isset($_POST['iniciarSesion'])) {
             iconColor: "var(--verde)",
             title: '¡Bienvenido!',
             text: 'Inicio de Sesión Exitosa',
-            showConfirmButton: false,
-          })
-          setTimeout(function () {
-            window.location.href = '../user-gestor/1_dashboard.php';
-          }, 1500);
+            showConfirmButton: true,
+            allowOutsideClick: false,
+                        customClass: {
+              confirmButton: 'btn-confirm'
+            },
+            confirmButtonText: "Aceptar",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = '../user-gestor/1_dashboard.php';
+            }
+          });
         </script>
         <?php
       }
@@ -152,11 +165,17 @@ if (isset($_POST['iniciarSesion'])) {
           iconColor: "var(--rojo)",
           title: 'Error ',
           text: 'Contraseña Incorrecta',
-          showConfirmButton: false,
-        })
-        setTimeout(function () {
-          window.location.href = window.location.href;
-        }, 1500);
+          showConfirmButton: true,
+          allowOutsideClick: false,
+          customClass: {
+            confirmButton: 'btn-confirm'
+          },
+          confirmButtonText: "Aceptar",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = window.location.href;
+          }
+        });
       </script>
       <?php
     }
@@ -169,11 +188,17 @@ if (isset($_POST['iniciarSesion'])) {
         iconColor: "var(--rojo)",
         title: 'Error ',
         text: 'Usuario Incorrecto',
-        showConfirmButton: false,
-      })
-      setTimeout(function () {
-        window.location.href = window.location.href;
-      }, 1500);
+        showConfirmButton: true,
+        allowOutsideClick: false,
+        customClass: {
+          confirmButton: 'btn-confirm'
+        },
+        confirmButtonText: "Aceptar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = window.location.href;
+        }
+      });
     </script>
     <?php
   }

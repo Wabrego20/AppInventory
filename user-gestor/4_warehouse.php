@@ -26,7 +26,8 @@ if (isset($_POST['editBodega'])) {
                 title: '!Éxito!',
                 text: 'Bodega actualizada.',
                 showConfirmButton: true,
-                customClass: {
+                allowOutsideClick: false,
+                        customClass: {
                     confirmButton: 'btn-confirm'
                 },
                 confirmButtonText: "Aceptar",
@@ -147,7 +148,7 @@ if (isset($_POST['editBodega'])) {
                         <h5>Solicitudes</h5>
                     </a>
                 </li>
-               
+
                 <li>
                     <a href="8_editUser.php">
                         <i class="fa-solid fa-user-gear"></i>
@@ -283,8 +284,9 @@ if (isset($_POST['editBodega'])) {
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
                             <input class="btnTxt" type="text" name="warehouses_name" id="warehouses_name"
-                                value="<?php echo isset($name) ? htmlspecialchars($name) : ''; ?>" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]+" maxlength="30"
-                                placeholder="Edite el nombre" required autofocus>
+                                value="<?php echo isset($name) ? htmlspecialchars($name) : ''; ?>"
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]+" maxlength="30" placeholder="Edite el nombre"
+                                required autofocus>
                         </div>
                     </div>
 
@@ -294,7 +296,9 @@ if (isset($_POST['editBodega'])) {
                         <div class="campo">
                             <i class="fa-solid fa-map-location-dot"></i>
                             <select name="warehouses_province" id="warehouses_province" class="btnTxt" required>
-                                <option value="<?php echo isset($provincia)  ? htmlspecialchars($provincia) : 'Seleccione'; ?>">Seleccione</option>
+                                <option
+                                    value="<?php echo isset($provincia) ? htmlspecialchars($provincia) : 'Seleccione'; ?>">
+                                    Seleccione</option>
                                 <option value="Panamá">Panamá</option>
                                 <option value="Colón">Colón</option>
                                 <option value="Chiriquí">Chiriquí</option>

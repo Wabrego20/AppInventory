@@ -2,19 +2,6 @@
 <?php
 include_once ("../settings/sessionStart.php");
 include_once ("../settings/conexion.php");
-// Consulta SQL y obtención de resultados
-$seleSol = "SELECT request.*, users.*, departament.*, warehouses.*, categories.*, articles.*, inventory1.*
-            FROM request
-            JOIN users ON request.users_id = users.users_id
-            JOIN departament ON request.departament_id = departament.departament_id
-            JOIN warehouses ON request.warehouses_id = warehouses.warehouses_id
-            JOIN categories ON request.categories_id = categories.categories_id
-            JOIN articles ON request.articles_id = articles.articles_id
-            JOIN inventory1 ON request.inventory1_id = inventory1.inventory1_id";
-
-$stmt = $conn->prepare($seleSol);
-$stmt->execute();
-$result = $stmt->get_result();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -159,11 +146,10 @@ $result = $stmt->get_result();
             </thead>
             <tbody>
                 <?php
-                // Declaración SQL
                 $inventario1 = "SELECT inventory1.*, articles.*, categories.*, warehouses.* 
                 FROM inventory1, articles, categories, warehouses
-                WHERE inventory1.articles_id  = articles.articles_id
-                AND inventory1.categories_id  = categories.categories_id
+                WHERE inventory1.articles_id = articles.articles_id
+                AND inventory1.categories_id = categories.categories_id
                 AND inventory1.warehouses_id = warehouses.warehouses_id";
                 // Preparar la declaración
                 $stmt = $conn->prepare($inventario1);
@@ -207,7 +193,7 @@ $result = $stmt->get_result();
                                     '<?php echo $row['articles_name']; ?>',
                                     '<?php echo $row['categories_name']; ?>',
                                     '<?php echo $row['warehouses_name']; ?>',
-                                    '', // Assuming you will handle this in the form
+                                    '',
                                     '<?php echo $row['articles_unit_cost']; ?>',
                                     '')">Solicitar</button>
                                 </td>
@@ -308,21 +294,14 @@ $result = $stmt->get_result();
                     JOIN inventory1 ON request.inventory1_id = inventory1.inventory1_id");
                     $stmt->execute();
                     $result = $stmt->get_result();
-
-                    while ($row = $result->fetch_assoc()) {
-                        ?>
-                        <input type="text" name="request_id" value="<?php echo $row['request_id']; ?>">
-                        <input type="text" name="users_id" value="<?php echo $row['users_id']; ?>">
-                        <input type="text" name="departament_id" value="<?php echo $row['departament_id']; ?>">
-                        <input type="text" name="warehouses_id" value="<?php echo $row['warehouses_id']; ?>">
-                        <input type="text" name="categories_id" value="<?php echo $row['categories_id']; ?>">
-                        <input type="text" name="articles_id" value="<?php echo $row['articles_id']; ?>">
-                        <input type="text" name="inventory1_id" value="<?php echo $row['inventory1_id']; ?>">
-                        <br>
-                        <?php
-                    }
+                    $row = $result->fetch_assoc();
                     ?>
-
+                    <input type="text" name="users_id" value="<?php echo $row['users_id']; ?>">
+                    <input type="text" name="departament_id" value="<?php echo $row['departament_id']; ?>">
+                    <input type="text" name="warehouses_id" value="<?php echo $row['warehouses_id']; ?>">
+                    <input type="text" name="categories_id" value="<?php echo $row['categories_id']; ?>">
+                    <input type="text" name="articles_id" value="<?php echo $row['articles_id']; ?>">
+                    <input type="text" name="inventory1_id" value="<?php echo $row['inventory1_id']; ?>">
                 </form>
             </div>
         </div>
