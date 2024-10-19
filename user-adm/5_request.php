@@ -165,7 +165,6 @@ include_once ("../settings/conexion.php");
                 <?php
                 // Declaración SQL
                 $solicitud = "SELECT * FROM request";
-
                 // Preparar la declaración
                 $stmt = $conn->prepare($solicitud);
                 // Ejecutar la declaración
@@ -209,7 +208,7 @@ include_once ("../settings/conexion.php");
                                 <?php echo !empty($row['request_status']) ? $row['request_status'] : ''; ?>
                             </td>
                             <td class="btn-request aprobar">
-                                <button onclick="solicitarArt()">Aprobar</button>
+                                <button onclick="verAprobarSolicitud('<?php echo $row['request_article']; ?>','<?php echo $row['request_quantity']; ?>')">Aprobar</button>
                             </td>
                             <td class="btn-request rechazar">
                                 <button onclick="solicitarArt()">Rechazar</button>
@@ -228,42 +227,35 @@ include_once ("../settings/conexion.php");
         <div class="modalProcessRequest">
             <div class="panelProcessRequest">
                 <form method="post" class="formProcessRequest">
-                    <h2>Solicitudes</h2>
+                    <h2>Aprobar Solicitud</h2>
 
                     <!--campo de nombre de la solicitud-->
                     <div class="formLogCampo">
-                        <label for="warehouse_name">Nombre:</label>
+                        <label for="request_article">Artículo:</label>
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
-                            <input class="btnTxt" type="text" name="warehouse_name" id="warehouse_name"
-                                pattern="[a-zA-ZñÑ]{3,30}" maxlength="30" placeholder="introduzca un nombre" required
-                                autofocus>
+                            <input class="btnTxt" type="text" name="request_article" id="request_article" readonly>
                         </div>
                     </div>
 
-                    <!--campo de provincia de la solicitud-->
+                    <!--campo de cantidad-->
                     <div class="formLogCampo">
-                        <label for="warehouse_name">Provincia:</label>
+                        <label for="request_quantity">Cantidad:<i class="fa-solid fa-asterisk">Inserte y Verifique la cantidad</i></label>
                         <div class="campo">
-                            <i class="fa-solid fa-map-location-dot"></i>
-                            <select name="warehouse_country" id="warehouse_country" class="btnTxt" required>
-                                <option value="">Seleccione</option>
-                                <option value="">Panamá</option>
-                                <option value="">Colón</option>
-                                <option value="">Chiriquí</option>
-                            </select>
+                            <i class="fa-solid fa-arrow-up-1-9"></i>
+                            <input class="btnTxt" type="number" name="request_quantity" id="request_quantity"
+                                pattern="[0-9]{1,7}" min="0" max="1000000" step="1"
+                                placeholder="introduzca la cantidad " required>
                         </div>
                     </div>
 
-                    <!--campo de ubicación de la solicitud-->
-                    <div class="formLogCampo">
-                        <label for="warehouse_location">Dirección:</label>
-                        <div class="campo">
-                            <i class="fa-solid fa-location-dot"></i>
-                            <textarea name="articles_description" id="articles_description" class="btnTxt textArea"
-                                maxlength="100" pattern="[a-zñA-ZÑ0-9]"
-                                placeholder="introduzca la dirección de la bodega" required></textarea>
-                        </div>
+                     <!--Botón de enviar aprobación de soli-->
+                     <div class="btnSubmitPanel">
+                        <button type="submit" class="btnSubmit btnCreateUser" name="aprobacionSolicitudArt">
+                        <i class="fa-regular fa-paper-plane"></i>
+                            Enviar
+                        </button>
+                        <div class="btnSubmit btnCancel" onclick="ocultarFormProcessRequest()">Cancelar</div>
                     </div>
                 </form>
             </div>

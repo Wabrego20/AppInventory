@@ -8,7 +8,6 @@ main {
     color: var(--azul);
   }
 }
-
 /*Formulario para crear usuarios*/
 .modalProcessRequest {
   background-color: var(--fondo);

@@ -36,3 +36,15 @@ function ocultarFormProcessRequest() {
         modal.classList.remove("hide");
     }, 500);
 }
+/**
+ * 
+ */
+function verAprobarSolicitud(articleName, quantity) {
+    var formu = document.querySelector(".modalProcessRequest"); //mostrar el modal de crear artículo
+    formu.style.display = "flex";
+    setTimeout(function () {
+      formu.classList.add("show");
+    }, 10);
+    document.getElementById("request_article").value = articleName;
+    document.getElementById("request_quantity").value = quantity;
+  }

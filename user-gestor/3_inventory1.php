@@ -275,8 +275,8 @@ include_once ("../settings/conexion.php");
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
                     <div class="btnSubmitPanel">
                         <button type="submit" class="btnSubmit btnCreateUser" name="solicitarArtConsumoInterno">
-                            <i class="fa-solid fa-heart-circle-check"></i>
-                            Solicitar
+                        <i class="fa-regular fa-paper-plane"></i>
+                            Enviar
                         </button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormAddArticle()">Cancelar</div>
                     </div>

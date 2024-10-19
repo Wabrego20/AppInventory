@@ -1,7 +1,7 @@
 <!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
-include_once("../settings/sessionStart.php");
-include_once("../settings/conexion.php");
+include_once ("../settings/sessionStart.php");
+include_once ("../settings/conexion.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -160,7 +160,7 @@ include_once("../settings/conexion.php");
                 if ($result->num_rows > 0) {
                     $fila = 1;
                     while ($row = $result->fetch_assoc()) {
-                ?>
+                        ?>
                         <tr>
                             <td>
                                 <?php echo $fila; ?>
@@ -181,7 +181,7 @@ include_once("../settings/conexion.php");
                             </td>
                         </tr>
 
-                <?php
+                        <?php
                         $fila++;
                     }
                 }
@@ -332,7 +332,7 @@ if (isset($_POST['crearBodega'])) {
     $result = $checkQuery->get_result();
 
     if ($result->num_rows > 0) {
-?>
+        ?>
         <script>
             Swal.fire({
                 color: "var(--rojo)",
@@ -358,7 +358,7 @@ if (isset($_POST['crearBodega'])) {
         $stmt->bind_param("sss", $name, $provincia, $direccion);
 
         if ($stmt->execute()) {
-        ?>
+            ?>
             <script>
                 Swal.fire({
                     color: "var(--verde)",
@@ -377,7 +377,7 @@ if (isset($_POST['crearBodega'])) {
                     }
                 });
             </script>
-        <?php
+            <?php
         } else {
             echo "Error: " . $stmt->error;
         }
@@ -389,18 +389,17 @@ if (isset($_POST['crearBodega'])) {
 
 /**Editar Bodega */
 if (isset($_POST['editBodega'])) {
-
     $name = htmlspecialchars($_POST['warehouses_name']);
     $provincia = htmlspecialchars($_POST['warehouses_province']);
     $direccion = htmlspecialchars($_POST['warehouses_location']);
-    $sql = "UPDATE warehouses SET 
-            warehouses_name = ?, 
-            warehouses_province = ?, 
-            warehouses_location = ?
-        WHERE warehouses_id = ?";
+    $id = htmlspecialchars($_POST['warehouses_id']); // Asegúrate de obtener el ID de alguna manera
+
+    $sql = "UPDATE warehouses
+            SET warehouses_name = ?, warehouses_province = ?, warehouses_location = ?
+            WHERE warehouses_id = ?";
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssss", $name, $provincia, $direccion);
+    $stmt->bind_param("sssi", $name, $provincia, $direccion, $id);
 
     if ($stmt->execute()) {
         ?>
@@ -422,13 +421,12 @@ if (isset($_POST['editBodega'])) {
                 }
             });
         </script>
-<?php
+        <?php
+        $stmt->close();
     } else {
         echo "Error actualizando la bodega: " . $conn->error;
     }
 
-    $stmt->close();
-    $conn->close();
 } else {
     $sql = "SELECT * FROM warehouses WHERE warehouses_id = ?";
     $stmt = $conn->prepare($sql);
@@ -436,11 +434,13 @@ if (isset($_POST['editBodega'])) {
     if ($stmt->execute()) {
         $result = $stmt->get_result();
         if ($result->num_rows > 0) {
-            $name = htmlspecialchars($_POST['warehouses_name']);
-            $provincia = htmlspecialchars($_POST['warehouses_province']);
-            $direccion = htmlspecialchars($_POST['warehouses_location']);
+            $row = $result->fetch_assoc();
+            $name = htmlspecialchars($row['warehouses_name']);
+            $provincia = htmlspecialchars($row['warehouses_province']);
+            $direccion = htmlspecialchars($row['warehouses_location']);
         }
     }
+    $conn->close();
 }
 
 ?>

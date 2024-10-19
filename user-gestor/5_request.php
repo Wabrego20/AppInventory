@@ -242,6 +242,14 @@ include_once ("../settings/conexion.php");
                                 placeholder="introduzca la dirección de la bodega" required></textarea>
                         </div>
                     </div>
+                    <!--Botón de enviar aprobación de soli-->
+                    <div class="btnSubmitPanel">
+                        <button type="submit" class="btnSubmit btnCreateUser" name="solicitarArtConsumoInterno">
+                        <i class="fa-regular fa-paper-plane"></i>
+                            Enviar
+                        </button>
+                        <div class="btnSubmit btnCancel" onclick="ocultarFormAddArticle()">Cancelar</div>
+                    </div>
                 </form>
             </div>
         </div>
