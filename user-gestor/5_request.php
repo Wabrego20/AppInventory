@@ -144,11 +144,9 @@ include_once ("../settings/conexion.php");
             </thead>
             <tbody>
                 <?php
-                // Declaración SQL
-                $solicitud = "SELECT * FROM request";
-
-                // Preparar la declaración
-                $stmt = $conn->prepare($solicitud);
+                 $usuario = $_SESSION['users_user'];
+                 $stmt = $conn->prepare("SELECT * FROM request WHERE request_requester = ?");
+                 $stmt->bind_param("s", $usuario);
                 // Ejecutar la declaración
                 $stmt->execute();
                 // Obtener los resultados
@@ -163,7 +161,7 @@ include_once ("../settings/conexion.php");
                                 <?php echo $fila; ?>
                             </td>
                             <td>
-                                <?php echo !empty($row['request_user']) ? $row['request_user'] : 'No disponible'; ?>
+                                <?php echo !empty($row['request_requester']) ? $row['request_requester'] : 'No disponible'; ?>
                             </td>
                             
                             <td>

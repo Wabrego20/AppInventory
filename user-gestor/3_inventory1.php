@@ -305,45 +305,57 @@ include_once ("../settings/conexion.php");
 <!--Agregar un articulo de consumo interno-->
 <?php
 if (isset($_POST['solicitarArtConsumoInterno'])) {
-    $departament_id = htmlspecialchars($_POST['departament_id']);
-    $warehouses_id = htmlspecialchars($_POST['warehouses_id']);
-    $articles_id = htmlspecialchars($_POST['articles_id']);
-    $categories_id = htmlspecialchars($_POST['categories_id']);
-    $inventory1_id = htmlspecialchars($_POST['inventory1_id']);
-    $request_quantity = htmlspecialchars($_POST['request_quantity']);
-    $request_total_cost = htmlspecialchars($_POST['request_total_cost']);
-    date_default_timezone_set('America/Panama');
+    $stmt = $conn->prepare("SELECT users.*, departament.* 
+    FROM users 
+    JOIN departament ON users.departament_id = departament.departament_id 
+    WHERE users.users_user = ?");
+    $stmt->bind_param("s", $usuario);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($row = $result->fetch_assoc()) {
 
-    // Preparar y ejecutar el INSERT statement
-    $stmt_insert = $conn->prepare('INSERT INTO request (warehouses_id, categories_id, articles_id, inventory1_id, request_quantity, request_total_cost) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-    $stmt_insert->bind_param('iiiiiid', $users_id, $departament_id, $warehouses_id, $categories_id, $articles_id, $inventory1_id, $request_quantity, $request_total_cost);
+        $usuario = $_SESSION['users_user'];
+        $inventoryType = "Consumo Interno";
+        date_default_timezone_set('America/Panama');
+        $departament = isset($row["departament_name"]) ? $row["departament_name"] : '';
+        $warehouses_name = htmlspecialchars($_POST['warehouses_name']);
+        $articles_name = htmlspecialchars($_POST['articles_name']);
+        $categories_name = htmlspecialchars($_POST['categories_name']);
+        $request_unit_cost = htmlspecialchars($_POST['articles_unit_cost']);
+        $request_quantity = htmlspecialchars($_POST['request_quantity']);
+        $request_total_cost = htmlspecialchars($_POST['request_total_cost']);
 
-    // Ejecutar la inserción y manejar errores
-    if ($stmt_insert->execute()) {
-        ?>
-        <script>
-            Swal.fire({
-                color: "var(--verde)",
-                icon: "success",
-                iconColor: "var(--verde)",
-                title: '!Éxito!',
-                text: 'Se a enviado su solicitud',
-                showConfirmButton: true,
-                customClass: {
-                    confirmButton: 'btn-confirm'
-                },
-                confirmButtonText: "Aceptar",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = window.location.href;
-                }
-            });
-        </script>
-        <?php
-    } else {
-        echo "Error: " . $stmt->error;
+        // Preparar y ejecutar el INSERT statement
+        $stmt_insert = $conn->prepare('INSERT INTO request (request_requester, request_departament, request_article, request_categorie, request_warehouse, request_inventory1, request_quantity, request_unit_cost, request_total_cost) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        $stmt_insert->bind_param('ssssssidd', $usuario, $departament, $articles_name, $categories_name, $warehouses_name, $inventoryType, $request_quantity, $request_unit_cost, $request_total_cost);
+        // Ejecutar la inserción y manejar errores
+        if ($stmt_insert->execute()) {
+            ?>
+            <script>
+                Swal.fire({
+                    color: "var(--verde)",
+                    icon: "success",
+                    iconColor: "var(--verde)",
+                    title: '!Éxito!',
+                    text: 'Se a enviado su solicitud, ir al apartado de Solicitudes para verificar el estado de su solicitud',
+                    showConfirmButton: true,
+                    customClass: {
+                        confirmButton: 'btn-confirm'
+                    },
+                    confirmButtonText: "Aceptar",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = window.location.href;
+                    }
+                });
+            </script>
+            <?php
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+        $stmt->close();
+        $conn->close();
     }
-    $stmt->close();
-    $conn->close();
 }
 ?>

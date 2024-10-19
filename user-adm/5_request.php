@@ -182,7 +182,7 @@ include_once ("../settings/conexion.php");
                                 <?php echo $fila; ?>
                             </td>
                             <td>
-                                <?php echo !empty($row['request_user']) ? $row['request_user'] : 'No disponible'; ?>
+                                <?php echo !empty($row['request_requester']) ? $row['request_requester'] : 'No disponible'; ?>
                             </td>
                             <td>
                                 <?php echo !empty($row['request_departament']) ? $row['request_departament'] : 'no disponible'; ?>
