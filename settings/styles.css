@@ -112,7 +112,7 @@ main {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  width: 95%;
+  width: 90%;
 }
 .btnSubmit {
   height: 40px;
@@ -121,12 +121,20 @@ main {
   font-size: 16px;
   border-radius: 5px;
   transition: 0.3s ease-in-out;
-  margin: 10px 5px;
+  margin: 10px 0;
 }
 .btnSubmit:hover {
   cursor: pointer;
 }
-
+.btnDelete{
+  color: var(--blanco);
+  background-color: var(--rojo);
+}
+.btnDelete:hover {
+  color: var(--rojo);
+  background-color: var(--blanco);
+  box-shadow: 0 0 5px var(--rojo);
+}
 .btnCreateUser {
   color: var(--blanco);
   background-color: var(--verde);
@@ -151,6 +159,7 @@ main {
   color: var(--gris);
   background-color: var(--blanco);
   box-shadow: 0 0 5px var(--gris);
+  font-weight: bold;
 }
 .btnCreateUser:hover {
   color: var(--verde);
@@ -194,6 +203,11 @@ main {
 .solicitar button{
   background-color: var(--negro);
 }
+.solicitar button:hover{
+  color: var(--negro);
+  box-shadow: 0 0 5px var(--negro);
+}
+
 .aprobar button{
   background-color: var(--verde);
 }
@@ -207,10 +221,7 @@ main {
   cursor: pointer;
 }
 
-.solicitar button:hover{
-  color: var(--negro);
-  box-shadow: 0 0 5px var(--negro);
-}
+
 .aprobar button:hover{
   color: var(--verde);
   box-shadow: 0 0 5px var(--verde);
@@ -322,6 +333,40 @@ main {
     color: var(--blanco) !important;
     margin: 5px;
   }
+}
+
+
+/*
+*Botones para las columna de editar y eliminar
+*/
+.accion {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  transition: 0.2s ease-in-out;
+  border: none;
+  color: var(--blanco);
+}
+.accion:hover{
+  background-color: var(--blanco);
+  scale: 0.99;
+  cursor: pointer;
+}
+.accionEliminar{
+  background-color: var(--rojo);
+}
+.accionEliminar:hover{
+  color: var(--rojo);
+  box-shadow: 0 0 5px var(--rojo);
+}
+.accionEditar{
+  background-color: var(--naranja);
+}
+.accionEditar:hover{
+  color: var(--naranja);
+  box-shadow: 0 0 5px var(--naranja);
 }
 
 

@@ -152,14 +152,10 @@ include_once ("../settings/conexion.php");
                 WHERE inventory1.articles_id = articles.articles_id
                 AND inventory1.categories_id = categories.categories_id
                 AND inventory1.warehouses_id = warehouses.warehouses_id";
-
-                // Preparar la declaración
+               
                 $stmt = $conn->prepare($inventario1);
-                // Ejecutar la declaración
                 $stmt->execute();
-                // Obtener los resultados
                 $result = $stmt->get_result();
-                // Procesar los resultados
                 if ($result->num_rows > 0) {
                     $fila = 1;
                     while ($row = $result->fetch_assoc()) {

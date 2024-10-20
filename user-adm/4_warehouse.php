@@ -175,10 +175,18 @@ include_once ("../settings/conexion.php");
                                 </a>
                             </td>
                             <td>
+                                <button class="accion accionEliminar"
+                                    onclick="deleteBodega('<?php echo $row['warehouses_name']; ?>', '<?php echo $row['warehouses_total_quantity']; ?>')"
+                                    title="Eliminar esta bodega">
+                                    <i class="fa-solid fa-warehouse"></i>
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </td>
+                            <!-- <td>
                                 <a href="javascript:void(0);" onclick="deleteBodega(<?php echo $row['warehouses_id']; ?>)">
                                     <i class="fa-solid fa-house-fire"></i>
                                 </a>
-                            </td>
+                            </td> -->
                         </tr>
 
                         <?php
@@ -251,9 +259,9 @@ include_once ("../settings/conexion.php");
 
                     <!--campo de nombre de la bodega-->
                     <div class="formLogCampo">
-                        <label for="warehouses_name">Nombre:</label>
+                        <label for="warehouses_name">Nombre</label>
                         <div class="campo">
-                            <i class="fa-solid fa-signature"></i>
+                            <i class="fa-solid fa-warehouse"></i>
                             <input class="btnTxt" type="text" name="warehouses_name" id="warehouses_name"
                                 value="<?php echo isset($name) ? htmlspecialchars($name) : ''; ?>"
                                 pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]+" maxlength="30" placeholder="Edite el nombre"
@@ -295,6 +303,36 @@ include_once ("../settings/conexion.php");
                             <i class="fa-solid fa-house-circle-check"></i> Guardar Bodega
                         </button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormEditBodega()">Cancelar</div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!--Formulario para eliminar bodega-->
+        <div class="modalDeleteBodega">
+            <div class="panelCreateBodega">
+                <form method="post" class="formCreateBodega">
+                    <h2>Eliminar Bodega/Almacén</h2>
+
+                    <!--campo de nombre de la bodega-->
+                    <div class="formLogCampo">
+                        <label for="warehouses_name">Nombre:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-warehouse"></i>
+                            <input class="btnTxt" type="text" name="warehouses_name" id="warehouses_name_new" readonly>
+                            <input type="hidden" name="warehouses_total_quantity" id="warehouses_total_quantity_new">
+                        </div>
+                    </div>
+
+                    <!--Mensaje-->
+                    <div class="formLogCampo">
+                        <h4>¿Desea Eliminar esta bodega?</h4>
+                    </div>
+
+                    <!--Botón de crear bodega, botón de cancelar creación de bodega-->
+                    <div class="btnSubmitPanel">
+                        <button type="submit" name="eliminarBodega" class="btnSubmit btnDelete">Eliminar</button>
+                        <div class="btnSubmit btnCancel" onclick="ocultarFormEliminarBodega()">Cancelar</div>
                     </div>
                 </form>
             </div>
@@ -387,30 +425,31 @@ if (isset($_POST['crearBodega'])) {
     $conn->close();
 }
 
-/**Editar Bodega */
-if (isset($_POST['editBodega'])) {
+/***
+ * Eliminar Bodega
+ */
+if (isset($_POST['eliminarBodega'])) {
+
     $name = htmlspecialchars($_POST['warehouses_name']);
-    $provincia = htmlspecialchars($_POST['warehouses_province']);
-    $direccion = htmlspecialchars($_POST['warehouses_location']);
-    $id = htmlspecialchars($_POST['warehouses_id']); // Asegúrate de obtener el ID de alguna manera
+    $quantity = htmlspecialchars($_POST['warehouses_total_quantity']);
 
-    $sql = "UPDATE warehouses
-            SET warehouses_name = ?, warehouses_province = ?, warehouses_location = ?
-            WHERE warehouses_id = ?";
+    $checkQuery = $conn->prepare("SELECT * FROM warehouses WHERE warehouses_total_quantity = ?" );
+    $checkQuery->bind_param("i", $quantity);
+    $checkQuery->execute();
+    $result = $checkQuery->get_result();
+    $row = $result->fetch_assoc();
 
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssi", $name, $provincia, $direccion, $id);
-
-    if ($stmt->execute()) {
+    if ($row['warehouses_total_quantity'] > 0) {
         ?>
         <script>
             Swal.fire({
-                color: "var(--verde)",
-                icon: "success",
-                iconColor: "var(--verde)",
-                title: '!Éxito!',
-                text: 'Bodega actualizada.',
+                color: "var(--rojo)",
+                icon: "error",
+                iconColor: "var(--rojo)",
+                title: 'Error',
+                text: 'No se puede eliminar la bodega porque contiene artículos.',
                 showConfirmButton: true,
+                allowOutsideClick: false,
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },
@@ -422,25 +461,38 @@ if (isset($_POST['editBodega'])) {
             });
         </script>
         <?php
-        $stmt->close();
     } else {
-        echo "Error actualizando la bodega: " . $conn->error;
-    }
+        // Consulta para eliminar la bodega
+        $deleteQuery = $conn->prepare("DELETE FROM warehouses WHERE warehouses_name = ?");
+        $deleteQuery->bind_param("s", $name);
 
-} else {
-    $sql = "SELECT * FROM warehouses WHERE warehouses_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $warehouses_id);
-    if ($stmt->execute()) {
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $name = htmlspecialchars($row['warehouses_name']);
-            $provincia = htmlspecialchars($row['warehouses_province']);
-            $direccion = htmlspecialchars($row['warehouses_location']);
+        if ($deleteQuery->execute()) {
+            ?>
+            <script>
+                Swal.fire({
+                    color: "var(--verde)",
+                    icon: "success",
+                    iconColor: "var(--verde)",
+                    title: 'Éxito',
+                    text: 'Bodega eliminada.',
+                    showConfirmButton: true,
+                    allowOutsideClick: false,
+                    customClass: {
+                        confirmButton: 'btn-confirm'
+                    },
+                    confirmButtonText: "Aceptar",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = window.location.href;
+                    }
+                });
+            </script>
+            <?php
+        } else {
+            echo "Error al eliminar la bodega.";
         }
+        $deleteQuery->close();
     }
+    $checkQuery->close();
     $conn->close();
 }
-
-?>
