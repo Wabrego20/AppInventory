@@ -208,7 +208,7 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
                             <input class="btnTxt" type="text" name="warehouses_name" id="warehouses_name"
-                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ#°\s,0-9]+" maxlength="30" placeholder="introduzca un nombre"
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ#.°\s,0-9]+" maxlength="30" placeholder="introduzca un nombre"
                                 required autofocus>
                         </div>
                     </div>
@@ -262,7 +262,7 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-warehouse"></i>
                             <input class="btnTxt" type="text" name="warehouses_name" id="warehouses_name_edit"
-                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ°#\s,0-9]+" maxlength="30" placeholder="Edite el nombre"
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ.°#\s,0-9]+" maxlength="30" placeholder="Edite el nombre"
                                 required autofocus>
                         </div>
                     </div>
