@@ -28,7 +28,7 @@ $(document).ready(function () {
     dom: "lBfrtip", // 'l' es para el selector de longitud
     buttons: [
       {
-        text: '<i class="fa-solid fa-house-circle-check"></i> Crear bodega',
+        text: '<i class="fa-solid fa-warehouse"></i><i class="fa-solid fa-plus fa-xs"></i> Crear bodega',
         action: function (e, dt, node, config) {
           var formu = document.querySelector(".modalCreateBodega");
           formu.style.display = "flex";
@@ -55,7 +55,7 @@ function ocultarFormCreateBodega() {
 }
 
 /*
- *Función para eliminar usuario
+ *Función para eliminar bodega
  */
 function deleteBodega(warehouse, cantidad) {
   var formu = document.querySelector(".modalDeleteBodega");
@@ -68,6 +68,30 @@ function deleteBodega(warehouse, cantidad) {
 }
 function ocultarFormEliminarBodega() {
   var modal = document.querySelector(".modalDeleteBodega");
+  modal.classList.remove("show");
+  modal.classList.add("hide");
+  setTimeout(function () {
+    modal.style.display = "none";
+    modal.classList.remove("hide");
+  }, 500);
+}
+
+/*
+ *Función para editar bodega
+ */
+ function editBodega(id, warehouse, provincia, descripcion) {
+  var formu = document.querySelector(".modalEditBodega");
+  formu.style.display = "flex";
+  setTimeout(function () {
+    formu.classList.add("show");
+  }, 10);
+  document.getElementById("warehouses_id_edit").value = id;
+  document.getElementById("warehouses_name_edit").value = warehouse;
+  document.getElementById("warehouses_province_edit").value = provincia;
+  document.getElementById("warehouses_location_edit").value = descripcion;
+}
+function ocultarFormEditarBodega() {
+  var modal = document.querySelector(".modalEditBodega");
   modal.classList.remove("show");
   modal.classList.add("hide");
   setTimeout(function () {

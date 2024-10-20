@@ -50,7 +50,7 @@
       </div>
 
       <!--Botón de inicio de sesión y de recuperar contraseña-->
-      <input type="submit" value="Iniciar Sesión" class="btnSubmit" name="iniciarSesion">
+      <input type="submit" value="Iniciar Sesión" class="btnSubmit" name="iniciarSesion" title="Click para iniciar sesión">
       <h5><a onclick="verFormRecoverPass()">Ir a Recuperar Contraseña</a></h5>
     </form>
 

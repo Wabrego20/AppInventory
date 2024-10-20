@@ -107,76 +107,7 @@ main {
   color: var(--gris);
   box-shadow: 0 0 5px var(--gris);
 }
-.btnSubmitPanel {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  width: 90%;
-}
-.btnSubmit {
-  height: 40px;
-  padding: 0 10px;
-  border: none;
-  font-size: 16px;
-  border-radius: 5px;
-  transition: 0.3s ease-in-out;
-  margin: 10px 0;
-}
-.btnSubmit:hover {
-  cursor: pointer;
-}
-.btnDelete{
-  color: var(--blanco);
-  background-color: var(--rojo);
-}
-.btnDelete:hover {
-  color: var(--rojo);
-  background-color: var(--blanco);
-  box-shadow: 0 0 5px var(--rojo);
-}
-.btnCreateUser {
-  color: var(--blanco);
-  background-color: var(--verde);
-}
-.btnEditUser {
-  color: var(--blanco);
-  background-color: var(--naranja);
-  line-height: 40px;
-}
-.btnSaveUser {
-  color: var(--blanco);
-  background-color: var(--verde);
-  pointer-events: none;
-  opacity: 0.5;
-}
-.btnCancel{
-  line-height: 40px;
-  background-color: var(--gris);
-  color: var(--blanco);
-}
-.btnCancel:hover {
-  color: var(--gris);
-  background-color: var(--blanco);
-  box-shadow: 0 0 5px var(--gris);
-  font-weight: bold;
-}
-.btnCreateUser:hover {
-  color: var(--verde);
-  background-color: var(--blanco);
-  box-shadow: 0 0 5px var(--verde);
-}
-.btnEditUser:hover {
-  color: var(--naranja);
-  background-color: var(--blanco);
-  box-shadow: 0 0 5px var(--naranja);
-}
-.btnSaveUser:hover {
-  color: var(--verde);
-  background-color: var(--blanco);
-  box-shadow: 0 0 5px var(--verde);
-}
-/*********************/
+/*******************************************/
 .fa-floppy-disk {
   font-size: 12px;
   margin: 0 2px 0 0;
@@ -188,52 +119,9 @@ main {
   margin-left: 5px;
   font-size: 10px;
 }
-
-.btn-request button{
-  color: var(--blanco);
-  height: 40px;
-  line-height: 40px;
-  border-radius: 5px;
-  padding: 0 10px;
-  transition: 0.2s ease-in-out;
-  border: none;
-  font-weight: bold;
-}
-
-.solicitar button{
-  background-color: var(--negro);
-}
-.solicitar button:hover{
-  color: var(--negro);
-  box-shadow: 0 0 5px var(--negro);
-}
-
-.aprobar button{
-  background-color: var(--verde);
-}
-.rechazar button{
-  background-color: var(--rojo);
-}
-
-.btn-request button:hover{
-  background-color: var(--blanco);
-  scale: 0.99;
-  cursor: pointer;
-}
-
-
-.aprobar button:hover{
-  color: var(--verde);
-  box-shadow: 0 0 5px var(--verde);
-}
-.rechazar button:hover{
-  color: var(--rojo);
-  box-shadow: 0 0 5px var(--rojo);
-}
-
-
-
-/*Tablas*/
+/*
+Tabla
+*/
 .dataTables_wrapper {
   background-color: var(--azul);
   max-width: 95%;
@@ -334,8 +222,6 @@ main {
     margin: 5px;
   }
 }
-
-
 /*
 *Botones para las columna de editar y eliminar
 */
@@ -354,6 +240,13 @@ main {
   scale: 0.99;
   cursor: pointer;
 }
+.accionCrear{
+  background-color: var(--verde);
+}
+.accionCrear:hover{
+  color: var(--verde);
+  box-shadow: 0 0 5px var(--verde);
+}
 .accionEliminar{
   background-color: var(--rojo);
 }
@@ -368,7 +261,78 @@ main {
   color: var(--naranja);
   box-shadow: 0 0 5px var(--naranja);
 }
+.accionSolicitar{
+  background-color: var(--negro);
+}
+.accionSolicitar:hover{
+  color: var(--negro);
+  box-shadow: 0 0 5px var(--negro);
+}
+/*
+*Botones para guardar, crear, enviar, aprobar, eliminara, rechazar, cancelar, y solicitar
+*/
 
+.btnSubmitPanel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 95%;
+}
+.btnSubmit {
+  height: 40px;
+  padding: 0 10px;
+  border: none;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: 0.3s ease-in-out;
+  margin: 10px 0;
+}
+.btnSubmit:hover {
+  cursor: pointer;
+}
+.btnRojo{
+  color: var(--blanco);
+  background-color: var(--rojo);
+}
+.btnRojo:hover {
+  color: var(--rojo);
+  background-color: var(--blanco);
+  box-shadow: 0 0 5px var(--rojo);
+  font-weight: bold;
+}
+.btnVerde {
+  color: var(--blanco);
+  background-color: var(--verde);
+}
+.btnVerde:hover {
+  color: var(--verde);
+  background-color: var(--blanco);
+  box-shadow: 0 0 5px var(--verde);
+  font-weight: bold;
+}
 
+.btnNegro {
+  color: var(--blanco);
+  background-color: var(--negro);
+  line-height: 40px;
+}
+.btnNegro:hover {
+  color: var(--negro);
+  background-color: var(--blanco);
+  box-shadow: 0 0 5px var(--negro);
+  font-weight: bold;
+}
 
+.btnCancel{
+  line-height: 40px;
+  background-color: var(--gris);
+  color: var(--blanco);
+}
+.btnCancel:hover {
+  color: var(--gris);
+  background-color: var(--blanco);
+  box-shadow: 0 0 5px var(--gris);
+  font-weight: bold;
+}
 

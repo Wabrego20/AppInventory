@@ -170,23 +170,21 @@ include_once ("../settings/conexion.php");
                             <td><?php echo $row['warehouses_location']; ?></td>
                             <td><?php echo $row['warehouses_total_quantity']; ?></td>
                             <td>
-                                <a href="javascript:void(0);" onclick="editBodega(<?php echo $row['warehouses_id']; ?>)">
-                                    <i class="fa-solid fa-house-crack"></i>
-                                </a>
+                                <button class="accion accionEditar"
+                                    onclick="editBodega('<?php echo $row['warehouses_id']; ?>','<?php echo $row['warehouses_name']; ?>', '<?php echo $row['warehouses_province']; ?>', '<?php echo $row['warehouses_location']; ?>')"
+                                    title="Eliminar esta bodega">
+                                    <i class="fa-solid fa-warehouse"></i>
+                                    <i class="fa-solid fa-pen fa-xs"></i>
+                                </button>
                             </td>
                             <td>
                                 <button class="accion accionEliminar"
                                     onclick="deleteBodega('<?php echo $row['warehouses_name']; ?>', '<?php echo $row['warehouses_total_quantity']; ?>')"
                                     title="Eliminar esta bodega">
                                     <i class="fa-solid fa-warehouse"></i>
-                                    <i class="fa-solid fa-xmark"></i>
+                                    <i class="fa-solid fa-minus fa-2xs"></i>
                                 </button>
                             </td>
-                            <!-- <td>
-                                <a href="javascript:void(0);" onclick="deleteBodega(<?php echo $row['warehouses_id']; ?>)">
-                                    <i class="fa-solid fa-house-fire"></i>
-                                </a>
-                            </td> -->
                         </tr>
 
                         <?php
@@ -210,7 +208,7 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
                             <input class="btnTxt" type="text" name="warehouses_name" id="warehouses_name"
-                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]+" maxlength="30" placeholder="introduzca un nombre"
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ#°\s,0-9]+" maxlength="30" placeholder="introduzca un nombre"
                                 required autofocus>
                         </div>
                     </div>
@@ -242,8 +240,8 @@ include_once ("../settings/conexion.php");
 
                     <!--Botón de crear bodega, botón de cancelar creación de bodega-->
                     <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnCreateUser" name="crearBodega">
-                            <i class="fa-solid fa-house-circle-check"></i> Crear Bodega
+                        <button type="submit" class="btnSubmit btnVerde" name="crearBodega">
+                            Crear Bodega
                         </button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormCreateBodega()">Cancelar</div>
                     </div>
@@ -255,6 +253,7 @@ include_once ("../settings/conexion.php");
         <div class="modalEditBodega">
             <div class="panelCreateBodega">
                 <form method="post" class="formCreateBodega">
+                    <input type="hidden" name="warehouses_id" id="warehouses_id_edit">
                     <h2>Editar Bodega/Almacén</h2>
 
                     <!--campo de nombre de la bodega-->
@@ -262,9 +261,8 @@ include_once ("../settings/conexion.php");
                         <label for="warehouses_name">Nombre</label>
                         <div class="campo">
                             <i class="fa-solid fa-warehouse"></i>
-                            <input class="btnTxt" type="text" name="warehouses_name" id="warehouses_name"
-                                value="<?php echo isset($name) ? htmlspecialchars($name) : ''; ?>"
-                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]+" maxlength="30" placeholder="Edite el nombre"
+                            <input class="btnTxt" type="text" name="warehouses_name" id="warehouses_name_edit"
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ°#\s,0-9]+" maxlength="30" placeholder="Edite el nombre"
                                 required autofocus>
                         </div>
                     </div>
@@ -274,10 +272,8 @@ include_once ("../settings/conexion.php");
                         <label for="warehouses_province">Provincia:</label>
                         <div class="campo">
                             <i class="fa-solid fa-map-location-dot"></i>
-                            <select name="warehouses_province" id="warehouses_province" class="btnTxt" required>
-                                <option
-                                    value="<?php echo isset($provincia) ? htmlspecialchars($provincia) : 'Seleccione'; ?>">
-                                    Seleccione</option>
+                            <select name="warehouses_province" id="warehouses_province_edit" class="btnTxt" required>
+                                <option>Seleccione</option>
                                 <option value="Panamá">Panamá</option>
                                 <option value="Colón">Colón</option>
                                 <option value="Chiriquí">Chiriquí</option>
@@ -290,19 +286,16 @@ include_once ("../settings/conexion.php");
                         <label for="warehouses_location">Dirección:</label>
                         <div class="campo">
                             <i class="fa-solid fa-location-dot"></i>
-                            <textarea name="warehouses_location" id="warehouses_location" class="btnTxt textArea"
-                                maxlength="100" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]+"
-                                placeholder="Edite la dirección de la bodega"
-                                required><?php echo isset($direccion) ? htmlspecialchars($direccion) : ''; ?></textarea>
+                            <textarea name="warehouses_location" id="warehouses_location_edit" class="btnTxt textArea"
+                                maxlength="100" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ#°\s,0-9]+"
+                                placeholder="Edite la dirección de la bodega" required></textarea>
                         </div>
                     </div>
 
-                    <!--Botón de crear bodega, botón de cancelar creación de bodega-->
+                    <!--Botón de guardar bodega, botón de cancelar creación de bodega-->
                     <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnCreateUser" name="editBodega">
-                            <i class="fa-solid fa-house-circle-check"></i> Guardar Bodega
-                        </button>
-                        <div class="btnSubmit btnCancel" onclick="ocultarFormEditBodega()">Cancelar</div>
+                        <button type="submit" class="btnSubmit btnVerde" name="editBodega">Guardar</button>
+                        <div class="btnSubmit btnCancel" onclick="ocultarFormEditarBodega()">Cancelar</div>
                     </div>
                 </form>
             </div>
@@ -331,7 +324,7 @@ include_once ("../settings/conexion.php");
 
                     <!--Botón de crear bodega, botón de cancelar creación de bodega-->
                     <div class="btnSubmitPanel">
-                        <button type="submit" name="eliminarBodega" class="btnSubmit btnDelete">Eliminar</button>
+                        <button type="submit" name="eliminarBodega" class="btnSubmit btnRojo">Eliminar</button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormEliminarBodega()">Cancelar</div>
                     </div>
                 </form>
@@ -356,8 +349,10 @@ include_once ("../settings/conexion.php");
 
 </html>
 
-<!--Crear Bodega-->
 <?php
+/***
+ * Función para Crear Bodega
+ */
 if (isset($_POST['crearBodega'])) {
     $name = htmlspecialchars($_POST['warehouses_name']);
     $provincia = htmlspecialchars($_POST['warehouses_province']);
@@ -424,16 +419,78 @@ if (isset($_POST['crearBodega'])) {
     $checkQuery->close();
     $conn->close();
 }
-
 /***
- * Eliminar Bodega
+ * Función para Editar Bodega
+ */
+if (isset($_POST['editBodega'])) {
+    $warehouses_id = $_POST['warehouses_id'];
+    $warehouses_name = $_POST['warehouses_name'];
+    $warehouses_province = $_POST['warehouses_province'];
+    $warehouses_location = $_POST['warehouses_location'];
+
+    // Preparar y ejecutar la consulta de actualización
+    $sql = "UPDATE warehouses SET warehouses_name=?, warehouses_province=?, warehouses_location=? WHERE warehouses_id=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssi", $warehouses_name, $warehouses_province, $warehouses_location, $warehouses_id);
+
+    if ($stmt->execute()) {
+        ?>
+        <script>
+            Swal.fire({
+                color: "var(--verde)",
+                icon: "success",
+                iconColor: "var(--verde)",
+                title: 'Éxito',
+                text: 'Bodega Actualizada.',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = window.location.href;
+                }
+            });
+        </script>
+        <?php
+    } else {
+        ?>
+        <script>
+            Swal.fire({
+                color: "var(--rojo)",
+                icon: "error",
+                iconColor: "var(--rojo)",
+                title: 'Error',
+                text: 'No se actualizo la bodega.',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = window.location.href;
+                }
+            });
+        </script>
+        <?php
+    }
+
+    $stmt->close();
+    $conn->close();
+}
+/***
+ * Función para Eliminar Bodega
  */
 if (isset($_POST['eliminarBodega'])) {
 
     $name = htmlspecialchars($_POST['warehouses_name']);
     $quantity = htmlspecialchars($_POST['warehouses_total_quantity']);
 
-    $checkQuery = $conn->prepare("SELECT * FROM warehouses WHERE warehouses_total_quantity = ?" );
+    $checkQuery = $conn->prepare("SELECT * FROM warehouses WHERE warehouses_total_quantity = ?");
     $checkQuery->bind_param("i", $quantity);
     $checkQuery->execute();
     $result = $checkQuery->get_result();

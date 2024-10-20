@@ -207,11 +207,11 @@ include_once ("../settings/conexion.php");
                             <td class="<?php echo !empty($row['request_status']) ? strtolower($row['request_status']) : ''; ?>">
                                 <?php echo !empty($row['request_status']) ? $row['request_status'] : ''; ?>
                             </td>
-                            <td class="btn-request aprobar">
-                                <button onclick="verAprobarSolicitud('<?php echo $row['request_article']; ?>','<?php echo $row['request_quantity']; ?>')">Aprobar</button>
+                            <td>
+                                <button title="clic para procesar solicitud" class="accion accionCrear" onclick="verAprobarSolicitud('<?php echo $row['request_article']; ?>','<?php echo $row['request_quantity']; ?>')"><i class="fa-solid fa-thumbs-up fa-lg"></i></button>
                             </td>
-                            <td class="btn-request rechazar">
-                                <button onclick="solicitarArt()">Rechazar</button>
+                            <td>
+                                <button title="clic para rechazar solicitud" class="accion accionEliminar" onclick="solicitarArt()"><i class="fa-solid fa-thumbs-down fa-lg"></i></button>
                             </td>
                         </tr>
 
@@ -251,10 +251,7 @@ include_once ("../settings/conexion.php");
 
                      <!--Botón de enviar aprobación de soli-->
                      <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnCreateUser" name="aprobacionSolicitudArt">
-                        <i class="fa-regular fa-paper-plane"></i>
-                            Enviar
-                        </button>
+                        <button type="submit" class="btnSubmit btnVerde" name="aprobacionSolicitudArt">Aprobar</button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormProcessRequest()">Cancelar</div>
                     </div>
                 </form>

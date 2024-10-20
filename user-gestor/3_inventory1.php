@@ -186,9 +186,8 @@ include_once ("../settings/conexion.php");
                             <td>
                                 <?php echo !empty($row['inventory1_total_cost']) ? $row['inventory1_total_cost'] : '0.00'; ?>
                             </td>
-                            <td class="btn-request solicitar">
-                                <button
-                                    onclick="solicitarArt('<?php echo $row['articles_name']; ?>','<?php echo $row['categories_name']; ?>','<?php echo $row['warehouses_name']; ?>','','<?php echo $row['articles_unit_cost']; ?>','')">Solicitar</button>
+                            <td>
+                                <button class="accion accionSolicitar" onclick="solicitarArt('<?php echo $row['articles_name']; ?>','<?php echo $row['categories_name']; ?>','<?php echo $row['warehouses_name']; ?>','','<?php echo $row['articles_unit_cost']; ?>','')"><i class="fa-solid fa-paper-plane"></i></button>
                             </td>
 
                         </tr>
@@ -270,10 +269,7 @@ include_once ("../settings/conexion.php");
 
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
                     <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnCreateUser" name="solicitarArtConsumoInterno">
-                        <i class="fa-regular fa-paper-plane"></i>
-                            Enviar
-                        </button>
+                        <button type="submit" class="btnSubmit btnVerde" name="solicitarArtConsumoInterno">Enviar Solicitud</button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormAddArticle()">Cancelar</div>
                     </div>
                 </form>

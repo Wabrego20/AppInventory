@@ -51,8 +51,7 @@ main {
     color: var(--blanco);
   }
   .formLogCampo {
-    width: 350px;
-    max-width: 95%;
+    width: 95%;
     display: flex;
     justify-content: space-between;
     align-items: start;
@@ -65,7 +64,7 @@ main {
     }
     h4{
       color: var(--azul);
-      margin: 20px 0;
+      margin: 10px 0;
       width: 100%;
     }
     .campo {
