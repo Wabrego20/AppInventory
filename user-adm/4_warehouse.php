@@ -172,7 +172,7 @@ include_once ("../settings/conexion.php");
                             <td>
                                 <button class="accion accionEditar"
                                     onclick="editBodega('<?php echo $row['warehouses_id']; ?>','<?php echo $row['warehouses_name']; ?>', '<?php echo $row['warehouses_province']; ?>', '<?php echo $row['warehouses_location']; ?>')"
-                                    title="Eliminar esta bodega">
+                                    title="Editar esta bodega">
                                     <i class="fa-solid fa-warehouse"></i>
                                     <i class="fa-solid fa-pen fa-xs"></i>
                                 </button>
@@ -428,7 +428,6 @@ if (isset($_POST['editBodega'])) {
     $warehouses_province = $_POST['warehouses_province'];
     $warehouses_location = $_POST['warehouses_location'];
 
-    // Preparar y ejecutar la consulta de actualización
     $sql = "UPDATE warehouses SET warehouses_name=?, warehouses_province=?, warehouses_location=? WHERE warehouses_id=?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sssi", $warehouses_name, $warehouses_province, $warehouses_location, $warehouses_id);

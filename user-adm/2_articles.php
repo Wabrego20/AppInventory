@@ -201,13 +201,17 @@ include_once ("../settings/conexion.php");
                                 <?php endif; ?>
                             </td>
                             <td>
-                                <button class="accion accionEditar" onclick="editArticle('<?php echo $row['articles_name']; ?>', '<?php echo $row['articles_description']; ?>', '<?php echo $row['articles_brand']; ?>', '<?php echo $row['categories_id']; ?>', '<?php echo $row['units_id']; ?>', '<?php echo $row['articles_unit_cost']; ?>', '<?php echo $row['articles_expiration_date']; ?>')" title="Editar este artículo">
+                                <button class="accion accionEditar"
+                                    onclick="editArticle('<?php echo $row['articles_id']; ?>', '<?php echo $row['articles_name']; ?>', '<?php echo $row['articles_description']; ?>', '<?php echo $row['articles_brand']; ?>', '<?php echo $row['categories_id']; ?>', '<?php echo $row['units_id']; ?>', '<?php echo $row['articles_unit_cost']; ?>', '<?php echo $row['articles_expiration_date']; ?>')"
+                                    title="Editar este artículo">
                                     <i class="fa-solid fa-box fa-lg"></i>
                                     <i class="fa-solid fa-pen fa-xs"></i>
                                 </button>
                             </td>
                             <td>
-                                <button class="accion accionEliminar" onclick="deleteArticle('<?php echo $row['articles_name']; ?>')" title="Eliminar este artículo">
+                                <button class="accion accionEliminar"
+                                    onclick="deleteArticle('<?php echo $row['articles_name']; ?>')"
+                                    title="Eliminar este artículo">
                                     <i class="fa-solid fa-box fa-lg"></i>
                                     <i class="fa-solid fa-minus fa-2xs"></i>
                                 </button>
@@ -233,7 +237,7 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
                             <input class="btnTxt" type="text" name="articles_name" id="articles_name"
-                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s.,0-9]{3,30}" maxlength="30"
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ.°#"\s.,0-9]{3,30}" maxlength="30"
                                 placeholder="introduzca nombre del artículo" autofocus required>
                         </div>
                     </div>
@@ -369,6 +373,7 @@ include_once ("../settings/conexion.php");
         <div class="modalEditArticle">
             <div class="panelArticle">
                 <form method="post" class="formArticle" enctype="multipart/form-data">
+                <input type="hidden" name="articles_id" id="articles_id_edit">
                     <h2>Editar Artículo/Producto</h2>
 
                     <!--campo de nombre de artículo-->
@@ -377,7 +382,7 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
                             <input class="btnTxt" type="text" name="articles_name" id="articles_name_edit"
-                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s.,0-9]{3,30}" maxlength="30"
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ.#°"\s.,0-9]{3,30}" maxlength="30"
                                 placeholder="introduzca nombre del artículo" autofocus required>
                         </div>
                     </div>
@@ -477,7 +482,8 @@ include_once ("../settings/conexion.php");
 
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
                     <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnVerde" title="clic para guardar cambios" name="crearArticulo">Guardar</button>
+                        <button type="submit" class="btnSubmit btnVerde" title="clic para guardar cambios"
+                            name="editarArticulo">Guardar</button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormEditArticle()">Cancelar</div>
                     </div>
 
@@ -508,7 +514,8 @@ include_once ("../settings/conexion.php");
 
                     <!--Botón de eliminar artículo, botón de cancelar-->
                     <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnRojo" title="clic para eliminar artículo" name="eliminarArticulo">Eliminar</button>
+                        <button type="submit" class="btnSubmit btnRojo" title="clic para eliminar artículo"
+                            name="eliminarArticulo">Eliminar</button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormDeleteArticle()">Cancelar</div>
                     </div>
 
@@ -628,5 +635,76 @@ if (isset($_POST['crearArticulo'])) {
     }
     $check_stmt->close();
     $conn->close();
+}
+
+/**
+ * Editar un artículo
+ */
+if (isset($_POST['editarArticulo'])) {
+    $articles_id = htmlspecialchars($_POST['articles_id']);
+    $articles_name = htmlspecialchars($_POST['articles_name']);
+    $articles_description = htmlspecialchars($_POST['articles_description']);
+    $articles_brand = htmlspecialchars($_POST['articles_brand']);
+    $categories_id = htmlspecialchars($_POST['categories_id']); //tabla categories
+    $units_id = htmlspecialchars($_POST['units_id']); //tabla units_of_measure
+    $articles_unit_cost = htmlspecialchars($_POST['articles_unit_cost']);
+    $articles_expiration_date = htmlspecialchars($_POST['articles_expiration_date']);
+
+    $sql = "UPDATE articles 
+    SET articles_name=?, articles_description=?, articles_brand=?, categories_id=?, units_id=?, articles_unit_cost=?, articles_expiration_date=?
+    WHERE articles_id=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssiidsi", $articles_name, $articles_description, $articles_brand, $categories_id, $units_id, $articles_unit_cost, $articles_expiration_date, $articles_id);
+
+    if ($stmt->execute()) {
+        ?>
+        <script>
+            Swal.fire({
+                color: "var(--verde)",
+                icon: "success",
+                iconColor: "var(--verde)",
+                title: 'Éxito',
+                text: 'Artículo Actualizado.',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = window.location.href;
+                }
+            });
+        </script>
+        <?php
+    } 
+    else {
+        ?>
+        <script>
+            Swal.fire({
+                color: "var(--rojo)",
+                icon: "error",
+                iconColor: "var(--rojo)",
+                title: 'Error',
+                text: 'No se actualizo el artículo.',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = window.location.href;
+                }
+            });
+        </script>
+        <?php
+    }
+
+    $stmt->close();
+    $conn->close();
+
 }
 ?>

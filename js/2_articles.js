@@ -80,12 +80,13 @@ document
   /*
   *Editar Artículo
   */
-  function editArticle(nombre, descripcion, marca, categoria, medida, costo, fecha) {
+  function editArticle(id, nombre, descripcion, marca, categoria, medida, costo, fecha) {
   var formu = document.querySelector(".modalEditArticle"); //mostrar el modal de crear artículo
   formu.style.display = "flex";
   setTimeout(function () {
     formu.classList.add("show");
   }, 10);
+  document.getElementById("articles_id_edit").value = id;
   document.getElementById("articles_name_edit").value = nombre;
   document.getElementById("articles_descripcion_edit").value = descripcion;
   document.getElementById("articles_marca_edit").value = marca;
