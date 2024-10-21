@@ -34,7 +34,7 @@ main {
 }
 
 /*Formulario para crear usuarios*/
-.modalAddArticle, .modalDeleteArticle {
+.modalAddArticle, .modalDeleteArticle, .modalAddQuantArticle {
   background-color: var(--fondo);
   width: 100%;
   height: 100vh;
@@ -47,7 +47,7 @@ main {
   align-items: center;
   z-index: 2;
 }
-.modalAddArticle.show, .modalDeleteArticle.show {
+.modalAddArticle.show, .modalDeleteArticle.show, .modalAddQuantArticle.show {
   opacity: 1;
 }
 .panelArticle {

@@ -74,6 +74,32 @@ function ocultarFormDeleteArticle() {
     modal.classList.remove("hide");
   }, 500);
 }
+/*
+ *Función para agregar una cantidad de artículos de consumo interno
+ */
+ function addQuantArtConsumoInt(id, name) {
+  var formu = document.querySelector(".modalAddQuantArticle"); //mostrar el modal de crear artículo
+  formu.style.display = "flex";
+  setTimeout(function () {
+    formu.classList.add("show");
+  }, 10);
+
+  document.getElementById("inventory1_id_add_quant").value = id;
+  document.getElementById("articles_name_add_quant").value = name;
+}
+function ocultarFormAddQuantArticle() {
+  var modal = document.querySelector(".modalAddQuantArticle");
+  modal.classList.remove("show");
+  modal.classList.add("hide");
+  setTimeout(function () {
+    modal.style.display = "none";
+    modal.classList.remove("hide");
+  }, 500);
+}
+
+
+
+
 /**
  * Al seleccionar un articulo, se muestra su precio unitario y su categoría
  * Calcular costo total de los articulos agregados

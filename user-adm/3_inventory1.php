@@ -190,36 +190,37 @@ include_once '../settings/conexion.php';
                                 <?php echo $fila; ?>
                             </td>
                             <td>
-                                <?php echo !empty($row['articles_name']) ? $row['articles_name'] : 'No disponible'; ?>
+                                <?php echo $row['articles_name'] ?? 'no disponible'; ?>
                             </td>
                             <td>
-                                <?php echo !empty($row['categories_name']) ? $row['categories_name'] : 'No disponible'; ?>
+                                <?php echo $row['categories_name'] ?? 'no disponible'; ?>
                             </td>
                             <td>
-                                <button class="accion accionSolicitar" title="Tiene <?php echo !empty($row['inventory1_quantity']) ? $row['inventory1_quantity'] : '0'; ?> artículos, haga clic si desea agregar más">
-                                    <?php echo !empty($row['inventory1_quantity']) ? $row['inventory1_quantity'] : '0'; ?>
+                                <button class="accion accionSolicitar"
+                                    onclick="addQuantArtConsumoInt('<?php echo $row['inventory1_id']; ?>', '<?php echo $row['articles_name']; ?>')"
+                                    title="Tiene <?php echo $row['inventory1_quantity'] ?? '0'; ?> artículos, haga clic si desea agregar más">
+                                    <?php echo $row['inventory1_quantity'] ?? '0'; ?>
                                 </button>
-
+                            </td>
+                            <td>
+                                <?php echo $row['inventory1_registration_date'] ?? 'dd/mm/aaaa'; ?>
+                            </td>
+                            <td>
+                                <?php echo $row['warehouses_name'] ?? 'no disponible'; ?>
+                            </td>
+                            <td>
+                                <?php echo $row['articles_unit_cost'] ?? '0.00'; ?>
+                            </td>
+                            <td>
+                                <?php echo $row['inventory1_total_cost'] ?? '0.00'; ?>
+                            </td>
+                            <td>
+                                <?php echo $row['inventory1_re_order'] ?? 'n/a'; ?>
                             </td>
 
                             <td>
-                                <?php echo !empty($row['inventory1_registration_date']) ? $row['inventory1_registration_date'] : 'dd/mm/aaaa'; ?>
-                            </td>
-                            <td>
-                                <?php echo !empty($row['warehouses_name']) ? $row['warehouses_name'] : 'No disponible'; ?>
-                            </td>
-                            <td>
-                                <?php echo !empty($row['articles_unit_cost']) ? $row['articles_unit_cost'] : '0.00'; ?>
-                            </td>
-                            <td>
-                                <?php echo !empty($row['inventory1_total_cost']) ? $row['inventory1_total_cost'] : '0.00'; ?>
-                            </td>
-                            <td>
-                                <?php echo !empty($row['inventory1_re_order']) ? $row['inventory1_re_order'] : 'N/A'; ?>
-                            </td>
-
-                            <td>
-                                <button class="accion accionEliminar" onclick="deleteArtConsumoInt('<?php echo $row['inventory1_id']; ?>', '<?php echo $row['inventory1_quantity']; ?>', '<?php echo $row['articles_name']; ?>')"
+                                <button class="accion accionEliminar"
+                                    onclick="deleteArtConsumoInt('<?php echo $row['inventory1_id']; ?>', '<?php echo $row['inventory1_quantity']; ?>', '<?php echo $row['articles_name']; ?>')"
                                     title="Eliminar este artículo">
                                     <i class="fa-solid fa-box-open fa-lg"></i>
                                     <i class="fa-solid fa-minus fa-2xs"></i>
@@ -340,7 +341,7 @@ include_once '../settings/conexion.php';
 
         <!--Formulario para eliminar un articulo-->
         <div class="modalDeleteArticle">
-            <div class="panelArticle" style="width:400px;" >
+            <div class="panelArticle" style="width:400px;">
                 <form method="post" class="formArticle">
                     <input type="hidden" name="inventory1_quantity" id="inventory1_quantity_delete">
                     <input type="hidden" name="inventory1_id" id="inventory1_id_delete">
@@ -362,7 +363,8 @@ include_once '../settings/conexion.php';
 
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
                     <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnRojo" name="eliminarArtConsumoInterno">Eliminar</button>
+                        <button type="submit" class="btnSubmit btnRojo"
+                            name="eliminarArtConsumoInterno">Eliminar</button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormDeleteArticle()">Cancelar</div>
                     </div>
 
@@ -370,6 +372,45 @@ include_once '../settings/conexion.php';
             </div>
         </div>
 
+        <!--Formulario para agregar cantidad de articulos-->
+        <div class="modalAddQuantArticle">
+            <div class="panelArticle" style="width:400px;">
+                <form method="post" class="formArticle">
+                    <input type="hidden" name="inventory1_id" id="inventory1_id_add_quant">
+                    <input type="hidden" name="warehouses_id" id="warehouses_id_add_quant">
+                    <h2>Agregar Cantidad de Artículos</h2>
+
+                    <!--campo de nombre de artículo-->
+                    <div class="formLogCampo">
+                        <label for="articles_name_add_quant">Nombre:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-box-open"></i>
+                            <input class="btnTxt" type="text" name="articles_name" id="articles_name_add_quant"
+                                readonly>
+                        </div>
+                    </div>
+
+                    <!--campo de cantidad de artículos-->
+                    <div class="formLogCampo">
+                        <label for="inventory1_quantity_add_new">Cantidad:<que class="fa-solid fa-asterisk">verifique
+                                antes de agregar</que></label>
+                        <div class="campo">
+                            <i class="fa-solid fa-arrow-up-1-9"></i>
+                            <input class="btnTxt" type="number" name="inventory1_quantity"
+                                id="inventory1_quantity_add_new" pattern="[0-9]{1,7}" min="1" max="1000000" step="1"
+                                placeholder="introduzca la cantidad " required>
+                        </div>
+                    </div>
+
+                    <!--Botón de crear usuario, botón de cancelar creación de usuario-->
+                    <div class="btnSubmitPanel">
+                        <button type="submit" class="btnSubmit btnVerde" name="addQuantArt">Agregar</button>
+                        <div class="btnSubmit btnCancel" onclick="ocultarFormAddQuantArticle()">Cancelar</div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
     </main>
 
     <!--Pie de Página-->
@@ -391,8 +432,8 @@ include_once '../settings/conexion.php';
 
 <?php
 /*
-*Función para agregar un articulo al inventario de consumo interno
-*/
+ *Función para agregar un articulo al inventario de consumo interno
+ */
 if (isset($_POST['agregarArtConsumoInterno'])) {
 
     $articles_id = htmlspecialchars($_POST['articles_id']);
@@ -543,6 +584,90 @@ if (isset($_POST['eliminarArtConsumoInterno'])) {
             echo "Error al eliminar la bodega.";
         }
         $deleteQuery->close();
+    }
+    $checkQuery->close();
+    $conn->close();
+}
+/*
+ *Función para agregar un articulo al inventario de consumo interno/*****PENDIENTE
+ */
+if (isset($_POST['addQuantArt'])) {
+
+    $id = htmlspecialchars($_POST['inventory1_id']);
+    $name = htmlspecialchars($_POST['articles_name']);
+    $quantity = htmlspecialchars($_POST['inventory1_quantity']);
+    date_default_timezone_set('America/Panama');
+    $warehouses_id = htmlspecialchars($_POST['warehouses_id']);
+    $total_cost = htmlspecialchars($_POST['inventory1_total_cost']);
+    $re_order = $quantity / 3;
+    $checkQuery = $conn->prepare("SELECT * 
+    FROM inventory1 
+    WHERE articles_id = ? 
+    AND warehouses_id = ?
+    AND categories_id = ?");
+    $checkQuery->bind_param("iii", $articles_id, $warehouses_id, $categories_id);
+    $checkQuery->execute();
+    $result = $checkQuery->get_result();
+    if ($result->num_rows > 0) {
+        ?>
+        <script>
+            Swal.fire({
+                color: "var(--rojo)",
+                icon: "error",
+                iconColor: "var(--rojo)",
+                title: '¡Error!',
+                text: 'El artículo ya fue agregado',
+                showConfirmButton: true,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = window.location.href;
+                }
+            });
+        </script>
+        <?php
+    } else {
+
+        $stmt = $conn->prepare("INSERT INTO inventory1 (articles_id, categories_id, inventory1_quantity, inventory1_registration_date, warehouses_id, inventory1_total_cost, inventory1_re_order) 
+        VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("iiisidi", $articles_id, $categories_id, $quantity, $inventory1_registration_date, $warehouses_id, $total_cost, $re_order);
+
+        // Actualizar la cantidad total en la tabla warehouses
+        $stmt_update = $conn->prepare("UPDATE warehouses 
+        SET warehouses_total_quantity = warehouses_total_quantity + ? / 2
+        WHERE warehouses_id = ?");
+        $stmt_update->bind_param("ii", $quantity, $warehouses_id);
+        $stmt_update->execute();
+
+
+        if ($stmt->execute() && $stmt_update->execute()) {
+            ?>
+            <script>
+                Swal.fire({
+                    color: "var(--verde)",
+                    icon: "success",
+                    iconColor: "var(--verde)",
+                    title: '!Éxito!',
+                    text: 'Artículo Agregado',
+                    showConfirmButton: true,
+                    customClass: {
+                        confirmButton: 'btn-confirm'
+                    },
+                    confirmButtonText: "Aceptar",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = window.location.href;
+                    }
+                });
+            </script>
+            <?php
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+        $stmt->close();
     }
     $checkQuery->close();
     $conn->close();
