@@ -237,7 +237,7 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
                             <input class="btnTxt" type="text" name="articles_name" id="articles_name"
-                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ.°#"\s.,0-9]{3,30}" maxlength="30"
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ.°#" \s.,0-9]{3,30}" maxlength="30"
                                 placeholder="introduzca nombre del artículo" autofocus required>
                         </div>
                     </div>
@@ -373,7 +373,7 @@ include_once ("../settings/conexion.php");
         <div class="modalEditArticle">
             <div class="panelArticle">
                 <form method="post" class="formArticle" enctype="multipart/form-data">
-                <input type="hidden" name="articles_id" id="articles_id_edit">
+                    <input type="hidden" name="articles_id" id="articles_id_edit">
                     <h2>Editar Artículo/Producto</h2>
 
                     <!--campo de nombre de artículo-->
@@ -382,7 +382,7 @@ include_once ("../settings/conexion.php");
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
                             <input class="btnTxt" type="text" name="articles_name" id="articles_name_edit"
-                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ.#°"\s.,0-9]{3,30}" maxlength="30"
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ.#°" \s.,0-9]{3,30}" maxlength="30"
                                 placeholder="introduzca nombre del artículo" autofocus required>
                         </div>
                     </div>
@@ -657,6 +657,13 @@ if (isset($_POST['editarArticulo'])) {
     $stmt->bind_param("sssiidsi", $articles_name, $articles_description, $articles_brand, $categories_id, $units_id, $articles_unit_cost, $articles_expiration_date, $articles_id);
 
     if ($stmt->execute()) {
+        // Actualizar inventory1
+        $sql_inventory = "UPDATE inventory1 
+        SET categories_id=? 
+        WHERE articles_id=?";
+        $stmt_inventory = $conn->prepare($sql_inventory);
+        $stmt_inventory->bind_param("ii", $categories_id, $articles_id);
+        $stmt_inventory->execute();
         ?>
         <script>
             Swal.fire({
@@ -678,8 +685,7 @@ if (isset($_POST['editarArticulo'])) {
             });
         </script>
         <?php
-    } 
-    else {
+    } else {
         ?>
         <script>
             Swal.fire({

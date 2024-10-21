@@ -364,8 +364,9 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
     $checkQuery = $conn->prepare("SELECT * 
     FROM inventory1 
     WHERE articles_id = ? 
-    AND warehouses_id = ?");
-    $checkQuery->bind_param("ii", $articles_id, $warehouses_id);
+    AND warehouses_id = ?
+    AND categories_id = ?");
+    $checkQuery->bind_param("iii", $articles_id, $warehouses_id, $categories_id);
     $checkQuery->execute();
     $result = $checkQuery->get_result();
     if ($result->num_rows > 0) {
