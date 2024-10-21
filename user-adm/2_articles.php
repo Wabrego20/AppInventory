@@ -1,7 +1,7 @@
 <!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
-include_once("../settings/sessionStart.php");
-include_once("../settings/conexion.php");
+include_once ("../settings/sessionStart.php");
+include_once ("../settings/conexion.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -160,8 +160,11 @@ include_once("../settings/conexion.php");
             </thead>
             <tbody>
                 <?php
-                // Declaración SQL
-                $articulos = "SELECT articles.*, categories.*, units_of_measure.* FROM articles, categories, units_of_measure where articles.categories_id = categories.categories_id AND articles.units_id = units_of_measure.units_id ";
+
+                $articulos = "SELECT articles.*, categories.*, units_of_measure.* 
+                FROM articles, categories, units_of_measure 
+                WHERE articles.categories_id = categories.categories_id 
+                AND articles.units_id = units_of_measure.units_id ";
                 // Preparar la declaración
                 $stmt = $conn->prepare($articulos);
                 // Ejecutar la declaración
@@ -172,7 +175,7 @@ include_once("../settings/conexion.php");
                 if ($result->num_rows > 0) {
                     $fila = 1;
                     while ($row = $result->fetch_assoc()) {
-                ?>
+                        ?>
                         <tr>
                             <td>
                                 <?php echo $fila; ?>
@@ -198,18 +201,19 @@ include_once("../settings/conexion.php");
                                 <?php endif; ?>
                             </td>
                             <td>
-                                <a href="javascript:void(0);" title="clic para editar el artículo" onclick="deleteUser(<?php echo $row['articles_id']; ?>)">
-                                    <i class="fa-solid fa-heart-pulse"></i>
-                                </a>
+                                <button class="accion accionEditar" onclick="editArticle('<?php echo $row['articles_name']; ?>', '<?php echo $row['articles_description']; ?>', '<?php echo $row['articles_brand']; ?>', '<?php echo $row['categories_id']; ?>', '<?php echo $row['units_id']; ?>', '<?php echo $row['articles_unit_cost']; ?>', '<?php echo $row['articles_expiration_date']; ?>')" title="Editar este artículo">
+                                    <i class="fa-solid fa-box fa-lg"></i>
+                                    <i class="fa-solid fa-pen fa-xs"></i>
+                                </button>
                             </td>
                             <td>
-                                <a href="javascript:void(0);" title="clic para eliminar el artículo" onclick="deleteUser(<?php echo $row['articles_id']; ?>)">
-                                    <i class="fa-solid fa-heart-circle-minus"></i>
-                                </a>
+                                <button class="accion accionEliminar" onclick="deleteArticle('<?php echo $row['articles_name']; ?>')" title="Eliminar este artículo">
+                                    <i class="fa-solid fa-box fa-lg"></i>
+                                    <i class="fa-solid fa-minus fa-2xs"></i>
+                                </button>
                             </td>
                         </tr>
-
-                <?php
+                        <?php
                         $fila++;
                     }
                 }
@@ -219,8 +223,8 @@ include_once("../settings/conexion.php");
 
         <!--Formulario para Crear un articulo-->
         <div class="modalCreateArticle">
-            <div class="panelCreateArticle">
-                <form method="post" class="formCreateArticle" enctype="multipart/form-data">
+            <div class="panelArticle">
+                <form method="post" class="formArticle" enctype="multipart/form-data">
                     <h2>Crear Artículo/Producto</h2>
 
                     <!--campo de nombre de artículo-->
@@ -353,10 +357,159 @@ include_once("../settings/conexion.php");
 
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
                     <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnCreateUser" name="crearArticulo">
-                            <i class="fa-solid fa-heart-circle-plus"></i> Crear Artículo
-                        </button>
+                        <button type="submit" class="btnSubmit btnVerde" name="crearArticulo">Crear Artículo</button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormCreateArticle()">Cancelar</div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <!--Formulario para Editar un articulo-->
+        <div class="modalEditArticle">
+            <div class="panelArticle">
+                <form method="post" class="formArticle" enctype="multipart/form-data">
+                    <h2>Editar Artículo/Producto</h2>
+
+                    <!--campo de nombre de artículo-->
+                    <div class="formLogCampo">
+                        <label for="articles_name_edit">Nombre:<i class="fa-solid fa-asterisk"></i></label>
+                        <div class="campo">
+                            <i class="fa-solid fa-signature"></i>
+                            <input class="btnTxt" type="text" name="articles_name" id="articles_name_edit"
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s.,0-9]{3,30}" maxlength="30"
+                                placeholder="introduzca nombre del artículo" autofocus required>
+                        </div>
+                    </div>
+
+                    <!--campo de descripción del producto-->
+                    <div class="formLogCampo">
+                        <label for="articles_descripcion_edit">Descripción:<i class="fa-solid fa-asterisk"></i></label>
+                        <div class="campo">
+                            <i class="fa-solid fa-file-signature"></i>
+                            <textarea name="articles_description" id="articles_descripcion_edit" class="btnTxt textArea"
+                                maxlength="100" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]{4,100}"
+                                placeholder="introduzca una descripción del artículo" required></textarea>
+                        </div>
+                    </div>
+
+                    <!--campo de nombre de artículo-->
+                    <div class="formLogCampo">
+                        <label for="articles_marca_edit">Marca:</label>
+                        <div class="campo">
+                            <i class="fa-regular fa-flag"></i>
+                            <input class="btnTxt" type="text" name="articles_brand" id="articles_marca_edit"
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]{2,30}" maxlength="30"
+                                placeholder="introduzca la marca del producto">
+                        </div>
+                    </div>
+
+                    <!--campo de categoría-->
+                    <div class="formLogCampo">
+                        <label for="articles_categoria_edit">Categoría:<i class="fa-solid fa-asterisk"></i></label>
+                        <div class="campo">
+                            <i class="fa-solid fa-layer-group"></i>
+                            <select name="categories_id" class="btnTxt" id="articles_categoria_edit" required>
+                                <option value="">Seleccione</option>
+                                <?php
+                                $selectCategory = $conn->query("SELECT categories_id, categories_name FROM categories");
+                                if ($selectCategory->num_rows > 0) {
+                                    while ($row = $selectCategory->fetch_assoc()) {
+                                        echo '<option value="' . $row["categories_id"] . '">' . $row["categories_name"] . '</option>';
+                                    }
+                                } else {
+                                    echo '<option value="">No hay categorías disponibles</option>';
+                                }
+                                ?>
+                            </select>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <!--campo de unidada de medida-->
+                    <div class="formLogCampo">
+                        <label for="articles_medida_edit">Unidad de Medida:<i class="fa-solid fa-asterisk"></i></label>
+                        <div class="campo">
+                            <i class="fa-solid fa-ruler-combined"></i>
+                            <select name="units_id" class="btnTxt" id="articles_medida_edit" required>
+                                <option value>Seleccione</option>
+                                <?php
+                                $selectUnits = $conn->query("SELECT units_id, units_name FROM units_of_measure");
+                                if ($selectUnits->num_rows > 0) {
+                                    while (
+                                        $row =
+                                        $selectUnits->fetch_assoc()
+                                    ) {
+                                        echo '<option
+                                        value="' . $row["units_id"] .
+                                            '">' . $row["units_name"] . '</option>';
+                                    }
+                                } else {
+                                    echo '<option value>No hay unidades
+                                        disponibles</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!--campo de costo unitario del artículos-->
+                    <div class="formLogCampo">
+                        <label for="articles_costo_edit">Costo Unitario:<i class="fa-solid fa-asterisk"></i></label>
+                        <div class="campo">
+                            <i class="fa-solid fa-dollar-sign"></i>
+                            <input class="btnTxt" type="number" name="articles_unit_cost" id="articles_costo_edit"
+                                step="0.01" max="1000000" placeholder="introduzca precio del artículo" required>
+                        </div>
+
+                    </div>
+
+                    <!--campo de fecha de vencimiento del artículos-->
+                    <div class="formLogCampo">
+                        <label for="articles_fecha_edit">Fecha de Expiración:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-calendar-xmark"></i>
+                            <input type="date" name="articles_expiration_date" min="<?php echo date('Y-m-d'); ?>"
+                                id="articles_fecha_edit" class="btnTxt">
+                        </div>
+                    </div>
+
+                    <!--Botón de crear usuario, botón de cancelar creación de usuario-->
+                    <div class="btnSubmitPanel">
+                        <button type="submit" class="btnSubmit btnVerde" title="clic para guardar cambios" name="crearArticulo">Guardar</button>
+                        <div class="btnSubmit btnCancel" onclick="ocultarFormEditArticle()">Cancelar</div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <div class="modalDeleteArticle">
+            <div class="panelArticle">
+                <form method="post" class="formArticle" enctype="multipart/form-data" style="width: 400px;">
+                    <h2>Eliminar Artículo/Producto</h2>
+
+                    <!--campo de nombre de artículo-->
+                    <div class="formLogCampo" style="width: 95%">
+                        <label for="articles_name">Nombre:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-box"></i>
+                            <input class="btnTxt" type="text" name="articles_name" id="articles_name_delete"
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s.,0-9]{3,30}" maxlength="30"
+                                placeholder="introduzca nombre del artículo" readonly>
+                        </div>
+                    </div>
+
+                    <!--Mensaje-->
+                    <div class="formLogCampo" style="width: 95%">
+                        <h4>¿Desea eliminar este artículo?</h4>
+                    </div>
+
+                    <!--Botón de eliminar artículo, botón de cancelar-->
+                    <div class="btnSubmitPanel">
+                        <button type="submit" class="btnSubmit btnRojo" title="clic para eliminar artículo" name="eliminarArticulo">Eliminar</button>
+                        <div class="btnSubmit btnCancel" onclick="ocultarFormDeleteArticle()">Cancelar</div>
                     </div>
 
                 </form>
@@ -403,7 +556,7 @@ if (isset($_POST['crearArticulo'])) {
     $check_stmt->execute();
     $result = $check_stmt->get_result();
     if ($result->num_rows > 0) {
-?>
+        ?>
         <script>
             Swal.fire({
                 color: "var(--rojo)",
@@ -429,7 +582,7 @@ if (isset($_POST['crearArticulo'])) {
 
         // Ejecutar la sentencia
         if ($stmt->execute()) {
-        ?>
+            ?>
             <script>
                 Swal.fire({
                     color: "var(--verde)",
@@ -448,9 +601,9 @@ if (isset($_POST['crearArticulo'])) {
                     }
                 });
             </script>
-        <?php
+            <?php
         } else {
-        ?>
+            ?>
             <script>
                 Swal.fire({
                     color: "var(--rojo)",
@@ -469,7 +622,7 @@ if (isset($_POST['crearArticulo'])) {
                     }
                 });
             </script>
-<?php
+            <?php
         }
         $stmt->close();
     }

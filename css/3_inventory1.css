@@ -34,7 +34,7 @@ main {
 }
 
 /*Formulario para crear usuarios*/
-.modalAddArticle {
+.modalAddArticle, .modalEditArticle, .modalDeleteArticle {
   background-color: var(--fondo);
   width: 100%;
   height: 100vh;
@@ -47,17 +47,17 @@ main {
   align-items: center;
   z-index: 2;
 }
-.modalAddArticle.show {
+.modalAddArticle.show, .modalEditArticle.show, .modalDeleteArticle.show {
   opacity: 1;
 }
-.panelAddArticle {
+.panelArticle {
   width: 800px;
   max-height: 99%;
   max-width: 99%;
   overflow: auto;
 }
 
-.formAddArticle {
+.formArticle {
   width: 100%;
   background-color: var(--blanco);
   display: flex;
@@ -129,7 +129,6 @@ main {
   }
 }
 
-
 .fa-heart-pulse {
   background-color: var(--naranja);
 }
@@ -153,4 +152,3 @@ main {
   text-align: center;
   transition: 0.2s ease-in-out;
 }
-

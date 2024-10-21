@@ -27,7 +27,7 @@ $(document).ready(function () {
     dom: "lBfrtip", // 'l' es para el selector de longitud
     buttons: [
       {
-        text: '<i class="fa-solid fa-heart-circle-plus"></i> Crear articulo',
+        text: '<i class="fa-solid fa-box-open fa-lg"></i><i class="fa-solid fa-plus fa-2xs"></i> Crear artículo',
         action: function (e, dt, node, config) {
           var formu = document.querySelector(".modalCreateArticle"); //mostrar el modal de crear artículo
           formu.style.display = "flex";
@@ -75,3 +75,59 @@ document
       reader.readAsDataURL(file);
     }
   });
+
+
+  /*
+  *Editar Artículo
+  */
+  function editArticle(nombre, descripcion, marca, categoria, medida, costo, fecha) {
+  var formu = document.querySelector(".modalEditArticle"); //mostrar el modal de crear artículo
+  formu.style.display = "flex";
+  setTimeout(function () {
+    formu.classList.add("show");
+  }, 10);
+  document.getElementById("articles_name_edit").value = nombre;
+  document.getElementById("articles_descripcion_edit").value = descripcion;
+  document.getElementById("articles_marca_edit").value = marca;
+  document.getElementById("articles_categoria_edit").value = categoria;
+  document.getElementById("articles_medida_edit").value = medida;
+  document.getElementById("articles_costo_edit").value = costo;
+  document.getElementById("articles_fecha_edit").value = fecha;
+}
+
+/*
+ *Función para ocultar el modal de editar artículo
+ */
+ function ocultarFormEditArticle() {
+  var modal = document.querySelector(".modalEditArticle");
+  modal.classList.remove("show");
+  modal.classList.add("hide");
+  setTimeout(function () {
+    modal.style.display = "none";
+    modal.classList.remove("hide");
+  }, 500);
+}
+
+ /*
+  *Eliminar Artículo
+  */
+  function deleteArticle(bodega) {
+    var formu = document.querySelector(".modalDeleteArticle"); //mostrar el modal de crear artículo
+    formu.style.display = "flex";
+    setTimeout(function () {
+      formu.classList.add("show");
+    }, 10);
+    document.getElementById("articles_name_delete").value = bodega;
+  }
+  /*
+ *Función para ocultar el modal de eliminar artículo
+ */
+ function ocultarFormDeleteArticle() {
+  var modal = document.querySelector(".modalDeleteArticle");
+  modal.classList.remove("show");
+  modal.classList.add("hide");
+  setTimeout(function () {
+    modal.style.display = "none";
+    modal.classList.remove("hide");
+  }, 500);
+}

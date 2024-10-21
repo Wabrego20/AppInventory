@@ -156,7 +156,7 @@ include_once ("../settings/conexion.php");
                     <th>Costo Unitario</th>
                     <th>Costo Total</th>
                     <th>Re-Orden</th>
-                    <th>Editar</th>
+                    <th>Eliminar</th>
                 </tr>
             </thead>
             <tbody>
@@ -189,7 +189,10 @@ include_once ("../settings/conexion.php");
                                 <?php echo !empty($row['categories_name']) ? $row['categories_name'] : 'No disponible'; ?>
                             </td>
                             <td>
-                                <?php echo !empty($row['inventory1_quantity']) ? $row['inventory1_quantity'] : '0'; ?>
+                                <button class="accion accionSolicitar" title="Tiene <?php echo !empty($row['inventory1_quantity']) ? $row['inventory1_quantity'] : '0'; ?> artículos, haga clic si desea agregar más">
+                                    <?php echo !empty($row['inventory1_quantity']) ? $row['inventory1_quantity'] : '0'; ?>
+                                </button>
+
                             </td>
 
                             <td>
@@ -224,9 +227,11 @@ include_once ("../settings/conexion.php");
                             </td>
 
                             <td>
-                                <a href="javascript:void(0);" onclick="editArtConsumoInt(<?php echo $row['articles_id']; ?>)">
-                                    <i class="fa-solid fa-heart-pulse"></i>
-                                </a>
+                                <button class="accion accionEliminar" onclick="deleteArtConsumoInt()"
+                                    title="Eliminar este artículo">
+                                    <i class="fa-solid fa-box-open fa-lg"></i>
+                                    <i class="fa-solid fa-minus fa-2xs"></i>
+                                </button>
                             </td>
                         </tr>
 
@@ -240,8 +245,8 @@ include_once ("../settings/conexion.php");
 
         <!--Formulario para Crear un articulo-->
         <div class="modalAddArticle">
-            <div class="panelAddArticle">
-                <form method="post" class="formAddArticle">
+            <div class="panelArticle">
+                <form method="post" class="formArticle">
                     <h2>Agregar Artículo de Consumo Interno</h2>
 
                     <!--campo de nombre de artículo-->
@@ -332,10 +337,8 @@ include_once ("../settings/conexion.php");
 
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
                     <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnCreateUser" name="agregarArtConsumoInterno">
-                            <i class="fa-solid fa-heart-circle-plus"></i>
-                            Agregar Artículo
-                        </button>
+                        <button type="submit" class="btnSubmit btnVerde" name="agregarArtConsumoInterno">Agregar
+                            Artículo</button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormAddArticle()">Cancelar</div>
                     </div>
 

@@ -8,7 +8,7 @@ function clearCookies() {
             $parts = explode('=', $cookie);
             $name = trim($parts[0]);
             // Establecer la cookie con una fecha de expiración en el pasado
-            setcookie($name, '', time() - 3600, '/');
+            setcookie($name, '', time() - 3600, '/', 'localhost');
         }
     }
 }

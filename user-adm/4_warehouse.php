@@ -319,7 +319,7 @@ include_once ("../settings/conexion.php");
 
                     <!--Mensaje-->
                     <div class="formLogCampo">
-                        <h4>¿Desea Eliminar esta bodega?</h4>
+                        <h4>¿Desea eliminar esta bodega?</h4>
                     </div>
 
                     <!--Botón de crear bodega, botón de cancelar creación de bodega-->

@@ -13,7 +13,7 @@ h2 {
 }
 
 /*Formulario para crear usuarios*/
-.modalCreateArticle {
+.modalCreateArticle, .modalEditArticle, .modalDeleteArticle {
   background-color: var(--fondo);
   width: 100%;
   height: 100vh;
@@ -27,11 +27,11 @@ h2 {
   z-index: 2;
 }
 
-.modalCreateArticle.show {
+.modalCreateArticle.show, .modalEditArticle.show, .modalDeleteArticle.show {
   opacity: 1;
 }
 
-.panelCreateArticle {
+.panelArticle {
   width: 800px;
   max-height: 100%;
   max-width: 100%;
@@ -39,7 +39,7 @@ h2 {
   border-radius: 5px;
 }
 
-.formCreateArticle {
+.formArticle {
   width: 99%;
   height: 99%;
   margin: 10px auto;
@@ -73,6 +73,11 @@ h2 {
     label {
       color: var(--azul);
       font-weight: bold;
+    }
+    h4{
+      color: var(--azul);
+      margin: 10px 0;
+      width: 100%;
     }
 
     .campo {

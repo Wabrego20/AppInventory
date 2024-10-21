@@ -50,7 +50,8 @@
       </div>
 
       <!--Botón de inicio de sesión y de recuperar contraseña-->
-      <input type="submit" value="Iniciar Sesión" class="btnSubmit" name="iniciarSesion" title="Click para iniciar sesión">
+      <input type="submit" value="Iniciar Sesión" class="btnSubmit" name="iniciarSesion"
+        title="Click para iniciar sesión">
       <h5><a onclick="verFormRecoverPass()">Ir a Recuperar Contraseña</a></h5>
     </form>
 
@@ -118,17 +119,12 @@ if (isset($_POST['iniciarSesion'])) {
             iconColor: "var(--verde)",
             title: '¡Bienvenido!',
             text: 'Inicio de Sesión Exitosa',
-            showConfirmButton: true,
+            showConfirmButton: false,
             allowOutsideClick: false,
-                        customClass: {
-              confirmButton: 'btn-confirm'
-            },
-            confirmButtonText: "Aceptar",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              window.location.href = '../user-adm/1_dashboard.php';
-            }
           });
+          setTimeout(() => {
+            window.location.href = '../user-adm/1_dashboard.php';
+          }, 1500);
         </script>
 
         <?php
@@ -141,17 +137,12 @@ if (isset($_POST['iniciarSesion'])) {
             iconColor: "var(--verde)",
             title: '¡Bienvenido!',
             text: 'Inicio de Sesión Exitosa',
-            showConfirmButton: true,
+            showConfirmButton: false,
             allowOutsideClick: false,
-                        customClass: {
-              confirmButton: 'btn-confirm'
-            },
-            confirmButtonText: "Aceptar",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              window.location.href = '../user-gestor/1_dashboard.php';
-            }
           });
+          setTimeout(() => {
+            window.location.href = '../user-gestor/1_dashboard.php';
+          }, 1500);
         </script>
         <?php
       }
