@@ -121,6 +121,7 @@ if (isset($_POST['iniciarSesion'])) {
             text: 'Inicio de Sesión Exitosa',
             showConfirmButton: false,
             allowOutsideClick: false,
+            width: '400px',
           });
           setTimeout(() => {
             window.location.href = '../user-adm/1_dashboard.php';
@@ -139,6 +140,7 @@ if (isset($_POST['iniciarSesion'])) {
             text: 'Inicio de Sesión Exitosa',
             showConfirmButton: false,
             allowOutsideClick: false,
+            width: '400px',
           });
           setTimeout(() => {
             window.location.href = '../user-gestor/1_dashboard.php';

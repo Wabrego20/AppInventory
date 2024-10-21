@@ -27,7 +27,7 @@ $(document).ready(function () {
     dom: "lBfrtip", // 'l' es para el selector de longitud
     buttons: [
       {
-        text: '<i class="fa-solid fa-box-open fa-lg"></i><i class="fa-solid fa-plus fa-2xs"></i> Crear artículo',
+        text: '<i class="fa-solid fa-box fa-lg"></i><i class="fa-solid fa-plus fa-2xs"></i> Crear artículo',
         action: function (e, dt, node, config) {
           var formu = document.querySelector(".modalCreateArticle"); //mostrar el modal de crear artículo
           formu.style.display = "flex";

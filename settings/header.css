@@ -253,3 +253,7 @@ nav ul li:hover {
     transform: translate(-50%,-50%);
   }
 }
+
+.custom-width{
+  width: 400px;
+}

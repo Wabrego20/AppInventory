@@ -59,6 +59,9 @@ function cerrarSesion() {
             showCancelButton: false,
             showConfirmButton: false,
             allowOutsideClick: false,
+            customClass: {
+              popup: 'custom-width' // Añade una clase personalizada si es necesario
+            }
           });
           setTimeout(() => {
             window.location.href = "../login/login.php";
