@@ -1,7 +1,7 @@
 <!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
-include_once ("../settings/sessionStart.php");
-include_once ("../settings/conexion.php");
+include_once '../settings/sessionStart.php';
+include_once '../settings/conexion.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -559,3 +559,4 @@ if (isset($_POST['eliminarBodega'])) {
     $checkQuery->close();
     $conn->close();
 }
+?>

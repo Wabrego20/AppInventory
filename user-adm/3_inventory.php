@@ -1,7 +1,7 @@
 <!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
-include_once("../settings/sessionStart.php");
-include_once("../settings/conexion.php");
+include_once '../settings/sessionStart.php';
+include_once '../settings/conexion.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -67,7 +67,7 @@ include_once("../settings/conexion.php");
                             </a>
                         </li>
 
-                        <!--Pestaña de Ayuda Social--></li>
+                        <!--Pestaña de Ayuda Social-->
                         <li>
                             <a href="3_inventory3.php">
                                 <i class="fa-solid fa-handshake-angle"></i>

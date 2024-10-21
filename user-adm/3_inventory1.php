@@ -1,7 +1,7 @@
 <!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
-include_once ("../settings/sessionStart.php");
-include_once ("../settings/conexion.php");
+include_once '../settings/sessionStart.php';
+include_once '../settings/conexion.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -52,28 +52,35 @@ include_once ("../settings/conexion.php");
                     </li>
                     <span class="subMenu">
 
+                        <!--Pestaña de consumo interno-->
                         <li class="active">
                             <a href="">
                                 <i class="fa-solid fa-stapler"></i>
                                 <h5>Consumo Interno</h5>
                             </a>
                         </li>
+
+                        <!--Pestaña de Bienes Físicos-->
+                        <li>
+                            <a href="3_inventory2.php">
+                                <i class="fa-solid fa-computer"></i>
+                                <h5>Bienes Físicos</h5>
+                            </a>
+                        </li>
+
+                        <!--Pestaña de Ayuda Social-->
                         <li>
                             <a href="">
                                 <i class="fa-solid fa-handshake-angle"></i>
                                 <h5>Ayuda Social</h5>
                             </a>
                         </li>
+
+                        <!--Pestaña de Donaciones-->
                         <li>
                             <a href="">
                                 <i class="fa-solid fa-hand-holding-heart"></i>
                                 <h5>Donaciones</h5>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="3_inventory2.php">
-                                <i class="fa-solid fa-computer"></i>
-                                <h5>Bienes Físicos</h5>
                             </a>
                         </li>
                     </span>
@@ -212,7 +219,7 @@ include_once ("../settings/conexion.php");
                             </td>
 
                             <td>
-                                <button class="accion accionEliminar" onclick="deleteArtConsumoInt()"
+                                <button class="accion accionEliminar" onclick="deleteArtConsumoInt('<?php echo $row['inventory1_id']; ?>', '<?php echo $row['inventory1_quantity']; ?>', '<?php echo $row['articles_name']; ?>')"
                                     title="Eliminar este artículo">
                                     <i class="fa-solid fa-box-open fa-lg"></i>
                                     <i class="fa-solid fa-minus fa-2xs"></i>
@@ -331,6 +338,38 @@ include_once ("../settings/conexion.php");
             </div>
         </div>
 
+        <!--Formulario para eliminar un articulo-->
+        <div class="modalDeleteArticle">
+            <div class="panelArticle" style="width:400px;" >
+                <form method="post" class="formArticle">
+                    <input type="hidden" name="inventory1_quantity" id="inventory1_quantity_delete">
+                    <input type="hidden" name="inventory1_id" id="inventory1_id_delete">
+                    <h2>Eliminar Artículo de Consumo Interno</h2>
+
+                    <!--campo de nombre de artículo-->
+                    <div class="formLogCampo">
+                        <label for="articles_name_delete">Nombre:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-box-open"></i>
+                            <input class="btnTxt" type="text" name="articles_name" id="articles_name_delete" readonly>
+                        </div>
+                    </div>
+
+                    <!--Mensaje-->
+                    <div class="formLogCampo">
+                        <h4>¿Desea eliminar este artículo del inventario de Consumo Interno?</h4>
+                    </div>
+
+                    <!--Botón de crear usuario, botón de cancelar creación de usuario-->
+                    <div class="btnSubmitPanel">
+                        <button type="submit" class="btnSubmit btnRojo" name="eliminarArtConsumoInterno">Eliminar</button>
+                        <div class="btnSubmit btnCancel" onclick="ocultarFormDeleteArticle()">Cancelar</div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
     </main>
 
     <!--Pie de Página-->
@@ -349,8 +388,11 @@ include_once ("../settings/conexion.php");
 
 </html>
 
-<!--Agregar un articulo de consumo interno-->
+
 <?php
+/*
+*Función para agregar un articulo al inventario de consumo interno
+*/
 if (isset($_POST['agregarArtConsumoInterno'])) {
 
     $articles_id = htmlspecialchars($_POST['articles_id']);
@@ -429,6 +471,78 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
             echo "Error: " . $stmt->error;
         }
         $stmt->close();
+    }
+    $checkQuery->close();
+    $conn->close();
+}
+/***
+ * Función para Eliminarartículo de consumo interno
+ */
+if (isset($_POST['eliminarArtConsumoInterno'])) {
+
+    $name = htmlspecialchars($_POST['articles_name']);
+    $id = htmlspecialchars($_POST['inventory1_id']);
+    $quantity = htmlspecialchars($_POST['inventory1_quantity']);
+
+    $checkQuery = $conn->prepare("SELECT * FROM inventory1 WHERE inventory1_quantity = ?");
+    $checkQuery->bind_param("i", $quantity);
+    $checkQuery->execute();
+    $result = $checkQuery->get_result();
+    $row = $result->fetch_assoc();
+
+    if ($row['inventory1_quantity'] > 0) {
+        ?>
+        <script>
+            Swal.fire({
+                color: "var(--rojo)",
+                icon: "error",
+                iconColor: "var(--rojo)",
+                title: 'Error',
+                text: 'No se puede eliminar el artículo porque, la cantidad disponible es mayor a 0.',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = window.location.href;
+                }
+            });
+        </script>
+        <?php
+    } else {
+        // Consulta para eliminar la bodega
+        $deleteQuery = $conn->prepare("DELETE FROM inventory1 WHERE inventory1_id = ?");
+        $deleteQuery->bind_param("i", $id);
+
+        if ($deleteQuery->execute()) {
+            ?>
+            <script>
+                Swal.fire({
+                    color: "var(--verde)",
+                    icon: "success",
+                    iconColor: "var(--verde)",
+                    title: 'Éxito',
+                    text: 'Artículo eliminado del inventario de Consumo Interno',
+                    showConfirmButton: true,
+                    allowOutsideClick: false,
+                    customClass: {
+                        confirmButton: 'btn-confirm'
+                    },
+                    confirmButtonText: "Aceptar",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = window.location.href;
+                    }
+                });
+            </script>
+            <?php
+        } else {
+            echo "Error al eliminar la bodega.";
+        }
+        $deleteQuery->close();
     }
     $checkQuery->close();
     $conn->close();

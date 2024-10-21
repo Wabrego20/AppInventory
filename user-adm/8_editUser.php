@@ -1,7 +1,7 @@
 <!--Apartado para editar el perfil editUser.php-->
 <?php
-include_once("../settings/sessionStart.php");
-include_once("../settings/conexion.php");
+include_once '../settings/sessionStart.php';
+include_once '../settings/conexion.php';
 $usuario = $_SESSION['users_user'];
 $stmt = $conn->prepare("SELECT users.*, departament.* 
     FROM users 
@@ -25,7 +25,7 @@ if ($row = $result->fetch_assoc()) {
     $edad = isset($row["users_age"]) ? $row["users_age"] : '';
     $phone = isset($row["users_office_phone"]) ? $row["users_office_phone"] : '';
     $cell = isset($row["users_cell_phone"]) ? $row["users_cell_phone"] : '';
-    $adress = isset($row["users_adress"]) ? $row["users_adress"] : '';
+    $adress = $row["users_adress"] ?? '';
     $stmt->close();
 }
 

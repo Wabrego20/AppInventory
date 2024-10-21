@@ -1,7 +1,7 @@
 <!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
-include_once ("../settings/sessionStart.php");
-include_once ("../settings/conexion.php");
+include_once '../settings/sessionStart.php';
+include_once '../settings/conexion.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -52,28 +52,35 @@ include_once ("../settings/conexion.php");
                     </li>
                     <span class="subMenu">
 
+                        <!--Pestaña de consumo interno-->
                         <li>
                             <a href="3_inventory1.php">
                                 <i class="fa-solid fa-stapler"></i>
                                 <h5>Consumo Interno</h5>
                             </a>
                         </li>
+
+                        <!--Pestaña de Bienes Físicos-->
+                        <li class="active">
+                            <a href="#">
+                                <i class="fa-solid fa-computer"></i>
+                                <h5>Bienes Físicos</h5>
+                            </a>
+                        </li>
+
+                        <!--Pestaña de Ayuda Social-->
                         <li>
                             <a href="">
                                 <i class="fa-solid fa-handshake-angle"></i>
                                 <h5>Ayuda Social</h5>
                             </a>
                         </li>
+
+                        <!--Pestaña de Donaciones-->
                         <li>
                             <a href="">
                                 <i class="fa-solid fa-hand-holding-heart"></i>
                                 <h5>Donaciones</h5>
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a href="#">
-                                <i class="fa-solid fa-computer"></i>
-                                <h5>Bienes Físicos</h5>
                             </a>
                         </li>
                     </span>

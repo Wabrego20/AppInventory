@@ -50,6 +50,30 @@ function ocultarFormAddArticle() {
     modal.classList.remove("hide");
   }, 500);
 }
+
+/*
+ *Función para eliminar artículo de consumo interno
+ */
+function deleteArtConsumoInt(id, cant, name) {
+  var formu = document.querySelector(".modalDeleteArticle"); //mostrar el modal de crear artículo
+  formu.style.display = "flex";
+  setTimeout(function () {
+    formu.classList.add("show");
+  }, 10);
+
+  document.getElementById("inventory1_id_delete").value = id;
+  document.getElementById("inventory1_quantity_delete").value = cant;
+  document.getElementById("articles_name_delete").value = name;
+}
+function ocultarFormDeleteArticle() {
+  var modal = document.querySelector(".modalDeleteArticle");
+  modal.classList.remove("show");
+  modal.classList.add("hide");
+  setTimeout(function () {
+    modal.style.display = "none";
+    modal.classList.remove("hide");
+  }, 500);
+}
 /**
  * Al seleccionar un articulo, se muestra su precio unitario y su categoría
  * Calcular costo total de los articulos agregados
