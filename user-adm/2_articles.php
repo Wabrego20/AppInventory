@@ -52,28 +52,35 @@ include_once ("../settings/conexion.php");
                     </li>
                     <span class="subMenu">
 
-                        <li class="subMenu1">
+                        <!--Pestaña de consumo interno-->
+                        <li>
                             <a href="3_inventory1.php">
                                 <i class="fa-solid fa-stapler"></i>
                                 <h5>Consumo Interno</h5>
                             </a>
                         </li>
+
+                        <!--Pestaña de Bienes Físicos-->
                         <li>
-                            <a href="">
+                            <a href="3_inventory2.php">
+                                <i class="fa-solid fa-computer"></i>
+                                <h5>Bienes Físicos</h5>
+                            </a>
+                        </li>
+
+                        <!--Pestaña de Ayuda Social--></li>
+                        <li>
+                            <a href="3_inventory3.php">
                                 <i class="fa-solid fa-handshake-angle"></i>
                                 <h5>Ayuda Social</h5>
                             </a>
                         </li>
+
+                        <!--Pestaña de Donaciones-->
                         <li>
-                            <a href="">
+                            <a href="3_inventory4.php">
                                 <i class="fa-solid fa-hand-holding-heart"></i>
                                 <h5>Donaciones</h5>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <i class="fa-solid fa-computer"></i>
-                                <h5>Bienes Físicos</h5>
                             </a>
                         </li>
                     </span>
@@ -708,9 +715,78 @@ if (isset($_POST['editarArticulo'])) {
         </script>
         <?php
     }
-
     $stmt->close();
     $conn->close();
+}
+/**
+ * Eliminar artículo****************PENDIENTE
+ */
+if (isset($_POST['eliminarArticulo'])) {
 
+    $name = htmlspecialchars($_POST['articles_name']);
+    $quantity = htmlspecialchars($_POST['warehouses_total_quantity']);
+
+    $checkQuery = $conn->prepare("SELECT * FROM warehouses WHERE warehouses_total_quantity = ?");
+    $checkQuery->bind_param("i", $quantity);
+    $checkQuery->execute();
+    $result = $checkQuery->get_result();
+    $row = $result->fetch_assoc();
+
+    if ($row['warehouses_total_quantity'] > 0) {
+        ?>
+        <script>
+            Swal.fire({
+                color: "var(--rojo)",
+                icon: "error",
+                iconColor: "var(--rojo)",
+                title: 'Error',
+                text: 'No se puede eliminar la bodega porque contiene artículos.',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = window.location.href;
+                }
+            });
+        </script>
+        <?php
+    } else {
+        // Consulta para eliminar la bodega
+        $deleteQuery = $conn->prepare("DELETE FROM warehouses WHERE warehouses_name = ?");
+        $deleteQuery->bind_param("s", $name);
+
+        if ($deleteQuery->execute()) {
+            ?>
+            <script>
+                Swal.fire({
+                    color: "var(--verde)",
+                    icon: "success",
+                    iconColor: "var(--verde)",
+                    title: 'Éxito',
+                    text: 'Bodega eliminada.',
+                    showConfirmButton: true,
+                    allowOutsideClick: false,
+                    customClass: {
+                        confirmButton: 'btn-confirm'
+                    },
+                    confirmButtonText: "Aceptar",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = window.location.href;
+                    }
+                });
+            </script>
+            <?php
+        } else {
+            echo "Error al eliminar la bodega.";
+        }
+        $deleteQuery->close();
+    }
+    $checkQuery->close();
+    $conn->close();
 }
 ?>

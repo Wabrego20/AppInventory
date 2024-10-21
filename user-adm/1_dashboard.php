@@ -55,16 +55,24 @@ include_once("../settings/sessionStart.php");
                     <span class="subMenu">
 
                         <!--Pestaña de consumo interno-->
-                        <li class="subMenu1">
+                        <li>
                             <a href="3_inventory1.php">
                                 <i class="fa-solid fa-stapler"></i>
                                 <h5>Consumo Interno</h5>
                             </a>
                         </li>
 
+                        <!--Pestaña de Bienes Físicos-->
+                        <li>
+                            <a href="3_inventory2.php">
+                                <i class="fa-solid fa-computer"></i>
+                                <h5>Bienes Físicos</h5>
+                            </a>
+                        </li>
+
                         <!--Pestaña de Ayuda Social-->
                         <li>
-                            <a href="">
+                            <a href="3_inventory3.php">
                                 <i class="fa-solid fa-handshake-angle"></i>
                                 <h5>Ayuda Social</h5>
                             </a>
@@ -72,17 +80,9 @@ include_once("../settings/sessionStart.php");
 
                         <!--Pestaña de Donaciones-->
                         <li>
-                            <a href="">
+                            <a href="3_inventory4.php">
                                 <i class="fa-solid fa-hand-holding-heart"></i>
                                 <h5>Donaciones</h5>
-                            </a>
-                        </li>
-
-                        <!--Pestaña de Bienes Físicos-->
-                        <li>
-                            <a href="">
-                                <i class="fa-solid fa-computer"></i>
-                                <h5>Bienes Físicos</h5>
                             </a>
                         </li>
                     </span>

@@ -15,7 +15,7 @@ include_once ("../settings/conexion.php");
     <link rel="stylesheet" href="../settings/styles.css">
     <link rel="stylesheet" href="../css/3_inventory1.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
-    <title>Consumo Interno | Sist-Inventario</title>
+    <title>Bienes Físicos | Sist-Inventario</title>
 </head>
 
 <body>
@@ -52,8 +52,8 @@ include_once ("../settings/conexion.php");
                     </li>
                     <span class="subMenu">
 
-                        <li class="active">
-                            <a href="">
+                        <li>
+                            <a href="3_inventory1.php">
                                 <i class="fa-solid fa-stapler"></i>
                                 <h5>Consumo Interno</h5>
                             </a>
@@ -70,8 +70,8 @@ include_once ("../settings/conexion.php");
                                 <h5>Donaciones</h5>
                             </a>
                         </li>
-                        <li>
-                            <a href="3_inventory2.php">
+                        <li class="active">
+                            <a href="#">
                                 <i class="fa-solid fa-computer"></i>
                                 <h5>Bienes Físicos</h5>
                             </a>
@@ -138,12 +138,12 @@ include_once ("../settings/conexion.php");
             <h5>Inventarios</h5>
         </a>
         <i class="fa-solid fa-chevron-right"></i>
-        <h4>Inventario de Consumo Interno</h4>
+        <h4>Inventario de Bienes Físicos</h4>
     </div>
 
     <!--Cuerpo Principal-->
     <main>
-        <h2>Tabla de Articulos de Consumo Interno</h2>
+        <h2>Tabla de Bienes Físicos</h2>
         <table id="tableInventory">
             <thead>
                 <tr>
@@ -322,7 +322,7 @@ include_once ("../settings/conexion.php");
 
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
                     <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnVerde" name="agregarArtConsumoInterno">Agregar
+                        <button type="submit" class="btnSubmit btnVerde" name="agregarBienFisico">Agregar
                             Artículo</button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormAddArticle()">Cancelar</div>
                     </div>
@@ -351,7 +351,7 @@ include_once ("../settings/conexion.php");
 
 <!--Agregar un articulo de consumo interno-->
 <?php
-if (isset($_POST['agregarArtConsumoInterno'])) {
+if (isset($_POST['agregarBienFisico'])) {
 
     $articles_id = htmlspecialchars($_POST['articles_id']);
     $categories_id = htmlspecialchars($_POST['categories_id']);
@@ -362,7 +362,7 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
     $total_cost = htmlspecialchars($_POST['inventory1_total_cost']);
     $re_order = $quantity / 3;
     $checkQuery = $conn->prepare("SELECT * 
-    FROM inventory1 
+    FROM inventory2 
     WHERE articles_id = ? 
     AND warehouses_id = ?
     AND categories_id = ?");
@@ -392,7 +392,7 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
         <?php
     } else {
 
-        $stmt = $conn->prepare("INSERT INTO inventory1 (articles_id, categories_id, inventory1_quantity, inventory1_registration_date, warehouses_id, inventory1_total_cost, inventory1_re_order) 
+        $stmt = $conn->prepare("INSERT INTO inventory2 (articles_id, categories_id, inventory1_quantity, inventory1_registration_date, warehouses_id, inventory1_total_cost, inventory1_re_order) 
         VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("iiisidi", $articles_id, $categories_id, $quantity, $inventory1_registration_date, $warehouses_id, $total_cost, $re_order);
 
