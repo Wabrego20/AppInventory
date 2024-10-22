@@ -136,12 +136,13 @@ document.getElementById("inventory1_quantity").addEventListener("input", functio
 /**
  * Formulario para realizar una solicitud
  */
-function solicitarArt(articleName, categoryName, warehouseName, quantity, unitCost, totalCost) {
+function solicitarArt(id, articleName, categoryName, warehouseName, quantity, unitCost, totalCost) {
   var formu = document.querySelector(".modalAddArticle");
   formu.style.display = "flex";
   setTimeout(function () {
     formu.classList.add("show");
   }, 10);
+  document.getElementById("articles_id").value = id;
   document.getElementById("articles_name").value = articleName;
   document.getElementById("categories_name").value = categoryName;
   document.getElementById("warehouses_name").value = warehouseName;

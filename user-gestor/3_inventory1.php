@@ -1,7 +1,7 @@
 <!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
-include_once ("../settings/sessionStart.php");
-include_once ("../settings/conexion.php");
+include_once '../settings/sessionStart.php';
+include_once '../settings/conexion.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -152,7 +152,7 @@ include_once ("../settings/conexion.php");
                 WHERE inventory1.articles_id = articles.articles_id
                 AND inventory1.categories_id = categories.categories_id
                 AND inventory1.warehouses_id = warehouses.warehouses_id";
-               
+
                 $stmt = $conn->prepare($inventario1);
                 $stmt->execute();
                 $result = $stmt->get_result();
@@ -187,9 +187,10 @@ include_once ("../settings/conexion.php");
                                 <?php echo !empty($row['inventory1_total_cost']) ? $row['inventory1_total_cost'] : '0.00'; ?>
                             </td>
                             <td>
-                                <button class="accion accionSolicitar" onclick="solicitarArt('<?php echo $row['articles_name']; ?>','<?php echo $row['categories_name']; ?>','<?php echo $row['warehouses_name']; ?>','','<?php echo $row['articles_unit_cost']; ?>','')"><i class="fa-solid fa-paper-plane"></i></button>
+                                <button class="accion accionSolicitar"
+                                    onclick="solicitarArt('<?php echo $row['articles_id']; ?>', '<?php echo $row['articles_name']; ?>','<?php echo $row['categories_name']; ?>','<?php echo $row['warehouses_name']; ?>','','<?php echo $row['articles_unit_cost']; ?>','')"><i
+                                        class="fa-solid fa-paper-plane"></i></button>
                             </td>
-
                         </tr>
                         <?php
                         $fila++;
@@ -203,8 +204,8 @@ include_once ("../settings/conexion.php");
 
         <!--Formulario para Crear un articulo-->
         <div class="modalAddArticle">
-            <div class="panelAddArticle">
-                <form method="post" class="formAddArticle">
+            <div class="panelArticle">
+                <form method="post" class="formArticle">
                     <h2>Solicitar Artículo de Consumo Interno</h2>
 
                     <!--campo de nombre de artículo-->
@@ -212,6 +213,7 @@ include_once ("../settings/conexion.php");
                         <label for="articles_name">Artículo:</label>
                         <div class="campo">
                             <i class="fa-solid fa-box-open"></i>
+                            <input type="hidden" name="articles_id" id="articles_id">
                             <input type="text" name="articles_name" id="articles_name" class="btnTxt" readonly>
 
                         </div>
@@ -269,7 +271,8 @@ include_once ("../settings/conexion.php");
 
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
                     <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnVerde" name="solicitarArtConsumoInterno">Enviar Solicitud</button>
+                        <button type="submit" class="btnSubmit btnVerde" name="solicitarArtConsumoInterno">Enviar
+                            Solicitud</button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormAddArticle()">Cancelar</div>
                     </div>
                 </form>
@@ -297,57 +300,79 @@ include_once ("../settings/conexion.php");
 <!--Agregar un articulo de consumo interno-->
 <?php
 if (isset($_POST['solicitarArtConsumoInterno'])) {
-    $stmt = $conn->prepare("SELECT users.*, departament.* 
-    FROM users 
-    JOIN departament ON users.departament_id = departament.departament_id 
-    WHERE users.users_user = ?");
-    $stmt->bind_param("s", $usuario);
+
+    $users_user = $_SESSION['users_user'];
+    $article_id = $_POST['articles_id'];
+    $article_name = $_POST['articles_name'];
+    $warehouses_name = $_POST['warehouses_name'];
+
+    $sql_user = "SELECT users_id FROM users WHERE users_user = ?";
+    $stmt_user = $conn->prepare($sql_user);
+    $stmt_user->bind_param("s", $users_user);
+    $stmt_user->execute();
+    $result_user = $stmt_user->get_result();
+    $row_user = $result_user->fetch_assoc();
+    $user_id = $row_user['users_id'] ?? 'No disponible';
+    
+    $sql_departament = "SELECT departament.departament_name
+    FROM users
+    JOIN departament ON users.departament_id = departament.departament_id
+    WHERE users.users_user = ?";
+    $stmt = $conn->prepare($sql_departament);
+    $stmt->bind_param("s", $users_user);
     $stmt->execute();
     $result = $stmt->get_result();
-    if ($row = $result->fetch_assoc()) {
+    $row = $result->fetch_assoc();
+    $departament_name = $row['departament_name'] ?? 'No disponible';
 
-        $usuario = $_SESSION['users_user'];
-        $inventoryType = "Consumo Interno";
-        date_default_timezone_set('America/Panama');
-        $departament = isset($row["departament_name"]) ? $row["departament_name"] : '';
-        $warehouses_name = htmlspecialchars($_POST['warehouses_name']);
-        $articles_name = htmlspecialchars($_POST['articles_name']);
-        $categories_name = htmlspecialchars($_POST['categories_name']);
-        $request_unit_cost = htmlspecialchars($_POST['articles_unit_cost']);
-        $request_quantity = htmlspecialchars($_POST['request_quantity']);
-        $request_total_cost = htmlspecialchars($_POST['request_total_cost']);
+    $sql_warehouses = "SELECT warehouses_id FROM warehouses WHERE warehouses_name = ?";
+    $stmt = $conn->prepare($sql_warehouses);
+    $stmt_warehouses = $conn->prepare($sql_warehouses);
+    $stmt_warehouses->bind_param("s", $warehouses_name);
+    $stmt_warehouses->execute();
+    $result_warehouses = $stmt_warehouses->get_result();
+    $row_warehouses = $result_warehouses->fetch_assoc();
+    $warehouse_id = $row_warehouses['warehouses_id'];
+   
+    $inventoryType = "Consumo Interno";
+    date_default_timezone_set('America/Panama');
+    $request_quantity = htmlspecialchars($_POST['request_quantity']);
+    $request_total_cost = htmlspecialchars($_POST['request_total_cost']);
 
-        // Preparar y ejecutar el INSERT statement
-        $stmt_insert = $conn->prepare('INSERT INTO request (request_requester, request_departament, request_article, request_categorie, request_warehouse, request_inventory1, request_quantity, request_unit_cost, request_total_cost) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
-        $stmt_insert->bind_param('ssssssidd', $usuario, $departament, $articles_name, $categories_name, $warehouses_name, $inventoryType, $request_quantity, $request_unit_cost, $request_total_cost);
-        // Ejecutar la inserción y manejar errores
-        if ($stmt_insert->execute()) {
-            ?>
-            <script>
-                Swal.fire({
-                    color: "var(--verde)",
-                    icon: "success",
-                    iconColor: "var(--verde)",
-                    title: '!Éxito!',
-                    text: 'Se a enviado su solicitud, ir al apartado de Solicitudes para verificar el estado de su solicitud',
-                    showConfirmButton: true,
-                    customClass: {
-                        confirmButton: 'btn-confirm'
-                    },
-                    confirmButtonText: "Aceptar",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = window.location.href;
-                    }
-                });
-            </script>
-            <?php
-        } else {
-            echo "Error: " . $stmt->error;
-        }
-        $stmt->close();
-        $conn->close();
+    $stmt_insert = $conn->prepare('INSERT INTO request (requester_id, articles_id, warehouse_id, inventoryType, request_quantity, request_total_cost) 
+                                   VALUES (?, ?, ?, ?, ?, ?)');
+    $stmt_insert->bind_param('iiisid', $user_id, $article_id, $warehouse_id, $inventoryType, $request_quantity, $request_total_cost);
+
+    // Ejecutar la inserción y manejar errores
+    if ($stmt_insert->execute()) {
+        ?>
+        <script>
+            Swal.fire({
+                color: "var(--verde)",
+                icon: "success",
+                iconColor: "var(--verde)",
+                title: '!Éxito!',
+                text: 'Se ha enviado su solicitud, ir al apartado de Solicitudes para verificar el estado de su solicitud',
+                showConfirmButton: true,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = window.location.href;
+                }
+            });
+        </script>
+        <?php
+    } else {
+        echo "Error: " . $stmt_insert->error;
     }
+
+    $stmt_user->close();
+    $stmt->close();
+    $stmt_warehouses->close();
+    $stmt_insert->close();
+    $conn->close();
 }
 ?>

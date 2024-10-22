@@ -145,7 +145,7 @@ include_once ("../settings/conexion.php");
             <tbody>
                 <?php
                  $usuario = $_SESSION['users_user'];
-                 $stmt = $conn->prepare("SELECT * FROM request WHERE request_requester = ?");
+                 $stmt = $conn->prepare("SELECT * FROM request WHERE request_id = ?");
                  $stmt->bind_param("s", $usuario);
                 // Ejecutar la declaración
                 $stmt->execute();
