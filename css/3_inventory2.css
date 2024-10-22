@@ -1,0 +1,161 @@
+main {
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  align-items: center;
+  justify-content: center;
+  h2{
+    color: var(--azul);
+    margin: 10px auto;
+    max-width: 100%;
+  }
+}
+.ruta2 {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  border: 1px solid var(--gris);
+  flex-wrap: wrap;
+  h4 {
+    color: var(--azul);
+    margin: 5px;
+  }
+  a {
+    margin-left: 10px;
+    text-decoration: none;
+    color: var(--azul);
+    transition: 0.2s ease-in-out;
+    :hover {
+      text-decoration: underline;
+      color: var(--negro);
+    }
+  }
+}
+
+/*Formulario para crear usuarios*/
+.modalAddArticle,
+.modalDeleteArticle,
+.modalAddQuantArticle {
+  background-color: var(--fondo);
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  transition: 0.2s ease-in-out;
+  opacity: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+.modalAddArticle.show, .modalDeleteArticle.show, .modalAddQuantArticle.show {
+  opacity: 1;
+}
+.panelArticle {
+  width: 800px;
+  max-height: 99%;
+  max-width: 99%;
+  overflow: auto;
+}
+
+.formArticle {
+  width: 100%;
+  background-color: var(--blanco);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 5px;
+  box-shadow: 0 0 10px var(--azul);
+  flex-wrap: wrap;
+  h2 {
+    border-radius: 5px 5px 0 0;
+    margin: auto;
+    padding: 5px;
+    width: 100%;
+    text-align: center;
+    background-color: var(--azul);
+    color: var(--blanco);
+  }
+  .formLogCampo {
+    width: 350px;
+    max-width: 95%;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: 5px;
+    label {
+      color: var(--azul);
+      font-weight: bold;
+    }
+    h4{
+      color: var(--azul);
+      margin: 10px 0;
+      width: 100%;
+    }
+    .campo {
+      display: flex;
+      align-items: center;
+      justify-content: start;
+      width: 100%;
+      position: relative;
+      .fa-file-signature {
+        height: 60px;
+        line-height: 60px;
+        width: 60px;
+      }
+      i {
+        height: 40px;
+        line-height: 40px;
+        width: 40px;
+        text-align: center;
+        background-color: var(--azul);
+        color: var(--blanco);
+        border-radius: 5px 0 0 5px;
+      }
+      .btnTxt {
+        width: 100%;
+        height: 40px;
+        border-radius: 0 5px 5px 0;
+        border: 1px solid var(--azul);
+        font-size: 16px;
+        color: var(--azul);
+        font-weight: bold;
+      }
+      .btnTxt:focus {
+        box-shadow: 0 0 5px var(--azul);
+        outline: 1px solid var(--azul);
+      }
+      .textArea {
+        resize: none;
+        height: 60px;
+      }
+    }
+  }
+}
+
+.fa-heart-pulse {
+  background-color: var(--naranja);
+}
+
+.fa-heart-pulse:hover {
+  color: var(--naranja);
+  box-shadow: 0 0 5px var(--naranja);
+}
+
+.fa-heart-pulse:hover,
+.fa-user-minus:hover {
+  background-color: var(--blanco);
+}
+.fa-heart-pulse,
+.fa-user-minus {
+  color: var(--blanco);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  transition: 0.2s ease-in-out;
+}

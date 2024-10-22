@@ -13,10 +13,10 @@ include_once '../settings/conexion.php';
     <link rel="stylesheet" href="../settings/header.css">
     <link rel="stylesheet" href="../settings/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="../settings/styles.css">
-    <link rel="stylesheet" href="../css/3_inventory1.css">
+    <link rel="stylesheet" href="../css/3_inventory2.css">
     <link rel="stylesheet" href="../settings/gestor.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
-    <title>Consumo Interno | Sist-Inventario</title>
+    <title>Bienes Físicos | Sist-Inventario</title>
 </head>
 
 <body>
@@ -53,16 +53,16 @@ include_once '../settings/conexion.php';
                     </li>
                     <span class="subMenu">
 
-                        <li class="active subMenu1">
-                            <a href="">
+                        <li>
+                            <a href="3_inventory1.php">
                                 <i class="fa-solid fa-stapler"></i>
                                 <h5>Consumo Interno</h5>
                             </a>
                         </li>
 
                         <!--Pestaña de Bienes Físicos-->
-                        <li>
-                            <a href="3_inventory2.php">
+                        <li class="active">
+                            <a href="#">
                                 <i class="fa-solid fa-computer"></i>
                                 <h5>Bienes Físicos</h5>
                             </a>
@@ -77,12 +77,6 @@ include_once '../settings/conexion.php';
                             <a href="">
                                 <i class="fa-solid fa-hand-holding-heart"></i>
                                 <h5>Donaciones</h5>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <i class="fa-solid fa-computer"></i>
-                                <h5>Bienes Físicos</h5>
                             </a>
                         </li>
                     </span>
@@ -132,12 +126,12 @@ include_once '../settings/conexion.php';
             <h5>Inventarios</h5>
         </a>
         <i class="fa-solid fa-chevron-right"></i>
-        <h4>Inventario de Consumo Interno</h4>
+        <h4>Inventario de Bienes físicos</h4>
     </div>
 
     <!--Cuerpo Principal-->
     <main>
-        <h2>Tabla de Articulos de Consumo Interno</h2>
+        <h2>Tabla de Articulos de Bienes físicos</h2>
         <table id="tableInventory">
             <thead>
                 <tr>
@@ -155,13 +149,13 @@ include_once '../settings/conexion.php';
 
             <tbody>
                 <?php
-                $inventario1 = "SELECT inventory1.*, articles.*, categories.*, warehouses.* 
-                FROM inventory1, articles, categories, warehouses
-                WHERE inventory1.articles_id = articles.articles_id
-                AND inventory1.categories_id = categories.categories_id
-                AND inventory1.warehouses_id = warehouses.warehouses_id";
+                $inventario2 = "SELECT inventory2.*, articles.*, categories.*, warehouses.* 
+                FROM inventory2, articles, categories, warehouses
+                WHERE inventory2.articles_id = articles.articles_id
+                AND inventory2.categories_id = categories.categories_id
+                AND inventory2.warehouses_id = warehouses.warehouses_id";
 
-                $stmt = $conn->prepare($inventario1);
+                $stmt = $conn->prepare($inventario2);
                 $stmt->execute();
                 $result = $stmt->get_result();
                 if ($result->num_rows > 0) {
@@ -179,11 +173,11 @@ include_once '../settings/conexion.php';
                                 <?php echo !empty($row['categories_name']) ? $row['categories_name'] : 'No disponible'; ?>
                             </td>
                             <td>
-                                <?php echo !empty($row['inventory1_quantity']) ? $row['inventory1_quantity'] : '0'; ?>
+                                <?php echo !empty($row['inventory2_quantity']) ? $row['inventory2_quantity'] : '0'; ?>
                             </td>
 
                             <td>
-                                <?php echo !empty($row['inventory1_registration_date']) ? $row['inventory1_registration_date'] : 'dd/mm/aaaa'; ?>
+                                <?php echo !empty($row['inventory2_registration_date']) ? $row['inventory2_registration_date'] : 'dd/mm/aaaa'; ?>
                             </td>
                             <td>
                                 <?php echo !empty($row['warehouses_name']) ? $row['warehouses_name'] : 'No disponible'; ?>
@@ -192,7 +186,7 @@ include_once '../settings/conexion.php';
                                 <?php echo !empty($row['articles_unit_cost']) ? $row['articles_unit_cost'] : '0.00'; ?>
                             </td>
                             <td>
-                                <?php echo !empty($row['inventory1_total_cost']) ? $row['inventory1_total_cost'] : '0.00'; ?>
+                                <?php echo !empty($row['inventory2_total_cost']) ? $row['inventory2_total_cost'] : '0.00'; ?>
                             </td>
                             <td>
                                 <button class="accion accionSolicitar"title="clic para solicitar article"
@@ -279,7 +273,7 @@ include_once '../settings/conexion.php';
 
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
                     <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnVerde" name="solicitarArtConsumoInterno">Enviar
+                        <button type="submit" class="btnSubmit btnVerde" name="solicitarArtBienesFisicos">Enviar
                             Solicitud</button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormAddArticle()">Cancelar</div>
                     </div>
@@ -299,7 +293,7 @@ include_once '../settings/conexion.php';
     <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
     <script src="../settings/header.js"></script>
-    <script src="../js/3_inventory1.js"></script>
+    <script src="../js/3_inventory2.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
@@ -307,7 +301,7 @@ include_once '../settings/conexion.php';
 
 <!--Agregar un articulo de consumo interno-->
 <?php
-if (isset($_POST['solicitarArtConsumoInterno'])) {
+if (isset($_POST['solicitarArtBienesFisicos'])) {
 
     $users_user = $_SESSION['users_user'];
     $article_id = $_POST['articles_id'];
@@ -342,12 +336,12 @@ if (isset($_POST['solicitarArtConsumoInterno'])) {
     $row_warehouses = $result_warehouses->fetch_assoc();
     $warehouse_id = $row_warehouses['warehouses_id'];
    
-    $inventoryType = "Consumo Interno";
+    $inventoryType = "Bienes Físicos";
     date_default_timezone_set('America/Panama');
     $request_quantity = htmlspecialchars($_POST['request_quantity']);
     $request_total_cost = htmlspecialchars($_POST['request_total_cost']);
 
-    $stmt_insert = $conn->prepare('INSERT INTO request (requester_id, articles_id, warehouse_id, inventory1_name, request_quantity, request_total_cost) 
+    $stmt_insert = $conn->prepare('INSERT INTO request (requester_id, articles_id, warehouse_id, inventoryType, request_quantity, request_total_cost) 
                                    VALUES (?, ?, ?, ?, ?, ?)');
     $stmt_insert->bind_param('iiisid', $user_id, $article_id, $warehouse_id, $inventoryType, $request_quantity, $request_total_cost);
 
