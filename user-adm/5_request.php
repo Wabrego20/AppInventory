@@ -206,13 +206,13 @@ include_once '../settings/conexion.php';
                             <?php echo $row['inventoryType'] ?? 'No disponible'; ?>
                             </td>
                             <td>
-                            <?php echo $row['request_quantity'] ?? 'No disponible'; ?>
+                            <?php echo $row['request_quantity'] ?? '0'; ?>
                             </td>
                             <td>
-                            <?php echo $row['request_total_cost'] ?? 'No disponible'; ?>
+                            <?php echo $row['request_total_cost'] ?? '0.00'; ?>
                             </td>
                             <td>
-                                <?php echo !empty($row['request_order_date']) ? $row['request_order_date'] : ''; ?>
+                            <?php echo $row['request_order_date'] ?? 'd/m/a'; ?>
                             </td>
                             <td class="<?php echo !empty($row['request_status']) ? strtolower($row['request_status']) : ''; ?>">
                                 <?php echo !empty($row['request_status']) ? $row['request_status'] : ''; ?>

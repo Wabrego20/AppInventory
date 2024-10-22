@@ -187,7 +187,7 @@ include_once '../settings/conexion.php';
                                 <?php echo !empty($row['inventory1_total_cost']) ? $row['inventory1_total_cost'] : '0.00'; ?>
                             </td>
                             <td>
-                                <button class="accion accionSolicitar"
+                                <button class="accion accionSolicitar"title="clic para solicitar article"
                                     onclick="solicitarArt('<?php echo $row['articles_id']; ?>', '<?php echo $row['articles_name']; ?>','<?php echo $row['categories_name']; ?>','<?php echo $row['warehouses_name']; ?>','','<?php echo $row['articles_unit_cost']; ?>','')"><i
                                         class="fa-solid fa-paper-plane"></i></button>
                             </td>
