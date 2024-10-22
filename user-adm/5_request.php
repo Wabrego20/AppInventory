@@ -169,7 +169,12 @@ include_once '../settings/conexion.php';
             <tbody>
                 <?php
                 // Declaración SQL
-                $solicitud = "SELECT * FROM request";
+                $solicitud = "SELECT request.*, users.*, departament.*, articles.*, categories.*
+                FROM request
+                JOIN users ON request.requester_id = users.users_id
+                JOIN departament ON users.departament_id = departament.departament_id
+                JOIN articles ON request.articles_id = articles.articles_id
+                JOIN categories ON articles.categories_id = categories.categories_id";
                 // Preparar la declaración
                 $stmt = $conn->prepare($solicitud);
                 // Ejecutar la declaración
@@ -186,25 +191,25 @@ include_once '../settings/conexion.php';
                                 <?php echo $fila; ?>
                             </td>
                             <td>
-                                <?php echo !empty($row['request_requester']) ? $row['request_requester'] : 'No disponible'; ?>
+                                <?php echo $row['users_user'] ?? 'No disponible'; ?>
                             </td>
                             <td>
-                                <?php echo !empty($row['request_departament']) ? $row['request_departament'] : 'no disponible'; ?>
+                            <?php echo $row['departament_name'] ?? 'No disponible'; ?>
                             </td>
                             <td>
-                                <?php echo !empty($row['request_article']) ? $row['request_article'] : 'no disponible'; ?>
+                            <?php echo $row['articles_name'] ?? 'No disponible'; ?>
                             </td>
                             <td>
-                                <?php echo !empty($row['request_categorie']) ? $row['request_categorie'] : 'no disponible'; ?>
+                            <?php echo $row['categories_name'] ?? 'No disponible'; ?>
                             </td>
                             <td>
-                                <?php echo !empty($row['request_inventory1']) ? $row['request_inventory1'] : 'no disponible'; ?>
+                            <?php echo $row['inventoryType'] ?? 'No disponible'; ?>
                             </td>
                             <td>
-                                <?php echo !empty($row['request_quantity']) ? $row['request_quantity'] : '0'; ?>
+                            <?php echo $row['request_quantity'] ?? 'No disponible'; ?>
                             </td>
                             <td>
-                                <?php echo !empty($row['request_total_cost']) ? $row['request_total_cost'] : '0.00'; ?>
+                            <?php echo $row['request_total_cost'] ?? 'No disponible'; ?>
                             </td>
                             <td>
                                 <?php echo !empty($row['request_order_date']) ? $row['request_order_date'] : ''; ?>
@@ -213,7 +218,7 @@ include_once '../settings/conexion.php';
                                 <?php echo !empty($row['request_status']) ? $row['request_status'] : ''; ?>
                             </td>
                             <td>
-                                <button title="clic para procesar solicitud" class="accion accionCrear" onclick="verAprobarSolicitud('<?php echo $row['request_article']; ?>','<?php echo $row['request_quantity']; ?>')"><i class="fa-solid fa-thumbs-up fa-lg"></i></button>
+                                <button title="clic para procesar solicitud" class="accion accionCrear" onclick="verAprobarSolicitud('<?php echo $row['articles_name']; ?>','<?php echo $row['request_quantity']; ?>')"><i class="fa-solid fa-thumbs-up fa-lg"></i></button>
                             </td>
                             <td>
                                 <button title="clic para rechazar solicitud" class="accion accionEliminar" onclick="solicitarArt()"><i class="fa-solid fa-thumbs-down fa-lg"></i></button>
