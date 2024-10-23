@@ -18,7 +18,6 @@ if (isset($_SESSION['ultimoAcceso'])) {
 }
 // Actualizar el tiempo de la última actividad
 $_SESSION['ultimoAcceso'] = time();
-
 //error_reporting(0);
 ini_set('display_errors', 1);
 $usuario = $_SESSION['users_user'];

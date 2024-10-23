@@ -189,7 +189,7 @@ include_once '../settings/conexion.php';
                                 <?php echo !empty($row['inventory2_total_cost']) ? $row['inventory2_total_cost'] : '0.00'; ?>
                             </td>
                             <td>
-                                <button class="accion accionSolicitar"title="clic para solicitar article"
+                                <button class="accion accionSolicitar" title="clic para solicitar article"
                                     onclick="solicitarArt('<?php echo $row['articles_id']; ?>', '<?php echo $row['articles_name']; ?>','<?php echo $row['categories_name']; ?>','<?php echo $row['warehouses_name']; ?>','','<?php echo $row['articles_unit_cost']; ?>','')"><i
                                         class="fa-solid fa-paper-plane"></i></button>
                             </td>
@@ -315,7 +315,7 @@ if (isset($_POST['solicitarArtBienesFisicos'])) {
     $result_user = $stmt_user->get_result();
     $row_user = $result_user->fetch_assoc();
     $user_id = $row_user['users_id'] ?? 'No disponible';
-    
+
     $sql_departament = "SELECT departament.departament_name
     FROM users
     JOIN departament ON users.departament_id = departament.departament_id
@@ -335,26 +335,29 @@ if (isset($_POST['solicitarArtBienesFisicos'])) {
     $result_warehouses = $stmt_warehouses->get_result();
     $row_warehouses = $result_warehouses->fetch_assoc();
     $warehouse_id = $row_warehouses['warehouses_id'];
-   
+
     $inventoryType = "Bienes Físicos";
     date_default_timezone_set('America/Panama');
     $request_quantity = htmlspecialchars($_POST['request_quantity']);
     $request_total_cost = htmlspecialchars($_POST['request_total_cost']);
 
-    $stmt_insert = $conn->prepare('INSERT INTO request (requester_id, articles_id, warehouse_id, inventoryType, request_quantity, request_total_cost) 
-                                   VALUES (?, ?, ?, ?, ?, ?)');
-    $stmt_insert->bind_param('iiisid', $user_id, $article_id, $warehouse_id, $inventoryType, $request_quantity, $request_total_cost);
+    // Consulta para verificar si ya existe una solicitud pendiente
+    $stmt_check = $conn->prepare('SELECT COUNT(*) FROM request WHERE requester_id = ? AND articles_id = ? AND request_status = "Pendiente"');
+    $stmt_check->bind_param('ii', $user_id, $article_id);
+    $stmt_check->execute();
+    $stmt_check->bind_result($count);
+    $stmt_check->fetch();
+    $stmt_check->close();
 
-    // Ejecutar la inserción y manejar errores
-    if ($stmt_insert->execute()) {
+    if ($count > 0) {
         ?>
         <script>
             Swal.fire({
-                color: "var(--verde)",
-                icon: "success",
-                iconColor: "var(--verde)",
-                title: '!Éxito!',
-                text: 'Se ha enviado su solicitud, ir al apartado de Solicitudes para verificar el estado de su solicitud',
+                color: "var(--rojo)",
+                icon: "error",
+                iconColor: "var(--rojo)",
+                title: '!Error!',
+                text: 'Ya se ha solicitado este artículo y está pendiente.',
                 showConfirmButton: true,
                 customClass: {
                     confirmButton: 'btn-confirm'
@@ -368,13 +371,42 @@ if (isset($_POST['solicitarArtBienesFisicos'])) {
         </script>
         <?php
     } else {
-        echo "Error: " . $stmt_insert->error;
-    }
 
-    $stmt_user->close();
-    $stmt->close();
-    $stmt_warehouses->close();
-    $stmt_insert->close();
-    $conn->close();
+        $stmt_insert = $conn->prepare('INSERT INTO request (requester_id, articles_id, warehouse_id, inventoryType, request_quantity, request_total_cost) 
+                                   VALUES (?, ?, ?, ?, ?, ?)');
+        $stmt_insert->bind_param('iiisid', $user_id, $article_id, $warehouse_id, $inventoryType, $request_quantity, $request_total_cost);
+
+        // Ejecutar la inserción y manejar errores
+        if ($stmt_insert->execute()) {
+            ?>
+            <script>
+                Swal.fire({
+                    color: "var(--verde)",
+                    icon: "success",
+                    iconColor: "var(--verde)",
+                    title: '!Éxito!',
+                    text: 'Se ha enviado su solicitud, ir al apartado de Solicitudes para verificar el estado de su solicitud',
+                    showConfirmButton: true,
+                    customClass: {
+                        confirmButton: 'btn-confirm'
+                    },
+                    confirmButtonText: "Aceptar",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = window.location.href;
+                    }
+                });
+            </script>
+            <?php
+        } else {
+            echo "Error: " . $stmt_insert->error;
+        }
+
+        $stmt_user->close();
+        $stmt->close();
+        $stmt_warehouses->close();
+        $stmt_insert->close();
+        $conn->close();
+    }
 }
 ?>

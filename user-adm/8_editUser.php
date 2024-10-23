@@ -393,7 +393,7 @@ if (isset($_POST['editarUsuario'])) {
             $stmt = $conn->prepare("UPDATE users SET users_password=? WHERE users_user=?");
             $stmt->bind_param("ss", $nueva_contraseña_encriptada, $usuario);
             if ($stmt->execute()) {
-?>
+                ?>
                 <script>
                     Swal.fire({
                         color: "var(--verde)",
@@ -403,13 +403,13 @@ if (isset($_POST['editarUsuario'])) {
                         text: 'Contraseña actualizada correctamente',
                         showConfirmButton: false,
                     })
-                    setTimeout(function() {
+                    setTimeout(function () {
                         window.location.href = window.location.href;
                     }, 1500);
                 </script>
-            <?php
+                <?php
             } else {
-            ?>
+                ?>
                 <script>
                     Swal.fire({
                         color: "var(--rojo)",
@@ -419,11 +419,11 @@ if (isset($_POST['editarUsuario'])) {
                         text: 'No se actualizó la contraseña',
                         showConfirmButton: false,
                     })
-                    setTimeout(function() {
+                    setTimeout(function () {
                         window.location.href = window.location.href;
                     }, 1500);
                 </script>
-            <?php
+                <?php
             }
             $stmt->close();
         } else {
@@ -437,7 +437,7 @@ if (isset($_POST['editarUsuario'])) {
                     text: 'Las contraseñas no coinciden',
                     showConfirmButton: false,
                 })
-                setTimeout(function() {
+                setTimeout(function () {
                     window.location.href = window.location.href;
                 }, 1500);
             </script>
@@ -464,7 +464,7 @@ if (isset($_POST['editarUsuario'])) {
             $stmt->bind_param("ssssssissss", $base64Image, $name, $dni, $lastName, $email, $cumple, $edad, $phone, $cell, $adress, $usuario);
 
             if ($stmt->execute()) {
-            ?>
+                ?>
                 <script>
                     Swal.fire({
                         color: "var(--verde)",
@@ -474,13 +474,13 @@ if (isset($_POST['editarUsuario'])) {
                         text: 'Datos actualizados correctamente',
                         showConfirmButton: false,
                     })
-                    setTimeout(function() {
+                    setTimeout(function () {
                         window.location.href = window.location.href;
                     }, 1500);
                 </script>
-            <?php
+                <?php
             } else {
-            ?>
+                ?>
                 <script>
                     Swal.fire({
                         color: "var(--rojo)",
@@ -490,11 +490,11 @@ if (isset($_POST['editarUsuario'])) {
                         text: 'No se actualizó el correo',
                         showConfirmButton: false,
                     })
-                    setTimeout(function() {
+                    setTimeout(function () {
                         window.location.href = window.location.href;
                     }, 1500);
                 </script>
-<?php
+                <?php
             }
             $stmt->close();
         }
