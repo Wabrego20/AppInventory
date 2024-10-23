@@ -20,6 +20,7 @@ main {
   display: none;
   justify-content: center;
   align-items: center;
+  z-index: 2;
 }
 .modalApproveRequest.show, .modalRejectRequest.show {
   opacity: 1;

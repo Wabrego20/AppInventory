@@ -250,7 +250,7 @@ include_once '../settings/conexion.php';
 
                     <!--campo de cantidad-->
                     <div class="formLogCampo">
-                        <label for="request_quantity">Cantidad:<i class="fa-solid fa-asterisk">Inserte y Verifique la cantidad</i></label>
+                        <label for="request_quantity">Cantidad:</label>
                         <div class="campo">
                             <i class="fa-solid fa-arrow-up-1-9"></i>
                             <input class="btnTxt" type="text" name="request_quantity" id="request_quantity" readonly>
