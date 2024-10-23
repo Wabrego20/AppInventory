@@ -218,10 +218,10 @@ include_once '../settings/conexion.php';
                                 <?php echo !empty($row['request_status']) ? $row['request_status'] : ''; ?>
                             </td>
                             <td>
-                                <button title="clic para procesar solicitud" class="accion accionCrear" onclick="verAprobarSolicitud('<?php echo $row['articles_name']; ?>','<?php echo $row['request_quantity']; ?>')"><i class="fa-solid fa-thumbs-up fa-lg"></i></button>
+                                <button title="clic para procesar solicitud" class="accion accionCrear" onclick="approveRequest('<?php echo $row['articles_name']; ?>','<?php echo $row['request_quantity']; ?>')"><i class="fa-solid fa-thumbs-up fa-lg"></i></button>
                             </td>
                             <td>
-                                <button title="clic para rechazar solicitud" class="accion accionEliminar" onclick="solicitarArt()"><i class="fa-solid fa-thumbs-down fa-lg"></i></button>
+                                <button title="clic para rechazar solicitud" class="accion accionEliminar" onclick="rejectRequest('<?php echo $row['articles_name']; ?>','<?php echo $row['request_quantity']; ?>')"><i class="fa-solid fa-thumbs-down fa-lg"></i></button>
                             </td>
                         </tr>
 
@@ -234,7 +234,7 @@ include_once '../settings/conexion.php';
         </table>
 
         <!--Formulario para Crear un usuario-->
-        <div class="modalProcessRequest">
+        <div class="modalApproveRequest">
             <div class="panelProcessRequest">
                 <form method="post" class="formProcessRequest">
                     <h2>Aprobar Solicitud</h2>
@@ -244,7 +244,7 @@ include_once '../settings/conexion.php';
                         <label for="request_article">Artículo:</label>
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
-                            <input class="btnTxt" type="text" name="request_article" id="request_article" readonly>
+                            <input class="btnTxt" type="text" name="articles_id" id="request_article" readonly>
                         </div>
                     </div>
 
@@ -253,16 +253,56 @@ include_once '../settings/conexion.php';
                         <label for="request_quantity">Cantidad:<i class="fa-solid fa-asterisk">Inserte y Verifique la cantidad</i></label>
                         <div class="campo">
                             <i class="fa-solid fa-arrow-up-1-9"></i>
-                            <input class="btnTxt" type="number" name="request_quantity" id="request_quantity"
-                                pattern="[0-9]{1,7}" min="0" max="1000000" step="1"
-                                placeholder="introduzca la cantidad " required>
+                            <input class="btnTxt" type="text" name="request_quantity" id="request_quantity" readonly>
                         </div>
                     </div>
 
                      <!--Botón de enviar aprobación de soli-->
                      <div class="btnSubmitPanel">
                         <button type="submit" class="btnSubmit btnVerde" name="aprobacionSolicitudArt">Aprobar</button>
-                        <div class="btnSubmit btnCancel" onclick="ocultarFormProcessRequest()">Cancelar</div>
+                        <div class="btnSubmit btnCancel" onclick="hideFormApproveRequest()">Cancelar</div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modalRejectRequest">
+            <div class="panelProcessRequest">
+                <form method="post" class="formProcessRequest">
+                    <h2>Rechazar Solicitud</h2>
+
+                    <!--campo de nombre de la solicitud-->
+                    <div class="formLogCampo">
+                        <label for="request_article">Artículo:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-signature"></i>
+                            <input class="btnTxt" type="text" name="request_article" id="article_reject" readonly>
+                        </div>
+                    </div>
+
+                    <!--campo de cantidad-->
+                    <div class="formLogCampo">
+                        <label for="request_quantity">Cantidad:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-arrow-up-1-9"></i>
+                            <input class="btnTxt" type="text" name="request_quantity" id="quantity_reject" readonly>
+                        </div>
+                    </div>
+
+                    <div class="formLogCampo">
+                        <label for="rquest_reason">Razón:<i class="fa-solid fa-asterisk"></i></label>
+                        <div class="campo">
+                            <i class="fa-solid fa-file-signature"></i>
+                            <textarea name="rquest_reason" id="rquest_reason" class="btnTxt textArea"
+                                maxlength="100" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ.\s,0-9]{4,100}"
+                                placeholder="introduzca la razón del rechazo" required></textarea>
+                        </div>
+                    </div>
+
+                     <!--Botón de rechazo de soli-->
+                     <div class="btnSubmitPanel">
+                        <button type="submit" class="btnSubmit btnRojo" name="aprobacionSolicitudArt">Rechazar</button>
+                        <div class="btnSubmit btnCancel" onclick="hideFormRejectRequest()">Cancelar</div>
                     </div>
                 </form>
             </div>

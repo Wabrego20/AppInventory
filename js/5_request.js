@@ -25,10 +25,10 @@ $(document).ready(function () {
     });
 });
 /*
- *Función para ocultar formulario de creación de usuarios
+ *Función para ocultar formulario de aprobar solicitud
  */
-function ocultarFormProcessRequest() {
-    var modal = document.querySelector(".modalProcessRequest");
+function hideFormApproveRequest() {
+    var modal = document.querySelector(".modalApproveRequest");
     modal.classList.remove("show");
     modal.classList.add("hide");
     setTimeout(function () {
@@ -39,12 +39,38 @@ function ocultarFormProcessRequest() {
 /**
  * 
  */
-function verAprobarSolicitud(articleName, quantity) {
-    var formu = document.querySelector(".modalProcessRequest"); //mostrar el modal de crear artículo
+function approveRequest(articleName, quantity) {
+    var formu = document.querySelector(".modalApproveRequest"); //mostrar el modal de crear artículo
     formu.style.display = "flex";
     setTimeout(function () {
       formu.classList.add("show");
     }, 10);
     document.getElementById("request_article").value = articleName;
     document.getElementById("request_quantity").value = quantity;
+  }
+
+
+  /*
+ *Función para ocultar formulario de creación de usuarios
+ */
+function hideFormRejectRequest() {
+    var modal = document.querySelector(".modalRejectRequest");
+    modal.classList.remove("show");
+    modal.classList.add("hide");
+    setTimeout(function () {
+        modal.style.display = "none";
+        modal.classList.remove("hide");
+    }, 500);
+}
+/**
+ * 
+ */
+function rejectRequest(articleName, quantity) {
+    var formu = document.querySelector(".modalRejectRequest"); //mostrar el modal de crear artículo
+    formu.style.display = "flex";
+    setTimeout(function () {
+      formu.classList.add("show");
+    }, 10);
+    document.getElementById("article_reject").value = articleName;
+    document.getElementById("quantity_reject").value = quantity;
   }

@@ -9,7 +9,7 @@ main {
   }
 }
 /*Formulario para crear usuarios*/
-.modalProcessRequest {
+.modalApproveRequest,  .modalRejectRequest {
   background-color: var(--fondo);
   width: 100%;
   height: 100vh;
@@ -21,7 +21,7 @@ main {
   justify-content: center;
   align-items: center;
 }
-.modalProcessRequest.show {
+.modalApproveRequest.show, .modalRejectRequest.show {
   opacity: 1;
 }
 .panelProcessRequest {
@@ -67,6 +67,11 @@ main {
       width: 100%;
       position: relative;
       .fa-location-dot {
+        height: 60px;
+        line-height: 60px;
+        width: 60px;
+      }
+      .fa-file-signature {
         height: 60px;
         line-height: 60px;
         width: 60px;
@@ -135,5 +140,7 @@ main {
   background-color: var(--verde);
   color:var(--blanco);
 }
+
+
 
 
