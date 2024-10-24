@@ -361,6 +361,9 @@ include_once '../settings/conexion.php';
 /***
  * Función para aprobar solicitud de artículo
  */
+/***
+ * Función para aprobar solicitud de artículo
+ */
 if (isset($_POST['approveRequest'])) {
     $approver_user = $_SESSION['users_user'];
     $sql_user = "SELECT users_id FROM users WHERE users_user = ?";
@@ -372,15 +375,14 @@ if (isset($_POST['approveRequest'])) {
     $approver_id = $row_user['users_id'] ?? '0';
     $stmt_user->close();
 
-    $requester_id = htmlspecialchars($_POST['requester_id'] ?? '0');
-    $article_id = htmlspecialchars($_POST['articles_id'] ?? '0');
     $request_id = htmlspecialchars($_POST['request_id'] ?? '0'); // Asegúrate de tener el request_id en el formulario
     $request_quantity = htmlspecialchars($_POST['request_quantity'] ?? '0');
+    $state = "Aprobada";
 
     // Obtener el estado actual de la solicitud
-    $sql_check_status = "SELECT request_status FROM request WHERE requester_id = ? AND articles_id = ?";
+    $sql_check_status = "SELECT request_status FROM request WHERE request_id = ?";
     $stmt_check_status = $conn->prepare($sql_check_status);
-    $stmt_check_status->bind_param("ii", $requester_id, $article_id);
+    $stmt_check_status->bind_param("i", $request_id);
     $stmt_check_status->execute();
     $result_status = $stmt_check_status->get_result();
     $row_status = $result_status->fetch_assoc();
@@ -408,8 +410,6 @@ if (isset($_POST['approveRequest'])) {
     $stmt_get_quantity->close();
 
     if (trim($current_status) === 'Pendiente') {
-        $state = "Aprobada";
-
         // Calcular la nueva cantidad
         $new_quantity = $current_quantity - $request_quantity;
 
@@ -420,9 +420,9 @@ if (isset($_POST['approveRequest'])) {
         $stmt_update_quantity->execute();
 
         // Actualizar la tabla request
-        $sql_update = "UPDATE request SET request_status = ?, approver_id = ? WHERE requester_id = ? AND articles_id = ?";
+        $sql_update = "UPDATE request SET request_status = ?, approver_id = ? WHERE request_id = ?";
         $stmt_update = $conn->prepare($sql_update);
-        $stmt_update->bind_param("siii", $state, $approver_id, $requester_id, $article_id);
+        $stmt_update->bind_param("sii", $state, $approver_id, $request_id);
         $stmt_update->execute();
 
         if ($stmt_update->affected_rows > 0) {
@@ -497,6 +497,7 @@ if (isset($_POST['approveRequest'])) {
     }
     $conn->close();
 }
+
 
 /*
  * Función para rechazar solicitud de artículo
