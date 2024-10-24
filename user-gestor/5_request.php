@@ -184,8 +184,8 @@ include_once ("../settings/conexion.php");
                             <td>
                                 <?php echo $row['request_order_date'] ?? 'd/m/a'; ?>
                             </td>
-                            <td class="<?php echo !empty($row['request_status']) ? strtolower($row['request_status']) : ''; ?>">
-                                <?php echo !empty($row['request_status']) ? $row['request_status'] : ''; ?>
+                            <td  class="<?php echo strtolower($row['request_status'] ?? ''); ?>">
+                                <h5 title="Clic para ver la razón del rechazo." onclick="reasonRject('<?php echo $row['request_reason']; ?>')" ><?php echo $row['request_status'] ?? ''; ?></h5>
                             </td>
                             <td>
                                 <span href="javascript:void(0);" title="Ver acta de entrega"
@@ -203,6 +203,27 @@ include_once ("../settings/conexion.php");
                 ?>
             </tbody>
         </table>
+
+        <div class="modalRejectReason">
+            <div class="panelProcessRequest">
+                <form method="post" class="formProcessRequest">
+                    <h2>Rechazo de la Solicitud</h2>
+
+                    <div class="formLogCampo">
+                        <label for="request_reason">Razón:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-file-signature"></i>
+                            <textarea id="request_reason_reject" class="btnTxt textArea" readonly></textarea>
+                        </div>
+                    </div>
+
+                    <!--Botón de rechazo de soli-->
+                    <div class="btnSubmitPanel">
+                        <div class="btnSubmit btnAzul" onclick="hideFormRejectReason()">Aceptar</div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </main>
 
     <!--Pie de Página-->

@@ -214,8 +214,11 @@ include_once '../settings/conexion.php';
                             <td>
                                 <?php echo $row['request_order_date'] ?? 'd/m/a'; ?>
                             </td>
-                            <td class="<?php echo !empty($row['request_status']) ? strtolower($row['request_status']) : ''; ?>">
-                                <?php echo !empty($row['request_status']) ? $row['request_status'] : ''; ?>
+                            <td class="<?php echo strtolower($row['request_status'] ?? ''); ?>">
+                                <h5 title="Clic para ver la razón del rechazo."
+                                    onclick="reasonRject('<?php echo $row['request_reason']; ?>')">
+                                    <?php echo $row['request_status'] ?? ''; ?>
+                                </h5>
                             </td>
                             <td>
                                 <button title="clic para procesar solicitud" class="accion accionCrear"
@@ -291,8 +294,7 @@ include_once '../settings/conexion.php';
                         <label for="quantity_reject">Cantidad:</label>
                         <div class="campo">
                             <i class="fa-solid fa-arrow-up-1-9"></i>
-                            <input class="btnTxt" type="text" name="request_quantity" id="quantity_reject"
-                                readonly>
+                            <input class="btnTxt" type="text" name="request_quantity" id="quantity_reject" readonly>
                         </div>
                     </div>
 
@@ -314,6 +316,26 @@ include_once '../settings/conexion.php';
             </div>
         </div>
 
+        <div class="modalRejectReason">
+            <div class="panelProcessRequest">
+                <form method="post" class="formProcessRequest">
+                    <h2>Rechazo de la Solicitud</h2>
+
+                    <div class="formLogCampo">
+                        <label for="request_reason">Razón:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-file-signature"></i>
+                            <textarea id="request_reason_reject" class="btnTxt textArea" readonly></textarea>
+                        </div>
+                    </div>
+
+                    <!--Botón de rechazo de soli-->
+                    <div class="btnSubmitPanel">
+                        <div class="btnSubmit btnAzul" onclick="hideFormRejectReason()">Aceptar</div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </main>
 
     <!--Pie de Página-->
@@ -335,8 +357,7 @@ include_once '../settings/conexion.php';
 <?php
 /***
  * Función para rechazar solicitud de artículo
- */
-if (isset($_POST['rejectRequest'])) {
+ */if (isset($_POST['rejectRequest'])) {
     $approver_user = $_SESSION['users_user'];
     $sql_user = "SELECT users_id FROM users WHERE users_user = ?";
     $stmt_user = $conn->prepare($sql_user);
@@ -345,40 +366,77 @@ if (isset($_POST['rejectRequest'])) {
     $result_user = $stmt_user->get_result();
     $row_user = $result_user->fetch_assoc();
     $approver_id = $row_user['users_id'] ?? '0';
- 
+    $stmt_user->close();
+
     $requester_id = htmlspecialchars($_POST['requester_id'] ?? '0');
     $article_id = htmlspecialchars($_POST['articles_id'] ?? '0');
     $reason = htmlspecialchars($_POST['request_reason']);
     $state = "Rechazada";
 
-    // Actualizar la tabla request
-    $sql_update = "UPDATE request SET request_status = ?, approver_id = ?, request_reason = ? WHERE requester_id = ? AND articles_id = ?";
-    $stmt_update = $conn->prepare($sql_update);
-    $stmt_update->bind_param("sisii", $state, $approver_id, $reason, $requester_id, $article_id);
-    $stmt_update->execute();
+    // Obtener el estado actual de la solicitud
+    $sql_check_status = "SELECT request_status FROM request WHERE requester_id = ? AND articles_id = ?";
+    $stmt_check_status = $conn->prepare($sql_check_status);
+    $stmt_check_status->bind_param("ii", $requester_id, $article_id);
+    $stmt_check_status->execute();
+    $result_status = $stmt_check_status->get_result();
+    $row_status = $result_status->fetch_assoc();
+    $current_status = $row_status['request_status'] ?? '';
+    $stmt_check_status->close();
 
-    if ($stmt_update->affected_rows > 0) {
-        ?>
-        <script>
-            Swal.fire({
-                color: "var(--verde)",
-                icon: "success",
-                iconColor: "var(--verde)",
-                title: 'Éxito',
-                text: 'Solicitud Rechazada.',
-                showConfirmButton: true,
-                allowOutsideClick: false,
-                customClass: {
-                    confirmButton: 'btn-confirm'
-                },
-                confirmButtonText: "Aceptar",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = window.location.href;
-                }
-            });
-        </script>
-        <?php
+    // Verificar si el estado es "Pendiente"
+    if (trim($current_status) === 'Pendiente') {
+        // Actualizar la tabla request
+        $sql_update = "UPDATE request SET request_status = ?, approver_id = ?, request_reason = ? WHERE requester_id = ? AND articles_id = ?";
+        $stmt_update = $conn->prepare($sql_update);
+        $stmt_update->bind_param("sisii", $state, $approver_id, $reason, $requester_id, $article_id);
+        $stmt_update->execute();
+
+        if ($stmt_update->affected_rows > 0) {
+            ?>
+            <script>
+                Swal.fire({
+                    color: "var(--verde)",
+                    icon: "success",
+                    iconColor: "var(--verde)",
+                    title: 'Éxito',
+                    text: 'Solicitud Rechazada.',
+                    showConfirmButton: true,
+                    allowOutsideClick: false,
+                    customClass: {
+                        confirmButton: 'btn-confirm'
+                    },
+                    confirmButtonText: "Aceptar",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = window.location.href;
+                    }
+                });
+            </script>
+            <?php
+        } else {
+            ?>
+            <script>
+                Swal.fire({
+                    color: "var(--rojo)",
+                    icon: "error",
+                    iconColor: "var(--rojo)",
+                    title: 'Error',
+                    text: 'No se puede rechazar la solicitud.',
+                    showConfirmButton: true,
+                    allowOutsideClick: false,
+                    customClass: {
+                        confirmButton: 'btn-confirm'
+                    },
+                    confirmButtonText: "Aceptar",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = window.location.href;
+                    }
+                });
+            </script>
+            <?php
+        }
+        $stmt_update->close();
     } else {
         ?>
         <script>
@@ -387,7 +445,7 @@ if (isset($_POST['rejectRequest'])) {
                 icon: "error",
                 iconColor: "var(--rojo)",
                 title: 'Error',
-                text: 'No se puede rechazar la solicitud.',
+                text: 'Esta solicitud ya se ha procesado.',
                 showConfirmButton: true,
                 allowOutsideClick: false,
                 customClass: {
@@ -402,7 +460,7 @@ if (isset($_POST['rejectRequest'])) {
         </script>
         <?php
     }
+    $conn->close();
 }
-
 
 ?>

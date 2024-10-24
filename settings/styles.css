@@ -272,8 +272,6 @@ Tabla
   box-shadow: 0 0 5px var(--negro);
 }
 
-
-
 /*
 *Botones para guardar, crear, enviar, aprobar, eliminara, rechazar, cancelar, y solicitar
 */
@@ -286,16 +284,30 @@ Tabla
 }
 .btnSubmit {
   height: 40px;
+  line-height: 40px;
   padding: 0 10px;
   border: none;
   font-size: 16px;
   border-radius: 5px;
   transition: 0.3s ease-in-out;
   margin: 10px 0;
+  font-weight: bold;
 }
 .btnSubmit:hover {
   cursor: pointer;
 }
+
+.btnAzul {
+  color: var(--blanco);
+  background-color: var(--azul);
+
+}
+.btnAzul:hover {
+  color: var(--azul);
+  background-color: var(--blanco);
+  box-shadow: 0 0 5px var(--azul);
+}
+
 .btnRojo{
   color: var(--blanco);
   background-color: var(--rojo);
@@ -304,8 +316,9 @@ Tabla
   color: var(--rojo);
   background-color: var(--blanco);
   box-shadow: 0 0 5px var(--rojo);
-  font-weight: bold;
+  
 }
+
 .btnVerde {
   color: var(--blanco);
   background-color: var(--verde);
@@ -314,7 +327,6 @@ Tabla
   color: var(--verde);
   background-color: var(--blanco);
   box-shadow: 0 0 5px var(--verde);
-  font-weight: bold;
 }
 
 .btnNegro {
@@ -326,7 +338,6 @@ Tabla
   color: var(--negro);
   background-color: var(--blanco);
   box-shadow: 0 0 5px var(--negro);
-  font-weight: bold;
 }
 
 .btnCancel{
@@ -338,6 +349,5 @@ Tabla
   color: var(--gris);
   background-color: var(--blanco);
   box-shadow: 0 0 5px var(--gris);
-  font-weight: bold;
 }
 
