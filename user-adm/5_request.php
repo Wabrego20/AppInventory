@@ -194,34 +194,38 @@ include_once '../settings/conexion.php';
                                 <?php echo $row['users_user'] ?? 'No disponible'; ?>
                             </td>
                             <td>
-                            <?php echo $row['departament_name'] ?? 'No disponible'; ?>
+                                <?php echo $row['departament_name'] ?? 'No disponible'; ?>
                             </td>
                             <td>
-                            <?php echo $row['articles_name'] ?? 'No disponible'; ?>
+                                <?php echo $row['articles_name'] ?? 'No disponible'; ?>
                             </td>
                             <td>
-                            <?php echo $row['categories_name'] ?? 'No disponible'; ?>
+                                <?php echo $row['categories_name'] ?? 'No disponible'; ?>
                             </td>
                             <td>
-                            <?php echo $row['inventoryType'] ?? 'No disponible'; ?>
+                                <?php echo $row['inventoryType'] ?? 'No disponible'; ?>
                             </td>
                             <td>
-                            <?php echo $row['request_quantity'] ?? '0'; ?>
+                                <?php echo $row['request_quantity'] ?? '0'; ?>
                             </td>
                             <td>
-                            <?php echo $row['request_total_cost'] ?? '0.00'; ?>
+                                <?php echo $row['request_total_cost'] ?? '0.00'; ?>
                             </td>
                             <td>
-                            <?php echo $row['request_order_date'] ?? 'd/m/a'; ?>
+                                <?php echo $row['request_order_date'] ?? 'd/m/a'; ?>
                             </td>
                             <td class="<?php echo !empty($row['request_status']) ? strtolower($row['request_status']) : ''; ?>">
                                 <?php echo !empty($row['request_status']) ? $row['request_status'] : ''; ?>
                             </td>
                             <td>
-                                <button title="clic para procesar solicitud" class="accion accionCrear" onclick="approveRequest('<?php echo $row['articles_name']; ?>','<?php echo $row['request_quantity']; ?>')"><i class="fa-solid fa-thumbs-up fa-lg"></i></button>
+                                <button title="clic para procesar solicitud" class="accion accionCrear"
+                                    onclick="approveRequest('<?php echo $row['articles_name']; ?>','<?php echo $row['request_quantity']; ?>')"><i
+                                        class="fa-solid fa-thumbs-up fa-lg"></i></button>
                             </td>
                             <td>
-                                <button title="clic para rechazar solicitud" class="accion accionEliminar" onclick="rejectRequest('<?php echo $row['articles_name']; ?>','<?php echo $row['request_quantity']; ?>')"><i class="fa-solid fa-thumbs-down fa-lg"></i></button>
+                                <button title="clic para rechazar solicitud" class="accion accionEliminar"
+                                    onclick="rejectRequest('<?php echo $row['articles_id']; ?>', '<?php echo $row['requester_id']; ?>', '<?php echo $row['articles_name']; ?>', '<?php echo $row['request_quantity']; ?>')"><i
+                                        class="fa-solid fa-thumbs-down fa-lg"></i></button>
                             </td>
                         </tr>
 
@@ -257,8 +261,8 @@ include_once '../settings/conexion.php';
                         </div>
                     </div>
 
-                     <!--Botón de enviar aprobación de soli-->
-                     <div class="btnSubmitPanel">
+                    <!--Botón de enviar aprobación de soli-->
+                    <div class="btnSubmitPanel">
                         <button type="submit" class="btnSubmit btnVerde" name="aprobacionSolicitudArt">Aprobar</button>
                         <div class="btnSubmit btnCancel" onclick="hideFormApproveRequest()">Cancelar</div>
                     </div>
@@ -273,35 +277,37 @@ include_once '../settings/conexion.php';
 
                     <!--campo de nombre de la solicitud-->
                     <div class="formLogCampo">
-                        <label for="request_article">Artículo:</label>
+                        <label for="article_reject">Artículo:</label>
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
-                            <input class="btnTxt" type="text" name="request_article" id="article_reject" readonly>
+                            <input type="hidden" id="articles_id_reject" name="articles_id">
+                            <input type="hidden" id="requester_id_reject" name="requester_id">
+                            <input class="btnTxt" type="text" name="articles_name" id="article_reject" readonly>
                         </div>
                     </div>
 
                     <!--campo de cantidad-->
                     <div class="formLogCampo">
-                        <label for="request_quantity">Cantidad:</label>
+                        <label for="quantity_reject">Cantidad:</label>
                         <div class="campo">
                             <i class="fa-solid fa-arrow-up-1-9"></i>
-                            <input class="btnTxt" type="text" name="request_quantity" id="quantity_reject" readonly>
+                            <input class="btnTxt" type="text" name="request_quantity" id="quantity_reject"
+                                readonly>
                         </div>
                     </div>
 
                     <div class="formLogCampo">
-                        <label for="rquest_reason">Razón:<i class="fa-solid fa-asterisk"></i></label>
+                        <label for="request_reason">Razón:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-file-signature"></i>
-                            <textarea name="rquest_reason" id="rquest_reason" class="btnTxt textArea"
-                                maxlength="100" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ.\s,0-9]{4,100}"
-                                placeholder="introduzca la razón del rechazo" required></textarea>
+                            <textarea name="request_reason" id="request_reason" class="btnTxt textArea" maxlength="100"
+                                pattern=".{4,100}" placeholder="introduzca la razón del rechazo" required></textarea>
                         </div>
                     </div>
 
-                     <!--Botón de rechazo de soli-->
-                     <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnRojo" name="aprobacionSolicitudArt">Rechazar</button>
+                    <!--Botón de rechazo de soli-->
+                    <div class="btnSubmitPanel">
+                        <button type="submit" class="btnSubmit btnRojo" name="rejectRequest">Rechazar</button>
                         <div class="btnSubmit btnCancel" onclick="hideFormRejectRequest()">Cancelar</div>
                     </div>
                 </form>
@@ -325,3 +331,78 @@ include_once '../settings/conexion.php';
 </body>
 
 </html>
+
+<?php
+/***
+ * Función para rechazar solicitud de artículo
+ */
+if (isset($_POST['rejectRequest'])) {
+    $approver_user = $_SESSION['users_user'];
+    $sql_user = "SELECT users_id FROM users WHERE users_user = ?";
+    $stmt_user = $conn->prepare($sql_user);
+    $stmt_user->bind_param("s", $approver_user);
+    $stmt_user->execute();
+    $result_user = $stmt_user->get_result();
+    $row_user = $result_user->fetch_assoc();
+    $approver_id = $row_user['users_id'] ?? '0';
+ 
+    $requester_id = htmlspecialchars($_POST['requester_id'] ?? '0');
+    $article_id = htmlspecialchars($_POST['articles_id'] ?? '0');
+    $reason = htmlspecialchars($_POST['request_reason']);
+    $state = "Rechazada";
+
+    // Actualizar la tabla request
+    $sql_update = "UPDATE request SET request_status = ?, approver_id = ?, request_reason = ? WHERE requester_id = ? AND articles_id = ?";
+    $stmt_update = $conn->prepare($sql_update);
+    $stmt_update->bind_param("sisii", $state, $approver_id, $reason, $requester_id, $article_id);
+    $stmt_update->execute();
+
+    if ($stmt_update->affected_rows > 0) {
+        ?>
+        <script>
+            Swal.fire({
+                color: "var(--verde)",
+                icon: "success",
+                iconColor: "var(--verde)",
+                title: 'Éxito',
+                text: 'Solicitud Rechazada.',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = window.location.href;
+                }
+            });
+        </script>
+        <?php
+    } else {
+        ?>
+        <script>
+            Swal.fire({
+                color: "var(--rojo)",
+                icon: "error",
+                iconColor: "var(--rojo)",
+                title: 'Error',
+                text: 'No se puede rechazar la solicitud.',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = window.location.href;
+                }
+            });
+        </script>
+        <?php
+    }
+}
+
+
+?>

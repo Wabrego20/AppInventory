@@ -203,60 +203,6 @@ include_once ("../settings/conexion.php");
                 ?>
             </tbody>
         </table>
-
-        <!--Formulario para Crear un usuario-->
-        <div class="modalProcessRequest">
-            <div class="panelProcessRequest">
-                <form method="post" class="formProcessRequest">
-                    <h2>Solicitudes</h2>
-
-                    <!--campo de nombre de la solicitud-->
-                    <div class="formLogCampo">
-                        <label for="warehouse_name">Nombre:</label>
-                        <div class="campo">
-                            <i class="fa-solid fa-signature"></i>
-                            <input class="btnTxt" type="text" name="warehouse_name" id="warehouse_name"
-                                pattern="[a-zA-ZñÑ]{3,30}" maxlength="30" placeholder="introduzca un nombre" required
-                                autofocus>
-                        </div>
-                    </div>
-
-                    <!--campo de provincia de la solicitud-->
-                    <div class="formLogCampo">
-                        <label for="warehouse_name">Provincia:</label>
-                        <div class="campo">
-                            <i class="fa-solid fa-map-location-dot"></i>
-                            <select name="warehouse_country" id="warehouse_country" class="btnTxt" required>
-                                <option value="">Seleccione</option>
-                                <option value="">Panamá</option>
-                                <option value="">Colón</option>
-                                <option value="">Chiriquí</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!--campo de ubicación de la solicitud-->
-                    <div class="formLogCampo">
-                        <label for="warehouse_location">Dirección:</label>
-                        <div class="campo">
-                            <i class="fa-solid fa-location-dot"></i>
-                            <textarea name="articles_description" id="articles_description" class="btnTxt textArea"
-                                maxlength="100" pattern="[a-zñA-ZÑ0-9]"
-                                placeholder="introduzca la dirección de la bodega" required></textarea>
-                        </div>
-                    </div>
-                    <!--Botón de enviar aprobación de soli-->
-                    <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnCreateUser" name="solicitarArtConsumoInterno">
-                            <i class="fa-regular fa-paper-plane"></i>
-                            Enviar
-                        </button>
-                        <div class="btnSubmit btnCancel" onclick="ocultarFormAddArticle()">Cancelar</div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
     </main>
 
     <!--Pie de Página-->

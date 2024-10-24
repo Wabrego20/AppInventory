@@ -310,9 +310,9 @@ include_once '../settings/conexion.php';
 if (isset($_POST['solicitarArtConsumoInterno'])) {
 
     $users_user = $_SESSION['users_user'];
-    $article_id = $_POST['articles_id'];
-    $article_name = $_POST['articles_name'];
-    $warehouses_name = $_POST['warehouses_name'];
+    $article_id = htmlspecialchars($_POST['articles_id']);
+    $article_name = htmlspecialchars($_POST['articles_name']);
+    $warehouses_name = htmlspecialchars($_POST['warehouses_name']);
 
     $sql_user = "SELECT users_id FROM users WHERE users_user = ?";
     $stmt_user = $conn->prepare($sql_user);
@@ -320,7 +320,7 @@ if (isset($_POST['solicitarArtConsumoInterno'])) {
     $stmt_user->execute();
     $result_user = $stmt_user->get_result();
     $row_user = $result_user->fetch_assoc();
-    $user_id = $row_user['users_id'] ?? 'No disponible';
+    $user_id = $row_user['users_id'] ?? '0';
 
     $sql_departament = "SELECT departament.departament_name
     FROM users
@@ -357,25 +357,25 @@ if (isset($_POST['solicitarArtConsumoInterno'])) {
 
     if ($count > 0) {
         ?>
-            <script>
-                Swal.fire({
-                    color: "var(--rojo)",
-                    icon: "error",
-                    iconColor: "var(--rojo)",
-                    title: '!Error!',
-                    text: 'Ya se ha solicitado este artículo y está pendiente.',
-                    showConfirmButton: true,
-                    customClass: {
-                        confirmButton: 'btn-confirm'
-                    },
-                    confirmButtonText: "Aceptar",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = window.location.href;
-                    }
-                });
-            </script>
-            <?php
+        <script>
+            Swal.fire({
+                color: "var(--rojo)",
+                icon: "error",
+                iconColor: "var(--rojo)",
+                title: '!Error!',
+                text: 'Ya se ha solicitado este artículo y está pendiente.',
+                showConfirmButton: true,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = window.location.href;
+                }
+            });
+        </script>
+        <?php
     } else {
 
 

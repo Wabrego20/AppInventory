@@ -215,8 +215,8 @@ include_once '../settings/conexion.php';
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
                             <input class="btnTxt" type="text" name="warehouses_name" id="warehouses_name"
-                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ#.°\s,0-9]+" maxlength="30" placeholder="introduzca un nombre"
-                                required autofocus>
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ#.°\s,0-9]+" maxlength="30"
+                                placeholder="introduzca un nombre" required autofocus>
                         </div>
                     </div>
 
@@ -430,10 +430,11 @@ if (isset($_POST['crearBodega'])) {
  * Función para Editar Bodega
  */
 if (isset($_POST['editBodega'])) {
-    $warehouses_id = $_POST['warehouses_id'];
-    $warehouses_name = $_POST['warehouses_name'];
-    $warehouses_province = $_POST['warehouses_province'];
-    $warehouses_location = $_POST['warehouses_location'];
+
+    $warehouses_id = htmlspecialchars($_POST['warehouses_id']);
+    $warehouses_name = htmlspecialchars($_POST['warehouses_name']);
+    $warehouses_province = htmlspecialchars($_POST['warehouses_province']);
+    $warehouses_location = htmlspecialchars($_POST['warehouses_location']);
 
     $sql = "UPDATE warehouses SET warehouses_name=?, warehouses_province=?, warehouses_location=? WHERE warehouses_id=?";
     $stmt = $conn->prepare($sql);

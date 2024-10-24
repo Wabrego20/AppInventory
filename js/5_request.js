@@ -65,12 +65,14 @@ function hideFormRejectRequest() {
 /**
  * 
  */
-function rejectRequest(articleName, quantity) {
+function rejectRequest(article_id, requester_id, articleName, quantity) {
     var formu = document.querySelector(".modalRejectRequest"); //mostrar el modal de crear artículo
     formu.style.display = "flex";
     setTimeout(function () {
       formu.classList.add("show");
     }, 10);
+    document.getElementById("articles_id_reject").value = article_id;
+    document.getElementById("requester_id_reject").value = requester_id;
     document.getElementById("article_reject").value = articleName;
-    document.getElementById("quantity_reject").value = quantity;
+    document.getElementById("quantity_reject").value = quantity; 
   }
