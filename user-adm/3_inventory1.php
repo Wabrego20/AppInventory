@@ -358,7 +358,7 @@ include_once '../settings/conexion.php';
 
                     <!--Mensaje-->
                     <div class="formLogCampo">
-                        <h4>¿Desea eliminar este artículo del inventario de Consumo Interno?</h4>
+                        <h4>¿Desea eliminar este artículo del inventario?</h4>
                     </div>
 
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->

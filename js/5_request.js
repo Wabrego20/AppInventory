@@ -39,7 +39,7 @@ function hideFormApproveRequest() {
 /**
  * 
  */
-function approveRequest(articleName, quantity) {
+function approveRequest(articleName, quantity, id_request, id_requester, id_article) {
     var formu = document.querySelector(".modalApproveRequest"); //mostrar el modal de crear artículo
     formu.style.display = "flex";
     setTimeout(function () {
@@ -47,6 +47,10 @@ function approveRequest(articleName, quantity) {
     }, 10);
     document.getElementById("request_article").value = articleName;
     document.getElementById("request_quantity").value = quantity;
+    document.getElementById("request_id_approve").value = id_request;
+    document.getElementById("requester_id_approve").value = id_requester;
+    document.getElementById("articles_id_approve").value = id_article;
+    
 }
 
 

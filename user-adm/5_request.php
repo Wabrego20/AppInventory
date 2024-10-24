@@ -222,7 +222,7 @@ include_once '../settings/conexion.php';
                             </td>
                             <td>
                                 <button title="clic para procesar solicitud" class="accion accionCrear"
-                                    onclick="approveRequest('<?php echo $row['articles_name']; ?>','<?php echo $row['request_quantity']; ?>')"><i
+                                    onclick="approveRequest('<?php echo $row['articles_name']; ?>','<?php echo $row['request_quantity']; ?>','<?php echo $row['request_id']; ?>','<?php echo $row['requester_id']; ?>','<?php echo $row['articles_id']; ?>')"><i
                                         class="fa-solid fa-thumbs-up fa-lg"></i></button>
                             </td>
                             <td>
@@ -251,7 +251,10 @@ include_once '../settings/conexion.php';
                         <label for="request_article">Artículo:</label>
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
-                            <input class="btnTxt" type="text" name="articles_id" id="request_article" readonly>
+                            <input type="hidden" id="articles_id_approve" name="articles_id">
+                            <input type="hidden" id="requester_id_approve" name="requester_id">
+                            <input type="hidden" id="request_id_approve" name="request_id">
+                            <input class="btnTxt" type="text" name="articles_name" id="request_article" readonly>
                         </div>
                     </div>
 
@@ -266,7 +269,7 @@ include_once '../settings/conexion.php';
 
                     <!--Botón de enviar aprobación de soli-->
                     <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnVerde" name="aprobacionSolicitudArt">Aprobar</button>
+                        <button type="submit" class="btnSubmit btnVerde" name="approveRequest">Aprobar</button>
                         <div class="btnSubmit btnCancel" onclick="hideFormApproveRequest()">Cancelar</div>
                     </div>
                 </form>
@@ -356,8 +359,149 @@ include_once '../settings/conexion.php';
 
 <?php
 /***
+ * Función para aprobar solicitud de artículo
+ */
+if (isset($_POST['approveRequest'])) {
+    $approver_user = $_SESSION['users_user'];
+    $sql_user = "SELECT users_id FROM users WHERE users_user = ?";
+    $stmt_user = $conn->prepare($sql_user);
+    $stmt_user->bind_param("s", $approver_user);
+    $stmt_user->execute();
+    $result_user = $stmt_user->get_result();
+    $row_user = $result_user->fetch_assoc();
+    $approver_id = $row_user['users_id'] ?? '0';
+    $stmt_user->close();
+
+    $requester_id = htmlspecialchars($_POST['requester_id'] ?? '0');
+    $article_id = htmlspecialchars($_POST['articles_id'] ?? '0');
+    $request_id = htmlspecialchars($_POST['request_id'] ?? '0'); // Asegúrate de tener el request_id en el formulario
+    $request_quantity = htmlspecialchars($_POST['request_quantity'] ?? '0');
+
+    // Obtener el estado actual de la solicitud
+    $sql_check_status = "SELECT request_status FROM request WHERE requester_id = ? AND articles_id = ?";
+    $stmt_check_status = $conn->prepare($sql_check_status);
+    $stmt_check_status->bind_param("ii", $requester_id, $article_id);
+    $stmt_check_status->execute();
+    $result_status = $stmt_check_status->get_result();
+    $row_status = $result_status->fetch_assoc();
+    $current_status = $row_status['request_status'] ?? '';
+    $stmt_check_status->close();
+
+    // Obtener el warehouse_id desde la tabla request
+    $sql_get_warehouse_id = "SELECT warehouse_id FROM request WHERE request_id = ?";
+    $stmt_get_warehouse_id = $conn->prepare($sql_get_warehouse_id);
+    $stmt_get_warehouse_id->bind_param("i", $request_id);
+    $stmt_get_warehouse_id->execute();
+    $result_warehouse_id = $stmt_get_warehouse_id->get_result();
+    $row_warehouse_id = $result_warehouse_id->fetch_assoc();
+    $warehouse_id = $row_warehouse_id['warehouse_id'] ?? '0';
+    $stmt_get_warehouse_id->close();
+
+    // Obtener la cantidad actual de artículos en la bodega
+    $sql_get_quantity = "SELECT warehouses_total_quantity FROM warehouses WHERE warehouses_id = ?";
+    $stmt_get_quantity = $conn->prepare($sql_get_quantity);
+    $stmt_get_quantity->bind_param("i", $warehouse_id);
+    $stmt_get_quantity->execute();
+    $result_quantity = $stmt_get_quantity->get_result();
+    $row_quantity = $result_quantity->fetch_assoc();
+    $current_quantity = $row_quantity['warehouses_total_quantity'] ?? 0;
+    $stmt_get_quantity->close();
+
+    if (trim($current_status) === 'Pendiente') {
+        $state = "Aprobada";
+
+        // Calcular la nueva cantidad
+        $new_quantity = $current_quantity - $request_quantity;
+
+        // Actualizar la cantidad en la tabla warehouses
+        $sql_update_quantity = "UPDATE warehouses SET warehouses_total_quantity = ? WHERE warehouses_id = ?";
+        $stmt_update_quantity = $conn->prepare($sql_update_quantity);
+        $stmt_update_quantity->bind_param("ii", $new_quantity, $warehouse_id);
+        $stmt_update_quantity->execute();
+
+        // Actualizar la tabla request
+        $sql_update = "UPDATE request SET request_status = ?, approver_id = ? WHERE requester_id = ? AND articles_id = ?";
+        $stmt_update = $conn->prepare($sql_update);
+        $stmt_update->bind_param("siii", $state, $approver_id, $requester_id, $article_id);
+        $stmt_update->execute();
+
+        if ($stmt_update->affected_rows > 0) {
+            ?>
+            <script>
+                Swal.fire({
+                    color: "var(--verde)",
+                    icon: "success",
+                    iconColor: "var(--verde)",
+                    title: 'Éxito',
+                    text: 'Solicitud Aprobada y cantidad actualizada exitosamente.',
+                    showConfirmButton: true,
+                    allowOutsideClick: false,
+                    customClass: {
+                        confirmButton: 'btn-confirm'
+                    },
+                    confirmButtonText: "Aceptar",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = window.location.href;
+                    }
+                });
+            </script>
+            <?php
+        } else {
+            ?>
+            <script>
+                Swal.fire({
+                    color: "var(--rojo)",
+                    icon: "error",
+                    iconColor: "var(--rojo)",
+                    title: 'Error',
+                    text: 'No se puede aprobar la solicitud o actualizar la cantidad.',
+                    showConfirmButton: true,
+                    allowOutsideClick: false,
+                    customClass: {
+                        confirmButton: 'btn-confirm'
+                    },
+                    confirmButtonText: "Aceptar",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = window.location.href;
+                    }
+                });
+            </script>
+            <?php
+        }
+        $stmt_update_quantity->close();
+        $stmt_update->close();
+    } else {
+        ?>
+        <script>
+            Swal.fire({
+                color: "var(--rojo)",
+                icon: "error",
+                iconColor: "var(--rojo)",
+                title: 'Error',
+                text: 'Esta solicitud ya se ha procesado.',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = window.location.href;
+                }
+            });
+        </script>
+        <?php
+    }
+    $conn->close();
+}
+
+/*
  * Función para rechazar solicitud de artículo
- */if (isset($_POST['rejectRequest'])) {
+ */
+if (isset($_POST['rejectRequest'])) {
     $approver_user = $_SESSION['users_user'];
     $sql_user = "SELECT users_id FROM users WHERE users_user = ?";
     $stmt_user = $conn->prepare($sql_user);
@@ -371,7 +515,6 @@ include_once '../settings/conexion.php';
     $requester_id = htmlspecialchars($_POST['requester_id'] ?? '0');
     $article_id = htmlspecialchars($_POST['articles_id'] ?? '0');
     $reason = htmlspecialchars($_POST['request_reason']);
-    $state = "Rechazada";
 
     // Obtener el estado actual de la solicitud
     $sql_check_status = "SELECT request_status FROM request WHERE requester_id = ? AND articles_id = ?";
@@ -384,7 +527,9 @@ include_once '../settings/conexion.php';
     $stmt_check_status->close();
 
     // Verificar si el estado es "Pendiente"
+    echo $current_status;
     if (trim($current_status) === 'Pendiente') {
+        $state = "Rechazada";
         // Actualizar la tabla request
         $sql_update = "UPDATE request SET request_status = ?, approver_id = ?, request_reason = ? WHERE requester_id = ? AND articles_id = ?";
         $stmt_update = $conn->prepare($sql_update);
@@ -462,5 +607,4 @@ include_once '../settings/conexion.php';
     }
     $conn->close();
 }
-
 ?>
