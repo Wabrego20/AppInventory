@@ -112,13 +112,14 @@ document
  /*
   *Eliminar Artículo
   */
-  function deleteArticle(bodega) {
+  function deleteArticle(name, id) {
     var formu = document.querySelector(".modalDeleteArticle"); //mostrar el modal de crear artículo
     formu.style.display = "flex";
     setTimeout(function () {
       formu.classList.add("show");
     }, 10);
-    document.getElementById("articles_name_delete").value = bodega;
+    document.getElementById("articles_id_delete").value = id;
+    document.getElementById("articles_name_delete").value = name;
   }
   /*
  *Función para ocultar el modal de eliminar artículo

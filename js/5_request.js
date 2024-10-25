@@ -50,10 +50,7 @@ function approveRequest(articleName, quantity, id_request, id_requester, id_arti
     document.getElementById("request_id_approve").value = id_request;
     document.getElementById("requester_id_approve").value = id_requester;
     document.getElementById("articles_id_approve").value = id_article;
-    
 }
-
-
 /*
 *Función para ocultar formulario de creación de usuarios
 */

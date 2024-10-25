@@ -135,6 +135,7 @@ main {
 .pendiente {
   color: var(--naranja);
   font-weight: bold;
+  pointer-events: none;
 }
 .rechazada {
   color: var(--rojo);
@@ -147,4 +148,5 @@ main {
 .aprobada {
   color: var(--verde);
   font-weight: bold;
+  pointer-events: none;
 }

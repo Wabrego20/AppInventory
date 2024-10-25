@@ -217,7 +217,7 @@ include_once '../settings/conexion.php';
                             </td>
                             <td>
                                 <button class="accion accionEliminar"
-                                    onclick="deleteArticle('<?php echo $row['articles_name']; ?>')"
+                                    onclick="deleteArticle('<?php echo $row['articles_name']; ?>','<?php echo $row['articles_id']; ?>')"
                                     title="Eliminar este artículo">
                                     <i class="fa-solid fa-box fa-lg"></i>
                                     <i class="fa-solid fa-minus fa-2xs"></i>
@@ -508,6 +508,7 @@ include_once '../settings/conexion.php';
                         <label for="articles_name">Nombre:</label>
                         <div class="campo">
                             <i class="fa-solid fa-box"></i>
+                            <input type="hidden" name="articles_id" id="articles_id_delete">
                             <input class="btnTxt" type="text" name="articles_name" id="articles_name_delete"
                                 pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s.,0-9]{3,30}" maxlength="30"
                                 placeholder="introduzca nombre del artículo" readonly>
@@ -734,5 +735,69 @@ if (isset($_POST['editarArticulo'])) {
  */
 if (isset($_POST['eliminarArticulo'])) {
 
+    // Obtener el valor de $articles_id
+    $articles_id = htmlspecialchars($_POST['articles_id']);
+
+    // Verificar si el artículo está en el inventario
+    $sql_check = "SELECT COUNT(*) AS count FROM inventory WHERE articles_id = ?";
+    $stmt_check = $conn->prepare($sql_check);
+    $stmt_check->bind_param("i", $articles_id);
+    $stmt_check->execute();
+    $result_check = $stmt_check->get_result();
+    $row_check = $result_check->fetch_assoc();
+
+    if ($row_check['count'] > 0) {
+        ?>
+        <script>
+            Swal.fire({
+                color: "var(--rojo)",
+                icon: "error",
+                iconColor: "var(--rojo)",
+                title: 'Error',
+                text: 'El artículo no se puede eliminar porque está inventariado.',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = window.location.href;
+                }
+            });
+        </script>
+        <?php
+    } else {
+        // Eliminar el registro de la tabla articles
+        $sql_delete = "DELETE FROM articles WHERE articles_id = ?";
+        $stmt_delete = $conn->prepare($sql_delete);
+        $stmt_delete->bind_param("i", $articles_id);
+        $stmt_delete->execute();
+        ?>
+        <script>
+            Swal.fire({
+                color: "var(--verde)",
+                icon: "success",
+                iconColor: "var(--verde)",
+                title: 'Éxito',
+                text: 'El artículo ha sido eliminado.',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = window.location.href;
+                }
+            });
+        </script>
+        <?php
+        $stmt_delete->close();
+    }
+    $stmt_check->close();
+    $conn->close();
 }
 ?>

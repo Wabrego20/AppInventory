@@ -149,12 +149,13 @@ include_once '../settings/conexion.php';
 
             <tbody>
                 <?php
-                $inventario2 = "SELECT inventory2.*, articles.*, categories.*, warehouses.* 
-                FROM inventory2, articles, categories, warehouses
-                WHERE inventory2.articles_id = articles.articles_id
-                AND inventory2.categories_id = categories.categories_id
-                AND inventory2.warehouses_id = warehouses.warehouses_id";
-
+                $inventario2 = "SELECT inventory.*, articles.*, categories.*, warehouses.* 
+                FROM inventory, articles, categories, warehouses
+                WHERE inventory.articles_id = articles.articles_id
+                AND inventory.categories_id = categories.categories_id
+                AND inventory.warehouses_id = warehouses.warehouses_id
+                AND inventory.inventory_name = 'Bienes Físicos'";
+                
                 $stmt = $conn->prepare($inventario2);
                 $stmt->execute();
                 $result = $stmt->get_result();
@@ -167,26 +168,26 @@ include_once '../settings/conexion.php';
                                 <?php echo $fila; ?>
                             </td>
                             <td>
-                                <?php echo !empty($row['articles_name']) ? $row['articles_name'] : 'No disponible'; ?>
+                                <?php echo $row['articles_name'] ?? 'no disponible'; ?>
                             </td>
                             <td>
-                                <?php echo !empty($row['categories_name']) ? $row['categories_name'] : 'No disponible'; ?>
+                                <?php echo $row['categories_name'] ?? 'no disponible'; ?>
                             </td>
                             <td>
-                                <?php echo !empty($row['inventory2_quantity']) ? $row['inventory2_quantity'] : '0'; ?>
+                                <?php echo $row['inventory_quantity'] ?? '0'; ?>
                             </td>
 
                             <td>
-                                <?php echo !empty($row['inventory2_registration_date']) ? $row['inventory2_registration_date'] : 'dd/mm/aaaa'; ?>
+                                <?php echo $row['inventory_registration_date'] ?? 'd/m/a'; ?>
                             </td>
                             <td>
-                                <?php echo !empty($row['warehouses_name']) ? $row['warehouses_name'] : 'No disponible'; ?>
+                                <?php echo $row['warehouses_name'] ?? 'no disponible'; ?>
                             </td>
                             <td>
-                                <?php echo !empty($row['articles_unit_cost']) ? $row['articles_unit_cost'] : '0.00'; ?>
+                                <?php echo $row['articles_unit_cost'] ?? '0.00'; ?>
                             </td>
                             <td>
-                                <?php echo !empty($row['inventory2_total_cost']) ? $row['inventory2_total_cost'] : '0.00'; ?>
+                                <?php echo $row['inventory_total_cost'] ?? '0.00'; ?>
                             </td>
                             <td>
                                 <button class="accion accionSolicitar" title="clic para solicitar article"

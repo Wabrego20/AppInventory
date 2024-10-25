@@ -474,14 +474,23 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
         $stmt = $conn->prepare("INSERT INTO inventory (articles_id, categories_id, inventory_quantity, inventory_name, warehouses_id, inventory_total_cost, inventory_re_order) 
         VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("iiisidi", $articles_id, $categories_id, $quantity, $inventory_name, $warehouses_id, $total_cost, $re_order);
+        
+        // Obtener el valor actual de warehouses_total_quantity
+        $sql_select = "SELECT warehouses_total_quantity FROM warehouses WHERE warehouses_id = ?";
+        $stmt_select = $conn->prepare($sql_select);
+        $stmt_select->bind_param("i", $warehouses_id);
+        $stmt_select->execute();
+        $result = $stmt_select->get_result();
+        $row = $result->fetch_assoc();
+        $current_quantity = $row['warehouses_total_quantity'];
 
-        // Actualizar la cantidad total en la tabla warehouses
-        $stmt_update = $conn->prepare("UPDATE warehouses 
-        SET warehouses_total_quantity = warehouses_total_quantity + ? / 2
-        WHERE warehouses_id = ?");
-        $stmt_update->bind_param("ii", $quantity, $warehouses_id);
+        // Sumar la nueva cantidad al valor actual
+        $total = $current_quantity + $quantity;
+
+        // Actualizar el campo warehouses_total_quantity
+        $stmt_update = $conn->prepare("UPDATE warehouses SET warehouses_total_quantity = ? WHERE warehouses_id = ?");
+        $stmt_update->bind_param("ii", $total, $warehouses_id);
         $stmt_update->execute();
-
 
         if ($stmt->execute() && $stmt_update->execute()) {
             ?>

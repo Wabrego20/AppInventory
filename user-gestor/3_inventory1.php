@@ -155,12 +155,12 @@ include_once '../settings/conexion.php';
 
             <tbody>
                 <?php
-                $inventario1 = "SELECT inventory1.*, articles.*, categories.*, warehouses.* 
-                FROM inventory1, articles, categories, warehouses
-                WHERE inventory1.articles_id = articles.articles_id
-                AND inventory1.categories_id = categories.categories_id
-                AND inventory1.warehouses_id = warehouses.warehouses_id";
-
+                $inventario1 = "SELECT inventory.*, articles.*, categories.*, warehouses.* 
+                FROM inventory, articles, categories, warehouses
+                WHERE inventory.articles_id = articles.articles_id
+                AND inventory.categories_id = categories.categories_id
+                AND inventory.warehouses_id = warehouses.warehouses_id
+                AND inventory.inventory_name = 'Consumo Interno'";
                 $stmt = $conn->prepare($inventario1);
                 $stmt->execute();
                 $result = $stmt->get_result();
@@ -179,11 +179,11 @@ include_once '../settings/conexion.php';
                                 <?php echo $row['categories_name'] ?? 'no disponible'; ?>
                             </td>
                             <td>
-                                <?php echo $row['inventory1_quantity'] ?? '0'; ?>
+                                <?php echo $row['inventory_quantity'] ?? '0'; ?>
                             </td>
 
                             <td>
-                                <?php echo $row['inventory1_registration_date'] ?? 'd/m/a'; ?>
+                                <?php echo $row['inventory_registration_date'] ?? 'd/m/a'; ?>
                             </td>
                             <td>
                                 <?php echo $row['warehouses_name'] ?? 'no disponible'; ?>
@@ -192,7 +192,7 @@ include_once '../settings/conexion.php';
                                 <?php echo $row['articles_unit_cost'] ?? '0.00'; ?>
                             </td>
                             <td>
-                                <?php echo $row['inventory1_total_cost'] ?? '0.00'; ?>
+                                <?php echo $row['inventory_total_cost'] ?? '0.00'; ?>
                             </td>
                             <td>
                                 <button class="accion accionSolicitar" title="clic para solicitar article"
@@ -322,10 +322,7 @@ if (isset($_POST['solicitarArtConsumoInterno'])) {
     $row_user = $result_user->fetch_assoc();
     $user_id = $row_user['users_id'] ?? '0';
 
-    $sql_departament = "SELECT departament.departament_name
-    FROM users
-    JOIN departament ON users.departament_id = departament.departament_id
-    WHERE users.users_user = ?";
+    $sql_departament = "SELECT departament.departament_name FROM users JOIN departament ON users.departament_id = departament.departament_id WHERE users.users_user = ?";
     $stmt = $conn->prepare($sql_departament);
     $stmt->bind_param("s", $users_user);
     $stmt->execute();
