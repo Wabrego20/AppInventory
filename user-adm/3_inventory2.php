@@ -169,13 +169,14 @@ include_once '../settings/conexion.php';
             <tbody>
                 <?php
                 // Declaración SQL
-                $inventario2 = "SELECT inventory2.*, articles.*, categories.*, warehouses.* 
-                FROM inventory2, articles, categories, warehouses
-                WHERE inventory2.articles_id = articles.articles_id
-                AND inventory2.categories_id = categories.categories_id
-                AND inventory2.warehouses_id = warehouses.warehouses_id";
+                $inventario = "SELECT inventory.*, articles.*, categories.*, warehouses.* 
+                FROM inventory, articles, categories, warehouses
+                WHERE inventory.articles_id = articles.articles_id
+                AND inventory.categories_id = categories.categories_id
+                AND inventory.warehouses_id = warehouses.warehouses_id
+                AND inventory.inventory_name = 'Bienes Físicos'";
                 // Preparar la declaración
-                $stmt = $conn->prepare($inventario2);
+                $stmt = $conn->prepare($inventario);
                 // Ejecutar la declaración
                 $stmt->execute();
                 // Obtener los resultados
@@ -197,13 +198,13 @@ include_once '../settings/conexion.php';
                             </td>
                             <td>
                                 <button class="accion accionSolicitar"
-                                    onclick="addQuantArtConsumoInt('<?php echo $row['inventory2_id']; ?>', '<?php echo $row['articles_name']; ?>')"
-                                    title="Tiene <?php echo $row['inventory2_quantity'] ?? '0'; ?> artículos, haga clic si desea agregar más">
-                                    <?php echo $row['inventory2_quantity'] ?? '0'; ?>
+                                    onclick="addQuantArtConsumoInt('<?php echo $row['inventory_id']; ?>', '<?php echo $row['articles_name']; ?>')"
+                                    title="Tiene <?php echo $row['inventory_quantity'] ?? '0'; ?> artículos, haga clic si desea agregar más">
+                                    <?php echo $row['inventory_quantity'] ?? '0'; ?>
                                 </button>
                             </td>
                             <td>
-                                <?php echo $row['inventory2_registration_date'] ?? 'dd/mm/aaaa'; ?>
+                                <?php echo $row['inventory_registration_date'] ?? 'dd/mm/aaaa'; ?>
                             </td>
                             <td>
                                 <?php echo $row['warehouses_name'] ?? 'no disponible'; ?>
@@ -212,15 +213,15 @@ include_once '../settings/conexion.php';
                                 <?php echo $row['articles_unit_cost'] ?? '0.00'; ?>
                             </td>
                             <td>
-                                <?php echo $row['inventory2_total_cost'] ?? '0.00'; ?>
+                                <?php echo $row['inventory_total_cost'] ?? '0.00'; ?>
                             </td>
                             <td>
-                                <?php echo $row['inventory2_re_order'] ?? 'n/a'; ?>
+                                <?php echo $row['inventory_re_order'] ?? 'n/a'; ?>
                             </td>
 
                             <td>
                                 <button class="accion accionEliminar"
-                                    onclick="deleteArtConsumoInt('<?php echo $row['inventory2_id']; ?>', '<?php echo $row['inventory2_quantity']; ?>', '<?php echo $row['articles_name']; ?>')"
+                                    onclick="deleteArtConsumoInt('<?php echo $row['inventory_id']; ?>', '<?php echo $row['inventory_quantity']; ?>', '<?php echo $row['articles_name']; ?>')"
                                     title="Eliminar este artículo">
                                     <i class="fa-solid fa-box-open fa-lg"></i>
                                     <i class="fa-solid fa-minus fa-2xs"></i>
@@ -302,7 +303,7 @@ include_once '../settings/conexion.php';
                         <label for="inventory2_quantity">Cantidad:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-arrow-up-1-9"></i>
-                            <input class="btnTxt" type="number" name="inventory2_quantity" id="inventory2_quantity"
+                            <input class="btnTxt" type="number" name="inventory_quantity" id="inventory2_quantity"
                                 pattern="[0-9]{1,7}" min="1" max="1000000" step="1"
                                 placeholder="introduzca la cantidad " required>
                         </div>
@@ -323,7 +324,7 @@ include_once '../settings/conexion.php';
                         <label for="inventory2_total_cost">Costo Total:</label>
                         <div class="campo">
                             <i class="fa-solid fa-sack-dollar"></i>
-                            <input type="text" name="inventory2_total_cost" id="inventory2_total_cost" class="btnTxt"
+                            <input type="text" name="inventory_total_cost" id="inventory2_total_cost" class="btnTxt"
                                 readonly>
                         </div>
                     </div>
@@ -343,8 +344,8 @@ include_once '../settings/conexion.php';
         <div class="modalDeleteArticle">
             <div class="panelArticle" style="width:400px;">
                 <form method="post" class="formArticle">
-                    <input type="hidden" name="inventory2_quantity" id="inventory2_quantity_delete">
-                    <input type="hidden" name="inventory2_id" id="inventory2_id_delete">
+                    <input type="hidden" name="inventory_quantity" id="inventory2_quantity_delete">
+                    <input type="hidden" name="inventory_id" id="inventory2_id_delete">
                     <h2>Eliminar Artículo de Consumo Interno</h2>
 
                     <!--campo de nombre de artículo-->
@@ -376,7 +377,7 @@ include_once '../settings/conexion.php';
         <div class="modalAddQuantArticle">
             <div class="panelArticle" style="width:400px;">
                 <form method="post" class="formArticle">
-                    <input type="hidden" name="inventory2_id" id="inventory2_id_add_quant">
+                    <input type="hidden" name="inventory_id" id="inventory2_id_add_quant">
                     <input type="hidden" name="warehouses_id" id="warehouses_id_add_quant">
                     <h2>Agregar Cantidad de Artículos</h2>
 
@@ -396,7 +397,7 @@ include_once '../settings/conexion.php';
                                 antes de agregar</que></label>
                         <div class="campo">
                             <i class="fa-solid fa-arrow-up-1-9"></i>
-                            <input class="btnTxt" type="number" name="inventory1_quantity"
+                            <input class="btnTxt" type="number" name="inventory_quantity"
                                 id="inventory2_quantity_add_new" pattern="[0-9]{1,7}" min="1" max="1000000" step="1"
                                 placeholder="introduzca la cantidad " required>
                         </div>
@@ -435,17 +436,16 @@ include_once '../settings/conexion.php';
  *Función para agregar un articulo al inventario de consumo interno
  */
 if (isset($_POST['agregarArtBienesFisicos'])) {
-
+    $inventory_name = "Bienes Físicos";
     $articles_id = htmlspecialchars($_POST['articles_id']);
     $categories_id = htmlspecialchars($_POST['categories_id']);
-    $quantity = htmlspecialchars($_POST['inventory2_quantity']);
+    $quantity = htmlspecialchars($_POST['inventory_quantity']);
     date_default_timezone_set('America/Panama');
-    $inventory2_registration_date = date("Y-m-d");
     $warehouses_id = htmlspecialchars($_POST['warehouses_id']);
-    $total_cost = htmlspecialchars($_POST['inventory2_total_cost']);
+    $total_cost = htmlspecialchars($_POST['inventory_total_cost']);
     $re_order = $quantity / 3;
     $checkQuery = $conn->prepare("SELECT * 
-    FROM inventory2 
+    FROM inventory 
     WHERE articles_id = ? 
     AND warehouses_id = ?
     AND categories_id = ?");
@@ -475,9 +475,9 @@ if (isset($_POST['agregarArtBienesFisicos'])) {
         <?php
     } else {
 
-        $stmt = $conn->prepare("INSERT INTO inventory2 (articles_id, categories_id, inventory2_quantity, inventory2_registration_date, warehouses_id, inventory2_total_cost, inventory2_re_order) 
+        $stmt = $conn->prepare("INSERT INTO inventory (articles_id, categories_id, inventory_quantity, inventory_name, warehouses_id, inventory_total_cost, inventory_re_order) 
         VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("iiisidi", $articles_id, $categories_id, $quantity, $inventory2_registration_date, $warehouses_id, $total_cost, $re_order);
+        $stmt->bind_param("iiisidi", $articles_id, $categories_id, $quantity, $inventory_name, $warehouses_id, $total_cost, $re_order);
 
         // Actualizar la cantidad total en la tabla warehouses
         $stmt_update = $conn->prepare("UPDATE warehouses 
@@ -521,10 +521,10 @@ if (isset($_POST['agregarArtBienesFisicos'])) {
 if (isset($_POST['eliminarArtBienesFisicos'])) {
 
     $name = htmlspecialchars($_POST['articles_name']);
-    $id = htmlspecialchars($_POST['inventory2_id']);
-    $quantity = htmlspecialchars($_POST['inventory2_quantity']);
+    $id = htmlspecialchars($_POST['inventory_id']);
+    $quantity = htmlspecialchars($_POST['inventory_quantity']);
 
-    $checkQuery = $conn->prepare("SELECT * FROM inventory2 WHERE inventory2_quantity = ?");
+    $checkQuery = $conn->prepare("SELECT * FROM inventory WHERE inventory_quantity = ?");
     $checkQuery->bind_param("i", $quantity);
     $checkQuery->execute();
     $result = $checkQuery->get_result();
@@ -554,7 +554,7 @@ if (isset($_POST['eliminarArtBienesFisicos'])) {
         <?php
     } else {
         // Consulta para eliminar la bodega
-        $deleteQuery = $conn->prepare("DELETE FROM inventory2 WHERE inventory2_id = ?");
+        $deleteQuery = $conn->prepare("DELETE FROM inventory WHERE inventory_id = ?");
         $deleteQuery->bind_param("i", $id);
 
         if ($deleteQuery->execute()) {
@@ -592,15 +592,15 @@ if (isset($_POST['eliminarArtBienesFisicos'])) {
  */
 if (isset($_POST['addQuantArt'])) {
 
-    $id = htmlspecialchars($_POST['inventory2_id']);
+    $id = htmlspecialchars($_POST['inventory2_i']);
     $name = htmlspecialchars($_POST['articles_name']);
-    $quantity = htmlspecialchars($_POST['inventory2_quantity']);
+    $quantity = htmlspecialchars($_POST['inventory_quantity']);
     date_default_timezone_set('America/Panama');
     $warehouses_id = htmlspecialchars($_POST['warehouses_id']);
-    $total_cost = htmlspecialchars($_POST['inventory2_total_cost']);
+    $total_cost = htmlspecialchars($_POST['inventory_total_cost']);
     $re_order = $quantity / 3;
     $checkQuery = $conn->prepare("SELECT * 
-    FROM inventory2 
+    FROM inventory 
     WHERE articles_id = ? 
     AND warehouses_id = ?
     AND categories_id = ?");
@@ -630,7 +630,7 @@ if (isset($_POST['addQuantArt'])) {
         <?php
     } else {
 
-        $stmt = $conn->prepare("INSERT INTO inventory2 (articles_id, categories_id, inventory2_quantity, inventory2_registration_date, warehouses_id, inventory2_total_cost, inventory2_re_order) 
+        $stmt = $conn->prepare("INSERT INTO inventory (articles_id, categories_id, inventory_quantity, inventory_registration_date, warehouses_id, inventory_total_cost, inventory_re_order) 
         VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("iiisidi", $articles_id, $categories_id, $quantity, $inventory2_registration_date, $warehouses_id, $total_cost, $re_order);
 

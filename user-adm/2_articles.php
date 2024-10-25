@@ -664,13 +664,24 @@ if (isset($_POST['editarArticulo'])) {
     $stmt->bind_param("sssiidsi", $articles_name, $articles_description, $articles_brand, $categories_id, $units_id, $articles_unit_cost, $articles_expiration_date, $articles_id);
 
     if ($stmt->execute()) {
+
+        $sql_select = "SELECT inventory_quantity FROM inventory WHERE articles_id=?";
+        $stmt_select = $conn->prepare($sql_select);
+        $stmt_select->bind_param("i", $articles_id);
+        $stmt_select->execute();
+        $result = $stmt_select->get_result();
+        $row = $result->fetch_assoc();
+        $inventory1_quantity = $row['inventory_quantity'];
+        $inventory1_total_cost = $inventory1_quantity * $articles_unit_cost;
+
         // Actualizar inventory1
-        $sql_inventory = "UPDATE inventory1 
-        SET categories_id=? 
+        $sql_update = "UPDATE inventory 
+        SET categories_id=?, inventory_total_cost=? 
         WHERE articles_id=?";
-        $stmt_inventory = $conn->prepare($sql_inventory);
-        $stmt_inventory->bind_param("ii", $categories_id, $articles_id);
-        $stmt_inventory->execute();
+        $stmt_update = $conn->prepare($sql_update);
+        $stmt_update->bind_param("idi", $categories_id, $inventory1_total_cost, $articles_id);
+        $stmt_update->execute();
+
         ?>
         <script>
             Swal.fire({
