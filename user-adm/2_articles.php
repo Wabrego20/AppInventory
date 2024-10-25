@@ -562,9 +562,60 @@ if (isset($_POST['crearArticulo'])) {
     $articles_unit_cost = htmlspecialchars($_POST['articles_unit_cost']);
     $articles_arrival_date = htmlspecialchars($_POST['articles_arrival_date']);
     $articles_expiration_date = htmlspecialchars($_POST['articles_expiration_date']);
-    $imageData = file_get_contents($_FILES['articles_photo']['tmp_name']);
-    $base64Image = base64_encode($imageData);
 
+    // Validar el tipo de archivo de la imagen
+    if (isset($_FILES['articles_photo'])) {
+        $fileType = mime_content_type($_FILES['articles_photo']['tmp_name']);
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+
+        if (!in_array($fileType, $allowedTypes)) {
+            ?>
+            <script>
+                Swal.fire({
+                    color: "var(--rojo)",
+                    icon: "error",
+                    iconColor: "var(--rojo)",
+                    title: '¡Error!',
+                    text: 'Se requiere una imagen. Por favor, sube un archivo de tipo imagen.',
+                    showConfirmButton: true,
+                    customClass: {
+                        confirmButton: 'btn-confirm'
+                    },
+                    confirmButtonText: "Aceptar",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = window.location.href;
+                    }
+                });
+            </script>
+            <?php
+            exit;
+        }
+        $imageData = file_get_contents($_FILES['articles_photo']['tmp_name']);
+        $base64Image = base64_encode($imageData);
+    } else {
+        ?>
+        <script>
+            Swal.fire({
+                color: "var(--rojo)",
+                icon: "error",
+                iconColor: "var(--rojo)",
+                title: '¡Error!',
+                text: 'No se ha subido ninguna imagen.',
+                showConfirmButton: true,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = window.location.href;
+                }
+            });
+        </script>
+        <?php
+        exit;
+    }
     // Verificar si el artículo ya existe
     $check_stmt = $conn->prepare("SELECT * FROM `articles` WHERE `articles_name` = ? AND `articles_brand` = ?");
     $check_stmt->bind_param("ss", $articles_name, $articles_brand);

@@ -379,25 +379,28 @@ if (isset($_POST['approveRequest'])) {
     $request_quantity = htmlspecialchars($_POST['request_quantity'] ?? '0');
     $state = "Aprobada";
 
-    // Obtener el estado actual de la solicitud
-    $sql_check_status = "SELECT request_status FROM request WHERE request_id = ?";
-    $stmt_check_status = $conn->prepare($sql_check_status);
-    $stmt_check_status->bind_param("i", $request_id);
-    $stmt_check_status->execute();
-    $result_status = $stmt_check_status->get_result();
-    $row_status = $result_status->fetch_assoc();
-    $current_status = $row_status['request_status'] ?? '';
-    $stmt_check_status->close();
+    // Unificar las consultas para obtener el estado actual de la solicitud y el warehouse_id
+    $sql = "SELECT request_status, warehouse_id FROM request WHERE request_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $request_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $current_status = $row['request_status'] ?? '';
+    $warehouse_id = $row['warehouse_id'] ?? '0';
+    $stmt->close();
 
-    // Obtener el warehouse_id desde la tabla request
-    $sql_get_warehouse_id = "SELECT warehouse_id FROM request WHERE request_id = ?";
-    $stmt_get_warehouse_id = $conn->prepare($sql_get_warehouse_id);
-    $stmt_get_warehouse_id->bind_param("i", $request_id);
-    $stmt_get_warehouse_id->execute();
-    $result_warehouse_id = $stmt_get_warehouse_id->get_result();
-    $row_warehouse_id = $result_warehouse_id->fetch_assoc();
-    $warehouse_id = $row_warehouse_id['warehouse_id'] ?? '0';
-    $stmt_get_warehouse_id->close();
+    // Obtener el inventory_quantity de la tabla inventory basado en warehouses_id
+    $sql_inventory_quantity = "SELECT inventory_quantity FROM inventory WHERE warehouses_id = ?";
+    $stmt_inventory_quantity = $conn->prepare($sql_inventory_quantity);
+    $stmt_inventory_quantity->bind_param("i", $warehouse_id);
+    $stmt_inventory_quantity->execute();
+    $result_inventory_quantity = $stmt_inventory_quantity->get_result();
+    $row_inventory_quantity = $result_inventory_quantity->fetch_assoc();
+    $inventory_quantity = $row_inventory_quantity['inventory_quantity'] ?? '0';
+    $stmt_inventory_quantity->close();
+
+
 
     // Obtener la cantidad actual de artículos en la bodega
     $sql_get_quantity = "SELECT warehouses_total_quantity FROM warehouses WHERE warehouses_id = ?";
@@ -411,7 +414,15 @@ if (isset($_POST['approveRequest'])) {
 
     if (trim($current_status) === 'Pendiente') {
         // Calcular la nueva cantidad
+        $new_quantityI = $inventory_quantity - $request_quantity;
         $new_quantity = $current_quantity - $request_quantity;
+
+        // Actualizar la cantidad en la tabla inventory
+        $sql_update_inventory = "UPDATE inventory SET inventory_quantity = ?  WHERE warehouses_id = ?";
+        $stmt_update_inventory = $conn->prepare($sql_update_inventory);
+        $stmt_update_inventory->bind_param("ii", $new_quantityI, $warehouse_id);
+        $stmt_update_inventory->execute();
+        $stmt_update_inventory->close();
 
         // Actualizar la cantidad en la tabla warehouses
         $sql_update_quantity = "UPDATE warehouses SET warehouses_total_quantity = ? WHERE warehouses_id = ?";
