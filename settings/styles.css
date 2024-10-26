@@ -15,8 +15,11 @@
   --rojo: #e20000;
   --verde: #0e7a00;
   --naranja: #ffa500;
-  --choco: brown;
   --amarillo: #ffff00;
+  --morado: #800080;
+    --cian: #00ffff;
+    --rosa: #ff69b4;
+    --marron: #a52a2a;
 }
 body {
   display: flex;

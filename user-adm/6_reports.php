@@ -13,8 +13,9 @@ include_once '../settings/conexion.php';
     <link rel="stylesheet" href="../settings/header.css">
     <link rel="stylesheet" href="../settings/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="../settings/styles.css">
-    <link rel="stylesheet" href="../css/">
+    <link rel="stylesheet" href="../css/6_reports.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
     <title>Notificaciones | Sist-Inventario</title>
 </head>
 
@@ -142,11 +143,30 @@ include_once '../settings/conexion.php';
     </div>
     <main>
 
+        <div id="chart-container">
+            <canvas id="myChart">
+            </canvas>
+            <i class="fa-solid fa-print accion accionSolicitar" title="clic para imprimir este reporte" id="print-button"></i>
+        </div>
+
+        <?php
+        $sql = "SELECT warehouses_name, warehouses_total_quantity FROM warehouses";
+        $result = $conn->query($sql);
+
+        $data = array();
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+        $conn->close();
+        ?>
+
     </main>
     <footer>
         <h6>© 2024 Universidad de Panamá y William Abrego. Todos los derechos reservados.</h6>
     </footer>
+    <script>const data = <?php echo json_encode($data); ?>;</script>
     <script src="../settings/header.js"></script>
+    <script src="../js/6_reports.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
