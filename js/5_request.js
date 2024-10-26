@@ -81,7 +81,7 @@ function rejectRequest(article_id, requester_id, articleName, quantity) {
 /**
 * Formulario para ver la rason del rechzo
 */
-function reasonRject(reason) {
+function reasonReject(reason) {
     var formu = document.querySelector('.modalRejectReason'); // Asegúrate de que esta clase coincida con la del modal
     formu.style.display = "flex";
     setTimeout(function () {

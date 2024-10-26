@@ -169,12 +169,13 @@ include_once '../settings/conexion.php';
             <tbody>
                 <?php
                 // Declaración SQL
-                $solicitud = "SELECT request.*, users.*, departament.*, articles.*, categories.*
+                $solicitud = "SELECT request.*, users.*, departament.*, articles.*, categories.*, inventory.*
                 FROM request
                 JOIN users ON request.requester_id = users.users_id
                 JOIN departament ON users.departament_id = departament.departament_id
                 JOIN articles ON request.articles_id = articles.articles_id
-                JOIN categories ON articles.categories_id = categories.categories_id";
+                JOIN categories ON articles.categories_id = categories.categories_id
+                JOIN inventory ON inventory.inventory_id = request.inventory_id";
                 // Preparar la declaración
                 $stmt = $conn->prepare($solicitud);
                 // Ejecutar la declaración
@@ -216,7 +217,7 @@ include_once '../settings/conexion.php';
                             </td>
                             <td class="<?php echo strtolower($row['request_status'] ?? ''); ?>">
                                 <h5 title="Clic para ver la razón del rechazo."
-                                    onclick="reasonRject('<?php echo $row['request_reason']; ?>')">
+                                    onclick="reasonReject('<?php echo $row['request_reason']; ?>')">
                                     <?php echo $row['request_status'] ?? ''; ?>
                                 </h5>
                             </td>
@@ -251,7 +252,7 @@ include_once '../settings/conexion.php';
                         <label for="request_article">Artículo:</label>
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
-                            <input type="text" id="articles_id_approve" name="articles_id">
+                            <input type="hidden" id="articles_id_approve" name="articles_id">
                             <input type="hidden" id="requester_id_approve" name="requester_id">
                             <input type="hidden" id="request_id_approve" name="request_id">
                             <input class="btnTxt" type="text" name="articles_name" id="request_article" readonly>
@@ -376,8 +377,6 @@ if (isset($_POST['approveRequest'])) {
     $stmt_user->close();
 
     $request_id = htmlspecialchars($_POST['request_id'] ?? '0'); // Asegúrate de tener el request_id en el formulario
-    $request_quantity = htmlspecialchars($_POST['request_quantity'] ?? '0');
-    $state = "Aprobada";
 
     // Unificar las consultas para obtener el estado actual de la solicitud y el warehouse_id
     $sql = "SELECT request_status, warehouse_id FROM request WHERE request_id = ?";
@@ -390,45 +389,61 @@ if (isset($_POST['approveRequest'])) {
     $warehouse_id = $row['warehouse_id'] ?? '0';
     $stmt->close();
 
-    // Obtener el inventory_quantity de la tabla inventory basado en warehouses_id
-    $sql_inventory_quantity = "SELECT inventory_quantity, inventory_id FROM inventory WHERE warehouses_id = ?";
-    $stmt_inventory_quantity = $conn->prepare($sql_inventory_quantity);
-    $stmt_inventory_quantity->bind_param("i", $warehouse_id);
-    $stmt_inventory_quantity->execute();
-    $result_inventory_quantity = $stmt_inventory_quantity->get_result();
-    $row_inventory = $result_inventory_quantity->fetch_assoc();
-    $inventory_quantity = $row_inventory['inventory_quantity'] ?? '0';
-    $inventory_id = $row_inventory['inventory_id'] ?? '0';
-    $stmt_inventory_quantity->close();
-
-    // Obtener la cantidad actual de artículos en la bodega
-    $sql_get_quantity = "SELECT warehouses_total_quantity FROM warehouses WHERE warehouses_id = ?";
-    $stmt_get_quantity = $conn->prepare($sql_get_quantity);
-    $stmt_get_quantity->bind_param("i", $warehouse_id);
-    $stmt_get_quantity->execute();
-    $result_quantity = $stmt_get_quantity->get_result();
-    $row_quantity = $result_quantity->fetch_assoc();
-    $current_quantity = $row_quantity['warehouses_total_quantity'] ?? 0;
-    $stmt_get_quantity->close();
-
     if (trim($current_status) === 'Pendiente') {
-        // Calcular la nueva cantidad
-        $new_quantityI = $inventory_quantity - $request_quantity;
-        $new_quantity = $current_quantity - $request_quantity;
 
-        // Actualizar la cantidad en la tabla inventory
-        $sql_update_inventory = "UPDATE inventory SET inventory_quantity = ? WHERE inventory_id = ? AND articles_id = ? AND warehouses_id = ?";
-        $stmt_update_inventory = $conn->prepare($sql_update_inventory);
-        $stmt_update_inventory->bind_param("iiii", $new_quantityI, $inventory_id, $article_id, $warehouse_id);
-        $stmt_update_inventory->execute();
-        $stmt_update_inventory->close();
+        $request_quantity = htmlspecialchars($_POST['request_quantity'] ?? '0');
+
+        // Obtener la cantidad actual de artículos en la bodega
+        $sql_get_quantity = "SELECT warehouses_total_quantity FROM warehouses WHERE warehouses_id = ?";
+        $stmt_get_quantity = $conn->prepare($sql_get_quantity);
+        $stmt_get_quantity->bind_param("i", $warehouse_id);
+        $stmt_get_quantity->execute();
+        $result_quantity = $stmt_get_quantity->get_result();
+        $row_quantity = $result_quantity->fetch_assoc();
+        $current_quantity = $row_quantity['warehouses_total_quantity'] ?? 0;
+        $stmt_get_quantity->close();
+
+        $quantity_warehouse = $current_quantity - $request_quantity;
 
         // Actualizar la cantidad en la tabla warehouses
         $sql_update_quantity = "UPDATE warehouses SET warehouses_total_quantity = ? WHERE warehouses_id = ?";
         $stmt_update_quantity = $conn->prepare($sql_update_quantity);
-        $stmt_update_quantity->bind_param("ii", $new_quantity, $warehouse_id);
+        $stmt_update_quantity->bind_param("ii", $quantity_warehouse, $warehouse_id);
         $stmt_update_quantity->execute();
 
+        // Obtener el inventory_quantity de la tabla inventory basado en warehouses_id
+        $sql_inventory_quantity = "SELECT inventory_quantity, inventory_id FROM inventory WHERE warehouses_id = ?";
+        $stmt_inventory_quantity = $conn->prepare($sql_inventory_quantity);
+        $stmt_inventory_quantity->bind_param("i", $warehouse_id);
+        $stmt_inventory_quantity->execute();
+        $result_inventory_quantity = $stmt_inventory_quantity->get_result();
+        $row_inventory = $result_inventory_quantity->fetch_assoc();
+        $current_inventory_quantity = $row_inventory['inventory_quantity'] ?? '0';
+        $inventory_id = $row_inventory['inventory_id'] ?? '0';
+        $stmt_inventory_quantity->close();
+
+        // Obtener todas las filas relevantes de la tabla inventory
+        $sql_inventory_quantity = "SELECT inventory_quantity, inventory_id FROM inventory WHERE articles_id = ? AND warehouses_id = ?";
+        $stmt_inventory_quantity = $conn->prepare($sql_inventory_quantity);
+        $stmt_inventory_quantity->bind_param("ii", $article_id, $warehouse_id);
+        $stmt_inventory_quantity->execute();
+        $result_inventory_quantity = $stmt_inventory_quantity->get_result();
+
+        while ($row_inventory = $result_inventory_quantity->fetch_assoc()) {
+            $current_inventory_quantity = $row_inventory['inventory_quantity'];
+            $inventory_id = $row_inventory['inventory_id'];
+            $new_inventory_quantity = $current_inventory_quantity - $request_quantity;
+
+            // Actualizar la cantidad en la tabla inventory
+            $sql_update_inventory = "UPDATE inventory SET inventory_quantity = ? WHERE inventory_id = ? AND articles_id = ? AND warehouses_id = ?";
+            $stmt_update_inventory = $conn->prepare($sql_update_inventory);
+            $stmt_update_inventory->bind_param("iiii", $new_inventory_quantity, $inventory_id, $article_id, $warehouse_id);
+            $stmt_update_inventory->execute();
+            $stmt_update_inventory->close();
+        }
+        $stmt_inventory_quantity->close();
+
+        $state = "Aprobada";
         // Actualizar la tabla request
         $sql_update = "UPDATE request SET request_status = ?, approver_id = ? WHERE request_id = ?";
         $stmt_update = $conn->prepare($sql_update);
@@ -514,7 +529,7 @@ if (isset($_POST['rejectRequest'])) {
 
     $approver_user = $_SESSION['users_user'];
     $state = "Rechazada";
-    
+
     $sql_user = "SELECT users_id FROM users WHERE users_user = ?";
     $stmt_user = $conn->prepare($sql_user);
     $stmt_user->bind_param("s", $approver_user);
@@ -528,6 +543,11 @@ if (isset($_POST['rejectRequest'])) {
     $article_id = htmlspecialchars($_POST['articles_id'] ?? '0');
     $reason = htmlspecialchars($_POST['request_reason']);
 
+    // Verificar valores de entrada
+    echo "Requester ID: " . $requester_id . "\n";
+    echo "Article ID: " . $article_id . "\n";
+    echo "Reason: " . $reason . "\n";
+
     // Obtener el estado actual de la solicitud
     $sql_check_status = "SELECT request_status FROM request WHERE requester_id = ? AND articles_id = ?";
     $stmt_check_status = $conn->prepare($sql_check_status);
@@ -538,8 +558,10 @@ if (isset($_POST['rejectRequest'])) {
     $current_status = $row_status['request_status'] ?? '';
     $stmt_check_status->close();
 
+    // Verificar el estado actual
+    echo "Current Status: " . $current_status . "\n";
+
     // Verificar si el estado es "Pendiente"
-    echo $current_status;
     if (trim($current_status) === 'Pendiente') {
         // Actualizar la tabla request
         $sql_update = "UPDATE request SET request_status = ?, approver_id = ?, request_reason = ? WHERE requester_id = ? AND articles_id = ?";
@@ -547,6 +569,7 @@ if (isset($_POST['rejectRequest'])) {
         $stmt_update->bind_param("sisii", $state, $approver_id, $reason, $requester_id, $article_id);
         $stmt_update->execute();
 
+        // Verificar si la actualización fue exitosa
         if ($stmt_update->affected_rows > 0) {
             ?>
             <script>

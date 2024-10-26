@@ -188,7 +188,7 @@ include_once ("../settings/conexion.php");
 
                             <td class="<?php echo strtolower($row['request_status'] ?? ''); ?>">
                                 <h5 title="Clic para ver la razón del rechazo."
-                                    onclick="reasonRject('<?php echo $row['request_reason']; ?>')">
+                                    onclick="reasonReject('<?php echo $row['request_reason']; ?>')">
                                     <?php echo $row['request_status'] ?? ''; ?>
                                 </h5>
                             </td>

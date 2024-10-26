@@ -191,7 +191,7 @@ include_once '../settings/conexion.php';
                             </td>
                             <td>
                                 <button class="accion accionSolicitar" title="clic para solicitar article"
-                                    onclick="solicitarArt('<?php echo $row['articles_id']; ?>', '<?php echo $row['articles_name']; ?>','<?php echo $row['categories_name']; ?>','<?php echo $row['warehouses_name']; ?>','','<?php echo $row['articles_unit_cost']; ?>','')"><i
+                                    onclick="solicitarArt('<?php echo $row['inventory_id']; ?>', '<?php echo $row['articles_id']; ?>', '<?php echo $row['articles_name']; ?>','<?php echo $row['categories_name']; ?>','<?php echo $row['warehouses_name']; ?>','','<?php echo $row['articles_unit_cost']; ?>','')"><i
                                         class="fa-solid fa-paper-plane"></i></button>
                             </td>
                         </tr>
@@ -216,6 +216,7 @@ include_once '../settings/conexion.php';
                         <label for="articles_name">Artículo:</label>
                         <div class="campo">
                             <i class="fa-solid fa-box-open"></i>
+                            <input type="hidden" name="inventory_id" id="inventory_id">
                             <input type="hidden" name="articles_id" id="articles_id">
                             <input type="text" name="articles_name" id="articles_name" class="btnTxt" readonly>
 
@@ -305,9 +306,10 @@ include_once '../settings/conexion.php';
 if (isset($_POST['solicitarArtBienesFisicos'])) {
 
     $users_user = $_SESSION['users_user'];
-    $article_id = $_POST['articles_id'];
-    $article_name = $_POST['articles_name'];
-    $warehouses_name = $_POST['warehouses_name'];
+    $inventory_id = htmlspecialchars($_POST['inventory_id']);
+    $article_id = htmlspecialchars($_POST['articles_id']);
+    $article_name = htmlspecialchars($_POST['articles_name']);
+    $warehouses_name = htmlspecialchars($_POST['warehouses_name']);
 
     $sql_user = "SELECT users_id FROM users WHERE users_user = ?";
     $stmt_user = $conn->prepare($sql_user);
@@ -337,7 +339,6 @@ if (isset($_POST['solicitarArtBienesFisicos'])) {
     $row_warehouses = $result_warehouses->fetch_assoc();
     $warehouse_id = $row_warehouses['warehouses_id'];
 
-    $inventoryType = "Bienes Físicos";
     date_default_timezone_set('America/Panama');
     $request_quantity = htmlspecialchars($_POST['request_quantity']);
     $request_total_cost = htmlspecialchars($_POST['request_total_cost']);
@@ -373,9 +374,9 @@ if (isset($_POST['solicitarArtBienesFisicos'])) {
         <?php
     } else {
 
-        $stmt_insert = $conn->prepare('INSERT INTO request (requester_id, articles_id, warehouse_id, inventoryType, request_quantity, request_total_cost) 
+        $stmt_insert = $conn->prepare('INSERT INTO request (requester_id, articles_id, warehouse_id, inventory_id, request_quantity, request_total_cost) 
                                    VALUES (?, ?, ?, ?, ?, ?)');
-        $stmt_insert->bind_param('iiisid', $user_id, $article_id, $warehouse_id, $inventoryType, $request_quantity, $request_total_cost);
+        $stmt_insert->bind_param('iiiiid', $user_id, $article_id, $warehouse_id, $inventory_id, $request_quantity, $request_total_cost);
 
         // Ejecutar la inserción y manejar errores
         if ($stmt_insert->execute()) {
