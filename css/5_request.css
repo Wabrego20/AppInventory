@@ -121,6 +121,8 @@ main {
   text-align: center;
   font-size: 18px;
   transition: 0.2s ease-in-out;
+}
+.pdfHidden{
   pointer-events: none;
   opacity: 0.5;
 }

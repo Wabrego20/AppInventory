@@ -145,12 +145,13 @@ include_once ("../settings/conexion.php");
             <tbody>
                 <?php
                 $users_user = $_SESSION['users_user'];
-                $solicitud = "SELECT request.*, users.*, departament.*, articles.*, categories.*
+                $solicitud = "SELECT request.*, users.*, departament.*, articles.*, categories.*, inventory.*
                  FROM request
                  JOIN users ON request.requester_id = users.users_id
                  JOIN departament ON users.departament_id = departament.departament_id
                  JOIN articles ON request.articles_id = articles.articles_id
                  JOIN categories ON articles.categories_id = categories.categories_id
+                 JOIN inventory ON inventory.inventory_id = request.inventory_id
                  WHERE users.users_user=?";
                 $stmt = $conn->prepare($solicitud);
                 $stmt->bind_param("s", $users_user);
@@ -173,7 +174,7 @@ include_once ("../settings/conexion.php");
                                 <?php echo $row['categories_name'] ?? 'No disponible'; ?>
                             </td>
                             <td>
-                                <?php echo $row['inventoryType'] ?? 'No disponible'; ?>
+                                <?php echo $row['inventory_name'] ?? 'No disponible'; ?>
                             </td>
                             <td>
                                 <?php echo $row['request_quantity'] ?? 'No disponible'; ?>
@@ -184,14 +185,22 @@ include_once ("../settings/conexion.php");
                             <td>
                                 <?php echo $row['request_order_date'] ?? 'd/m/a'; ?>
                             </td>
-                            <td  class="<?php echo strtolower($row['request_status'] ?? ''); ?>">
-                                <h5 title="Clic para ver la razón del rechazo." onclick="reasonRject('<?php echo $row['request_reason']; ?>')" ><?php echo $row['request_status'] ?? ''; ?></h5>
+
+                            <td class="<?php echo strtolower($row['request_status'] ?? ''); ?>">
+                                <h5 title="Clic para ver la razón del rechazo."
+                                    onclick="reasonRject('<?php echo $row['request_reason']; ?>')">
+                                    <?php echo $row['request_status'] ?? ''; ?>
+                                </h5>
                             </td>
+
                             <td>
-                                <span href="javascript:void(0);" title="Ver acta de entrega"
-                                    onclick="procesar(<?php echo $row['request_id']; ?>)">
-                                    <i class="fa-solid fa-file-pdf"></i>
-                                </span>
+                                <?php if($row['request_status'] === 'Aprobada'): ?>
+                                    <a href="delivery_certificate.php" title="Ver acta de entrega">
+                                        <i class="fa-solid fa-file-pdf"></i>
+                                    </a>
+                                <?php else: ?>
+                                    <i class="fa-solid fa-file-pdf pdfHidden"></i>
+                                <?php endif; ?>
                             </td>
 
                         </tr>

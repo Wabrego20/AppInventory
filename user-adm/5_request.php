@@ -251,7 +251,7 @@ include_once '../settings/conexion.php';
                         <label for="request_article">Artículo:</label>
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
-                            <input type="hidden" id="articles_id_approve" name="articles_id">
+                            <input type="text" id="articles_id_approve" name="articles_id">
                             <input type="hidden" id="requester_id_approve" name="requester_id">
                             <input type="hidden" id="request_id_approve" name="request_id">
                             <input class="btnTxt" type="text" name="articles_name" id="request_article" readonly>
@@ -361,11 +361,11 @@ include_once '../settings/conexion.php';
 /***
  * Función para aprobar solicitud de artículo
  */
-/***
- * Función para aprobar solicitud de artículo
- */
 if (isset($_POST['approveRequest'])) {
+
     $approver_user = $_SESSION['users_user'];
+    $article_id = htmlspecialchars($_POST['articles_id']);
+
     $sql_user = "SELECT users_id FROM users WHERE users_user = ?";
     $stmt_user = $conn->prepare($sql_user);
     $stmt_user->bind_param("s", $approver_user);
@@ -391,16 +391,15 @@ if (isset($_POST['approveRequest'])) {
     $stmt->close();
 
     // Obtener el inventory_quantity de la tabla inventory basado en warehouses_id
-    $sql_inventory_quantity = "SELECT inventory_quantity FROM inventory WHERE warehouses_id = ?";
+    $sql_inventory_quantity = "SELECT inventory_quantity, inventory_id FROM inventory WHERE warehouses_id = ?";
     $stmt_inventory_quantity = $conn->prepare($sql_inventory_quantity);
     $stmt_inventory_quantity->bind_param("i", $warehouse_id);
     $stmt_inventory_quantity->execute();
     $result_inventory_quantity = $stmt_inventory_quantity->get_result();
-    $row_inventory_quantity = $result_inventory_quantity->fetch_assoc();
-    $inventory_quantity = $row_inventory_quantity['inventory_quantity'] ?? '0';
+    $row_inventory = $result_inventory_quantity->fetch_assoc();
+    $inventory_quantity = $row_inventory['inventory_quantity'] ?? '0';
+    $inventory_id = $row_inventory['inventory_id'] ?? '0';
     $stmt_inventory_quantity->close();
-
-
 
     // Obtener la cantidad actual de artículos en la bodega
     $sql_get_quantity = "SELECT warehouses_total_quantity FROM warehouses WHERE warehouses_id = ?";
@@ -418,9 +417,9 @@ if (isset($_POST['approveRequest'])) {
         $new_quantity = $current_quantity - $request_quantity;
 
         // Actualizar la cantidad en la tabla inventory
-        $sql_update_inventory = "UPDATE inventory SET inventory_quantity = ?  WHERE warehouses_id = ?";
+        $sql_update_inventory = "UPDATE inventory SET inventory_quantity = ? WHERE inventory_id = ? AND articles_id = ? AND warehouses_id = ?";
         $stmt_update_inventory = $conn->prepare($sql_update_inventory);
-        $stmt_update_inventory->bind_param("ii", $new_quantityI, $warehouse_id);
+        $stmt_update_inventory->bind_param("iiii", $new_quantityI, $inventory_id, $article_id, $warehouse_id);
         $stmt_update_inventory->execute();
         $stmt_update_inventory->close();
 
@@ -508,13 +507,14 @@ if (isset($_POST['approveRequest'])) {
     }
     $conn->close();
 }
-
-
 /*
  * Función para rechazar solicitud de artículo
  */
 if (isset($_POST['rejectRequest'])) {
+
     $approver_user = $_SESSION['users_user'];
+    $state = "Rechazada";
+    
     $sql_user = "SELECT users_id FROM users WHERE users_user = ?";
     $stmt_user = $conn->prepare($sql_user);
     $stmt_user->bind_param("s", $approver_user);
@@ -541,7 +541,6 @@ if (isset($_POST['rejectRequest'])) {
     // Verificar si el estado es "Pendiente"
     echo $current_status;
     if (trim($current_status) === 'Pendiente') {
-        $state = "Rechazada";
         // Actualizar la tabla request
         $sql_update = "UPDATE request SET request_status = ?, approver_id = ?, request_reason = ? WHERE requester_id = ? AND articles_id = ?";
         $stmt_update = $conn->prepare($sql_update);
