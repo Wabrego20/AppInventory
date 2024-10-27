@@ -147,12 +147,15 @@ include_once ("../settings/conexion.php");
                 $users_user = $_SESSION['users_user'];
                 $solicitud = "SELECT request.*, users.*, departament.*, articles.*, categories.*, inventory.*
                  FROM request
-                 JOIN users ON request.requester_id = users.users_id
+                 JOIN users ON request.requester_id = users.users_id OR request.approver_id = users.users_id
                  JOIN departament ON users.departament_id = departament.departament_id
                  JOIN articles ON request.articles_id = articles.articles_id
                  JOIN categories ON articles.categories_id = categories.categories_id
                  JOIN inventory ON inventory.inventory_id = request.inventory_id
                  WHERE users.users_user=?";
+
+                
+
                 $stmt = $conn->prepare($solicitud);
                 $stmt->bind_param("s", $users_user);
                 $stmt->execute();
@@ -194,10 +197,22 @@ include_once ("../settings/conexion.php");
                             </td>
 
                             <td>
-                                <?php if($row['request_status'] === 'Aprobada'): ?>
-                                    <a href="delivery_certificate.php" title="Ver acta de entrega">
+                                <?php if ($row['request_status'] === 'Aprobada'): ?>
+                                    <a href="delivery_certificate.php?fila=<?php echo $fila; ?>
+                                    &users_name=<?php echo urlencode($row['users_name'] ?? 'No disponible'); ?>
+                                    &users_last_name=<?php echo urlencode($row['users_last_name'] ?? 'No disponible'); ?>
+                                    &articles_name=<?php echo urlencode($row['articles_name'] ?? 'No disponible'); ?>
+                                    &categories_name=<?php echo urlencode($row['categories_name'] ?? 'No disponible'); ?>
+                                    &inventory_name=<?php echo urlencode($row['inventory_name'] ?? 'No disponible'); ?>
+                                    &request_quantity=<?php echo $row['request_quantity'] ?? 'No disponible'; ?>
+                                    &request_total_cost=<?php echo $row['request_total_cost'] ?? 'No disponible'; ?>
+                                    &request_order_date=<?php echo $row['request_order_date'] ?? 'd/m/a'; ?>
+                                    &request_status=<?php echo urlencode($row['request_status'] ?? ''); ?>
+                                    &request_reason=<?php echo urlencode($row['request_reason'] ?? ''); ?>"
+                                        title="Ver acta de entrega" target="_blank">
                                         <i class="fa-solid fa-file-pdf"></i>
                                     </a>
+
                                 <?php else: ?>
                                     <i class="fa-solid fa-file-pdf pdfHidden"></i>
                                 <?php endif; ?>

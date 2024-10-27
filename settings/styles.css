@@ -354,3 +354,9 @@ Tabla
   box-shadow: 0 0 5px var(--gris);
 }
 
+@media print {
+  .no-print {
+      display: none;
+  }
+}
+

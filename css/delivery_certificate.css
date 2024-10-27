@@ -1,0 +1,32 @@
+main {
+  flex-direction: column;
+}
+.datos {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  width: 95%;
+  flex-direction: column;
+  margin: 10px auto;
+}
+.campos {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 100%;
+  margin: 5px 0;
+  label{
+    width: 150px;
+  }
+  img {
+    width: 200px;
+  }
+  .logoMides {
+    border-radius: 50px;
+    width: 150px;
+  }
+}
+.dobleSaltoLinea{
+    margin-top: 20px;
+}
