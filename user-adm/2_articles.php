@@ -244,7 +244,7 @@ include_once '../settings/conexion.php';
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
                             <input class="btnTxt" type="text" name="articles_name" id="articles_name"
-                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ.°#" \s.,0-9]{3,30}" maxlength="30"
+                            pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ.\°#\s,0-9]{3,30}" maxlength="30"
                                 placeholder="introduzca nombre del artículo" autofocus required>
                         </div>
                     </div>
@@ -389,7 +389,7 @@ include_once '../settings/conexion.php';
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
                             <input class="btnTxt" type="text" name="articles_name" id="articles_name_edit"
-                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ.#°" \s.,0-9]{3,30}" maxlength="30"
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ.#°\s.,0-9]{3,30}" maxlength="30"
                                 placeholder="introduzca nombre del artículo" autofocus required>
                         </div>
                     </div>
