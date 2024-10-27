@@ -2,6 +2,7 @@
 <?php
 include_once '../settings/sessionStart.php';
 include_once '../settings/conexion.php';
+include_once '../settings/notice.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -92,10 +93,12 @@ include_once '../settings/conexion.php';
                     </a>
                 </li>
                 <li>
-                    <div class="bell">
-                        <i class="fa-solid fa-bell"></i>
-                        <h6>10</h6>
-                    </div>
+                    <?php if ($pending_count > 0): ?>
+                        <div class="bell" style="display: block;">
+                            <i class="fa-solid fa-bell"></i>
+                            <h6><?php echo $pending_count; ?></h6>
+                        </div>
+                    <?php endif; ?>
                     <a href="5_request.php">
                         <i class="fa-solid fa-clipboard-list"></i>
                         <h5>Solicitudes</h5>
@@ -474,7 +477,7 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
         $stmt = $conn->prepare("INSERT INTO inventory (articles_id, categories_id, inventory_quantity, inventory_name, warehouses_id, inventory_total_cost, inventory_re_order) 
         VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("iiisidi", $articles_id, $categories_id, $quantity, $inventory_name, $warehouses_id, $total_cost, $re_order);
-        
+
         // Obtener el valor actual de warehouses_total_quantity
         $sql_select = "SELECT warehouses_total_quantity FROM warehouses WHERE warehouses_id = ?";
         $stmt_select = $conn->prepare($sql_select);

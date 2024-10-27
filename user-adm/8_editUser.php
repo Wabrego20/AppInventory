@@ -2,6 +2,7 @@
 <?php
 include_once '../settings/sessionStart.php';
 include_once '../settings/conexion.php';
+include_once '../settings/notice.php';
 $usuario = $_SESSION['users_user'];
 $stmt = $conn->prepare("SELECT users.*, departament.* 
     FROM users 
@@ -127,10 +128,12 @@ if ($row = $result->fetch_assoc()) {
 
                 <!--Pestaña de Solicitudes-->
                 <li>
-                    <div class="bell">
-                        <i class="fa-solid fa-bell"></i>
-                        <h6>10</h6>
-                    </div>
+                    <?php if ($pending_count > 0): ?>
+                        <div class="bell" style="display: block;">
+                            <i class="fa-solid fa-bell"></i>
+                            <h6><?php echo $pending_count; ?></h6>
+                        </div>
+                    <?php endif; ?>
                     <a href="5_request.php">
                         <i class="fa-solid fa-clipboard-list"></i>
                         <h5>Solicitudes</h5>

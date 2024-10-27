@@ -2,6 +2,7 @@
 <?php
 include_once '../settings/sessionStart.php';
 include_once '../settings/conexion.php';
+include_once '../settings/notice.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -93,10 +94,12 @@ include_once '../settings/conexion.php';
                 </li>
 
                 <li>
-                    <div class="bell">
-                        <i class="fa-solid fa-bell"></i>
-                        <h6>10</h6>
-                    </div>
+                    <?php if ($pending_count > 0): ?>
+                        <div class="bell" style="display: block;">
+                            <i class="fa-solid fa-bell"></i>
+                            <h6><?php echo $pending_count; ?></h6>
+                        </div>
+                    <?php endif; ?>
                     <a href="5_request.php">
                         <i class="fa-solid fa-clipboard-list"></i>
                         <h5>Solicitudes</h5>
@@ -154,7 +157,8 @@ include_once '../settings/conexion.php';
         <a class="btn_seccion" href="3_inventory2.php">
             <h2>Inventario de Bienes Físicos</h2>
             <img src="../gif/portapapeles.gif" alt="article">
-            <h4>Solicitado por los Departamentos para sus operaciones, son registrados en el Sistema Istmo, realiza un acta de entrega al departamento. </h4>
+            <h4>Solicitado por los Departamentos para sus operaciones, son registrados en el Sistema Istmo, realiza un
+                acta de entrega al departamento. </h4>
         </a>
 
         <a class="btn_seccion" href="3_inventory2.html">
@@ -166,7 +170,8 @@ include_once '../settings/conexion.php';
         <a class="btn_seccion" href="inventory4.html">
             <h2>Inventario de Donaciones</h2>
             <img src="../gif/donacion-de-alimentos.gif" alt="article">
-            <h4>Entidades benefactoras que brindan bienes los cuales se deben ingresar al sistema para llevar un control los mismos y después distribuirlos.</h4>
+            <h4>Entidades benefactoras que brindan bienes los cuales se deben ingresar al sistema para llevar un control
+                los mismos y después distribuirlos.</h4>
         </a>
 
     </main>

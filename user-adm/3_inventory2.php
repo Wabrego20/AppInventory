@@ -2,6 +2,7 @@
 <?php
 include_once '../settings/sessionStart.php';
 include_once '../settings/conexion.php';
+include_once '../settings/notice.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -92,10 +93,12 @@ include_once '../settings/conexion.php';
                     </a>
                 </li>
                 <li>
-                    <div class="bell">
-                        <i class="fa-solid fa-bell"></i>
-                        <h6>10</h6>
-                    </div>
+                    <?php if ($pending_count > 0): ?>
+                        <div class="bell" style="display: block;">
+                            <i class="fa-solid fa-bell"></i>
+                            <h6><?php echo $pending_count; ?></h6>
+                        </div>
+                    <?php endif; ?>
                     <a href="5_request.php">
                         <i class="fa-solid fa-clipboard-list"></i>
                         <h5>Solicitudes</h5>
@@ -479,22 +482,22 @@ if (isset($_POST['agregarArtBienesFisicos'])) {
         VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("iiisidi", $articles_id, $categories_id, $quantity, $inventory_name, $warehouses_id, $total_cost, $re_order);
 
-       // Obtener el valor actual de warehouses_total_quantity
-       $sql_select = "SELECT warehouses_total_quantity FROM warehouses WHERE warehouses_id = ?";
-       $stmt_select = $conn->prepare($sql_select);
-       $stmt_select->bind_param("i", $warehouses_id);
-       $stmt_select->execute();
-       $result = $stmt_select->get_result();
-       $row = $result->fetch_assoc();
-       $current_quantity = $row['warehouses_total_quantity'];
+        // Obtener el valor actual de warehouses_total_quantity
+        $sql_select = "SELECT warehouses_total_quantity FROM warehouses WHERE warehouses_id = ?";
+        $stmt_select = $conn->prepare($sql_select);
+        $stmt_select->bind_param("i", $warehouses_id);
+        $stmt_select->execute();
+        $result = $stmt_select->get_result();
+        $row = $result->fetch_assoc();
+        $current_quantity = $row['warehouses_total_quantity'];
 
-       // Sumar la nueva cantidad al valor actual
-       $total = $current_quantity + $quantity;
+        // Sumar la nueva cantidad al valor actual
+        $total = $current_quantity + $quantity;
 
-       // Actualizar el campo warehouses_total_quantity
-       $stmt_update = $conn->prepare("UPDATE warehouses SET warehouses_total_quantity = ? WHERE warehouses_id = ?");
-       $stmt_update->bind_param("ii", $total, $warehouses_id);
-       $stmt_update->execute();
+        // Actualizar el campo warehouses_total_quantity
+        $stmt_update = $conn->prepare("UPDATE warehouses SET warehouses_total_quantity = ? WHERE warehouses_id = ?");
+        $stmt_update->bind_param("ii", $total, $warehouses_id);
+        $stmt_update->execute();
 
         if ($stmt->execute() && $stmt_update->execute()) {
             ?>
