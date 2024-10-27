@@ -1,5 +1,5 @@
 /**
- * Gráfica de Reportes
+ * Gráfica de Reportes por bodegas
  */
 document.addEventListener('DOMContentLoaded', function () {
     const labels = data.map(item => item.warehouses_name);
@@ -7,32 +7,36 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const totalQuantity = quantities.reduce((acc, curr) => acc + curr, 0);
 
-    // Lista de colores
-    const rootStyles = getComputedStyle(document.documentElement);
-    const colors = [
-        rootStyles.getPropertyValue('--amarillo').trim(),
-        rootStyles.getPropertyValue('--naranja').trim(),
-        rootStyles.getPropertyValue('--verde').trim(),
-        rootStyles.getPropertyValue('--cian').trim(),
-        rootStyles.getPropertyValue('--morado').trim(),
-        rootStyles.getPropertyValue('--rosa').trim(),
-        rootStyles.getPropertyValue('--gris').trim(),
-        rootStyles.getPropertyValue('--marron').trim(),
-        rootStyles.getPropertyValue('--azul').trim(),
-        rootStyles.getPropertyValue('--rojo').trim()
-    ];
+    // Crear etiquetas con cantidades
+    const labelsWithQuantities = data.map(item => `${item.warehouses_name} (${item.warehouses_total_quantity})`);
 
-    const axisColor = rootStyles.getPropertyValue('--azul').trim();
+    // Función para generar colores aleatorios
+    function getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    // Generar colores aleatorios para cada cantidad
+    const colors = quantities.map(() => getRandomColor());
+
+    // Obtener el color de la variable CSS --azul
+    const rootStyles = getComputedStyle(document.documentElement);
+    const axisColor = rootStyles.getPropertyValue('--negro').trim();
+
     const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: labels,
+            labels: labelsWithQuantities,
             datasets: [{
                 label: '',
                 data: quantities,
-                backgroundColor: colors.slice(0, quantities.length),
-                borderColor: colors.slice(0, quantities.length).map(color => color.replace('0.2', '1')),
+                backgroundColor: colors,
+                borderColor: colors.map(color => color.replace('0.2', '1')),
                 borderWidth: 1
             }]
         },

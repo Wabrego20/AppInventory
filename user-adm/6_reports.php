@@ -144,8 +144,7 @@ include_once '../settings/conexion.php';
     <main>
 
         <div id="chart-container">
-            <canvas id="myChart">
-            </canvas>
+            <canvas id="myChart"></canvas>
             <i class="fa-solid fa-print accion accionSolicitar" title="clic para imprimir este reporte" id="print-button"></i>
         </div>
 
