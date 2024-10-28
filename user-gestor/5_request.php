@@ -147,14 +147,49 @@ include_once ("../settings/conexion.php");
                 $users_user = $_SESSION['users_user'];
                 $solicitud = "SELECT request.*, users.*, departament.*, articles.*, categories.*, inventory.*
                  FROM request
-                 JOIN users ON request.requester_id = users.users_id OR request.approver_id = users.users_id
+                 JOIN users ON request.requester_id = users.users_id
                  JOIN departament ON users.departament_id = departament.departament_id
                  JOIN articles ON request.articles_id = articles.articles_id
                  JOIN categories ON articles.categories_id = categories.categories_id
                  JOIN inventory ON inventory.inventory_id = request.inventory_id
                  WHERE users.users_user=?";
 
-                
+                $sqlApprover = "SELECT users.* FROM users JOIN request ON request.approver_id = users.users_id";
+                $result = $conn->query($sqlApprover);
+                if ($result->num_rows > 0) {
+                    $approver_data = $result->fetch_assoc();
+                } else {
+                    $approver_data = [];
+                }
+                $sqlDepartament = "SELECT departament.* FROM departament JOIN users ON users.departament_id = departament.departament_id";
+                $result = $conn->query($sqlDepartament);
+                if ($result === false) {
+                    die("Error en la consulta SQL: " . $conn->error);
+                }
+                if ($result->num_rows > 0) {
+                    $departament_data = $result->fetch_assoc();
+                    $departament_name = $departament_data['departament_name'];
+                } else {
+                    $departament_data = [];
+                }
+                $sqlWarehouse = "SELECT warehouses_name FROM warehouses";
+                $result = $conn->query($sqlWarehouse);
+                if ($result->num_rows > 0) {
+                    $warehouse_data = $result->fetch_assoc();
+                    $warehouse_name = $warehouse_data['warehouses_name'];
+                } else {
+                    $warehouse_data = [];
+                }
+
+                $sqlUnits = "SELECT units_name FROM units_of_measure 
+                            JOIN articles ON articles.units_id = units_of_measure.units_id";
+                $result = $conn->query($sqlUnits);
+                if ($result->num_rows > 0) {
+                    $units_of_measure_data = $result->fetch_assoc();
+                    $units_name = $units_of_measure_data['units_name'];
+                } else {
+                    $units_of_measure_data = [];
+                }
 
                 $stmt = $conn->prepare($solicitud);
                 $stmt->bind_param("s", $users_user);
@@ -201,14 +236,24 @@ include_once ("../settings/conexion.php");
                                     <a href="delivery_certificate.php?fila=<?php echo $fila; ?>
                                     &users_name=<?php echo urlencode($row['users_name'] ?? 'No disponible'); ?>
                                     &users_last_name=<?php echo urlencode($row['users_last_name'] ?? 'No disponible'); ?>
+
+                                    &approver_name=<?php echo urlencode($approver_data['users_name'] ?? 'No disponible'); ?>
+                                    &approver_last_name=<?php echo urlencode($approver_data['users_last_name'] ?? 'No disponible'); ?>
+                                    &departament_name=<?php echo urlencode($departament_data['departament_name'] ?? 'No disponible'); ?>
+
+                                    &warehouses_name=<?php echo urlencode($warehouse_data['warehouses_name'] ?? 'No disponible'); ?>
+
                                     &articles_name=<?php echo urlencode($row['articles_name'] ?? 'No disponible'); ?>
+                                    
                                     &categories_name=<?php echo urlencode($row['categories_name'] ?? 'No disponible'); ?>
                                     &inventory_name=<?php echo urlencode($row['inventory_name'] ?? 'No disponible'); ?>
+
                                     &request_quantity=<?php echo $row['request_quantity'] ?? 'No disponible'; ?>
+                                    &units_name=<?php echo urlencode($units_of_measure_data['units_name'] ?? 'No disponible'); ?>
+
                                     &request_total_cost=<?php echo $row['request_total_cost'] ?? 'No disponible'; ?>
                                     &request_order_date=<?php echo $row['request_order_date'] ?? 'd/m/a'; ?>
-                                    &request_status=<?php echo urlencode($row['request_status'] ?? ''); ?>
-                                    &request_reason=<?php echo urlencode($row['request_reason'] ?? ''); ?>"
+                                    &articles_unit_cost=<?php echo urlencode($row['articles_unit_cost'] ?? ''); ?>"
                                         title="Ver acta de entrega" target="_blank">
                                         <i class="fa-solid fa-file-pdf"></i>
                                     </a>

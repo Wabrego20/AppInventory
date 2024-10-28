@@ -3,28 +3,29 @@
 $fila = $_GET['fila'] ?? 'No disponible';
 $users_name = $_GET['users_name'] ?? 'No disponible';
 $users_last_name = $_GET['users_last_name'] ?? 'No disponible';
-$articles_name = $_GET['articles_name'] ?? 'No disponible';
+
+$approver_name = $_GET['approver_name'] ?? 'No disponible';
+$approver_last_name = $_GET['approver_last_name'] ?? 'No disponible';
+$departament_name = $_GET['departament_name'] ?? 'No disponible';
+
+$warehouses_name = $_GET['warehouses_name'] ?? 'No disponible';
+
+$articles_name = $_GET['articles_name'] ?? 'No disponible'; 
 $categories_name = $_GET['categories_name'] ?? 'No disponible';
 $inventory_name = $_GET['inventory_name'] ?? 'No disponible';
+$units_name = $_GET['units_name'] ?? 'No disponible';
 $request_quantity = $_GET['request_quantity'] ?? '0';
+$articles_unit_cost = $_GET['articles_unit_cost'] ?? '0.00';
 $request_total_cost = $_GET['request_total_cost'] ?? '0.00';
 $request_order_date = $_GET['request_order_date'] ?? 'd/m/a';
-$request_status = $_GET['request_status'] ?? '';
 $request_reason = $_GET['request_reason'] ?? '';
 
 // Datos de ejemplo (deberías obtener estos datos de tu base de datos)
 $solicitante = $users_name . ' ' . $users_last_name;
-$elaborado_por = "Ana Gómez";
-$cantidad = $request_quantity;
+$elaborado_por = $approver_name . ' ' . $approver_last_name;
+$cant = $request_quantity . ' ' . $units_name;
 date_default_timezone_set('America/Panama');
 $fecha = date('Y-m-d H:i:s');
-
-
-$fecha_formateada = date('d-m-Y');
-
-$articulo = $articles_name;
-$precio_unitario = 0.10; // Precio unitario de ejemplo
-$precio_total = $request_total_cost;
 ?>
 
 <!DOCTYPE html>
@@ -66,41 +67,44 @@ $precio_total = $request_total_cost;
             </div>
             <div class="campos">
                 <label>Nombre del Artículo:</label>
-                <h4> <?php echo htmlspecialchars($articulo); ?></h4>
+                <h4> <?php echo htmlspecialchars($articles_name); ?></h4>
             </div>
             <div class="campos">
                 <label>Cantidad:</label>
-                <h4> <?php echo htmlspecialchars($cantidad); ?></h4>
+                <h4> <?php echo htmlspecialchars($cant); ?></h4>
             </div>
             <div class="campos">
                 <label>Categoría:</label>
-                <h4> <?php echo htmlspecialchars(""); ?></h4>
+                <h4> <?php echo htmlspecialchars($categories_name); ?></h4>
             </div>
             <div class="campos">
                 <label>Bodega:</label>
-                <h4> <?php echo htmlspecialchars(""); ?></h4>
+                <h4> <?php echo htmlspecialchars($warehouses_name); ?></h4>
             </div>
             <div class="campos">
                 <label>Fecha de Solicitud:</label>
-                <h4> <?php echo htmlspecialchars(""); ?></h4>
+                <h4> <?php echo htmlspecialchars($request_order_date); ?></h4>
             </div>
             <div class="campos">
                 <label>Costo Unitario:</label>
-                <h4> <?php echo htmlspecialchars($precio_unitario); ?></h4>
+                <h4> <?php echo htmlspecialchars('B/.' . ' ' .$articles_unit_cost); ?></h4>
             </div>
             <div class="campos">
                 <label>Costo Total:</label>
-                <h4> <?php echo htmlspecialchars($precio_total); ?></h4>
+                <h4> <?php echo htmlspecialchars('B/.' . ' ' .$request_total_cost); ?></h4>
             </div>
 
             <div class="campos dobleSaltoLinea">
                 <h4>Detalle de la entrega</h4>
             </div>
             <div class="campos">
-                <h4>
-                    El día <?php echo $fecha_formateada?>, en las instalaciones del Almacén Central, se realizó la entrega de 20
-                    sillas de oficina al departamento de Recursos Humanos. La entrega fue solicitada por el Jefe de
-                    Recursos Humanos, Juan Pérez, y fue gestionada por Ana Gómez, Responsable de Almacén.
+                <h4 style="text-align: justify;">
+                    El día
+                    <?php $formatter = new IntlDateFormatter('es_ES', IntlDateFormatter::FULL, IntlDateFormatter::NONE);
+                    $date = new DateTime();
+                    echo $formatter->format($date);
+                    ?>, en las instalaciones de la <?php echo $warehouses_name ?>, se realizó la entrega de <?php echo $cant?> de
+                    <?php echo $articles_name?>. La entrega fue solicitada por <?php echo $solicitante?> y fue gestionada por <?php echo $elaborado_por?> de <?php echo $departament_name?>.
                 </h4>
             </div>
 
