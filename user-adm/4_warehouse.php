@@ -170,11 +170,9 @@ include_once '../settings/notice.php';
                 if ($result->num_rows > 0) {
                     $fila = 1;
                     while ($row = $result->fetch_assoc()) {
-                        ?>
+                ?>
                         <tr>
-                            <td>
-                                <?php echo $fila; ?>
-                            </td>
+                            <td><?php echo $fila; ?></td>
                             <td><?php echo $row['warehouses_name']; ?></td>
                             <td><?php echo $row['warehouses_province']; ?></td>
                             <td><?php echo $row['warehouses_location']; ?></td>
@@ -196,8 +194,7 @@ include_once '../settings/notice.php';
                                 </button>
                             </td>
                         </tr>
-
-                        <?php
+                <?php
                         $fila++;
                     }
                 }
@@ -375,7 +372,7 @@ if (isset($_POST['crearBodega'])) {
     $result = $checkQuery->get_result();
 
     if ($result->num_rows > 0) {
-        ?>
+?>
         <script>
             Swal.fire({
                 color: "var(--rojo)",
@@ -401,7 +398,7 @@ if (isset($_POST['crearBodega'])) {
         $stmt->bind_param("sss", $name, $provincia, $direccion);
 
         if ($stmt->execute()) {
-            ?>
+        ?>
             <script>
                 Swal.fire({
                     color: "var(--verde)",
@@ -420,7 +417,7 @@ if (isset($_POST['crearBodega'])) {
                     }
                 });
             </script>
-            <?php
+        <?php
         } else {
             echo "Error: " . $stmt->error;
         }
@@ -464,9 +461,9 @@ if (isset($_POST['editBodega'])) {
                 }
             });
         </script>
-        <?php
+    <?php
     } else {
-        ?>
+    ?>
         <script>
             Swal.fire({
                 color: "var(--rojo)",
@@ -486,7 +483,7 @@ if (isset($_POST['editBodega'])) {
                 }
             });
         </script>
-        <?php
+    <?php
     }
 
     $stmt->close();
@@ -507,7 +504,7 @@ if (isset($_POST['eliminarBodega'])) {
     $row = $result->fetch_assoc();
 
     if ($row['warehouses_total_quantity'] > 0) {
-        ?>
+    ?>
         <script>
             Swal.fire({
                 color: "var(--rojo)",
@@ -534,7 +531,7 @@ if (isset($_POST['eliminarBodega'])) {
         $deleteQuery->bind_param("s", $name);
 
         if ($deleteQuery->execute()) {
-            ?>
+        ?>
             <script>
                 Swal.fire({
                     color: "var(--verde)",
@@ -554,7 +551,7 @@ if (isset($_POST['eliminarBodega'])) {
                     }
                 });
             </script>
-            <?php
+<?php
         } else {
             echo "Error al eliminar la bodega.";
         }

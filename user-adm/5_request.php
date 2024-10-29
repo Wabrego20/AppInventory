@@ -189,35 +189,17 @@ include_once '../settings/notice.php';
                 if ($result->num_rows > 0) {
                     $fila = 1;
                     while ($row = $result->fetch_assoc()) {
-                        ?>
+                ?>
                         <tr>
-                            <td>
-                                <?php echo $fila; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['users_user'] ?? 'No disponible'; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['departament_name'] ?? 'No disponible'; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['articles_name'] ?? 'No disponible'; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['categories_name'] ?? 'No disponible'; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['inventoryType'] ?? 'No disponible'; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['request_quantity'] ?? '0'; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['request_total_cost'] ?? '0.00'; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['request_order_date'] ?? 'd/m/a'; ?>
-                            </td>
+                            <td><?php echo $fila; ?></td>
+                            <td><?php echo $row['users_user'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['departament_name'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['articles_name'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['categories_name'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['inventoryType'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['request_quantity'] ?? '0'; ?></td>
+                            <td><?php echo $row['request_total_cost'] ?? '0.00'; ?></td>
+                            <td><?php echo $row['request_order_date'] ?? 'd/m/a'; ?></td>
                             <td class="<?php echo strtolower($row['request_status'] ?? ''); ?>">
                                 <h5 title="Clic para ver la razón del rechazo."
                                     onclick="reasonReject('<?php echo $row['request_reason']; ?>')">
@@ -235,8 +217,7 @@ include_once '../settings/notice.php';
                                         class="fa-solid fa-thumbs-down fa-lg"></i></button>
                             </td>
                         </tr>
-
-                        <?php
+                <?php
                         $fila++;
                     }
                 }
@@ -454,7 +435,7 @@ if (isset($_POST['approveRequest'])) {
         $stmt_update->execute();
 
         if ($stmt_update->affected_rows > 0) {
-            ?>
+?>
             <script>
                 Swal.fire({
                     color: "var(--verde)",
@@ -474,9 +455,9 @@ if (isset($_POST['approveRequest'])) {
                     }
                 });
             </script>
-            <?php
+        <?php
         } else {
-            ?>
+        ?>
             <script>
                 Swal.fire({
                     color: "var(--rojo)",
@@ -496,7 +477,7 @@ if (isset($_POST['approveRequest'])) {
                     }
                 });
             </script>
-            <?php
+        <?php
         }
         $stmt_update_quantity->close();
         $stmt_update->close();
@@ -574,7 +555,7 @@ if (isset($_POST['rejectRequest'])) {
 
         // Verificar si la actualización fue exitosa
         if ($stmt_update->affected_rows > 0) {
-            ?>
+        ?>
             <script>
                 Swal.fire({
                     color: "var(--verde)",
@@ -594,9 +575,9 @@ if (isset($_POST['rejectRequest'])) {
                     }
                 });
             </script>
-            <?php
+        <?php
         } else {
-            ?>
+        ?>
             <script>
                 Swal.fire({
                     color: "var(--rojo)",
@@ -616,7 +597,7 @@ if (isset($_POST['rejectRequest'])) {
                     }
                 });
             </script>
-            <?php
+        <?php
         }
         $stmt_update->close();
     } else {
@@ -640,7 +621,7 @@ if (isset($_POST['rejectRequest'])) {
                 }
             });
         </script>
-        <?php
+<?php
     }
     $conn->close();
 }

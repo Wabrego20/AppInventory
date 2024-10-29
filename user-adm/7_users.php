@@ -179,29 +179,15 @@ include_once '../settings/notice.php';
                 if ($verUsuarios->num_rows > 0) {
                     $fila = 1;
                     while ($row = $verUsuarios->fetch_assoc()) {
-                        ?>
+                ?>
                         <tr>
-                            <td>
-                                <?php echo $fila; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['users_dni']; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['users_name']; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['users_last_name']; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['users_email']; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['users_rol']; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['users_registration_date']; ?>
-                            </td>
+                            <td><?php echo $fila; ?></td>
+                            <td> <?php echo $row['users_dni']; ?></td>
+                            <td><?php echo $row['users_name']; ?></td>
+                            <td><?php echo $row['users_last_name']; ?></td>
+                            <td><?php echo $row['users_email']; ?></td>
+                            <td><?php echo $row['users_rol']; ?></td>
+                            <td><?php echo $row['users_registration_date']; ?></td>
                             <td>
                                 <a href="javascript:void(0);" onclick="editUser(<?php echo $row['users_id']; ?>)">
                                     <i class="fa-solid fa-user-pen"></i>
@@ -213,8 +199,7 @@ include_once '../settings/notice.php';
                                 </a>
                             </td>
                         </tr>
-
-                        <?php
+                <?php
                         $fila++;
                     }
                 }
@@ -368,7 +353,7 @@ if (isset($_POST['crearUsuario'])) {
     $result = $checkQuery->get_result();
 
     if ($result->num_rows > 0) {
-        ?>
+?>
         <script>
             Swal.fire({
                 color: "var(--rojo)",
@@ -414,7 +399,7 @@ if (isset($_POST['crearUsuario'])) {
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("sssssssss", $dni, $name, $lastName, $email, $uniqueUser, $password, $rol, $registration_date, $departament);
         if ($stmt->execute()) {
-            ?>
+        ?>
             <script>
                 Swal.fire({
                     color: "var(--verde)",
@@ -433,7 +418,7 @@ if (isset($_POST['crearUsuario'])) {
                     }
                 });
             </script>
-            <?php
+<?php
         } else {
             echo "Error: " . $stmt->error;
         }

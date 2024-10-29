@@ -170,7 +170,6 @@ include_once '../settings/notice.php';
             </thead>
             <tbody>
                 <?php
-
                 $articulos = "SELECT articles.*, categories.*, units_of_measure.* 
                 FROM articles, categories, units_of_measure 
                 WHERE articles.categories_id = categories.categories_id 
@@ -185,24 +184,17 @@ include_once '../settings/notice.php';
                 if ($result->num_rows > 0) {
                     $fila = 1;
                     while ($row = $result->fetch_assoc()) {
-                        ?>
+                ?>
                         <tr>
-                            <td>
-                                <?php echo $fila; ?>
-                            </td>
-                            <td><?php echo !empty($row['articles_name']) ? $row['articles_name'] : 'No disponible'; ?></td>
-                            <td><?php echo !empty($row['articles_description']) ? $row['articles_description'] : 'No disponible'; ?>
-                            </td>
-                            <td><?php echo !empty($row['articles_brand']) ? $row['articles_brand'] : 'No disponible'; ?></td>
-                            <td><?php echo !empty($row['categories_name']) ? $row['categories_name'] : 'No disponible'; ?></td>
-                            <td><?php echo !empty($row['units_name']) ? $row['units_name'] : 'no disponible'; ?>
-                            </td>
-                            <td><?php echo !empty($row['articles_unit_cost']) ? $row['articles_unit_cost'] : '0.00'; ?>
-                            </td>
-                            <td><?php echo !empty($row['articles_arrival_date']) ? $row['articles_arrival_date'] : 'dd/mm/aaaa'; ?>
-                            </td>
-                            <td><?php echo !empty($row['articles_expiration_date']) ? $row['articles_expiration_date'] : 'no aplica'; ?>
-                            </td>
+                            <td><?php echo $fila; ?></td>
+                            <td><?php echo $row['articles_name'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['articles_description'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['articles_brand'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['categories_name'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['units_name'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['articles_unit_cost'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['articles_arrival_date'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['articles_expiration_date'] ?? 'no disponible'; ?></td>
                             <td>
                                 <?php if (!empty($row['articles_photo'])): ?>
                                     <img src="data:image/jpeg;base64,<?php echo $row['articles_photo']; ?>" class="fotoArt" />
@@ -227,7 +219,7 @@ include_once '../settings/notice.php';
                                 </button>
                             </td>
                         </tr>
-                        <?php
+                <?php
                         $fila++;
                     }
                 }
@@ -572,7 +564,7 @@ if (isset($_POST['crearArticulo'])) {
         $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
         if (!in_array($fileType, $allowedTypes)) {
-            ?>
+?>
             <script>
                 Swal.fire({
                     color: "var(--rojo)",
@@ -591,7 +583,7 @@ if (isset($_POST['crearArticulo'])) {
                     }
                 });
             </script>
-            <?php
+        <?php
             exit;
         }
         $imageData = file_get_contents($_FILES['articles_photo']['tmp_name']);
@@ -616,7 +608,7 @@ if (isset($_POST['crearArticulo'])) {
                 }
             });
         </script>
-        <?php
+    <?php
         exit;
     }
     // Verificar si el artículo ya existe
@@ -625,7 +617,7 @@ if (isset($_POST['crearArticulo'])) {
     $check_stmt->execute();
     $result = $check_stmt->get_result();
     if ($result->num_rows > 0) {
-        ?>
+    ?>
         <script>
             Swal.fire({
                 color: "var(--rojo)",
@@ -651,7 +643,7 @@ if (isset($_POST['crearArticulo'])) {
 
         // Ejecutar la sentencia
         if ($stmt->execute()) {
-            ?>
+        ?>
             <script>
                 Swal.fire({
                     color: "var(--verde)",
@@ -670,9 +662,9 @@ if (isset($_POST['crearArticulo'])) {
                     }
                 });
             </script>
-            <?php
+        <?php
         } else {
-            ?>
+        ?>
             <script>
                 Swal.fire({
                     color: "var(--rojo)",
@@ -691,7 +683,7 @@ if (isset($_POST['crearArticulo'])) {
                     }
                 });
             </script>
-            <?php
+        <?php
         }
         $stmt->close();
     }
@@ -757,9 +749,9 @@ if (isset($_POST['editarArticulo'])) {
                 }
             });
         </script>
-        <?php
+    <?php
     } else {
-        ?>
+    ?>
         <script>
             Swal.fire({
                 color: "var(--rojo)",
@@ -779,7 +771,7 @@ if (isset($_POST['editarArticulo'])) {
                 }
             });
         </script>
-        <?php
+    <?php
     }
     $stmt->close();
     $conn->close();
@@ -801,7 +793,7 @@ if (isset($_POST['eliminarArticulo'])) {
     $row_check = $result_check->fetch_assoc();
 
     if ($row_check['count'] > 0) {
-        ?>
+    ?>
         <script>
             Swal.fire({
                 color: "var(--rojo)",
@@ -821,14 +813,14 @@ if (isset($_POST['eliminarArticulo'])) {
                 }
             });
         </script>
-        <?php
+    <?php
     } else {
         // Eliminar el registro de la tabla articles
         $sql_delete = "DELETE FROM articles WHERE articles_id = ?";
         $stmt_delete = $conn->prepare($sql_delete);
         $stmt_delete->bind_param("i", $articles_id);
         $stmt_delete->execute();
-        ?>
+    ?>
         <script>
             Swal.fire({
                 color: "var(--verde)",
@@ -848,7 +840,7 @@ if (isset($_POST['eliminarArticulo'])) {
                 }
             });
         </script>
-        <?php
+<?php
         $stmt_delete->close();
     }
     $stmt_check->close();

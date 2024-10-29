@@ -188,17 +188,11 @@ include_once '../settings/notice.php';
                 if ($result->num_rows > 0) {
                     $fila = 1;
                     while ($row = $result->fetch_assoc()) {
-                        ?>
+                ?>
                         <tr>
-                            <td>
-                                <?php echo $fila; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['articles_name'] ?? 'no disponible'; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['categories_name'] ?? 'no disponible'; ?>
-                            </td>
+                            <td><?php echo $fila; ?></td>
+                            <td><?php echo $row['articles_name'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['categories_name'] ?? 'no disponible'; ?></td>
                             <td>
                                 <button class="accion accionSolicitar"
                                     onclick="addQuantArtConsumoInt('<?php echo $row['inventory_id']; ?>', '<?php echo $row['articles_name']; ?>')"
@@ -206,22 +200,11 @@ include_once '../settings/notice.php';
                                     <?php echo $row['inventory_quantity'] ?? '0'; ?>
                                 </button>
                             </td>
-                            <td>
-                                <?php echo $row['inventory_registration_date'] ?? 'dd/mm/aaaa'; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['warehouses_name'] ?? 'no disponible'; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['articles_unit_cost'] ?? '0.00'; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['inventory_total_cost'] ?? '0.00'; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['inventory_re_order'] ?? 'n/a'; ?>
-                            </td>
-
+                            <td><?php echo $row['inventory_registration_date'] ?? 'dd/mm/aaaa'; ?></td>
+                            <td><?php echo $row['warehouses_name'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['articles_unit_cost'] ?? '0.00'; ?></td>
+                            <td><?php echo $row['inventory_total_cost'] ?? '0.00'; ?></td>
+                            <td><?php echo $row['inventory_re_order'] ?? 'n/a'; ?></td>
                             <td>
                                 <button class="accion accionEliminar"
                                     onclick="deleteArtConsumoInt('<?php echo $row['inventory_id']; ?>', '<?php echo $row['inventory_quantity']; ?>', '<?php echo $row['articles_name']; ?>')"
@@ -231,8 +214,7 @@ include_once '../settings/notice.php';
                                 </button>
                             </td>
                         </tr>
-
-                        <?php
+                <?php
                         $fila++;
                     }
                 }
@@ -452,7 +434,7 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
     $checkQuery->execute();
     $result = $checkQuery->get_result();
     if ($result->num_rows > 0) {
-        ?>
+?>
         <script>
             Swal.fire({
                 color: "var(--rojo)",
@@ -496,7 +478,7 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
         $stmt_update->execute();
 
         if ($stmt->execute() && $stmt_update->execute()) {
-            ?>
+        ?>
             <script>
                 Swal.fire({
                     color: "var(--verde)",
@@ -515,7 +497,7 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
                     }
                 });
             </script>
-            <?php
+        <?php
         } else {
             echo "Error: " . $stmt->error;
         }
@@ -567,7 +549,7 @@ if (isset($_POST['eliminarArtConsumoInterno'])) {
         $deleteQuery->bind_param("i", $id);
 
         if ($deleteQuery->execute()) {
-            ?>
+        ?>
             <script>
                 Swal.fire({
                     color: "var(--verde)",
@@ -587,7 +569,7 @@ if (isset($_POST['eliminarArtConsumoInterno'])) {
                     }
                 });
             </script>
-            <?php
+        <?php
         } else {
             echo "Error al eliminar la bodega.";
         }
@@ -652,7 +634,7 @@ if (isset($_POST['addQuantArt'])) {
 
 
         if ($stmt->execute() && $stmt_update->execute()) {
-            ?>
+        ?>
             <script>
                 Swal.fire({
                     color: "var(--verde)",
@@ -671,7 +653,7 @@ if (isset($_POST['addQuantArt'])) {
                     }
                 });
             </script>
-            <?php
+<?php
         } else {
             echo "Error: " . $stmt->error;
         }
