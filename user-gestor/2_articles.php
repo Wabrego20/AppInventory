@@ -14,7 +14,7 @@ include_once("../settings/conexion.php");
     <link rel="stylesheet" href="../settings/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="../settings/styles.css">
     <link rel="stylesheet" href="../css/2_articles.css">
-    <link rel="stylesheet" href="../settings/gestor.css">
+    <style>.oculto { display: none;}</style>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
     <title>Artículos/Productos | Sist-Inventario</title>
 </head>
