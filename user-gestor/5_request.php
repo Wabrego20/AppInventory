@@ -201,63 +201,39 @@ include_once ("../settings/conexion.php");
                     while ($row = $result->fetch_assoc()) {
                         ?>
                         <tr>
-                            <td>
-                                <?php echo $fila; ?>
-                            </td>
-
-                            <td>
-                                <?php echo $row['articles_name'] ?? 'No disponible'; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['categories_name'] ?? 'No disponible'; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['inventory_name'] ?? 'No disponible'; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['request_quantity'] ?? 'No disponible'; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['request_total_cost'] ?? 'No disponible'; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['request_order_date'] ?? 'd/m/a'; ?>
-                            </td>
-
+                            <td><?php echo $fila; ?></td>
+                            <td><?php echo $row['articles_name'] ?? 'No disponible'; ?></td>
+                            <td><?php echo $row['categories_name'] ?? 'No disponible'; ?></td>
+                            <td><?php echo $row['inventory_name'] ?? 'No disponible'; ?></td>
+                            <td><?php echo $row['request_quantity'] ?? 'No disponible'; ?></td>
+                            <td><?php echo $row['request_total_cost'] ?? 'No disponible'; ?></td>
+                            <td><?php echo $row['request_order_date'] ?? 'd/m/a'; ?></td>
                             <td class="<?php echo strtolower($row['request_status'] ?? ''); ?>">
                                 <h5 title="Clic para ver la razón del rechazo."
                                     onclick="reasonReject('<?php echo $row['request_reason']; ?>')">
                                     <?php echo $row['request_status'] ?? ''; ?>
                                 </h5>
                             </td>
-
                             <td>
                                 <?php if ($row['request_status'] === 'Aprobada'): ?>
                                     <a href="delivery_certificate.php?fila=<?php echo $fila; ?>
                                     &users_name=<?php echo urlencode($row['users_name'] ?? 'No disponible'); ?>
                                     &users_last_name=<?php echo urlencode($row['users_last_name'] ?? 'No disponible'); ?>
-
                                     &approver_name=<?php echo urlencode($approver_data['users_name'] ?? 'No disponible'); ?>
                                     &approver_last_name=<?php echo urlencode($approver_data['users_last_name'] ?? 'No disponible'); ?>
                                     &departament_name=<?php echo urlencode($departament_data['departament_name'] ?? 'No disponible'); ?>
-
                                     &warehouses_name=<?php echo urlencode($warehouse_data['warehouses_name'] ?? 'No disponible'); ?>
-
                                     &articles_name=<?php echo urlencode($row['articles_name'] ?? 'No disponible'); ?>
-                                    
                                     &categories_name=<?php echo urlencode($row['categories_name'] ?? 'No disponible'); ?>
                                     &inventory_name=<?php echo urlencode($row['inventory_name'] ?? 'No disponible'); ?>
-
                                     &request_quantity=<?php echo $row['request_quantity'] ?? 'No disponible'; ?>
                                     &units_name=<?php echo urlencode($units_of_measure_data['units_name'] ?? 'No disponible'); ?>
-
                                     &request_total_cost=<?php echo $row['request_total_cost'] ?? 'No disponible'; ?>
                                     &request_order_date=<?php echo $row['request_order_date'] ?? 'd/m/a'; ?>
                                     &articles_unit_cost=<?php echo urlencode($row['articles_unit_cost'] ?? ''); ?>"
                                         title="Ver acta de entrega" target="_blank">
                                         <i class="fa-solid fa-file-pdf"></i>
                                     </a>
-
                                 <?php else: ?>
                                     <i class="fa-solid fa-file-pdf pdfHidden"></i>
                                 <?php endif; ?>

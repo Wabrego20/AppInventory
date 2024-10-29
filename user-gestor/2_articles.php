@@ -159,17 +159,13 @@ include_once("../settings/conexion.php");
                     while ($row = $result->fetch_assoc()) {
                 ?>
                         <tr>
-                            <td>
-                                <?php echo $fila; ?>
-                            </td>
-                            <td><?php echo !empty($row['articles_name']) ? $row['articles_name'] : 'No disponible'; ?></td>
-                            <td><?php echo !empty($row['articles_description']) ? $row['articles_description'] : 'No disponible'; ?>
-                            </td>
-                            <td><?php echo !empty($row['articles_brand']) ? $row['articles_brand'] : 'No disponible'; ?></td>
-                            <td><?php echo !empty($row['categories_name']) ? $row['categories_name'] : 'No disponible'; ?></td>
-                            <td><?php echo !empty($row['units_name']) ? $row['units_name'] : 'no disponible'; ?>
-                            </td>
-                            <td><?php echo !empty($row['articles_unit_cost']) ? $row['articles_unit_cost'] : '0.00'; ?>
+                            <td><?php echo $fila; ?></td>
+                            <td><?php echo $row['articles_name'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['articles_description'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['articles_brand'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['categories_name'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['units_name'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['articles_unit_cost'] ?? '0.00'; ?></td>
                             </td>
                             <td>
                                 <?php if (!empty($row['articles_photo'])): ?>
@@ -178,12 +174,8 @@ include_once("../settings/conexion.php");
                                     <i class="fa-solid fa-camera"></i>
                                 <?php endif; ?>
                             </td>
-                            <td>
-                                <?php echo !empty($row['articles_arrival_date']) ? $row['articles_arrival_date'] : 'dd/mm/aaaa'; ?>
-                            </td>
-                            <td>
-                                <?php echo !empty($row['articles_expiration_date']) ? $row['articles_expiration_date'] : 'no aplica'; ?>
-                            </td>
+                            <td><?php echo $row['articles_arrival_date'] ?? 'dd/mm/aaa'; ?></td>
+                            <td><?php echo $row['articles_expiration_date'] ?? 'dd/mm/aaa'; ?></td>
                         </tr>
                 <?php
                         $fila++;

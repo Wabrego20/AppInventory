@@ -164,31 +164,14 @@ include_once '../settings/conexion.php';
                     while ($row = $result->fetch_assoc()) {
                         ?>
                         <tr>
-                            <td>
-                                <?php echo $fila; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['articles_name'] ?? 'no disponible'; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['categories_name'] ?? 'no disponible'; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['inventory_quantity'] ?? '0'; ?>
-                            </td>
-
-                            <td>
-                                <?php echo $row['inventory_registration_date'] ?? 'd/m/a'; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['warehouses_name'] ?? 'no disponible'; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['articles_unit_cost'] ?? '0.00'; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['inventory_total_cost'] ?? '0.00'; ?>
-                            </td>
+                            <td> <?php echo $fila; ?></td>
+                            <td><?php echo $row['articles_name'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['categories_name'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['inventory_quantity'] ?? '0'; ?></td>
+                            <td><?php echo $row['inventory_registration_date'] ?? 'd/m/a'; ?></td>
+                            <td><?php echo $row['warehouses_name'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['articles_unit_cost'] ?? '0.00'; ?></td>
+                            <td><?php echo $row['inventory_total_cost'] ?? '0.00'; ?></td>
                             <td>
                                 <button class="accion accionSolicitar" title="clic para solicitar article"
                                     onclick="solicitarArt('<?php echo $row['inventory_id']; ?>', '<?php echo $row['articles_id']; ?>', '<?php echo $row['articles_name']; ?>','<?php echo $row['categories_name']; ?>','<?php echo $row['warehouses_name']; ?>','','<?php echo $row['articles_unit_cost']; ?>','')"><i

@@ -148,13 +148,11 @@ include_once("../settings/conexion.php");
                     while ($row = $result->fetch_assoc()) {
                 ?>
                         <tr>
-                            <td>
-                                <?php echo $fila; ?>
-                            </td>
-                            <td><?php echo $row['warehouses_name']; ?></td>
-                            <td><?php echo $row['warehouses_province']; ?></td>
-                            <td><?php echo $row['warehouses_location']; ?></td>
-                            <td><?php echo $row['warehouses_total_quantity']; ?></td>
+                            <td><?php echo $fila; ?></td>
+                            <td><?php echo $row['warehouses_name'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['warehouses_province'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['warehouses_location'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['warehouses_total_quantity'] ?? 'no disponible'; ?></td>
                         </tr>
 
                 <?php
