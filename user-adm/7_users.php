@@ -182,12 +182,12 @@ include_once '../settings/notice.php';
                 ?>
                         <tr>
                             <td><?php echo $fila; ?></td>
-                            <td> <?php echo $row['users_dni']; ?></td>
-                            <td><?php echo $row['users_name']; ?></td>
-                            <td><?php echo $row['users_last_name']; ?></td>
-                            <td><?php echo $row['users_email']; ?></td>
-                            <td><?php echo $row['users_rol']; ?></td>
-                            <td><?php echo $row['users_registration_date']; ?></td>
+                            <td><?php echo $row['users_dni'] ?? 'user'; ?></td>
+                            <td><?php echo $row['users_name'] ?? 'name'; ?></td>
+                            <td><?php echo $row['users_last_name'] ?? 'lastName'; ?></td>
+                            <td><?php echo $row['users_email'] ?? 'ejemplo@mail.com'; ?></td>
+                            <td><?php echo $row['users_rol'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['users_registration_date'] ?? 'dd/mm/aaaa'; ?></td>
                             <td>
                                 <a href="javascript:void(0);" onclick="editUser(<?php echo $row['users_id']; ?>)">
                                     <i class="fa-solid fa-user-pen"></i>

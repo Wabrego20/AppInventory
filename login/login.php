@@ -32,7 +32,7 @@
         <label for="users_user">Usuario:</label>
         <div class="campo">
           <i class="fa-solid fa-user-tie"></i>
-          <input class="btnTxt" type="text" name="users_user" id="users_user" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{4,15}"
+          <input class="btnTxt" type="text" name="users_user" id="users_user" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ0-9]{3,15}"
             maxlength="15" placeholder="introduzca su usuario por favor:" required autofocus>
         </div>
       </div>
