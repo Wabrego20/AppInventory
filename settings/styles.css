@@ -56,13 +56,14 @@ main {
 .fondo {
   position: fixed;
   transform: translate(-50%, -50%);
-  top: 50%;
+  top: 57%;
   left: 50%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
   width: 100%;
-  min-height: 100vh;
+  height: 90%;
   z-index: -2;
 }
 .ruta {
