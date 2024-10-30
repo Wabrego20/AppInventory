@@ -77,7 +77,7 @@ function ocultarFormDeleteArticle() {
 /*
  *Función para agregar una cantidad de artículos de consumo interno
  */
- function addQuantArtConsumoInt(id, name) {
+ function addQuantArtConsumoInt(id2, id, name) {
   var formu = document.querySelector(".modalAddQuantArticle"); //mostrar el modal de crear artículo
   formu.style.display = "flex";
   setTimeout(function () {
@@ -86,6 +86,7 @@ function ocultarFormDeleteArticle() {
 
   document.getElementById("inventory1_id_add_quant").value = id;
   document.getElementById("articles_name_add_quant").value = name;
+  document.getElementById("warehouses_id_add_quant").value = id2;
 }
 function ocultarFormAddQuantArticle() {
   var modal = document.querySelector(".modalAddQuantArticle");

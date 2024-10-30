@@ -78,7 +78,7 @@ main {
     color: var(--blanco);
   }
   .formLogCampo {
-    width: 350px;
+    width: 360px;
     max-width: 95%;
     display: flex;
     justify-content: space-between;

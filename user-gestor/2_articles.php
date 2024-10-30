@@ -175,7 +175,7 @@ include_once("../settings/conexion.php");
                                 <?php endif; ?>
                             </td>
                             <td><?php echo $row['articles_arrival_date'] ?? 'dd/mm/aaa'; ?></td>
-                            <td><?php echo $row['articles_expiration_date'] ?? 'dd/mm/aaa'; ?></td>
+                            <td><?php echo $row['articles_expiration_date'] ?? 'no tiene'; ?></td>
                         </tr>
                 <?php
                         $fila++;

@@ -188,14 +188,14 @@ include_once '../settings/notice.php';
                 if ($result->num_rows > 0) {
                     $fila = 1;
                     while ($row = $result->fetch_assoc()) {
-                ?>
+                        ?>
                         <tr>
                             <td><?php echo $fila; ?></td>
                             <td><?php echo $row['articles_name'] ?? 'no disponible'; ?></td>
                             <td><?php echo $row['categories_name'] ?? 'no disponible'; ?></td>
                             <td>
                                 <button class="accion accionSolicitar"
-                                    onclick="addQuantArtConsumoInt('<?php echo $row['inventory_id']; ?>', '<?php echo $row['articles_name']; ?>')"
+                                    onclick="addQuantArtConsumoInt('<?php echo $row['warehouses_id']; ?>', '<?php echo $row['inventory_id']; ?>', '<?php echo $row['articles_name']; ?>')"
                                     title="Tiene <?php echo $row['inventory_quantity'] ?? '0'; ?> artículos, haga clic si desea agregar más">
                                     <?php echo $row['inventory_quantity'] ?? '0'; ?>
                                 </button>
@@ -214,7 +214,7 @@ include_once '../settings/notice.php';
                                 </button>
                             </td>
                         </tr>
-                <?php
+                        <?php
                         $fila++;
                     }
                 }
@@ -367,7 +367,7 @@ include_once '../settings/notice.php';
                     <h2>Agregar Cantidad de Artículos</h2>
 
                     <!--campo de nombre de artículo-->
-                    <div class="formLogCampo">
+                    <div class="formLogCampo" style="width:95%;">
                         <label for="articles_name_add_quant">Nombre:</label>
                         <div class="campo">
                             <i class="fa-solid fa-box-open"></i>
@@ -377,12 +377,12 @@ include_once '../settings/notice.php';
                     </div>
 
                     <!--campo de cantidad de artículos-->
-                    <div class="formLogCampo">
+                    <div class="formLogCampo" style="width:95%;">
                         <label for="inventory1_quantity_add_new">Cantidad:<que class="fa-solid fa-asterisk">verifique
                                 antes de agregar</que></label>
                         <div class="campo">
                             <i class="fa-solid fa-arrow-up-1-9"></i>
-                            <input class="btnTxt" type="number" name="inventory1_quantity"
+                            <input class="btnTxt" type="number" name="inventory_quantity"
                                 id="inventory1_quantity_add_new" pattern="[0-9]{1,7}" min="1" max="1000000" step="1"
                                 placeholder="introduzca la cantidad " required>
                         </div>
@@ -434,7 +434,7 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
     $checkQuery->execute();
     $result = $checkQuery->get_result();
     if ($result->num_rows > 0) {
-?>
+        ?>
         <script>
             Swal.fire({
                 color: "var(--rojo)",
@@ -478,7 +478,7 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
         $stmt_update->execute();
 
         if ($stmt->execute() && $stmt_update->execute()) {
-        ?>
+            ?>
             <script>
                 Swal.fire({
                     color: "var(--verde)",
@@ -497,7 +497,7 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
                     }
                 });
             </script>
-        <?php
+            <?php
         } else {
             echo "Error: " . $stmt->error;
         }
@@ -509,29 +509,54 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
 /***
  * Función para Eliminarartículo de consumo interno
  */
-if (isset($_POST['eliminarArtConsumoInterno'])) {
+if (isset($_POST['addQuantArt'])) {
+    $quantity = intval(htmlspecialchars($_POST['inventory_quantity']));
+    $inventory_id = htmlspecialchars($_POST['inventory_id']);
+    $warehouse_id = htmlspecialchars($_POST['warehouses_id']);
 
-    $name = htmlspecialchars($_POST['articles_name']);
-    $id = htmlspecialchars($_POST['inventory_id']);
-    $quantity = htmlspecialchars($_POST['inventory_quantity']);
-
-    $checkQuery = $conn->prepare("SELECT * FROM inventory WHERE inventory_quantity = ?");
-    $checkQuery->bind_param("i", $quantity);
-    $checkQuery->execute();
-    $result = $checkQuery->get_result();
+    // Obtener la cantidad actual del inventario
+    $query = $conn->prepare("SELECT inventory_quantity FROM inventory WHERE inventory_id = ?");
+    $query->bind_param("i", $inventory_id);
+    $query->execute();
+    $result = $query->get_result();
     $row = $result->fetch_assoc();
 
-    if ($row['inventory_quantity'] > 0) {
+    $inventory_quantity = intval($row['inventory_quantity'] ?? '0');
+
+    // Calcular la nueva cantidad
+    $nuevaCantidad = $inventory_quantity + $quantity;
+
+    // Actualizar la cantidad en la tabla inventory
+    $updateInventoryQuery = $conn->prepare("UPDATE inventory SET inventory_quantity = ? WHERE inventory_id = ?");
+    $updateInventoryQuery->bind_param("ii", $nuevaCantidad, $inventory_id);
+
+    // Obtener la cantidad total actual del almacén
+    $warehouseQuery = $conn->prepare("SELECT warehouses_total_quantity FROM warehouses WHERE warehouses_id = ?");
+    $warehouseQuery->bind_param("i", $warehouse_id);
+    $warehouseQuery->execute();
+    $warehouseResult = $warehouseQuery->get_result();
+    $warehouseRow = $warehouseResult->fetch_assoc();
+
+    $totalWarehouse = intval($warehouseRow['warehouses_total_quantity'] ?? '0');
+
+    // Calcular la nueva cantidad total del almacén
+    $nuevaCantidadTotalWarehouse = $totalWarehouse + $quantity;
+
+    // Actualizar la cantidad total en la tabla warehouses
+    $updateWarehouseQuery = $conn->prepare("UPDATE warehouses SET warehouses_total_quantity = ? WHERE warehouses_id = ?");
+    $updateWarehouseQuery->bind_param("ii", $nuevaCantidadTotalWarehouse, $warehouse_id);
+
+    // Ejecutar ambas actualizaciones
+    if ($updateInventoryQuery->execute() && $updateWarehouseQuery->execute()) {
         ?>
         <script>
             Swal.fire({
-                color: "var(--rojo)",
-                icon: "error",
-                iconColor: "var(--rojo)",
-                title: 'Error',
-                text: 'No se puede eliminar el artículo porque, la cantidad disponible es mayor a 0.',
+                color: "var(--verde)",
+                icon: "success",
+                iconColor: "var(--verde)",
+                title: '!Éxito!',
+                text: 'Cantidad actualizada del artículo en existencia',
                 showConfirmButton: true,
-                allowOutsideClick: false,
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },
@@ -544,61 +569,6 @@ if (isset($_POST['eliminarArtConsumoInterno'])) {
         </script>
         <?php
     } else {
-        // Consulta para eliminar la bodega
-        $deleteQuery = $conn->prepare("DELETE FROM inventory WHERE inventory_id = ?");
-        $deleteQuery->bind_param("i", $id);
-
-        if ($deleteQuery->execute()) {
-        ?>
-            <script>
-                Swal.fire({
-                    color: "var(--verde)",
-                    icon: "success",
-                    iconColor: "var(--verde)",
-                    title: 'Éxito',
-                    text: 'Artículo eliminado del inventario de Consumo Interno',
-                    showConfirmButton: true,
-                    allowOutsideClick: false,
-                    customClass: {
-                        confirmButton: 'btn-confirm'
-                    },
-                    confirmButtonText: "Aceptar",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = window.location.href;
-                    }
-                });
-            </script>
-        <?php
-        } else {
-            echo "Error al eliminar la bodega.";
-        }
-        $deleteQuery->close();
-    }
-    $checkQuery->close();
-    $conn->close();
-}
-/*
- *Función para agregar un articulo al inventario de consumo interno/*****PENDIENTE
- */
-if (isset($_POST['addQuantArt'])) {
-
-    $id = htmlspecialchars($_POST['inventory_id']);
-    $name = htmlspecialchars($_POST['articles_name']);
-    $quantity = htmlspecialchars($_POST['inventory_quantity']);
-    date_default_timezone_set('America/Panama');
-    $warehouses_id = htmlspecialchars($_POST['warehouses_id']);
-    $total_cost = htmlspecialchars($_POST['inventory_total_cost']);
-    $re_order = $quantity / 3;
-    $checkQuery = $conn->prepare("SELECT * 
-    FROM inventory 
-    WHERE articles_id = ? 
-    AND warehouses_id = ?
-    AND categories_id = ?");
-    $checkQuery->bind_param("iii", $articles_id, $warehouses_id, $categories_id);
-    $checkQuery->execute();
-    $result = $checkQuery->get_result();
-    if ($result->num_rows > 0) {
         ?>
         <script>
             Swal.fire({
@@ -606,7 +576,7 @@ if (isset($_POST['addQuantArt'])) {
                 icon: "error",
                 iconColor: "var(--rojo)",
                 title: '¡Error!',
-                text: 'El artículo ya fue agregado',
+                text: 'La cantidad del artículo no se pudo actualizar',
                 showConfirmButton: true,
                 customClass: {
                     confirmButton: 'btn-confirm'
@@ -619,47 +589,10 @@ if (isset($_POST['addQuantArt'])) {
             });
         </script>
         <?php
-    } else {
-
-        $stmt = $conn->prepare("INSERT INTO inventory (articles_id, categories_id, inventory_quantity, inventory_registration_date, warehouses_id, inventory_total_cost, inventory_re_order) 
-        VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("iiisidi", $articles_id, $categories_id, $quantity, $inventory1_registration_date, $warehouses_id, $total_cost, $re_order);
-
-        // Actualizar la cantidad total en la tabla warehouses
-        $stmt_update = $conn->prepare("UPDATE warehouses 
-        SET warehouses_total_quantity = warehouses_total_quantity + ? / 2
-        WHERE warehouses_id = ?");
-        $stmt_update->bind_param("ii", $quantity, $warehouses_id);
-        $stmt_update->execute();
-
-
-        if ($stmt->execute() && $stmt_update->execute()) {
-        ?>
-            <script>
-                Swal.fire({
-                    color: "var(--verde)",
-                    icon: "success",
-                    iconColor: "var(--verde)",
-                    title: '!Éxito!',
-                    text: 'Artículo Agregado',
-                    showConfirmButton: true,
-                    customClass: {
-                        confirmButton: 'btn-confirm'
-                    },
-                    confirmButtonText: "Aceptar",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = window.location.href;
-                    }
-                });
-            </script>
-<?php
-        } else {
-            echo "Error: " . $stmt->error;
-        }
-        $stmt->close();
     }
-    $checkQuery->close();
-    $conn->close();
+    $updateInventoryQuery->close();
+    $updateWarehouseQuery->close();
+    $query->close();
+    $warehouseQuery->close();
 }
 ?>
