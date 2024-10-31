@@ -4,10 +4,11 @@
     max-width: 95%;
 }
 .logoMides{
-    width: 100px;
+    width: 200px;
     max-width: 95%;
     margin: 5px;
-    border-radius: 15px;
+    border-radius: 5px;
+    background-color: var(--gris);
 }
 main{
     align-items: center;
