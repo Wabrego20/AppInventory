@@ -13,11 +13,11 @@
 </head>
 
 <body>
-  <img src="../img/fondo_login.png" alt="fondo" class="fondo">
+  <video src="../video/fondoLogin.mp4" class="fondo" autoplay muted loop></video>
 
   <header>
     <img src="../img/logoApp.png" class="logoApp">
-    <img src="../img/logoMides.png" class="logoMides">
+    <img src="../img/logoMides.webp" class="logoMides">
   </header>
 
   <main>
