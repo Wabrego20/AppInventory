@@ -349,9 +349,11 @@ include_once '../settings/notice.php';
 
                     <!--campo para agregar una foto del producto-->
                     <div class="formLogCampo">
-                        <label for="articles_photo">Cargar foto del artículo:<i class="fa-solid fa-asterisk"></i></label>
+                        <label for="articles_photo">Cargar foto del artículo:<i
+                                class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
-                            <input type="file" id="btnArticlesPhoto" accept="image/jpeg, image/png, image/jpg, image/tiff, image/tif, image/jpe, image/bmp"
+                            <input type="file" id="btnArticlesPhoto"
+                                accept="image/jpeg, image/jpg, image/jpe"
                                 style="display: none;" name="articles_photo" required />
                             <div class="btnArticlesPhoto" onclick="btnArticlesPhoto();">
                                 <i class="fa-solid fa-camera-retro"></i>
@@ -556,13 +558,11 @@ if (isset($_POST['crearArticulo'])) {
     $articles_unit_cost = htmlspecialchars($_POST['articles_unit_cost']);
     $articles_arrival_date = htmlspecialchars($_POST['articles_arrival_date']);
     $articles_expiration_date = htmlspecialchars($_POST['articles_expiration_date']) ?? 'no tiene';
-    $imageData = file_get_contents($_FILES['articles_photo']['tmp_name']);
-    $base64Image = base64_encode($imageData);
 
     // Validar el tipo de archivo de la imagen
     if (isset($_FILES['articles_photo'])) {
         $fileType = mime_content_type($_FILES['articles_photo']['tmp_name']);
-        $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/tiff', 'image/tif', 'image/jpe', 'image/bmp'];
+        $allowedTypes = ['image/jpeg', 'image/jpg', 'image/jpe'];
 
         if (!in_array($fileType, $allowedTypes)) {
             ?>
@@ -572,7 +572,7 @@ if (isset($_POST['crearArticulo'])) {
                     icon: "error",
                     iconColor: "var(--rojo)",
                     title: '¡Error!',
-                    text: 'Se requiere una imagen. Por favor, sube un archivo de tipo imagen.',
+                    text: 'Se requiere una imagen. jpg, jpe, jpeg.',
                     showConfirmButton: true,
                     customClass: {
                         confirmButton: 'btn-confirm'
@@ -586,6 +586,9 @@ if (isset($_POST['crearArticulo'])) {
             </script>
             <?php
             exit;
+        } else {
+            $imageData = file_get_contents($_FILES['articles_photo']['tmp_name']);
+            $base64Image = base64_encode($imageData);
         }
     } else {
         ?>
