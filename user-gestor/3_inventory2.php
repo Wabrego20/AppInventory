@@ -174,7 +174,7 @@ include_once '../settings/conexion.php';
                             <td><?php echo $row['inventory_total_cost'] ?? '0.00'; ?></td>
                             <td>
                                 <button class="accion accionSolicitar" title="clic para solicitar article"
-                                    onclick="solicitarArt('<?php echo $row['inventory_id']; ?>', '<?php echo $row['articles_id']; ?>', '<?php echo $row['articles_name']; ?>','<?php echo $row['categories_name']; ?>','<?php echo $row['warehouses_name']; ?>','','<?php echo $row['articles_unit_cost']; ?>','')"><i
+                                    onclick="solicitarArt('<?php echo $row['warehouses_total_quantity']; ?>','<?php echo $row['inventory_id']; ?>', '<?php echo $row['articles_id']; ?>', '<?php echo $row['articles_name']; ?>','<?php echo $row['categories_name']; ?>','<?php echo $row['warehouses_name']; ?>','','<?php echo $row['articles_unit_cost']; ?>','')"><i
                                         class="fa-solid fa-paper-plane"></i></button>
                             </td>
                         </tr>
@@ -231,7 +231,7 @@ include_once '../settings/conexion.php';
                         <div class="campo">
                             <i class="fa-solid fa-arrow-up-1-9"></i>
                             <input class="btnTxt" type="number" name="request_quantity" id="request_quantity"
-                                pattern="[0-9]{1,7}" min="0" max="1000000" step="1"
+                                pattern="[0-9]{1,7}" min="1" max="" step="1"
                                 placeholder="introduzca la cantidad " required>
                         </div>
                     </div>

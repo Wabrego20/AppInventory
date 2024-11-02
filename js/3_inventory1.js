@@ -137,12 +137,13 @@ document.getElementById("inventory1_quantity").addEventListener("input", functio
 /**
  * Formulario para realizar una solicitud
  */
-function solicitarArt(inventory_id, id, articleName, categoryName, warehouseName, quantity, unitCost, totalCost) {
+function solicitarArt(warehouses_total_quantity, inventory_id, id, articleName, categoryName, warehouseName, quantity, unitCost, totalCost) {
   var formu = document.querySelector(".modalAddArticle");
   formu.style.display = "flex";
   setTimeout(function () {
     formu.classList.add("show");
   }, 10);
+  document.getElementById('request_quantity').max = warehouses_total_quantity;
   document.getElementById("inventory_id").value = inventory_id;
   document.getElementById("articles_id").value = id;
   document.getElementById("articles_name").value = articleName;

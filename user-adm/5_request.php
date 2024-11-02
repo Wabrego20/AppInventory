@@ -528,10 +528,10 @@ if (isset($_POST['rejectRequest'])) {
     $reason = htmlspecialchars($_POST['request_reason']);
 
     // Verificar valores de entrada
-    echo "Requester ID: " . $requester_id . "\n";
+   /*  echo "Requester ID: " . $requester_id . "\n";
     echo "Article ID: " . $article_id . "\n";
     echo "Reason: " . $reason . "\n";
-
+ */
     // Obtener el estado actual de la solicitud
     $sql_check_status = "SELECT request_status FROM request WHERE requester_id = ? AND articles_id = ?";
     $stmt_check_status = $conn->prepare($sql_check_status);
@@ -543,7 +543,7 @@ if (isset($_POST['rejectRequest'])) {
     $stmt_check_status->close();
 
     // Verificar el estado actual
-    echo "Current Status: " . $current_status . "\n";
+   // echo "Current Status: " . $current_status . "\n";
 
     // Verificar si el estado es "Pendiente"
     if (trim($current_status) === 'Pendiente') {

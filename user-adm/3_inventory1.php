@@ -415,7 +415,6 @@ include_once '../settings/notice.php';
 
 </html>
 
-
 <?php
 /*
  *Función para agregar un articulo al inventario de consumo interno
@@ -513,6 +512,7 @@ if (isset($_POST['addQuantArt'])) {
     $quantity = intval(htmlspecialchars($_POST['inventory_quantity']));
     $inventory_id = htmlspecialchars($_POST['inventory_id']);
     $warehouse_id = htmlspecialchars($_POST['warehouses_id']);
+    date_default_timezone_set('America/Panama');
 
     // Obtener la cantidad actual del inventario
     $query = $conn->prepare("SELECT inventory_quantity FROM inventory WHERE inventory_id = ?");
@@ -527,7 +527,7 @@ if (isset($_POST['addQuantArt'])) {
     $nuevaCantidad = $inventory_quantity + $quantity;
 
     // Actualizar la cantidad en la tabla inventory
-    $updateInventoryQuery = $conn->prepare("UPDATE inventory SET inventory_quantity = ? WHERE inventory_id = ?");
+    $updateInventoryQuery = $conn->prepare("UPDATE inventory SET inventory_quantity = ?, inventory_registration_date = NOW() WHERE inventory_id = ?");
     $updateInventoryQuery->bind_param("ii", $nuevaCantidad, $inventory_id);
 
     // Obtener la cantidad total actual del almacén

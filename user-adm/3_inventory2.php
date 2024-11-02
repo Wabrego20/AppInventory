@@ -415,7 +415,6 @@ include_once '../settings/notice.php';
 
 </html>
 
-
 <?php
 /*
  *Función para agregar un articulo al inventario de consumo interno
@@ -429,11 +428,7 @@ if (isset($_POST['agregarArtBienesFisicos'])) {
     $warehouses_id = htmlspecialchars($_POST['warehouses_id']);
     $total_cost = htmlspecialchars($_POST['inventory_total_cost']);
     $re_order = $quantity / 3;
-    $checkQuery = $conn->prepare("SELECT * 
-    FROM inventory 
-    WHERE articles_id = ? 
-    AND warehouses_id = ?
-    AND categories_id = ?");
+    $checkQuery = $conn->prepare("SELECT * FROM inventory WHERE articles_id = ? AND warehouses_id = ? AND categories_id = ?");
     $checkQuery->bind_param("iii", $articles_id, $warehouses_id, $categories_id);
     $checkQuery->execute();
     $result = $checkQuery->get_result();
@@ -514,7 +509,6 @@ if (isset($_POST['agregarArtBienesFisicos'])) {
  * Función para Eliminarartículo de consumo interno
  */
 if (isset($_POST['eliminarArtBienesFisicos'])) {
-
     $name = htmlspecialchars($_POST['articles_name']);
     $id = htmlspecialchars($_POST['inventory_id']);
     $quantity = htmlspecialchars($_POST['inventory_quantity']);
@@ -525,7 +519,7 @@ if (isset($_POST['eliminarArtBienesFisicos'])) {
     $result = $checkQuery->get_result();
     $row = $result->fetch_assoc();
 
-    if ($row['inventory2_quantity'] > 0) {
+    if ($row['inventory_quantity'] > 0) {
         ?>
         <script>
             Swal.fire({
@@ -548,7 +542,6 @@ if (isset($_POST['eliminarArtBienesFisicos'])) {
         </script>
         <?php
     } else {
-        // Consulta para eliminar la bodega
         $deleteQuery = $conn->prepare("DELETE FROM inventory WHERE inventory_id = ?");
         $deleteQuery->bind_param("i", $id);
 
@@ -589,6 +582,7 @@ if (isset($_POST['addQuantArt'])) {
     $quantity = intval(htmlspecialchars($_POST['inventory_quantity']));
     $inventory_id = htmlspecialchars($_POST['inventory_id']);
     $warehouse_id = htmlspecialchars($_POST['warehouses_id']);
+    date_default_timezone_set('America/Panama');
 
     // Obtener la cantidad actual del inventario
     $query = $conn->prepare("SELECT inventory_quantity FROM inventory WHERE inventory_id = ?");
@@ -603,7 +597,7 @@ if (isset($_POST['addQuantArt'])) {
     $nuevaCantidad = $inventory_quantity + $quantity;
 
     // Actualizar la cantidad en la tabla inventory
-    $updateInventoryQuery = $conn->prepare("UPDATE inventory SET inventory_quantity = ? WHERE inventory_id = ?");
+    $updateInventoryQuery = $conn->prepare("UPDATE inventory SET inventory_quantity = ?, inventory_registration_date = NOW() WHERE inventory_id = ?");
     $updateInventoryQuery->bind_param("ii", $nuevaCantidad, $inventory_id);
 
     // Obtener la cantidad total actual del almacén
