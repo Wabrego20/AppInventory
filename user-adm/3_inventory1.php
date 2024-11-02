@@ -595,10 +595,11 @@ if (isset($_POST['addQuantArt'])) {
 
     // Calcular la nueva cantidad
     $nuevaCantidad = $inventory_quantity + $quantity;
+    $new_re_order = $nuevaCantidad / 3;
 
     // Actualizar la cantidad en la tabla inventory
-    $updateInventoryQuery = $conn->prepare("UPDATE inventory SET inventory_quantity = ?, inventory_registration_date = NOW() WHERE inventory_id = ?");
-    $updateInventoryQuery->bind_param("ii", $nuevaCantidad, $inventory_id);
+    $updateInventoryQuery = $conn->prepare("UPDATE inventory SET inventory_re_order= ?, inventory_quantity = ?, inventory_registration_date = NOW() WHERE inventory_id = ?");
+    $updateInventoryQuery->bind_param("iii", $new_re_order, $nuevaCantidad, $inventory_id);
 
     // Obtener la cantidad total actual del almacén
     $warehouseQuery = $conn->prepare("SELECT warehouses_total_quantity FROM warehouses WHERE warehouses_id = ?");

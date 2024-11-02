@@ -76,7 +76,6 @@ document
     }
   });
 
-
   /*
   *Editar Artículo
   */
