@@ -207,7 +207,7 @@ include_once '../settings/notice.php';
                             <td><?php echo $row['inventory_re_order'] ?? 'n/a'; ?></td>
                             <td>
                                 <button class="accion accionEliminar"
-                                    onclick="deleteArtConsumoInt('<?php echo $row['inventory_id']; ?>', '<?php echo $row['inventory_quantity']; ?>', '<?php echo $row['articles_name']; ?>')"
+                                    onclick="deleteArtInv('<?php echo $row['inventory_id']; ?>', '<?php echo $row['inventory_quantity']; ?>', '<?php echo $row['articles_name']; ?>')"
                                     title="Eliminar este artículo">
                                     <i class="fa-solid fa-box-open fa-lg"></i>
                                     <i class="fa-solid fa-minus fa-2xs"></i>
@@ -501,6 +501,76 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
             echo "Error: " . $stmt->error;
         }
         $stmt->close();
+    }
+    $checkQuery->close();
+    $conn->close();
+}
+/***
+ * Función para Eliminarartículo de consumo interno
+ */
+if (isset($_POST['eliminarArtConsumoInterno'])) {
+    $name = htmlspecialchars($_POST['articles_name']);
+    $id = htmlspecialchars($_POST['inventory_id']);
+    $quantity = htmlspecialchars($_POST['inventory_quantity']);
+
+    $checkQuery = $conn->prepare("SELECT * FROM inventory WHERE inventory_quantity = ?");
+    $checkQuery->bind_param("i", $quantity);
+    $checkQuery->execute();
+    $result = $checkQuery->get_result();
+    $row = $result->fetch_assoc();
+
+    if ($row['inventory_quantity'] > 0) {
+        ?>
+        <script>
+            Swal.fire({
+                color: "var(--rojo)",
+                icon: "error",
+                iconColor: "var(--rojo)",
+                title: 'Error',
+                text: 'No se puede eliminar el artículo porque, la cantidad disponible es mayor a 0.',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = window.location.href;
+                }
+            });
+        </script>
+        <?php
+    } else {
+        $deleteQuery = $conn->prepare("DELETE FROM inventory WHERE inventory_id = ?");
+        $deleteQuery->bind_param("i", $id);
+
+        if ($deleteQuery->execute()) {
+            ?>
+            <script>
+                Swal.fire({
+                    color: "var(--verde)",
+                    icon: "success",
+                    iconColor: "var(--verde)",
+                    title: 'Éxito',
+                    text: 'Artículo eliminado del inventario de Consumo Interno',
+                    showConfirmButton: true,
+                    allowOutsideClick: false,
+                    customClass: {
+                        confirmButton: 'btn-confirm'
+                    },
+                    confirmButtonText: "Aceptar",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = window.location.href;
+                    }
+                });
+            </script>
+            <?php
+        } else {
+            echo "Error al eliminar la bodega.";
+        }
+        $deleteQuery->close();
     }
     $checkQuery->close();
     $conn->close();

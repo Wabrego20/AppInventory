@@ -54,7 +54,7 @@ function ocultarFormAddArticle() {
 /*
  *Función para eliminar artículo de consumo interno
  */
-function deleteArtConsumoInt(id, cant, name) {
+function deleteArtInv(id, cant, name) {
   var formu = document.querySelector(".modalDeleteArticle"); //mostrar el modal de crear artículo
   formu.style.display = "flex";
   setTimeout(function () {

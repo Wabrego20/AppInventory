@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function () {
         txt.innerHTML = html;
         return txt.value;
     }
-
     // Datos de la primera gráfica
     const labels = data.map(item => decodeHtml(item.warehouses_name));
     const quantities = data.map(item => parseInt(item.warehouses_total_quantity, 10));
@@ -40,7 +39,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 data: quantities,
                 backgroundColor: colors,
                 borderColor: colors.map(color => color.replace('0.2', '1')),
-                borderWidth: 1
+                borderWidth: 0,
+                borderRadius: 5
             }]
         },
         options: {

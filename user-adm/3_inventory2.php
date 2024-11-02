@@ -207,7 +207,7 @@ include_once '../settings/notice.php';
                             <td><?php echo $row['inventory_re_order'] ?? 'n/a'; ?></td>
                             <td>
                                 <button class="accion accionEliminar"
-                                    onclick="deleteArtConsumoInt('<?php echo $row['inventory_id']; ?>', '<?php echo $row['inventory_quantity']; ?>', '<?php echo $row['articles_name']; ?>')"
+                                    onclick="deleteArtInv('<?php echo $row['inventory_id']; ?>', '<?php echo $row['inventory_quantity']; ?>', '<?php echo $row['articles_name']; ?>')"
                                     title="Eliminar este artículo">
                                     <i class="fa-solid fa-box-open fa-lg"></i>
                                     <i class="fa-solid fa-minus fa-2xs"></i>
