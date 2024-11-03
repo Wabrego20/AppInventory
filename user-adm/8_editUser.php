@@ -100,11 +100,11 @@ if ($row = $result->fetch_assoc()) {
                             </a>
                         </li>
 
-                        <!--Pestaña de Ayuda Social--></li>
-                        <li>
+                       <!--Pestaña de Ayuda Social--></li>
+                       <li>
                             <a href="3_inventory3.php">
                                 <i class="fa-solid fa-handshake-angle"></i>
-                                <h5>Ayuda Social</h5>
+                                <h5>Donaciones</h5>
                             </a>
                         </li>
 
@@ -112,7 +112,7 @@ if ($row = $result->fetch_assoc()) {
                         <li>
                             <a href="3_inventory4.php">
                                 <i class="fa-solid fa-hand-holding-heart"></i>
-                                <h5>Donaciones</h5>
+                                <h5>Ayuda Social</h5>
                             </a>
                         </li>
                     </span>

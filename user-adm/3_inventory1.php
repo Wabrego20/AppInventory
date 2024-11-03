@@ -55,7 +55,7 @@ include_once '../settings/notice.php';
 
                         <!--Pestaña de consumo interno-->
                         <li class="active">
-                            <a href="">
+                            <a href="#">
                                 <i class="fa-solid fa-stapler"></i>
                                 <h5>Consumo Interno</h5>
                             </a>
@@ -69,19 +69,19 @@ include_once '../settings/notice.php';
                             </a>
                         </li>
 
-                        <!--Pestaña de Ayuda Social-->
+                        <!--Pestaña de Donaciones-->
                         <li>
-                            <a href="">
-                                <i class="fa-solid fa-handshake-angle"></i>
-                                <h5>Ayuda Social</h5>
+                            <a href="3_inventory3">
+                                <i class="fa-solid fa-hand-holding-heart"></i>
+                                <h5>Donaciones</h5>
                             </a>
                         </li>
 
-                        <!--Pestaña de Donaciones-->
+                        <!--Pestaña de Ayuda Social-->
                         <li>
-                            <a href="">
-                                <i class="fa-solid fa-hand-holding-heart"></i>
-                                <h5>Donaciones</h5>
+                            <a href="3_inventory4.php">
+                                <i class="fa-solid fa-handshake-angle"></i>
+                                <h5>Ayuda Social</h5>
                             </a>
                         </li>
                     </span>

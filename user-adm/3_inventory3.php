@@ -14,9 +14,9 @@ include_once '../settings/notice.php';
     <link rel="stylesheet" href="../settings/header.css">
     <link rel="stylesheet" href="../settings/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="../settings/styles.css">
-    <link rel="stylesheet" href="../css/3_inventory2.css">
+    <link rel="stylesheet" href="../css/3_inventory3.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
-    <title>Bienes Físicos | Sist-Inventario</title>
+    <title>Donaciones | Sist-Inventario</title>
 </head>
 
 <body>
@@ -62,26 +62,26 @@ include_once '../settings/notice.php';
                         </li>
 
                         <!--Pestaña de Bienes Físicos-->
-                        <li class="active">
-                            <a href="#">
+                        <li>
+                            <a href="3_inventory2.php">
                                 <i class="fa-solid fa-computer"></i>
                                 <h5>Bienes Físicos</h5>
                             </a>
                         </li>
 
-                        <!--Pestaña de Donaciones-->
+                        <!--Pestaña de Ayuda Social-->
                         <li>
-                            <a href="3_inventory3.php">
-                                <i class="fa-solid fa-hand-holding-heart"></i>
-                                <h5>Donaciones</h5>
+                            <a href="">
+                                <i class="fa-solid fa-handshake-angle"></i>
+                                <h5>Ayuda Social</h5>
                             </a>
                         </li>
 
-                        <!--Pestaña de Ayuda Social-->
-                        <li>
-                            <a href="3_inventory4.php">
-                                <i class="fa-solid fa-handshake-angle"></i>
-                                <h5>Ayuda Social</h5>
+                        <!--Pestaña de Donaciones-->
+                        <li class="active">
+                            <a href="#">
+                                <i class="fa-solid fa-hand-holding-heart"></i>
+                                <h5>Donaciones</h5>
                             </a>
                         </li>
                     </span>
@@ -148,7 +148,7 @@ include_once '../settings/notice.php';
             <h5>Inventarios</h5>
         </a>
         <i class="fa-solid fa-chevron-right"></i>
-        <h4>Inventario de Bienes Físicos</h4>
+        <h4>Inventario de Donaciones</h4>
     </div>
 
     <!--Cuerpo Principal-->
@@ -177,7 +177,7 @@ include_once '../settings/notice.php';
                 WHERE inventory.articles_id = articles.articles_id
                 AND inventory.categories_id = categories.categories_id
                 AND inventory.warehouses_id = warehouses.warehouses_id
-                AND inventory.inventory_name = 'Bienes Físicos'";
+                AND inventory.inventory_name = 'Donaciones'";
                 // Preparar la declaración
                 $stmt = $conn->prepare($inventario);
                 // Ejecutar la declaración
@@ -226,7 +226,7 @@ include_once '../settings/notice.php';
         <div class="modalAddArticle">
             <div class="panelArticle" style="width:400px;">
                 <form method="post" class="formArticle">
-                    <h2>Agregar Artículo de Bienes Físicos</h2>
+                    <h2>Agregar Artículo Donado</h2>
 
                     <!--campo de nombre de artículo-->
                     <div class="formLogCampo">
@@ -409,7 +409,7 @@ include_once '../settings/notice.php';
     <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
     <script src="../settings/header.js"></script>
-    <script src="../js/3_inventory2.js"></script>
+    <script src="../js/3_inventory3.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
