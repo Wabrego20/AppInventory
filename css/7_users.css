@@ -31,7 +31,7 @@ main h2 {
 }
 
 .panelCreateUser {
-  width: 400px;
+  width: 800px;
   max-height: 100%;
   max-width: 100%;
   overflow: auto;
@@ -41,14 +41,14 @@ main h2 {
 .formCreateUser {
   width: 99%;
   height: 99%;
-  margin: 10px auto;
+  margin: 5px auto;
   background-color: var(--blanco);
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  flex-wrap: wrap;
   border-radius: 5px;
-  box-shadow: 0 0 10px var(--azul);
+  box-shadow: 0 0 10px 0 var(--azul);
 
   h2 {
     border-radius: 5px 5px 0 0;
@@ -61,7 +61,8 @@ main h2 {
   }
 
   .formLogCampo {
-    width: 95%;
+    max-width: 95%;
+    width: 350px;
     display: flex;
     justify-content: space-between;
     align-items: start;

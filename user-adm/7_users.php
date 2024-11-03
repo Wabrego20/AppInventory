@@ -171,7 +171,7 @@ include_once '../settings/notice.php';
             <tbody>
                 <?php
                 $session = $_SESSION['users_user'];
-                $usuarios = "SELECT * FROM users WHERE users_user != ?";
+                $usuarios = "SELECT users.*, rol.* FROM users JOIN rol ON users.rol_id = rol.rol_id WHERE users.users_user != ?";
                 $stmt = $conn->prepare($usuarios);
                 $stmt->bind_param("s", $session);
                 $stmt->execute();
@@ -179,14 +179,14 @@ include_once '../settings/notice.php';
                 if ($verUsuarios->num_rows > 0) {
                     $fila = 1;
                     while ($row = $verUsuarios->fetch_assoc()) {
-                ?>
+                        ?>
                         <tr>
                             <td><?php echo $fila; ?></td>
                             <td><?php echo $row['users_dni'] ?? 'user'; ?></td>
                             <td><?php echo $row['users_name'] ?? 'name'; ?></td>
                             <td><?php echo $row['users_last_name'] ?? 'lastName'; ?></td>
                             <td><?php echo $row['users_email'] ?? 'ejemplo@mail.com'; ?></td>
-                            <td><?php echo $row['users_rol'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['rol_name'] ?? 'no disponible'; ?></td>
                             <td><?php echo $row['users_registration_date'] ?? 'dd/mm/aaaa'; ?></td>
                             <td>
                                 <a href="javascript:void(0);" onclick="editUser(<?php echo $row['users_id']; ?>)">
@@ -199,7 +199,7 @@ include_once '../settings/notice.php';
                                 </a>
                             </td>
                         </tr>
-                <?php
+                        <?php
                         $fila++;
                     }
                 }
@@ -285,16 +285,24 @@ include_once '../settings/notice.php';
                             <i class="fa-solid fa-user-secret"></i>
                             <select name="users_rol" class="btnTxt" id="users_rol" required>
                                 <option value="">Seleccione</option>
-                                <option value="Administrador">Administrador</option>
-                                <option value="Gestor">Gestor</option>
+                                <?php
+                                $selectRol = $conn->query("SELECT rol_id, rol_name FROM rol");
+                                if ($selectRol->num_rows > 0) {
+                                    while ($row = $selectRol->fetch_assoc()) {
+                                        echo '<option value="' . $row["rol_id"] . '">' . $row["rol_name"] . '</option>';
+                                    }
+                                } else {
+                                    echo '<option value="">No hay roles disponibles</option>';
+                                }
+                                ?>
                             </select>
                         </div>
                     </div>
 
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
                     <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnCreateUser" name="crearUsuario">
-                            <i class="fas fa-user-plus"></i> Crear Usuario
+                        <button type="submit" class="btnSubmit btnVerde" name="crearUsuario">
+                            Crear Usuario
                         </button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormCreateUser()">Cancelar</div>
                     </div>
@@ -353,7 +361,7 @@ if (isset($_POST['crearUsuario'])) {
     $result = $checkQuery->get_result();
 
     if ($result->num_rows > 0) {
-?>
+        ?>
         <script>
             Swal.fire({
                 color: "var(--rojo)",
@@ -399,7 +407,7 @@ if (isset($_POST['crearUsuario'])) {
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("sssssssss", $dni, $name, $lastName, $email, $uniqueUser, $password, $rol, $registration_date, $departament);
         if ($stmt->execute()) {
-        ?>
+            ?>
             <script>
                 Swal.fire({
                     color: "var(--verde)",
@@ -418,7 +426,7 @@ if (isset($_POST['crearUsuario'])) {
                     }
                 });
             </script>
-<?php
+            <?php
         } else {
             echo "Error: " . $stmt->error;
         }

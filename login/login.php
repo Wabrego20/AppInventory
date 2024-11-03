@@ -109,8 +109,8 @@ if (isset($_POST['iniciarSesion'])) {
     if (password_verify($clave, $hashGuardado)) {
       // Inicio de sesión exitoso
       $_SESSION['users_user'] = $usuario;
-      $_SESSION['users_rol'] = $row['users_rol'];
-      if ($_SESSION['users_rol'] === 'Administrador') {
+      $rol = $row['rol_id'];
+      if ($rol === 1) {
         ?>
         <script>
           Swal.fire({
@@ -129,7 +129,7 @@ if (isset($_POST['iniciarSesion'])) {
         </script>
 
         <?php
-      } elseif ($_SESSION['users_rol'] === 'Gestor') {
+      } elseif ($rol === 2) {
         ?>
         <script>
           Swal.fire({

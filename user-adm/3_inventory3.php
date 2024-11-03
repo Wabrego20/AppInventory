@@ -69,19 +69,19 @@ include_once '../settings/notice.php';
                             </a>
                         </li>
 
-                        <!--Pestaña de Ayuda Social-->
-                        <li>
-                            <a href="">
+                        <!--Pestaña de Ayuda Social--></li>
+                        <li class="active">
+                            <a href="3_inventory3.php">
                                 <i class="fa-solid fa-handshake-angle"></i>
-                                <h5>Ayuda Social</h5>
+                                <h5>Donaciones</h5>
                             </a>
                         </li>
 
                         <!--Pestaña de Donaciones-->
-                        <li class="active">
-                            <a href="#">
+                        <li>
+                            <a href="3_inventory4.php">
                                 <i class="fa-solid fa-hand-holding-heart"></i>
-                                <h5>Donaciones</h5>
+                                <h5>Ayuda Social</h5>
                             </a>
                         </li>
                     </span>
@@ -153,7 +153,7 @@ include_once '../settings/notice.php';
 
     <!--Cuerpo Principal-->
     <main>
-        <h2>Tabla de Articulos de Bienes Físicos</h2>
+        <h2>Tabla de Articulos de Donados</h2>
         <table id="tableInventory">
             <thead>
                 <tr>
@@ -163,8 +163,6 @@ include_once '../settings/notice.php';
                     <th>Cantidad</th>
                     <th>Fecha de Registro</th>
                     <th>Bodega</th>
-                    <th>Costo Unitario</th>
-                    <th>Costo Total</th>
                     <th>Re-Orden</th>
                     <th>Eliminar</th>
                 </tr>
@@ -202,8 +200,6 @@ include_once '../settings/notice.php';
                             </td>
                             <td><?php echo $row['inventory_registration_date'] ?? 'dd/mm/aaaa'; ?></td>
                             <td><?php echo $row['warehouses_name'] ?? 'no disponible'; ?></td>
-                            <td><?php echo $row['articles_unit_cost'] ?? '0.00'; ?></td>
-                            <td><?php echo $row['inventory_total_cost'] ?? '0.00'; ?></td>
                             <td><?php echo $row['inventory_re_order'] ?? 'n/a'; ?></td>
                             <td>
                                 <button class="accion accionEliminar"
@@ -224,7 +220,7 @@ include_once '../settings/notice.php';
 
         <!--Formulario para Crear un articulo-->
         <div class="modalAddArticle">
-            <div class="panelArticle" style="width:400px;">
+            <div class="panelArticle">
                 <form method="post" class="formArticle">
                     <h2>Agregar Artículo Donado</h2>
 
@@ -294,29 +290,9 @@ include_once '../settings/notice.php';
                         </div>
                     </div>
 
-                    <!--campo de costo unitario del artículos-->
-                    <div class="formLogCampo">
-                        <label for="articles_unit_cost">Costo Unitario:</label>
-                        <div class="campo">
-                            <i class="fa-solid fa-dollar-sign"></i>
-                            <input type="text" name="articles_unit_cost" id="articles_unit_cost" class="btnTxt"
-                                readonly>
-                        </div>
-                    </div>
-
-                    <!--campo de costo total del artículos-->
-                    <div class="formLogCampo">
-                        <label for="inventory2_total_cost">Costo Total:</label>
-                        <div class="campo">
-                            <i class="fa-solid fa-sack-dollar"></i>
-                            <input type="text" name="inventory_total_cost" id="inventory2_total_cost" class="btnTxt"
-                                readonly>
-                        </div>
-                    </div>
-
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
                     <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnVerde" name="agregarArtBienesFisicos">Agregar
+                        <button type="submit" class="btnSubmit btnVerde" name="agregarDonacion">Agregar
                             Artículo</button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormAddArticle()">Cancelar</div>
                     </div>
@@ -419,14 +395,13 @@ include_once '../settings/notice.php';
 /*
  *Función para agregar un articulo al inventario de consumo interno
  */
-if (isset($_POST['agregarArtBienesFisicos'])) {
-    $inventory_name = "Bienes Físicos";
+if (isset($_POST['agregarDonacion'])) {
+    $inventory_name = "Donaciones";
     $articles_id = htmlspecialchars($_POST['articles_id']);
     $categories_id = htmlspecialchars($_POST['categories_id']);
     $quantity = htmlspecialchars($_POST['inventory_quantity']);
     date_default_timezone_set('America/Panama');
     $warehouses_id = htmlspecialchars($_POST['warehouses_id']);
-    $total_cost = htmlspecialchars($_POST['inventory_total_cost']);
     $re_order = $quantity / 3;
     $checkQuery = $conn->prepare("SELECT * FROM inventory WHERE articles_id = ? AND warehouses_id = ? AND categories_id = ?");
     $checkQuery->bind_param("iii", $articles_id, $warehouses_id, $categories_id);
@@ -455,9 +430,9 @@ if (isset($_POST['agregarArtBienesFisicos'])) {
         <?php
     } else {
 
-        $stmt = $conn->prepare("INSERT INTO inventory (articles_id, categories_id, inventory_quantity, inventory_name, warehouses_id, inventory_total_cost, inventory_re_order) 
-        VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("iiisidi", $articles_id, $categories_id, $quantity, $inventory_name, $warehouses_id, $total_cost, $re_order);
+        $stmt = $conn->prepare("INSERT INTO inventory (articles_id, categories_id, inventory_quantity, inventory_name, warehouses_id, inventory_re_order) 
+        VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("iiisii", $articles_id, $categories_id, $quantity, $inventory_name, $warehouses_id, $re_order);
 
         // Obtener el valor actual de warehouses_total_quantity
         $sql_select = "SELECT warehouses_total_quantity FROM warehouses WHERE warehouses_id = ?";
@@ -553,7 +528,7 @@ if (isset($_POST['eliminarArtBienesFisicos'])) {
                     icon: "success",
                     iconColor: "var(--verde)",
                     title: 'Éxito',
-                    text: 'Artículo eliminado del inventario de Consumo Interno',
+                    text: 'Artículo eliminado del inventario de Donaciones',
                     showConfirmButton: true,
                     allowOutsideClick: false,
                     customClass: {

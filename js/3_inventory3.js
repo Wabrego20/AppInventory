@@ -113,24 +113,8 @@ document.getElementById("articles_id").addEventListener("change", function () {
   document.getElementById("categories_name").value = categoryName
     ? categoryName
     : "Vacío";
-
-  var unitCost = selectedOption.getAttribute("data-cost");
-  document.getElementById("articles_unit_cost").value = unitCost
-    ? unitCost
-    : "0";
-
-  var quantity = document.getElementById("inventory2_quantity").value;
-  var totalCost = quantity * unitCost;
-  document.getElementById("inventory2_total_cost").value = totalCost.toFixed(2);
 });
 
-document.getElementById("inventory2_quantity").addEventListener("input", function () {
-  var unitCost = document.getElementById("articles_unit_cost").value;
-  var quantity = this.value;
-  var totalCost = quantity * unitCost;
-  document.getElementById("inventory2_total_cost").value =
-    totalCost.toFixed(2);
-});
 /**
  * Formulario para realizar una solicitud
  */

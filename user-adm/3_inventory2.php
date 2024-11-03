@@ -224,7 +224,7 @@ include_once '../settings/notice.php';
 
         <!--Formulario para Crear un articulo-->
         <div class="modalAddArticle">
-            <div class="panelArticle" style="width:400px;">
+            <div class="panelArticle">
                 <form method="post" class="formArticle">
                     <h2>Agregar Artículo de Bienes Físicos</h2>
 
