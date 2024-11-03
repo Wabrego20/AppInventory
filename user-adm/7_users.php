@@ -341,7 +341,6 @@ include_once '../settings/notice.php';
                                 }
                                 ?>
                             </select>
-
                         </div>
                     </div>
 
@@ -351,7 +350,8 @@ include_once '../settings/notice.php';
                         <div class="campo">
                             <i class="fa-solid fa-layer-group"></i>
                             <input type="hidden" name="categories_id" id="categories_id_donor">
-                            <input type="text" name="categories_name" id="categories_name_donor" class="btnTxt" readonly>
+                            <input type="text" name="categories_name" id="categories_name_donor" class="btnTxt"
+                                readonly>
                         </div>
                     </div>
 
@@ -368,10 +368,10 @@ include_once '../settings/notice.php';
 
                     <!--Tipo de Donante-->
                     <div class="formLogCampo">
-                        <label for="donor_type">Tipo de Donante:</label>
+                        <label for="donor_type">Tipo de Donante:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo" style="width:350px;">
                             <i class="fa-solid fa-award"></i>
-                            <Select name="donor_type" id="donor_type" class="btnTxt">
+                            <Select name="donor_type" id="donor_type" class="btnTxt" required>
                                 <Option value="">Seleccione</Option>
                                 <option value="Natural">Persona Natural</option>
                                 <option value="Juridica">Persona Jurídica</option>
@@ -379,8 +379,33 @@ include_once '../settings/notice.php';
                         </div>
                     </div>
 
-                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
-                     <div class="btnSubmitPanel">
+                    <div class="formCreate" id="otrosDatos">
+                        <h2>Datos de la Empresa</h2>
+                        <!--campo de nombre-->
+                        <div class="formLogCampo">
+                            <label for="donor_name">Nombre de la empresa:</label>
+                            <div class="campo">
+                                <i class="fa-solid fa-signature"></i>
+                                <input class="btnTxt" type="text" name="donor_name" id="donor_name"
+                                    pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,15}" maxlength="15"
+                                    placeholder="introduzca un nombre de la empresa" required>
+                            </div>
+                        </div>
+
+                        <!--RUC de la empresa-->
+                        <div class="formLogCampo">
+                            <label for="donor_ruc">RUC:</label>
+                            <div class="campo">
+                                <i class="fa-solid fa-signature"></i>
+                                <input class="btnTxt" type="text" name="donor_ruc" id="donor_ruc"
+                                    pattern="[A-Z0-9a-zÁÉÍÓÚáéíóúñÑ]{3,15}" maxlength="20"
+                                    placeholder="introduzca el RUC de su empresa" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Botón de crear usuario, botón de cancelar creación de usuario-->
+                    <div class="btnSubmitPanel">
                         <button type="submit" class="btnSubmit btnVerde" name="crearUsuario">
                             Enviar Acta
                         </button>

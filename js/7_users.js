@@ -119,31 +119,11 @@ function submitEditUserForm() {
 }
 
 /*
-*Mostrar tipo de donante
-
-document.getElementById('rol_name').addEventListener('change', function() {
-    const selectedRole = this.options[this.selectedIndex].text;
-    const donorTypeDiv = document.getElementById('donorType');
-    const donorTypeDiv2 = document.querySelector('.datosEmpresa');
-    const donorTypeSelect = document.getElementById('donor_type'); // Asegúrate de obtener el select
-
-    if (selectedRole === 'Donante') {
-        donorTypeDiv.style.display = 'block';
-        donorTypeSelect.value = ''; // Restablecer el valor predeterminado
-        donorTypeSelect.focus();
-    } else {
-        donorTypeDiv.style.display = 'none';
-        donorTypeDiv2.style.display = 'none';
-        donorTypeSelect.value = ''; // Restablecer el valor predeterminado
-    }
-});
-
-
 * Mostrar datos de la empresa
-
+*/
 document.getElementById('donor_type').addEventListener('change', function() {
     const selectedTypeDonor = this.options[this.selectedIndex].text;
-    const donorTypeDiv = document.querySelector('.datosEmpresa');
+    const donorTypeDiv = document.getElementById('otrosDatos');
 
     if (selectedTypeDonor === 'Persona Jurídica') {
         donorTypeDiv.style.display = 'flex';
@@ -152,7 +132,7 @@ document.getElementById('donor_type').addEventListener('change', function() {
         donorTypeDiv.style.display = 'none';
     }
 });
-*/
+
 
 function crearActa() {
     var modal = document.querySelector(".modalDonante");

@@ -12,7 +12,8 @@ main h2 {
 }
 
 /*Formulario para crear usuarios*/
-.modalCreate, .modalDonante {
+.modalCreate,
+.modalDonante {
   background-color: var(--fondo);
   width: 100%;
   height: 100vh;
@@ -26,11 +27,12 @@ main h2 {
   z-index: 2;
 }
 
-.modalCreate.show, .modalDonante.show {
+.modalCreate.show,
+.modalDonante.show {
   opacity: 1;
 }
 
-.panelCreate{
+.panelCreate {
   width: 800px;
   max-height: 100%;
   max-width: 100%;
@@ -59,7 +61,7 @@ main h2 {
     background-color: var(--azul);
     color: var(--blanco);
   }
-  h3{
+  h3 {
     text-align: center;
     width: 100%;
     padding: 0;
@@ -115,15 +117,6 @@ main h2 {
       }
     }
   }
-  .otrosDatos{
-    display: flex;
-    justify-content: space-between;
-    align-self: center;
-    flex-wrap: wrap;
-    width: 99%;
-    border-radius: 5px;
-    display: none;
-  }
 }
 
 .fa-id-badge,
@@ -144,7 +137,7 @@ main h2 {
   background-color: var(--blanco);
 }
 
-.fa-id-badge{
+.fa-id-badge {
   background-color: var(--azul);
 }
 .fa-user-pen {
@@ -165,7 +158,7 @@ main h2 {
   box-shadow: 0 0 5px var(--rojo);
 }
 
-.fa-id-badge:hover{
+.fa-id-badge:hover {
   cursor: pointer;
   color: var(--azul);
   box-shadow: 0 0 5px var(--azul);
@@ -178,4 +171,9 @@ main h2 {
 .donante h5:hover {
   cursor: pointer;
   text-decoration: underline;
+}
+
+
+#otrosDatos{
+  display: none;
 }
