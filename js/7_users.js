@@ -29,7 +29,7 @@ $(document).ready(function () {
             {
                 text: '<i class="fas fa-user-plus"></i> Crear usuario',
                 action: function (e, dt, node, config) {
-                    var modalUser = document.querySelector(".modalCreateUser");
+                    var modalUser = document.querySelector(".modalCreate");
                     modalUser.style.display = "flex";
                     setTimeout(function () {
                         modalUser.classList.add("show");
@@ -43,7 +43,7 @@ $(document).ready(function () {
  *Función para ocultar formulario de creación de usuarios
  */
 function ocultarFormCreateUser() {
-    var modal = document.querySelector(".modalCreateUser");
+    var modal = document.querySelector(".modalCreate");
     modal.classList.remove("show");
     modal.classList.add("hide");
     setTimeout(function () {
@@ -118,3 +118,69 @@ function submitEditUserForm() {
     document.getElementById('editUserForm').style.display = 'none';
 }
 
+/*
+*Mostrar tipo de donante
+
+document.getElementById('rol_name').addEventListener('change', function() {
+    const selectedRole = this.options[this.selectedIndex].text;
+    const donorTypeDiv = document.getElementById('donorType');
+    const donorTypeDiv2 = document.querySelector('.datosEmpresa');
+    const donorTypeSelect = document.getElementById('donor_type'); // Asegúrate de obtener el select
+
+    if (selectedRole === 'Donante') {
+        donorTypeDiv.style.display = 'block';
+        donorTypeSelect.value = ''; // Restablecer el valor predeterminado
+        donorTypeSelect.focus();
+    } else {
+        donorTypeDiv.style.display = 'none';
+        donorTypeDiv2.style.display = 'none';
+        donorTypeSelect.value = ''; // Restablecer el valor predeterminado
+    }
+});
+
+
+* Mostrar datos de la empresa
+
+document.getElementById('donor_type').addEventListener('change', function() {
+    const selectedTypeDonor = this.options[this.selectedIndex].text;
+    const donorTypeDiv = document.querySelector('.datosEmpresa');
+
+    if (selectedTypeDonor === 'Persona Jurídica') {
+        donorTypeDiv.style.display = 'flex';
+        document.getElementById('donor_name').focus();
+    } else {
+        donorTypeDiv.style.display = 'none';
+    }
+});
+*/
+
+function crearActa() {
+    var modal = document.querySelector(".modalDonante");
+    modal.style.display = "flex";
+    setTimeout(function () {
+        modal.classList.add("show");
+    }, 10);
+}
+
+function ocultarFormDonante() {
+    var modal = document.querySelector(".modalDonante");
+    modal.classList.remove("show");
+    modal.classList.add("hide");
+    setTimeout(function () {
+        modal.style.display = "none";
+        modal.classList.remove("hide");
+    }, 500);
+}
+
+document.getElementById("inventory_id").addEventListener("change", function () {
+    var selectedOption = this.options[this.selectedIndex];
+    var category_id = selectedOption.getAttribute("data-category-id");
+    document.getElementById("categories_id_donor").value = category_id
+      ? category_id
+      : "Vacío";
+  
+    var categoryName = selectedOption.getAttribute("data-category-name");
+    document.getElementById("categories_name_donor").value = categoryName
+      ? categoryName
+      : "Vacío";
+  });

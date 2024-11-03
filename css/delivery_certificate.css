@@ -30,7 +30,9 @@ main {
   }
   .logoMides {
     border-radius: 50px;
-    width: 150px;
+    width: 250px;
+    background-color: var(--azul);
+    border-radius: 5px;
   }
 }
 .dobleSaltoLinea{

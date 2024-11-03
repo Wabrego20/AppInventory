@@ -186,7 +186,11 @@ include_once '../settings/notice.php';
                             <td><?php echo $row['users_name'] ?? 'name'; ?></td>
                             <td><?php echo $row['users_last_name'] ?? 'lastName'; ?></td>
                             <td><?php echo $row['users_email'] ?? 'ejemplo@mail.com'; ?></td>
-                            <td><?php echo $row['rol_name'] ?? 'no disponible'; ?></td>
+                            <td class="<?php echo strtolower($row['rol_name'] ?? ''); ?>">
+                                <h5 title="Clic para enviar el acta." onclick="crearActa()">
+                                    <?php echo $row['rol_name'] ?? 'no disponible'; ?>
+                                </h5>
+                            </td>
                             <td><?php echo $row['users_registration_date'] ?? 'dd/mm/aaaa'; ?></td>
                             <td>
                                 <a href="javascript:void(0);" onclick="editUser(<?php echo $row['users_id']; ?>)">
@@ -208,14 +212,14 @@ include_once '../settings/notice.php';
         </table>
 
         <!--Formulario para Crear un usuario-->
-        <div class="modalCreateUser">
-            <div class="panelCreateUser">
-                <form method="post" class="formCreateUser">
+        <div class="modalCreate">
+            <div class="panelCreate">
+                <form method="post" class="formCreate">
                     <h2>Crear Usuario</h2>
 
                     <!--campo de cédula-->
                     <div class="formLogCampo">
-                        <label for="user">Cédula:</label>
+                        <label for="users_dni">Cédula:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-regular fa-address-card"></i>
                             <input class="btnTxt" type="text" name="users_dni" id="users_dni"
@@ -226,7 +230,7 @@ include_once '../settings/notice.php';
 
                     <!--campo de nombre-->
                     <div class="formLogCampo">
-                        <label for="user">Nombre:</label>
+                        <label for="users_name">Nombre:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
                             <input class="btnTxt" type="text" name="users_name" id="users_name"
@@ -237,18 +241,18 @@ include_once '../settings/notice.php';
 
                     <!--campo de apellido-->
                     <div class="formLogCampo">
-                        <label for="user">Apellido:</label>
+                        <label for="users_last_name">Apellido:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-file-signature"></i>
                             <input class="btnTxt" type="text" name="users_last_name" id="users_last_name"
-                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{4,15}" maxlength="15" placeholder="introduzca un apellido"
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,15}" maxlength="15" placeholder="introduzca un apellido"
                                 required>
                         </div>
                     </div>
 
                     <!--campo de correo-->
                     <div class="formLogCampo">
-                        <label for="email">Correo:</label>
+                        <label for="users_email">Correo:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-regular fa-envelope"></i>
                             <input class="btnTxt" type="email" name="users_email" id="users_email" maxlength="20"
@@ -258,7 +262,7 @@ include_once '../settings/notice.php';
 
                     <!--campo de departamento-->
                     <div class="formLogCampo">
-                        <label for="departament">Departamento:</label>
+                        <label for="departament_id">Departamento:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-building-user"></i>
                             <select name="departament_id" class="btnTxt" id="departament_id" required>
@@ -280,10 +284,10 @@ include_once '../settings/notice.php';
 
                     <!--campo de rol-->
                     <div class="formLogCampo">
-                        <label for="rol">Rol:</label>
+                        <label for="rol_name">Rol:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-user-secret"></i>
-                            <select name="users_rol" class="btnTxt" id="users_rol" required>
+                            <select name="rol_id" class="btnTxt" id="rol_name" required>
                                 <option value="">Seleccione</option>
                                 <?php
                                 $selectRol = $conn->query("SELECT rol_id, rol_name FROM rol");
@@ -311,15 +315,80 @@ include_once '../settings/notice.php';
             </div>
         </div>
 
-        <!-- Formulario para editar usuario -->
-        <form id="editUserForm" style="display:none;">
-            <input type="hidden" id="userId" name="userId">
-            <label for="userName">Nombre:</label>
-            <input type="text" id="userName" name="userName">
-            <label for="userEmail">Email:</label>
-            <input type="email" id="userEmail" name="userEmail">
-            <button type="button" onclick="submitEditUserForm()">Guardar Cambios</button>
-        </form>
+        <div class="modalDonante">
+            <div class="panelCreate">
+                <form method="post" class="formCreate">
+                    <h2>Datos de la Donación</h2>
+                    <!--campo de nombre de artículo-->
+                    <div class="formLogCampo">
+                        <label for="inventory_id">Artículo:<i class="fa-solid fa-asterisk"></i></label>
+                        <div class="campo">
+                            <i class="fa-solid fa-box-open"></i>
+                            <select name="inventory_id" class="btnTxt" id="inventory_id" required>
+                                <option value="">Seleccione</option>
+                                <?php
+                                $selectArticles = $conn->query("SELECT inventory.inventory_id, articles.articles_name, categories.*
+                                FROM inventory 
+                                JOIN articles ON inventory.articles_id = articles.articles_id
+                                JOIN categories ON articles.categories_id = categories.categories_id
+                                WHERE inventory_name = 'Donaciones'");
+                                if ($selectArticles->num_rows > 0) {
+                                    while ($row = $selectArticles->fetch_assoc()) {
+                                        echo '<option value="' . $row["inventory_id"] . '" data-category-id="' . $row["categories_id"] . '" data-category-name="' . $row["categories_name"] . '">' . $row["articles_name"] . '</option>';
+                                    }
+                                } else {
+                                    echo '<option value="">No hay artículo disponible</option>';
+                                }
+                                ?>
+                            </select>
+
+                        </div>
+                    </div>
+
+                    <!--campo de categoría-->
+                    <div class="formLogCampo">
+                        <label for="categories_name">Categoría:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-layer-group"></i>
+                            <input type="hidden" name="categories_id" id="categories_id_donor">
+                            <input type="text" name="categories_name" id="categories_name_donor" class="btnTxt" readonly>
+                        </div>
+                    </div>
+
+                    <!--campo de cantidad de artículos-->
+                    <div class="formLogCampo">
+                        <label for="inventory_quantity">Cantidad:<i class="fa-solid fa-asterisk"></i></label>
+                        <div class="campo">
+                            <i class="fa-solid fa-arrow-up-1-9"></i>
+                            <input class="btnTxt" type="number" name="inventory_quantity" id="inventory1_quantity"
+                                pattern="[0-9]{1,7}" min="1" max="1000000" step="1"
+                                placeholder="introduzca la cantidad " required>
+                        </div>
+                    </div>
+
+                    <!--Tipo de Donante-->
+                    <div class="formLogCampo">
+                        <label for="donor_type">Tipo de Donante:</label>
+                        <div class="campo" style="width:350px;">
+                            <i class="fa-solid fa-award"></i>
+                            <Select name="donor_type" id="donor_type" class="btnTxt">
+                                <Option value="">Seleccione</Option>
+                                <option value="Natural">Persona Natural</option>
+                                <option value="Juridica">Persona Jurídica</option>
+                            </Select>
+                        </div>
+                    </div>
+
+                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
+                     <div class="btnSubmitPanel">
+                        <button type="submit" class="btnSubmit btnVerde" name="crearUsuario">
+                            Enviar Acta
+                        </button>
+                        <div class="btnSubmit btnCancel" onclick="ocultarFormDonante()">Cancelar</div>
+                    </div>
+                </form>
+            </div>
+        </div>
 
     </main>
 
@@ -350,7 +419,7 @@ if (isset($_POST['crearUsuario'])) {
     $email = $_POST['users_email'];
     $user = strtolower(substr($name, 0, 1) . $lastName);
     $password = password_hash("12345678", PASSWORD_DEFAULT);
-    $rol = $_POST['users_rol'];
+    $rol = $_POST['rol_id'];
     $departament = $_POST['departament_id'];
     date_default_timezone_set('America/Panama');
     $registration_date = date("Y-m-d H:i:s");
@@ -403,9 +472,9 @@ if (isset($_POST['crearUsuario'])) {
             return $user;
         }
         $uniqueUser = generateUniqueUsername($conn, $user);
-        $stmt = $conn->prepare("INSERT INTO users (users_dni, users_name, users_last_name, users_email, users_user, users_password, users_rol, users_registration_date, departament_id) 
+        $stmt = $conn->prepare("INSERT INTO users (users_dni, users_name, users_last_name, users_email, users_user, users_password, rol_id, users_registration_date, departament_id) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssssss", $dni, $name, $lastName, $email, $uniqueUser, $password, $rol, $registration_date, $departament);
+        $stmt->bind_param("ssssssiss", $dni, $name, $lastName, $email, $uniqueUser, $password, $rol, $registration_date, $departament);
         if ($stmt->execute()) {
             ?>
             <script>
