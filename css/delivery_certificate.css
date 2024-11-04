@@ -44,3 +44,12 @@ main {
     right: 10px;
     top: 10px;
 }
+
+.fotoArticulo{
+  position: absolute;
+  top: 20%;
+  right: 10%;
+  width: 200px;
+  border-radius: 5px;
+  object-fit: cover; 
+}

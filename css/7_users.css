@@ -109,6 +109,7 @@ main h2 {
         font-size: 16px;
         color: var(--azul);
         font-weight: bold;
+        resize: none;
       }
 
       .btnTxt:focus {

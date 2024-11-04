@@ -396,10 +396,42 @@ include_once '../settings/notice.php';
                         <div class="formLogCampo">
                             <label for="donor_ruc">RUC:</label>
                             <div class="campo">
-                                <i class="fa-solid fa-signature"></i>
+                                <i class="fa-solid fa-id-card-clip"></i>
                                 <input class="btnTxt" type="text" name="donor_ruc" id="donor_ruc"
                                     pattern="[A-Z0-9a-zÁÉÍÓÚáéíóúñÑ]{3,15}" maxlength="20"
                                     placeholder="introduzca el RUC de su empresa" required>
+                            </div>
+                        </div>
+
+                        <!--Campo de telefono de oficina-->
+                        <div class="formLogCampo">
+                            <label for="donor_office_phone">Teléfono de Oficina:</label>
+                            <div class="campo">
+                                <i class="fa-solid fa-phone-volume"></i>
+                                <input type="tel" class="btnTxt" name="donor_office_phone"
+                                    placeholder="introduzca un teléfono" id="donor_office_phone"
+                                    pattern="[1-9][0-9]{2}-[0-9]{4}" value="">
+                            </div>
+                        </div>
+
+                        <!--Campo de correo-->
+                        <div class="formLogCampo">
+                            <label for="donor_email">Correo:</label>
+                            <div class="campo">
+                                <i class="fa-regular fa-envelope"></i>
+                                <input class="btnTxt" type="email" name="donor_email" id="donor_email" maxlength="30"
+                                    placeholder="introduzcca correo electrónico" value="">
+                            </div>
+                        </div>
+
+                        <!--Campo de dirección-->
+                        <div class="formLogCampo" style="width:100%">
+                            <label for="donor_adress">Dirección:</label>
+                            <div class="campo">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <textarea name="donor_adress" id="donor_adress" class="textArea btnTxt" maxlength="120"
+                                    pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]{4,100}"
+                                    placeholder="introduzca dirección"></textarea>
                             </div>
                         </div>
                     </div>

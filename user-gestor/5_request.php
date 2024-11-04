@@ -216,28 +216,56 @@ include_once ("../settings/conexion.php");
                             </td>
                             <td>
                                 <?php if ($row['request_status'] === 'Aprobada'): ?>
-                                    <a href="delivery_certificate.php?fila=<?php echo $fila; ?>
-                                    &users_name=<?php echo urlencode($row['users_name'] ?? 'No disponible'); ?>
-                                    &users_last_name=<?php echo urlencode($row['users_last_name'] ?? 'No disponible'); ?>
-                                    &approver_name=<?php echo urlencode($approver_data['users_name'] ?? 'No disponible'); ?>
-                                    &approver_last_name=<?php echo urlencode($approver_data['users_last_name'] ?? 'No disponible'); ?>
-                                    &departament_name=<?php echo urlencode($departament_data['departament_name'] ?? 'No disponible'); ?>
-                                    &warehouses_name=<?php echo urlencode($warehouse_data['warehouses_name'] ?? 'No disponible'); ?>
-                                    &articles_name=<?php echo urlencode($row['articles_name'] ?? 'No disponible'); ?>
-                                    &categories_name=<?php echo urlencode($row['categories_name'] ?? 'No disponible'); ?>
-                                    &inventory_name=<?php echo urlencode($row['inventory_name'] ?? 'No disponible'); ?>
-                                    &request_quantity=<?php echo $row['request_quantity'] ?? 'No disponible'; ?>
-                                    &units_name=<?php echo urlencode($units_of_measure_data['units_name'] ?? 'No disponible'); ?>
-                                    &request_total_cost=<?php echo $row['request_total_cost'] ?? 'No disponible'; ?>
-                                    &request_order_date=<?php echo $row['request_order_date'] ?? 'd/m/a'; ?>
-                                    &articles_unit_cost=<?php echo urlencode($row['articles_unit_cost'] ?? ''); ?>"
-                                        title="Ver acta de entrega" target="_blank">
-                                        <i class="fa-solid fa-file-pdf"></i>
-                                    </a>
+                                    <form action="delivery_certificate.php" method="POST" id="form-<?php echo $fila; ?>" target="-blank">
+                                        <input type="hidden" name="fila" value="<?php echo htmlspecialchars($fila); ?>">
+                                        <input type="hidden" name="users_name"
+                                            value="<?php echo htmlspecialchars($row['users_name'] ?? 'No disponible'); ?>">
+                                        <input type="hidden" name="users_last_name"
+                                            value="<?php echo htmlspecialchars($row['users_last_name'] ?? 'No disponible'); ?>">
+                                        <input type="hidden" name="users_dni"
+                                            value="<?php echo htmlspecialchars($row['users_dni'] ?? 'No disponible'); ?>">
+                                        <input type="hidden" name="departament_name"
+                                            value="<?php echo htmlspecialchars($row['departament_name'] ?? 'No disponible'); ?>">
+                                        <input type="hidden" name="approver_name"
+                                            value="<?php echo htmlspecialchars($approver_data['users_name'] ?? 'No disponible'); ?>">
+                                        <input type="hidden" name="approver_last_name"
+                                            value="<?php echo htmlspecialchars($approver_data['users_last_name'] ?? 'No disponible'); ?>">
+                                        <input type="hidden" name="approver_dni"
+                                            value="<?php echo htmlspecialchars($approver_data['users_dni'] ?? 'No disponible'); ?>">
+                                        <input type="hidden" name="approver_departament"
+                                            value="<?php echo htmlspecialchars($departament_data['departament_name'] ?? 'No disponible'); ?>">
+                                        <input type="hidden" name="warehouses_name"
+                                            value="<?php echo htmlspecialchars($warehouse_data['warehouses_name'] ?? 'No disponible'); ?>">
+                                        <input type="hidden" name="articles_name"
+                                            value="<?php echo htmlspecialchars($row['articles_name'] ?? 'No disponible'); ?>">
+                                        <input type="hidden" name="articles_brand"
+                                            value="<?php echo htmlspecialchars($row['articles_brand'] ?? 'No disponible'); ?>">
+                                        <input type="hidden" name="articles_unit_cost"
+                                            value="<?php echo htmlspecialchars($row['articles_unit_cost'] ?? ''); ?>">
+                                        <input type="hidden" name="articles_photo"
+                                            value="<?php echo htmlspecialchars($row['articles_photo'] ?? ''); ?>">
+                                        <input type="hidden" name="categories_name"
+                                            value="<?php echo htmlspecialchars($row['categories_name'] ?? 'No disponible'); ?>">
+                                        <input type="hidden" name="inventory_name"
+                                            value="<?php echo htmlspecialchars($row['inventory_name'] ?? 'No disponible'); ?>">
+                                        <input type="hidden" name="units_name"
+                                            value="<?php echo htmlspecialchars($units_of_measure_data['units_name'] ?? 'No disponible'); ?>">
+                                        <input type="hidden" name="request_quantity"
+                                            value="<?php echo htmlspecialchars($row['request_quantity'] ?? 'No disponible'); ?>">
+                                        <input type="hidden" name="request_total_cost"
+                                            value="<?php echo htmlspecialchars($row['request_total_cost'] ?? 'No disponible'); ?>">
+                                        <input type="hidden" name="request_order_date"
+                                            value="<?php echo htmlspecialchars($row['request_order_date'] ?? 'd/m/a'); ?>">
+                                        <button type="submit" title="Ver acta de entrega"
+                                            style="background: none; border: none; padding: 0; cursor: pointer;">
+                                            <i class="fa-solid fa-file-pdf"></i>
+                                        </button>
+                                    </form>
                                 <?php else: ?>
                                     <i class="fa-solid fa-file-pdf pdfHidden"></i>
                                 <?php endif; ?>
                             </td>
+
 
                         </tr>
 
