@@ -187,7 +187,8 @@ include_once '../settings/notice.php';
                             <td><?php echo $row['users_last_name'] ?? 'lastName'; ?></td>
                             <td><?php echo $row['users_email'] ?? 'ejemplo@mail.com'; ?></td>
                             <td class="<?php echo strtolower($row['rol_name'] ?? ''); ?>">
-                                <h5 title="Clic para aprobar donación." onclick="crearActa()">
+                                <h5 title="Clic para crear acta de donación."
+                                    onclick="crearActa('<?php echo $row['users_id']; ?>')">
                                     <?php echo $row['rol_name'] ?? 'no disponible'; ?>
                                 </h5>
                             </td>
@@ -318,7 +319,7 @@ include_once '../settings/notice.php';
                 <form method="post" class="formCreate">
                     <h2>Editar Usuario</h2>
 
-                    <input type="hidden" name="users_id" id="users_id_edit" readonly >
+                    <input type="hidden" name="users_id" id="users_id_edit" readonly>
 
                     <!--campo de cédula-->
                     <div class="formLogCampo">
@@ -450,6 +451,7 @@ include_once '../settings/notice.php';
             <div class="panelCreate">
                 <form method="post" class="formCreate">
                     <h2>Datos de la Donación</h2>
+                    <input type="text" name="" id="id_donor">
                     <!--campo de nombre de artículo-->
                     <div class="formLogCampo">
                         <label for="inventory_id">Artículo:<i class="fa-solid fa-asterisk"></i></label>
@@ -569,9 +571,52 @@ include_once '../settings/notice.php';
 
                     <!--Botón de aprobar donación, botón de cancelar-->
                     <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnVerde" name="crearUsuario">
-                            Aprobar
-                        </button>
+                        <form action="donor_certificate.php" method="POST" id="form-<?php echo $fila; ?>"
+                            target="-blank">
+                            <input type="hidden" name="fila" value="<?php echo htmlspecialchars($fila); ?>">
+                            <input type="hidden" name="users_name"
+                                value="<?php echo htmlspecialchars($row['users_name'] ?? 'No disponible'); ?>">
+                            <input type="hidden" name="users_last_name"
+                                value="<?php echo htmlspecialchars($row['users_last_name'] ?? 'No disponible'); ?>">
+                            <input type="hidden" name="users_dni"
+                                value="<?php echo htmlspecialchars($row['users_dni'] ?? 'No disponible'); ?>">
+                            <input type="hidden" name="departament_name"
+                                value="<?php echo htmlspecialchars($row['departament_name'] ?? 'No disponible'); ?>">
+                            <input type="hidden" name="approver_name"
+                                value="<?php echo htmlspecialchars($approver_data['users_name'] ?? 'No disponible'); ?>">
+                            <input type="hidden" name="approver_last_name"
+                                value="<?php echo htmlspecialchars($approver_data['users_last_name'] ?? 'No disponible'); ?>">
+                            <input type="hidden" name="approver_dni"
+                                value="<?php echo htmlspecialchars($approver_data['users_dni'] ?? 'No disponible'); ?>">
+                            <input type="hidden" name="approver_departament"
+                                value="<?php echo htmlspecialchars($departament_data['departament_name'] ?? 'No disponible'); ?>">
+                            <input type="hidden" name="warehouses_name"
+                                value="<?php echo htmlspecialchars($warehouse_data['warehouses_name'] ?? 'No disponible'); ?>">
+                            <input type="hidden" name="articles_name"
+                                value="<?php echo htmlspecialchars($row['articles_name'] ?? 'No disponible'); ?>">
+                            <input type="hidden" name="articles_brand"
+                                value="<?php echo htmlspecialchars($row['articles_brand'] ?? 'No disponible'); ?>">
+                            <input type="hidden" name="articles_unit_cost"
+                                value="<?php echo htmlspecialchars($row['articles_unit_cost'] ?? ''); ?>">
+                            <input type="hidden" name="articles_photo"
+                                value="<?php echo htmlspecialchars($row['articles_photo'] ?? ''); ?>">
+                            <input type="hidden" name="categories_name"
+                                value="<?php echo htmlspecialchars($row['categories_name'] ?? 'No disponible'); ?>">
+                            <input type="hidden" name="inventory_name"
+                                value="<?php echo htmlspecialchars($row['inventory_name'] ?? 'No disponible'); ?>">
+                            <input type="hidden" name="units_name"
+                                value="<?php echo htmlspecialchars($units_of_measure_data['units_name'] ?? 'No disponible'); ?>">
+                            <input type="hidden" name="request_quantity"
+                                value="<?php echo htmlspecialchars($row['request_quantity'] ?? 'No disponible'); ?>">
+                            <input type="hidden" name="request_total_cost"
+                                value="<?php echo htmlspecialchars($row['request_total_cost'] ?? 'No disponible'); ?>">
+                            <input type="hidden" name="request_order_date"
+                                value="<?php echo htmlspecialchars($row['request_order_date'] ?? 'd/m/a'); ?>">
+                            <button type="button" class="btnSubmit btnVerde" onclick="crearActa()">
+                                Crear Acta
+                            </button>
+                        </form>
+
                         <div class="btnSubmit btnCancel" onclick="ocultarFormDonante()">Cancelar</div>
                     </div>
                 </form>
@@ -692,13 +737,61 @@ if (isset($_POST['crearUsuario'])) {
     $checkQuery->close();
     $conn->close();
 }
+/*
+ *Editar Usuario
+ */
+if (isset($_POST['editUser'])) {
+    $users_id = $_POST['users_id'];
+    $users_dni = $_POST['users_dni'];
+    $users_name = $_POST['users_name'];
+    $users_last_name = $_POST['users_last_name'];
+    $users_email = $_POST['users_email'];
+    $departament_id = $_POST['departament_id'];
+    $rol_id = $_POST['rol_id'];
+
+    $stmt = $conn->prepare("UPDATE users SET 
+        users_dni = ?, 
+        users_name = ?, 
+        users_last_name = ?, 
+        users_email = ?, 
+        departament_id = ?, 
+        rol_id = ? 
+        WHERE users_id = ?");
+
+    $stmt->bind_param("ssssiii", $users_dni, $users_name, $users_last_name, $users_email, $departament_id, $rol_id, $users_id);
+
+    if ($stmt->execute()) {
+        ?>
+        <script>
+            Swal.fire({
+                color: "var(--verde)",
+                icon: "success",
+                iconColor: "var(--verde)",
+                title: 'Éxito!',
+                text: 'Usuario actualizado correctamente',
+                showConfirmButton: true,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = window.location.href;
+                }
+            });
+        </script>
+        <?php
+    } else {
+        echo "Error al actualizar el usuario: " . $stmt->error;
+    }
+    $stmt->close();
+}
 
 /*
  *Función para eliminar usuario
  */
-
 if (isset($_POST['deleteUser'])) {
-    $user_id = $_POST['users_id']; // Asegúrate de que esta variable esté definida y provenga de una fuente segura
+    $user_id = $_POST['users_id'];
 
     // Preparar la consulta SQL para evitar inyecciones SQL
     $sql = "DELETE FROM users WHERE users_id = ?";
@@ -732,5 +825,22 @@ if (isset($_POST['deleteUser'])) {
     $stmt->close();
     $conn->close();
 }
+/*
+ *Crear Acta para donantes
+ */
+if (isset($_POST['crearActa'])) {
+    ?>
+    <form action="donor_certificate.php" method="POST" id="form-<?php echo $fila; ?>" target="-blank">
+
+        <button type="submit" title="Ver acta de entrega"
+            style="background: none; border: none; padding: 0; cursor: pointer;">
+            <i class="fa-solid fa-file-pdf"></i>
+        </button>
+    </form>
+    <?php
+
+
+}
+
 
 ?>

@@ -101,12 +101,6 @@ include_once '../settings/notice.php';
 
                 <!--Pestaña de Solicitudes-->
                 <li>
-                    <?php if ($pending_count > 0): ?>
-                        <div class="bell" style="display: block;">
-                            <i class="fa-solid fa-bell"></i>
-                            <h6><?php echo $pending_count; ?></h6>
-                        </div>
-                    <?php endif; ?>
                     <a href="5_request.php">
                         <i class="fa-solid fa-clipboard-list"></i>
                         <h5>Solicitudes</h5>
@@ -190,11 +184,11 @@ include_once '../settings/notice.php';
             </div>
 
             <div class="panelDatos">
-                <h4 onclick="editarDatos('<?php echo $row['users_id'] ?? '0'; ?>')">Editar Datos Personales...</h4>
+                <h4 onclick="editarDatos('<?php echo $row['users_id'] ?? '0'; ?>')" title="clic para editar datos">Editar Datos Personales...</h4>
             </div>
 
             <div class="panelDatos">
-                <h4 onclick="cambiarPass('<?php echo $row['users_id'] ?? '0'; ?>')">Cambiar Contraseña...</h4>
+                <h4 onclick="cambiarPass('<?php echo $row['users_id'] ?? '0'; ?>')" title="clic para cambiar contraseña">Cambiar Contraseña...</h4>
             </div>
 
             <?php

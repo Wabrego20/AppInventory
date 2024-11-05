@@ -196,7 +196,7 @@ include_once '../settings/notice.php';
                             <td><?php echo $row['departament_name'] ?? 'no disponible'; ?></td>
                             <td><?php echo $row['articles_name'] ?? 'no disponible'; ?></td>
                             <td><?php echo $row['categories_name'] ?? 'no disponible'; ?></td>
-                            <td><?php echo $row['inventoryType'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['inventory_name'] ?? 'no disponible'; ?></td>
                             <td><?php echo $row['request_quantity'] ?? '0'; ?></td>
                             <td><?php echo $row['request_total_cost'] ?? '0.00'; ?></td>
                             <td><?php echo $row['request_order_date'] ?? 'd/m/a'; ?></td>

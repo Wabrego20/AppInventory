@@ -265,10 +265,7 @@ include_once ("../settings/conexion.php");
                                     <i class="fa-solid fa-file-pdf pdfHidden"></i>
                                 <?php endif; ?>
                             </td>
-
-
                         </tr>
-
                         <?php
                         $fila++;
                     }

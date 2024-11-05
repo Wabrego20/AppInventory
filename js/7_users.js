@@ -81,6 +81,7 @@ function ocultarformDeleteUser() {
     modal.style.display = "flex";
     setTimeout(function () {
         modal.classList.add("show");
+        document.getElementById("users_dni_edit").focus();
     }, 10);
     document.getElementById("users_id_edit").value = id;
     document.getElementById("users_dni_edit").value = dni;
@@ -103,9 +104,6 @@ function ocultarFormEditUser() {
 }
 
 
-
-
-
 /*
 * Mostrar datos de la empresa
 */
@@ -120,12 +118,13 @@ document.getElementById('donor_type').addEventListener('change', function () {
         donorTypeDiv.style.display = 'none';
     }
 });
-function crearActa() {
+function crearActa(id) {
     var modal = document.querySelector(".modalDonante");
     modal.style.display = "flex";
     setTimeout(function () {
         modal.classList.add("show");
     }, 10);
+    document.getElementById("id_donor").value = id
 }
 function ocultarFormDonante() {
     var modal = document.querySelector(".modalDonante");
