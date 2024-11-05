@@ -344,7 +344,7 @@ include_once '../settings/notice.php';
             <div class="panelPass">
                 <h2>Cambiar Contraseña</h2>
                 <form method="post" class="formPass">
-                    <input type="text" name="users_id" id="editPass">
+                    <input type="hidden" name="users_id" id="editPass">
 
                     <!--Campo de Contraseña actual-->
                     <div class="formLogCampo">
