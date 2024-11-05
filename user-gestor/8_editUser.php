@@ -328,7 +328,7 @@ include_once '../settings/notice.php';
             <div class="panelPass">
                 <h2>Cambiar Contraseña</h2>
                 <form method="post" class="formPass">
-                    <input type="hidden" name="users_user" id="editPass">
+                    <input type="text" name="users_id" id="editPass">
 
                     <!--Campo de Contraseña actual-->
                     <div class="formLogCampo">
@@ -336,7 +336,7 @@ include_once '../settings/notice.php';
                         <div class="campo">
                             <i class="fa-solid fa-key"></i>
                             <input class="btnTxt" type="password" name="current_password" id="users_password"
-                                placeholder="Contraseña Actual" required>
+                                pattern=".{8,15}" maxlength="15" placeholder="Contraseña Actual" required>
                             <i class="fa-regular fa-eye-slash" title="Ocultar Contraseña"
                                 onclick="visibilityCurrentPass();"></i>
                             <i class="fa-regular fa-eye" title="Mostrar Contraseña"
@@ -373,7 +373,7 @@ include_once '../settings/notice.php';
                     </div>
 
                     <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnVerde">Cambiar</button>
+                        <button type="submit" class="btnSubmit btnVerde" name="editarPass">Cambiar</button>
                         <span type="submit" class="btnSubmit btnCancel" onclick="ocultarFormPass()">Cancelar</span>
                     </div>
                 </form>
@@ -403,57 +403,42 @@ if (isset($_POST['editarPerfil'])) {
     $userAddress = $_POST['users_adress'];
     $userId = $_POST['users_id'];
 
-    // Obtener la fecha de nacimiento y la edad actuales si el campo está vacío
-    if (empty($userBirthdayDate)) {
-        $result = $conn->query("SELECT users_birthday_date, users_age FROM users WHERE users_user = '$userId'");
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
+    $result = $conn->query("SELECT users_birthday_date, users_age, users_photo FROM users WHERE users_id = '$userId'");
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+
+        if (empty($userBirthdayDate)) {
             $userBirthdayDate = $row['users_birthday_date'];
             $age = $row['users_age'];
+        } else {
+            // Calcular la edad si se proporciona una nueva fecha de nacimiento
+            $birthDate = new DateTime($userBirthdayDate);
+            $currentDate = new DateTime();
+            $age = $currentDate->diff($birthDate)->y;
         }
-    } else {
-        // Calcular la edad si se proporciona una nueva fecha de nacimiento
-        $birthDate = new DateTime($userBirthdayDate);
-        $currentDate = new DateTime();
-        $age = $currentDate->diff($birthDate)->y;
+
+        if (isset($_FILES['users_photo']) && $_FILES['users_photo']['error'] == 0) {
+            $imageData = file_get_contents($_FILES['users_photo']['tmp_name']);
+            $base64Image = base64_encode($imageData);
+        } else {
+            $base64Image = $row['users_photo'];
+        }
     }
 
-    // Verificar si se ha subido una nueva foto
-    if (isset($_FILES['users_photo']) && $_FILES['users_photo']['error'] == 0) {
-        $imageData = file_get_contents($_FILES['users_photo']['tmp_name']);
-        $base64Image = base64_encode($imageData);
-
-        if (!empty($base64Image)) {
-            // Consulta SQL con la foto
-            $sql = "UPDATE users SET 
-                        users_photo = ?, 
-                        users_name = ?, 
-                        users_last_name = ?, 
-                        users_email = ?, 
-                        users_birthday_date = ?, 
-                        users_age = ?, 
-                        users_office_phone = ?, 
-                        users_cell_phone = ?, 
-                        users_adress = ? 
-                    WHERE users_id = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ssssissssi", $base64Image, $userName, $userLastName, $userEmail, $userBirthdayDate, $age, $userOfficePhone, $userCellPhone, $userAddress, $userId);
-        }
-    } else {
-        // Consulta SQL sin la foto
-        $sql = "UPDATE users SET 
-                    users_name = ?, 
-                    users_last_name = ?, 
-                    users_email = ?, 
-                    users_birthday_date = ?, 
-                    users_age = ?, 
-                    users_office_phone = ?, 
-                    users_cell_phone = ?, 
-                    users_adress = ? 
-                WHERE users_id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssssisssi", $userName, $userLastName, $userEmail, $userBirthdayDate, $age, $userOfficePhone, $userCellPhone, $userAddress, $userId);
-    }
+    // Consulta SQL
+    $sql = "UPDATE users SET 
+                users_photo = ?, 
+                users_name = ?, 
+                users_last_name = ?, 
+                users_email = ?, 
+                users_birthday_date = ?, 
+                users_age = ?, 
+                users_office_phone = ?, 
+                users_cell_phone = ?, 
+                users_adress = ? 
+            WHERE users_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssssisssi", $base64Image, $userName, $userLastName, $userEmail, $userBirthdayDate, $age, $userOfficePhone, $userCellPhone, $userAddress, $userId);
 
     if ($stmt->execute()) {
         ?>
@@ -481,6 +466,101 @@ if (isset($_POST['editarPerfil'])) {
     }
 
     $stmt->close();
+    $conn->close();
+}
+/*
+ *Función para editar la contraseña
+ */
+if (isset($_POST['editarPass'])) {
+    $userId = $_POST['users_id'];
+    $currentPassword = $_POST['current_password'];
+    $newPassword = $_POST['users_password'];
+    $repeatNewPassword = $_POST['users_password_r'];
+
+    // Obtener la contraseña actual de la base de datos
+    $result = $conn->query("SELECT users_password FROM users WHERE users_id = '$userId'");
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $hashedPassword = $row['users_password'];
+
+        // Verificar la contraseña actual
+        if (password_verify($currentPassword, $hashedPassword)) {
+            // Verificar que las nuevas contraseñas coincidan
+            if ($newPassword === $repeatNewPassword) {
+                // Encriptar la nueva contraseña
+                $newHashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+
+                // Actualizar la contraseña en la base de datos
+                $sql = "UPDATE users SET users_password = ? WHERE users_id = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("si", $newHashedPassword, $userId);
+
+                if ($stmt->execute()) {
+                    ?>
+                    <script>
+                        Swal.fire({
+                            color: "var(--verde)",
+                            icon: "success",
+                            iconColor: "var(--verde)",
+                            title: '¡Éxito!',
+                            text: 'Contraseña actualizada correctamente',
+                            showConfirmButton: true,
+                            customClass: {
+                                confirmButton: 'btn-confirm'
+                            },
+                            confirmButtonText: "Aceptar",
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = window.location.href;
+                            }
+                        });
+                    </script>
+                    <?php
+                } else {
+                    echo "Error al actualizar la contraseña: " . $stmt->error;
+                }
+
+                $stmt->close();
+            } else {
+                ?>
+                <script>
+                    Swal.fire({
+                        color: "var(--rojo)",
+                        icon: "error",
+                        iconColor: "var(--rojo)",
+                        title: 'Error',
+                        text: 'Las nuevas contraseñas no coinciden',
+                        showConfirmButton: true,
+                        customClass: {
+                            confirmButton: 'btn-confirm'
+                        },
+                        confirmButtonText: "Aceptar",
+                    });
+                </script>
+                <?php
+            }
+        } else {
+            ?>
+            <script>
+                Swal.fire({
+                    color: "var(--rojo)",
+                    icon: "error",
+                    iconColor: "var(--rojo)",
+                    title: 'Error',
+                    text: 'La contraseña actual es incorrecta',
+                    showConfirmButton: true,
+                    customClass: {
+                        confirmButton: 'btn-confirm'
+                    },
+                    confirmButtonText: "Aceptar",
+                });
+            </script>
+            <?php
+        }
+    } else {
+        echo "Error: Usuario no encontrado.";
+    }
+
     $conn->close();
 }
 ?>

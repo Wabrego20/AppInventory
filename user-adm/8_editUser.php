@@ -344,7 +344,7 @@ include_once '../settings/notice.php';
             <div class="panelPass">
                 <h2>Cambiar Contraseña</h2>
                 <form method="post" class="formPass">
-                    <input type="hidden" name="users_id" id="editPass">
+                    <input type="text" name="users_id" id="editPass">
 
                     <!--Campo de Contraseña actual-->
                     <div class="formLogCampo">
@@ -352,7 +352,7 @@ include_once '../settings/notice.php';
                         <div class="campo">
                             <i class="fa-solid fa-key"></i>
                             <input class="btnTxt" type="password" name="current_password" id="users_password"
-                                placeholder="Contraseña Actual" required>
+                                pattern=".{8,15}" maxlength="15" placeholder="Contraseña Actual" required>
                             <i class="fa-regular fa-eye-slash" title="Ocultar Contraseña"
                                 onclick="visibilityCurrentPass();"></i>
                             <i class="fa-regular fa-eye" title="Mostrar Contraseña"
@@ -389,7 +389,7 @@ include_once '../settings/notice.php';
                     </div>
 
                     <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnVerde">Cambiar</button>
+                        <button type="submit" class="btnSubmit btnVerde" name="editarPass">Cambiar</button>
                         <span type="submit" class="btnSubmit btnCancel" onclick="ocultarFormPass()">Cancelar</span>
                     </div>
                 </form>
@@ -482,6 +482,101 @@ if (isset($_POST['editarPerfil'])) {
     }
 
     $stmt->close();
+    $conn->close();
+}
+/*
+ *Función para editar la contraseña
+ */
+if (isset($_POST['editarPass'])) {
+    $userId = $_POST['users_id'];
+    $currentPassword = $_POST['current_password'];
+    $newPassword = $_POST['users_password'];
+    $repeatNewPassword = $_POST['users_password_r'];
+
+    // Obtener la contraseña actual de la base de datos
+    $result = $conn->query("SELECT users_password FROM users WHERE users_id = '$userId'");
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $hashedPassword = $row['users_password'];
+
+        // Verificar la contraseña actual
+        if (password_verify($currentPassword, $hashedPassword)) {
+            // Verificar que las nuevas contraseñas coincidan
+            if ($newPassword === $repeatNewPassword) {
+                // Encriptar la nueva contraseña
+                $newHashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+
+                // Actualizar la contraseña en la base de datos
+                $sql = "UPDATE users SET users_password = ? WHERE users_id = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("si", $newHashedPassword, $userId);
+
+                if ($stmt->execute()) {
+                    ?>
+                    <script>
+                        Swal.fire({
+                            color: "var(--verde)",
+                            icon: "success",
+                            iconColor: "var(--verde)",
+                            title: '¡Éxito!',
+                            text: 'Contraseña actualizada correctamente',
+                            showConfirmButton: true,
+                            customClass: {
+                                confirmButton: 'btn-confirm'
+                            },
+                            confirmButtonText: "Aceptar",
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = window.location.href;
+                            }
+                        });
+                    </script>
+                    <?php
+                } else {
+                    echo "Error al actualizar la contraseña: " . $stmt->error;
+                }
+
+                $stmt->close();
+            } else {
+                ?>
+                <script>
+                    Swal.fire({
+                        color: "var(--rojo)",
+                        icon: "error",
+                        iconColor: "var(--rojo)",
+                        title: 'Error',
+                        text: 'Las nuevas contraseñas no coinciden',
+                        showConfirmButton: true,
+                        customClass: {
+                            confirmButton: 'btn-confirm'
+                        },
+                        confirmButtonText: "Aceptar",
+                    });
+                </script>
+                <?php
+            }
+        } else {
+            ?>
+            <script>
+                Swal.fire({
+                    color: "var(--rojo)",
+                    icon: "error",
+                    iconColor: "var(--rojo)",
+                    title: 'Error',
+                    text: 'La contraseña actual es incorrecta',
+                    showConfirmButton: true,
+                    customClass: {
+                        confirmButton: 'btn-confirm'
+                    },
+                    confirmButtonText: "Aceptar",
+                });
+            </script>
+            <?php
+        }
+    } else {
+        echo "Error: Usuario no encontrado.";
+    }
+
     $conn->close();
 }
 ?>
