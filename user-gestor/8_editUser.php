@@ -113,22 +113,6 @@ include_once '../settings/notice.php';
                     </a>
                 </li>
 
-                <!--Pestaña de Reportes-->
-                <li>
-                    <a href="6_reports.php">
-                        <i class="fa-solid fa-chart-simple"></i>
-                        <h5>Reportes</h5>
-                    </a>
-                </li>
-
-                <!--Pestaña de Usuarios-->
-                <li>
-                    <a href="7_users.php">
-                        <i class="fa-solid fa-users"></i>
-                        <h5>Usuarios</h5>
-                    </a>
-                </li>
-
                 <!--Pestaña de Mi Perfil-->
                 <li class="active">
                     <a href="#">

@@ -291,7 +291,7 @@ include_once '../settings/notice.php';
                         <div class="campo">
                             <i class="fa-solid fa-cake-candles"></i>
                             <input type="date" name="users_birthday_date" id="users_birthday_date"
-                                value="<?php echo $row['users_birthday_date'] ?? 'no disponible'; ?>" class="btnTxt">
+                                value="<?php echo $row['users_birthday_date'] ?? ''; ?>" class="btnTxt">
                         </div>
                     </div>
 
@@ -419,57 +419,42 @@ if (isset($_POST['editarPerfil'])) {
     $userAddress = $_POST['users_adress'];
     $userId = $_POST['users_id'];
 
-    // Obtener la fecha de nacimiento y la edad actuales si el campo está vacío
-    if (empty($userBirthdayDate)) {
-        $result = $conn->query("SELECT users_birthday_date, users_age FROM users WHERE users_id = '$userId'");
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
+    $result = $conn->query("SELECT users_birthday_date, users_age, users_photo FROM users WHERE users_id = '$userId'");
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+
+        if (empty($userBirthdayDate)) {
             $userBirthdayDate = $row['users_birthday_date'];
             $age = $row['users_age'];
+        } else {
+            // Calcular la edad si se proporciona una nueva fecha de nacimiento
+            $birthDate = new DateTime($userBirthdayDate);
+            $currentDate = new DateTime();
+            $age = $currentDate->diff($birthDate)->y;
         }
-    } else {
-        // Calcular la edad si se proporciona una nueva fecha de nacimiento
-        $birthDate = new DateTime($userBirthdayDate);
-        $currentDate = new DateTime();
-        $age = $currentDate->diff($birthDate)->y;
+
+        if (isset($_FILES['users_photo']) && $_FILES['users_photo']['error'] == 0) {
+            $imageData = file_get_contents($_FILES['users_photo']['tmp_name']);
+            $base64Image = base64_encode($imageData);
+        } else {
+            $base64Image = $row['users_photo'];
+        }
     }
 
-    // Verificar si se ha subido una nueva foto
-    if (isset($_FILES['users_photo']) && $_FILES['users_photo']['error'] == 0) {
-        $imageData = file_get_contents($_FILES['users_photo']['tmp_name']);
-        $base64Image = base64_encode($imageData);
-
-        if (!empty($base64Image)) {
-            // Consulta SQL con la foto
-            $sql = "UPDATE users SET 
-                        users_photo = ?, 
-                        users_name = ?, 
-                        users_last_name = ?, 
-                        users_email = ?, 
-                        users_birthday_date = ?, 
-                        users_age = ?, 
-                        users_office_phone = ?, 
-                        users_cell_phone = ?, 
-                        users_adress = ? 
-                    WHERE users_id = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ssssissssi", $base64Image, $userName, $userLastName, $userEmail, $userBirthdayDate, $age, $userOfficePhone, $userCellPhone, $userAddress, $userId);
-        }
-    } else {
-        // Consulta SQL sin la foto
-        $sql = "UPDATE users SET 
-                    users_name = ?, 
-                    users_last_name = ?, 
-                    users_email = ?, 
-                    users_birthday_date = ?, 
-                    users_age = ?, 
-                    users_office_phone = ?, 
-                    users_cell_phone = ?, 
-                    users_adress = ? 
-                WHERE users_id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssssisssi", $userName, $userLastName, $userEmail, $userBirthdayDate, $age, $userOfficePhone, $userCellPhone, $userAddress, $userId);
-    }
+    // Consulta SQL
+    $sql = "UPDATE users SET 
+                users_photo = ?, 
+                users_name = ?, 
+                users_last_name = ?, 
+                users_email = ?, 
+                users_birthday_date = ?, 
+                users_age = ?, 
+                users_office_phone = ?, 
+                users_cell_phone = ?, 
+                users_adress = ? 
+            WHERE users_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssssisssi", $base64Image, $userName, $userLastName, $userEmail, $userBirthdayDate, $age, $userOfficePhone, $userCellPhone, $userAddress, $userId);
 
     if ($stmt->execute()) {
         ?>
