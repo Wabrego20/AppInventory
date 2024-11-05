@@ -102,7 +102,6 @@ function editUser(userId) {
     document.getElementById('editUserForm').style.display = 'block';
     document.getElementById('users_id').value = userId;
 }
-
 /*
 *Función para enviar el formulario de edición
 */

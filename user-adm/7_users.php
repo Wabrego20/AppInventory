@@ -187,7 +187,7 @@ include_once '../settings/notice.php';
                             <td><?php echo $row['users_last_name'] ?? 'lastName'; ?></td>
                             <td><?php echo $row['users_email'] ?? 'ejemplo@mail.com'; ?></td>
                             <td class="<?php echo strtolower($row['rol_name'] ?? ''); ?>">
-                                <h5 title="Clic para enviar el acta." onclick="crearActa()">
+                                <h5 title="Clic para aprobar donación." onclick="crearActa()">
                                     <?php echo $row['rol_name'] ?? 'no disponible'; ?>
                                 </h5>
                             </td>
@@ -436,10 +436,10 @@ include_once '../settings/notice.php';
                         </div>
                     </div>
 
-                    <!--Botón de crear usuario, botón de cancelar creación de usuario-->
+                    <!--Botón de aprobar donación, botón de cancelar-->
                     <div class="btnSubmitPanel">
                         <button type="submit" class="btnSubmit btnVerde" name="crearUsuario">
-                            Enviar Acta
+                            Aprobar
                         </button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormDonante()">Cancelar</div>
                     </div>
