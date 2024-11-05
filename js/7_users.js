@@ -54,44 +54,23 @@ function ocultarFormCreateUser() {
 /*
  *Función para eliminar usuario
  */
-function deleteUser(userId) {
-    Swal.fire({
-        color: "var(--azul)",
-        title: "Eliminar Usuario",
-        text: "¿Está seguro que desea eliminar este usuario?",
-        icon: "question",
-        iconColor: "var(--azul)",
-        showCancelButton: true,
-        confirmButtonText: "Eliminar",
-        cancelButtonText: "Cancelar",
-        customClass: {
-            confirmButton: "btn-confirm",
-            cancelButton: "btn-cancel",
-        },
-        allowOutsideClick: false,
-    }).then((result) => {
-        if (result.isConfirmed) {
-            fetch("../settings/deleteUser.php?users_id=" + userId)
-                .then((response) => response.text())
-                .then((data) => {
-                    console.log(data); // Verifica la respuesta en la consola
-                    Swal.fire({
-                        color: "var(--verde)",
-                        title: "Éxito",
-                        text: "¡Usuario eliminado correctamente!",
-                        icon: "success",
-                        iconColor: "var(--verde)",
-                        showCancelButton: false,
-                        showConfirmButton: false,
-                        allowOutsideClick: false,
-                    });
-                    setTimeout(() => {
-                        window.location.href = window.location.href;
-                    }, 1500);
-                })
-                .catch((error) => console.error("Error:", error));
-        }
-    });
+function formDeleteUser(userId, name) {
+    var modal = document.querySelector(".modalDelete");
+    modal.style.display = "flex";
+    setTimeout(function () {
+        modal.classList.add("show");
+    }, 10);
+    document.getElementById('users_id_delete').value = userId;
+    document.getElementById('users_user_delete').value = name;
+}
+function ocultarformDeleteUser() {
+    var modal = document.querySelector(".modalDelete");
+    modal.classList.remove("show");
+    modal.classList.add("hide");
+    setTimeout(function () {
+        modal.style.display = "none";
+        modal.classList.remove("hide");
+    }, 500);
 }
 /*
 *Función para mostrar el formulario de edición con los datos del usuario
@@ -120,7 +99,7 @@ function submitEditUserForm() {
 /*
 * Mostrar datos de la empresa
 */
-document.getElementById('donor_type').addEventListener('change', function() {
+document.getElementById('donor_type').addEventListener('change', function () {
     const selectedTypeDonor = this.options[this.selectedIndex].text;
     const donorTypeDiv = document.getElementById('otrosDatos');
 
@@ -155,11 +134,11 @@ document.getElementById("inventory_id").addEventListener("change", function () {
     var selectedOption = this.options[this.selectedIndex];
     var category_id = selectedOption.getAttribute("data-category-id");
     document.getElementById("categories_id_donor").value = category_id
-      ? category_id
-      : "Vacío";
-  
+        ? category_id
+        : "Vacío";
+
     var categoryName = selectedOption.getAttribute("data-category-name");
     document.getElementById("categories_name_donor").value = categoryName
-      ? categoryName
-      : "Vacío";
-  });
+        ? categoryName
+        : "Vacío";
+});

@@ -192,15 +192,9 @@ include_once '../settings/notice.php';
                                 </h5>
                             </td>
                             <td><?php echo $row['users_registration_date'] ?? 'dd/mm/aaaa'; ?></td>
-                            <td>
-                                <a href="javascript:void(0);" onclick="editUser(<?php echo $row['users_id']; ?>)">
-                                    <i class="fa-solid fa-user-pen"></i>
-                                </a>
-                            </td>
-                            <td>
-                                <a href="javascript:void(0);" onclick="deleteUser(<?php echo $row['users_id']; ?>)">
-                                    <i class="fa-solid fa-user-minus"></i>
-                                </a>
+                            <td><i class="fa-solid fa-user-pen"></i></td>
+                            <td><i class="fa-solid fa-user-minus"
+                                    onclick="formDeleteUser('<?php echo $row['users_id']; ?>','<?php echo $row['users_user']; ?>');"></i>
                             </td>
                         </tr>
                         <?php
@@ -309,6 +303,33 @@ include_once '../settings/notice.php';
                             Crear Usuario
                         </button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormCreateUser()">Cancelar</div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <div class="modalDelete">
+            <div class="panelCreate">
+                <form method="post" class="formCreate" style="width: 400px;">
+                    <h2>Eliminar Usuario</h2>
+                    <input type="hidden" name="users_id" id="users_id_delete" class="btnTxt" readonly>
+                    <div class="formLogCampo">
+                        <label>Usuario:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-user-xmark"></i>
+                            <input type="text" name="users_user" id="users_user_delete" class="btnTxt" readonly>
+                        </div>
+                    </div>
+
+                    <div class="formLogCampo" style="width: 95%">
+                        <h4>¿Desea Eliminar este usuario?</h4>
+                    </div>
+
+                    <div class="btnSubmitPanel">
+                        <button type="submit" class="btnSubmit btnRojo" title="clic para eliminar artículo"
+                            name="deleteUser">Eliminar</button>
+                        <div class="btnSubmit btnCancel" onclick="ocultarformDeleteUser()">Cancelar</div>
                     </div>
 
                 </form>
@@ -561,4 +582,45 @@ if (isset($_POST['crearUsuario'])) {
     $checkQuery->close();
     $conn->close();
 }
+
+/*
+ *Función para eliminar usuario
+ */
+
+if (isset($_POST['deleteUser'])) {
+    $user_id = $_POST['users_id']; // Asegúrate de que esta variable esté definida y provenga de una fuente segura
+
+    // Preparar la consulta SQL para evitar inyecciones SQL
+    $sql = "DELETE FROM users WHERE users_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+
+    if ($stmt->execute()) {
+        ?>
+        <script>
+            Swal.fire({
+                color: "var(--verde)",
+                icon: "success",
+                iconColor: "var(--verde)",
+                title: '!Éxito!',
+                text: 'Usuario Eliminado correctamente',
+                showConfirmButton: true,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = window.location.href;
+                }
+            });
+        </script>
+        <?php
+    } else {
+        echo "<script>console.log('Error al eliminar: " . $stmt->error . "');</script>";
+    }
+    $stmt->close();
+    $conn->close();
+}
+
 ?>
