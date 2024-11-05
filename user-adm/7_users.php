@@ -192,9 +192,12 @@ include_once '../settings/notice.php';
                                 </h5>
                             </td>
                             <td><?php echo $row['users_registration_date'] ?? 'dd/mm/aaaa'; ?></td>
-                            <td><i class="fa-solid fa-user-pen"></i></td>
+                            <td><i class="fa-solid fa-user-pen"
+                                    onclick="formEditUser('<?php echo $row['users_id']; ?>','<?php echo $row['users_dni']; ?>','<?php echo $row['users_name']; ?>','<?php echo $row['users_last_name']; ?>','<?php echo $row['users_email']; ?>','<?php echo $row['rol_id']; ?>','<?php echo $row['departament_id']; ?>');"
+                                    title="clic aquí para editar este usuario"></i></td>
                             <td><i class="fa-solid fa-user-minus"
-                                    onclick="formDeleteUser('<?php echo $row['users_id']; ?>','<?php echo $row['users_user']; ?>');"></i>
+                                    onclick="formDeleteUser('<?php echo $row['users_id']; ?>','<?php echo $row['users_user']; ?>');"
+                                    title="clic aquí para eliminar este usuario"></i>
                             </td>
                         </tr>
                         <?php
@@ -309,6 +312,113 @@ include_once '../settings/notice.php';
             </div>
         </div>
 
+        <!--Formulario para editar un usuario-->
+        <div class="modalEdit">
+            <div class="panelCreate">
+                <form method="post" class="formCreate">
+                    <h2>Editar Usuario</h2>
+
+                    <input type="hidden" name="users_id" id="users_id_edit" readonly >
+
+                    <!--campo de cédula-->
+                    <div class="formLogCampo">
+                        <label for="users_dni">Cédula:<i class="fa-solid fa-asterisk"></i></label>
+                        <div class="campo">
+                            <i class="fa-regular fa-address-card"></i>
+                            <input class="btnTxt" type="text" name="users_dni" id="users_dni_edit"
+                                pattern="[a-zA-Z0-9]{1,2}-[0-9]{2,4}-[0-9]{2,4}" maxlength="14"
+                                placeholder="Editar cédula con guiones" required>
+                        </div>
+                    </div>
+
+                    <!--campo de nombre-->
+                    <div class="formLogCampo">
+                        <label for="users_name">Nombre:<i class="fa-solid fa-asterisk"></i></label>
+                        <div class="campo">
+                            <i class="fa-solid fa-signature"></i>
+                            <input class="btnTxt" type="text" name="users_name" id="users_name_edit"
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,15}" maxlength="15" placeholder="introduzca un nombre"
+                                required>
+                        </div>
+                    </div>
+
+                    <!--campo de apellido-->
+                    <div class="formLogCampo">
+                        <label for="users_last_name">Apellido:<i class="fa-solid fa-asterisk"></i></label>
+                        <div class="campo">
+                            <i class="fa-solid fa-file-signature"></i>
+                            <input class="btnTxt" type="text" name="users_last_name" id="users_last_name_edit"
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,15}" maxlength="15" placeholder="introduzca un apellido"
+                                required>
+                        </div>
+                    </div>
+
+                    <!--campo de correo-->
+                    <div class="formLogCampo">
+                        <label for="users_email">Correo:<i class="fa-solid fa-asterisk"></i></label>
+                        <div class="campo">
+                            <i class="fa-regular fa-envelope"></i>
+                            <input class="btnTxt" type="email" name="users_email" id="users_email_edit" maxlength="20"
+                                placeholder="introduzca un correo por favor" required>
+                        </div>
+                    </div>
+
+                    <!--campo de departamento-->
+                    <div class="formLogCampo">
+                        <label for="departament_id">Departamento:<i class="fa-solid fa-asterisk"></i></label>
+                        <div class="campo">
+                            <i class="fa-solid fa-building-user"></i>
+                            <select name="departament_id" class="btnTxt" id="departament_edit" required>
+                                <option value="">Seleccione</option>
+                                <?php
+                                $selectDepartament = "SELECT departament_id, departament_name FROM departament";
+                                $selectDepartament = $conn->query($selectDepartament);
+                                if ($selectDepartament->num_rows > 0) {
+                                    while ($row = $selectDepartament->fetch_assoc()) {
+                                        echo '<option value="' . $row["departament_id"] . '">' . $row["departament_name"] . '</option>';
+                                    }
+                                } else {
+                                    echo '<option value="">No hay departamentos disponibles</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!--campo de rol-->
+                    <div class="formLogCampo">
+                        <label for="rol_name">Rol:<i class="fa-solid fa-asterisk"></i></label>
+                        <div class="campo">
+                            <i class="fa-solid fa-user-secret"></i>
+                            <select name="rol_id" class="btnTxt" id="rol_name_edit" required>
+                                <option value="">Seleccione</option>
+                                <?php
+                                $selectRol = $conn->query("SELECT rol_id, rol_name FROM rol");
+                                if ($selectRol->num_rows > 0) {
+                                    while ($row = $selectRol->fetch_assoc()) {
+                                        echo '<option value="' . $row["rol_id"] . '">' . $row["rol_name"] . '</option>';
+                                    }
+                                } else {
+                                    echo '<option value="">No hay roles disponibles</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!--Botón de crear usuario, botón de cancelar creación de usuario-->
+                    <div class="btnSubmitPanel">
+                        <button type="submit" class="btnSubmit btnVerde" name="editUser">
+                            Guardar
+                        </button>
+                        <div class="btnSubmit btnCancel" onclick="ocultarFormEditUser()">Cancelar</div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <!--Formulario para eliminar un usuario-->
         <div class="modalDelete">
             <div class="panelCreate">
                 <form method="post" class="formCreate" style="width: 400px;">

@@ -206,11 +206,11 @@ include_once '../settings/notice.php';
             </div>
 
             <div class="panelDatos">
-                <h4 onclick="editarDatos('<?php echo $row['users_id'] ?? '0'; ?>')">Editar Datos Personales...</h4>
+                <h4 onclick="editarDatos('<?php echo $row['users_id'] ?? '0'; ?>')" title="clic aquí para editar sus datos personales">Editar Datos Personales...</h4>
             </div>
 
             <div class="panelDatos">
-                <h4 onclick="cambiarPass('<?php echo $row['users_id'] ?? '0'; ?>')">Cambiar Contraseña...</h4>
+                <h4 onclick="cambiarPass('<?php echo $row['users_id'] ?? '0'; ?>')" title="clic aquí para cambiar su contraseña">Cambiar Contraseña...</h4>
             </div>
 
             <?php

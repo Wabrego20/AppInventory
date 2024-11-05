@@ -72,29 +72,39 @@ function ocultarformDeleteUser() {
         modal.classList.remove("hide");
     }, 500);
 }
-/*
-*Función para mostrar el formulario de edición con los datos del usuario
-*/
-function editUser(userId) {
-    // Aquí puedes hacer una llamada AJAX para obtener los datos del usuario
-    // y rellenar el formulario. Por ahora, solo mostraremos el formulario.
-    document.getElementById('editUserForm').style.display = 'block';
-    document.getElementById('users_id').value = userId;
-}
-/*
-*Función para enviar el formulario de edición
-*/
-function submitEditUserForm() {
-    var userId = document.getElementById('users_id').value;
-    var userName = document.getElementById('users_name').value;
-    var userEmail = document.getElementById('users_email').value;
 
-    // Aquí puedes hacer una llamada AJAX para enviar los datos actualizados al servidor
-    console.log("Enviando datos actualizados del usuario:", userId, userName, userEmail);
-
-    // Ocultar el formulario después de enviar los datos
-    document.getElementById('editUserForm').style.display = 'none';
+/*
+ *Ver y ocultar el formulario de editar datos
+ */
+ function formEditUser(id, dni, name, last_name, email, rol, departament) {
+    var modal = document.querySelector(".modalEdit");
+    modal.style.display = "flex";
+    setTimeout(function () {
+        modal.classList.add("show");
+    }, 10);
+    document.getElementById("users_id_edit").value = id;
+    document.getElementById("users_dni_edit").value = dni;
+    document.getElementById("users_name_edit").value = name;
+    document.getElementById("users_last_name_edit").value = last_name;
+    document.getElementById("users_email_edit").value = email;
+    document.getElementById("rol_name_edit").value = rol;
+    document.getElementById("departament_edit").value = departament;
 }
+
+
+function ocultarFormEditUser() {
+    var modal = document.querySelector(".modalEdit");
+    modal.classList.remove("show");
+    modal.classList.add("hide");
+    setTimeout(function () {
+        modal.style.display = "none";
+        modal.classList.remove("hide");
+    }, 500);
+}
+
+
+
+
 
 /*
 * Mostrar datos de la empresa
@@ -110,8 +120,6 @@ document.getElementById('donor_type').addEventListener('change', function () {
         donorTypeDiv.style.display = 'none';
     }
 });
-
-
 function crearActa() {
     var modal = document.querySelector(".modalDonante");
     modal.style.display = "flex";
@@ -119,7 +127,6 @@ function crearActa() {
         modal.classList.add("show");
     }, 10);
 }
-
 function ocultarFormDonante() {
     var modal = document.querySelector(".modalDonante");
     modal.classList.remove("show");
@@ -129,7 +136,6 @@ function ocultarFormDonante() {
         modal.classList.remove("hide");
     }, 500);
 }
-
 document.getElementById("inventory_id").addEventListener("change", function () {
     var selectedOption = this.options[this.selectedIndex];
     var category_id = selectedOption.getAttribute("data-category-id");
