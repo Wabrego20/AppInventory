@@ -556,7 +556,7 @@ include_once '../settings/notice.php';
                             <div class="campo">
                                 <i class="fa-solid fa-signature"></i>
                                 <input class="btnTxt" type="text" name="donor_name" id="donor_name"
-                                    pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,15}" maxlength="15"
+                                    pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ0-9#\s]{3,50}" maxlength="50"
                                     placeholder="introduzca un nombre de la empresa">
                             </div>
                         </div>
@@ -606,7 +606,7 @@ include_once '../settings/notice.php';
 
                     <!--Botón de aprobar donación, botón de cancelar-->
                     <div class="btnSubmitPanel">
-                        <input type="submit" value="Crear Acta" class="btnSubmit btnVerde" onclick=" return validarActa()">
+                        <input type="submit" value="Crear Acta" class="btnSubmit btnVerde" onclick=" return validarActa();">
                         <div class="btnSubmit btnCancel" onclick="ocultarFormDonante()">Cancelar</div>
                     </div>
                 </form>

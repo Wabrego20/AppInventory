@@ -171,14 +171,17 @@ function validarActa() {
     const donorEmail = document.getElementById('donor_email').value;
     const donorAddress = document.getElementById('donor_adress').value;
 
+    const articulo = document.getElementById('article_donor').value;
+    const cantidad = document.getElementById('donor_quantity').value;
+
     if (donorType === 'Juridica') {
-        if (!donorName || !donorRuc || !donorPhone || !donorEmail || !donorAddress) {
+        if (!donorName || !donorRuc || !donorPhone || !donorEmail || !donorAddress || !articulo || !cantidad) {
             Swal.fire({
                 color: "var(--rojo)",
                 icon: "error",
                 iconColor: "var(--rojo)",
                 title: '¡Error!',
-                text: 'Todos los campos de la empresa son obligatorios',
+                text: 'Todos los campos son obligatorios',
                 showConfirmButton: true,
                 customClass: {
                     confirmButton: 'btn-confirm'
@@ -192,7 +195,27 @@ function validarActa() {
         }
         window.location.href = window.location.href;
         document.querySelector('.modalDonante').style.display = 'none'; // Oculta el formulario
-    } else {
+    }
+
+    else if (donorType === 'Natural') {
+        if (!articulo || !cantidad) {
+            Swal.fire({
+                color: "var(--rojo)",
+                icon: "error",
+                iconColor: "var(--rojo)",
+                title: '¡Error!',
+                text: 'Seleccione el artículo y la cantidad',
+                showConfirmButton: true,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                }
+            });
+            return false; // Evita el envío del formulario
+        }
         window.location.href = window.location.href;
         document.querySelector('.modalDonante').style.display = 'none'; // Oculta el formulario
     }
