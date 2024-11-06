@@ -164,6 +164,7 @@ include_once '../settings/notice.php';
                     <th>Fecha de Registro</th>
                     <th>Bodega</th>
                     <th>Re-Orden</th>
+                    <th>Solicitar</th>
                     <th>Eliminar</th>
                 </tr>
             </thead>
@@ -201,6 +202,11 @@ include_once '../settings/notice.php';
                             <td><?php echo $row['inventory_registration_date'] ?? 'dd/mm/aaaa'; ?></td>
                             <td><?php echo $row['warehouses_name'] ?? 'no disponible'; ?></td>
                             <td><?php echo $row['inventory_re_order'] ?? 'n/a'; ?></td>
+                            <td>
+                                <button class="accion accionSolicitar" title="clic para solicitar donación"
+                                    onclick="solicitarArt('<?php echo $row['warehouses_total_quantity']; ?>', '<?php echo $row['inventory_id']; ?>', '<?php echo $row['articles_id']; ?>', '<?php echo $row['articles_name']; ?>','<?php echo $row['categories_name']; ?>','<?php echo $row['warehouses_name']; ?>','','<?php echo $row['articles_unit_cost']; ?>','')"><i
+                                        class="fa-solid fa-paper-plane"></i></button>
+                            </td>
                             <td>
                                 <button class="accion accionEliminar"
                                     onclick="deleteArtInv('<?php echo $row['inventory_id']; ?>', '<?php echo $row['inventory_quantity']; ?>', '<?php echo $row['articles_name']; ?>')"
