@@ -76,7 +76,7 @@ function ocultarformDeleteUser() {
 /*
  *Ver y ocultar el formulario de editar datos
  */
- function formEditUser(id, dni, name, last_name, email, rol, departament) {
+function formEditUser(id, dni, name, last_name, email, rol, departament) {
     var modal = document.querySelector(".modalEdit");
     modal.style.display = "flex";
     setTimeout(function () {
@@ -91,8 +91,6 @@ function ocultarformDeleteUser() {
     document.getElementById("rol_name_edit").value = rol;
     document.getElementById("departament_edit").value = departament;
 }
-
-
 function ocultarFormEditUser() {
     var modal = document.querySelector(".modalEdit");
     modal.classList.remove("show");
@@ -102,8 +100,6 @@ function ocultarFormEditUser() {
         modal.classList.remove("hide");
     }, 500);
 }
-
-
 /*
 * Mostrar datos de la empresa
 */
@@ -118,13 +114,16 @@ document.getElementById('donor_type').addEventListener('change', function () {
         donorTypeDiv.style.display = 'none';
     }
 });
-function crearActa(id) {
+function crearActa(id, dni, name, last_name) {
     var modal = document.querySelector(".modalDonante");
     modal.style.display = "flex";
     setTimeout(function () {
         modal.classList.add("show");
     }, 10);
     document.getElementById("id_donor").value = id
+    document.getElementById("dni_donor").value = dni
+    document.getElementById("name_donor").value = name
+    document.getElementById("last_name_donor").value = last_name
 }
 function ocultarFormDonante() {
     var modal = document.querySelector(".modalDonante");
@@ -135,15 +134,66 @@ function ocultarFormDonante() {
         modal.classList.remove("hide");
     }, 500);
 }
-document.getElementById("inventory_id").addEventListener("change", function () {
+document.getElementById("article_donor").addEventListener("change", function () {
     var selectedOption = this.options[this.selectedIndex];
-    var category_id = selectedOption.getAttribute("data-category-id");
-    document.getElementById("categories_id_donor").value = category_id
-        ? category_id
+    var warehouse = selectedOption.getAttribute("data-warehouses-name");
+    document.getElementById("warehouses_name_donor").value = warehouse
+        ? warehouse
         : "Vacío";
 
     var categoryName = selectedOption.getAttribute("data-category-name");
     document.getElementById("categories_name_donor").value = categoryName
         ? categoryName
         : "Vacío";
+
+    var marca = selectedOption.getAttribute("data-articles-brand");
+    document.getElementById("articles_brand_donor").value = marca
+        ? marca
+        : "Vacío";
+
+    var unidad = selectedOption.getAttribute("data-units-name");
+    document.getElementById("units_name_donor").value = unidad
+        ? unidad
+        : "Vacío";
+
+    var foto = selectedOption.getAttribute("data-photo");
+    document.getElementById("articles_photo_donor").value = foto
+        ? foto
+        : "Vacío";
 });
+
+
+function validarActa() {
+    const donorType = document.getElementById('donor_type').value;
+    const donorName = document.getElementById('donor_name').value;
+    const donorRuc = document.getElementById('donor_ruc').value;
+    const donorPhone = document.getElementById('donor_office_phone').value;
+    const donorEmail = document.getElementById('donor_email').value;
+    const donorAddress = document.getElementById('donor_adress').value;
+
+    if (donorType === 'Juridica') {
+        if (!donorName || !donorRuc || !donorPhone || !donorEmail || !donorAddress) {
+            Swal.fire({
+                color: "var(--rojo)",
+                icon: "error",
+                iconColor: "var(--rojo)",
+                title: '¡Error!',
+                text: 'Todos los campos de la empresa son obligatorios',
+                showConfirmButton: true,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                }
+            });
+            return false; // Evita el envío del formulario
+        }
+        window.location.href = window.location.href;
+        document.querySelector('.modalDonante').style.display = 'none'; // Oculta el formulario
+    } else {
+        window.location.href = window.location.href;
+        document.querySelector('.modalDonante').style.display = 'none'; // Oculta el formulario
+    }
+}

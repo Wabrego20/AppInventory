@@ -256,8 +256,7 @@ include_once ("../settings/conexion.php");
                                             value="<?php echo htmlspecialchars($row['request_total_cost'] ?? 'No disponible'); ?>">
                                         <input type="hidden" name="request_order_date"
                                             value="<?php echo htmlspecialchars($row['request_order_date'] ?? 'd/m/a'); ?>">
-                                        <button type="submit" title="Ver acta de entrega"
-                                            style="background: none; border: none; padding: 0; cursor: pointer;">
+                                        <button type="submit" title="Ver acta de entrega" class="accion accionSolicitar" >
                                             <i class="fa-solid fa-file-pdf"></i>
                                         </button>
                                     </form>

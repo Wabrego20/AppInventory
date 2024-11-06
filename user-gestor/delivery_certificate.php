@@ -129,11 +129,6 @@ $fecha = date('Y-m-d H:i:s');
             </div>
 
             <div class="campos dobleSaltoLinea">
-                <h4>Foto del Artículo</h4>
-                <h4> <?php echo htmlspecialchars(""); ?></h4>
-            </div>
-
-            <div class="campos dobleSaltoLinea">
                 <h4>Firma del Solicitante:</h4>
                 ____________________________________
             </div>

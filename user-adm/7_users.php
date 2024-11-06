@@ -182,13 +182,13 @@ include_once '../settings/notice.php';
                         ?>
                         <tr>
                             <td><?php echo $fila; ?></td>
-                            <td><?php echo $row['users_dni'] ?? 'user'; ?></td>
+                            <td><?php echo $row['users_dni'] ?? 'dni'; ?></td>
                             <td><?php echo $row['users_name'] ?? 'name'; ?></td>
                             <td><?php echo $row['users_last_name'] ?? 'lastName'; ?></td>
                             <td><?php echo $row['users_email'] ?? 'ejemplo@mail.com'; ?></td>
                             <td class="<?php echo strtolower($row['rol_name'] ?? ''); ?>">
                                 <h5 title="Clic para crear acta de donación."
-                                    onclick="crearActa('<?php echo $row['users_id']; ?>')">
+                                    onclick="crearActa('<?php echo $row['users_id']; ?>', '<?php echo $row['users_dni']; ?>', '<?php echo $row['users_name']; ?>', '<?php echo $row['users_last_name']; ?>')">
                                     <?php echo $row['rol_name'] ?? 'no disponible'; ?>
                                 </h5>
                             </td>
@@ -449,31 +449,64 @@ include_once '../settings/notice.php';
 
         <div class="modalDonante">
             <div class="panelCreate">
-                <form method="post" class="formCreate">
+                <form method="POST" class="formCreate" action="donor_certificate.php" target="_blank" >
                     <h2>Datos de la Donación</h2>
-                    <input type="text" name="" id="id_donor">
+                    <input type="hidden" name="users_id" id="id_donor">
+                    <input type="hidden" name="users_name" id="name_donor">
+                    <input type="hidden" name="users_last_name" id="last_name_donor">
+                    <input type="hidden" name="users_dni" id="dni_donor">
+                    <!--Datos del que aprueba-->
+                    <?php
+                    $query = "SELECT users.*, departament.departament_name 
+                    FROM users 
+                    JOIN departament ON users.departament_id = departament.departament_id 
+                    WHERE users.users_user = ?";
+                    $stmt = $conn->prepare($query);
+                    $stmt->bind_param("s", $session);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            ?>
+                            <input type="hidden" name="approver_name"
+                                value="<?php echo htmlspecialchars($row['users_name'] ?? 'No disponible'); ?>">
+                            <input type="hidden" name="approver_last_name"
+                                value="<?php echo htmlspecialchars($row['users_last_name'] ?? 'No disponible'); ?>">
+                            <input type="hidden" name="approver_dni"
+                                value="<?php echo htmlspecialchars($row['users_dni'] ?? 'No disponible'); ?>">
+                            <input type="hidden" name="approver_departament"
+                                value="<?php echo htmlspecialchars($row['departament_name'] ?? 'No disponible'); ?>">
+                            <?php
+                        }
+                    }
+                    ?>
                     <!--campo de nombre de artículo-->
                     <div class="formLogCampo">
                         <label for="inventory_id">Artículo:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-box-open"></i>
-                            <select name="inventory_id" class="btnTxt" id="inventory_id" required>
+                            <select name="articles_name" class="btnTxt" id="article_donor" required>
                                 <option value="">Seleccione</option>
                                 <?php
-                                $selectArticles = $conn->query("SELECT inventory.inventory_id, articles.articles_name, categories.*
+
+                                $selectArticles = $conn->query("SELECT inventory.*, warehouses.*, articles.*, categories.*, units_of_measure.units_name
                                 FROM inventory 
+                                JOIN warehouses ON inventory.warehouses_id = warehouses.warehouses_id
                                 JOIN articles ON inventory.articles_id = articles.articles_id
                                 JOIN categories ON articles.categories_id = categories.categories_id
+                                JOIN units_of_measure ON articles.units_id = units_of_measure.units_id
                                 WHERE inventory_name = 'Donaciones'");
+
                                 if ($selectArticles->num_rows > 0) {
                                     while ($row = $selectArticles->fetch_assoc()) {
-                                        echo '<option value="' . $row["inventory_id"] . '" data-category-id="' . $row["categories_id"] . '" data-category-name="' . $row["categories_name"] . '">' . $row["articles_name"] . '</option>';
+                                        echo '<option value="' . $row["articles_name"] . '" data-photo="' . $row["articles_photo"] . '" data-warehouses-name="' . $row["warehouses_name"] . '" data-articles-brand="' . $row["articles_brand"] .  '" data-units-name="' . $row["units_name"] . '" data-category-name="' . $row["categories_name"] . '">' . $row["articles_name"] . '</option>';
                                     }
                                 } else {
                                     echo '<option value="">No hay artículo disponible</option>';
                                 }
                                 ?>
                             </select>
+                            <input type="hidden" name="articles_brand" id="articles_brand_donor">
                         </div>
                     </div>
 
@@ -482,7 +515,10 @@ include_once '../settings/notice.php';
                         <label for="categories_name">Categoría:</label>
                         <div class="campo">
                             <i class="fa-solid fa-layer-group"></i>
-                            <input type="hidden" name="categories_id" id="categories_id_donor">
+                            <input type="hidden" name="warehouses_name" id="warehouses_name_donor">
+                            <input type="hidden" name="units_name" id="units_name_donor">
+                            <input type="hidden" name="articles_photo" id="articles_photo_donor">
+                            
                             <input type="text" name="categories_name" id="categories_name_donor" class="btnTxt"
                                 readonly>
                         </div>
@@ -493,7 +529,7 @@ include_once '../settings/notice.php';
                         <label for="inventory_quantity">Cantidad:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-arrow-up-1-9"></i>
-                            <input class="btnTxt" type="number" name="inventory_quantity" id="inventory1_quantity"
+                            <input class="btnTxt" type="number" name="donor_quantity" id="donor_quantity"
                                 pattern="[0-9]{1,7}" min="1" max="1000000" step="1"
                                 placeholder="introduzca la cantidad " required>
                         </div>
@@ -521,7 +557,7 @@ include_once '../settings/notice.php';
                                 <i class="fa-solid fa-signature"></i>
                                 <input class="btnTxt" type="text" name="donor_name" id="donor_name"
                                     pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,15}" maxlength="15"
-                                    placeholder="introduzca un nombre de la empresa" required>
+                                    placeholder="introduzca un nombre de la empresa">
                             </div>
                         </div>
 
@@ -530,9 +566,8 @@ include_once '../settings/notice.php';
                             <label for="donor_ruc">RUC:</label>
                             <div class="campo">
                                 <i class="fa-solid fa-id-card-clip"></i>
-                                <input class="btnTxt" type="text" name="donor_ruc" id="donor_ruc"
-                                    pattern="[A-Z0-9a-zÁÉÍÓÚáéíóúñÑ]{3,15}" maxlength="20"
-                                    placeholder="introduzca el RUC de su empresa" required>
+                                <input class="btnTxt" type="text" name="donor_ruc" id="donor_ruc" pattern="\d{8}-\d{1}"
+                                    maxlength="10" placeholder="introduzca el RUC de la empresa" title="El formato debe ser ########-#">
                             </div>
                         </div>
 
@@ -543,7 +578,7 @@ include_once '../settings/notice.php';
                                 <i class="fa-solid fa-phone-volume"></i>
                                 <input type="tel" class="btnTxt" name="donor_office_phone"
                                     placeholder="introduzca un teléfono" id="donor_office_phone"
-                                    pattern="[1-9][0-9]{2}-[0-9]{4}" value="">
+                                    pattern="[1-9][0-9]{2}-[0-9]{4}">
                             </div>
                         </div>
 
@@ -553,7 +588,7 @@ include_once '../settings/notice.php';
                             <div class="campo">
                                 <i class="fa-regular fa-envelope"></i>
                                 <input class="btnTxt" type="email" name="donor_email" id="donor_email" maxlength="30"
-                                    placeholder="introduzcca correo electrónico" value="">
+                                    placeholder="introduzca correo electrónico">
                             </div>
                         </div>
 
@@ -571,52 +606,7 @@ include_once '../settings/notice.php';
 
                     <!--Botón de aprobar donación, botón de cancelar-->
                     <div class="btnSubmitPanel">
-                        <form action="donor_certificate.php" method="POST" id="form-<?php echo $fila; ?>"
-                            target="-blank">
-                            <input type="hidden" name="fila" value="<?php echo htmlspecialchars($fila); ?>">
-                            <input type="hidden" name="users_name"
-                                value="<?php echo htmlspecialchars($row['users_name'] ?? 'No disponible'); ?>">
-                            <input type="hidden" name="users_last_name"
-                                value="<?php echo htmlspecialchars($row['users_last_name'] ?? 'No disponible'); ?>">
-                            <input type="hidden" name="users_dni"
-                                value="<?php echo htmlspecialchars($row['users_dni'] ?? 'No disponible'); ?>">
-                            <input type="hidden" name="departament_name"
-                                value="<?php echo htmlspecialchars($row['departament_name'] ?? 'No disponible'); ?>">
-                            <input type="hidden" name="approver_name"
-                                value="<?php echo htmlspecialchars($approver_data['users_name'] ?? 'No disponible'); ?>">
-                            <input type="hidden" name="approver_last_name"
-                                value="<?php echo htmlspecialchars($approver_data['users_last_name'] ?? 'No disponible'); ?>">
-                            <input type="hidden" name="approver_dni"
-                                value="<?php echo htmlspecialchars($approver_data['users_dni'] ?? 'No disponible'); ?>">
-                            <input type="hidden" name="approver_departament"
-                                value="<?php echo htmlspecialchars($departament_data['departament_name'] ?? 'No disponible'); ?>">
-                            <input type="hidden" name="warehouses_name"
-                                value="<?php echo htmlspecialchars($warehouse_data['warehouses_name'] ?? 'No disponible'); ?>">
-                            <input type="hidden" name="articles_name"
-                                value="<?php echo htmlspecialchars($row['articles_name'] ?? 'No disponible'); ?>">
-                            <input type="hidden" name="articles_brand"
-                                value="<?php echo htmlspecialchars($row['articles_brand'] ?? 'No disponible'); ?>">
-                            <input type="hidden" name="articles_unit_cost"
-                                value="<?php echo htmlspecialchars($row['articles_unit_cost'] ?? ''); ?>">
-                            <input type="hidden" name="articles_photo"
-                                value="<?php echo htmlspecialchars($row['articles_photo'] ?? ''); ?>">
-                            <input type="hidden" name="categories_name"
-                                value="<?php echo htmlspecialchars($row['categories_name'] ?? 'No disponible'); ?>">
-                            <input type="hidden" name="inventory_name"
-                                value="<?php echo htmlspecialchars($row['inventory_name'] ?? 'No disponible'); ?>">
-                            <input type="hidden" name="units_name"
-                                value="<?php echo htmlspecialchars($units_of_measure_data['units_name'] ?? 'No disponible'); ?>">
-                            <input type="hidden" name="request_quantity"
-                                value="<?php echo htmlspecialchars($row['request_quantity'] ?? 'No disponible'); ?>">
-                            <input type="hidden" name="request_total_cost"
-                                value="<?php echo htmlspecialchars($row['request_total_cost'] ?? 'No disponible'); ?>">
-                            <input type="hidden" name="request_order_date"
-                                value="<?php echo htmlspecialchars($row['request_order_date'] ?? 'd/m/a'); ?>">
-                            <button type="button" class="btnSubmit btnVerde" onclick="crearActa()">
-                                Crear Acta
-                            </button>
-                        </form>
-
+                        <input type="submit" value="Crear Acta" class="btnSubmit btnVerde" onclick=" return validarActa()">
                         <div class="btnSubmit btnCancel" onclick="ocultarFormDonante()">Cancelar</div>
                     </div>
                 </form>
