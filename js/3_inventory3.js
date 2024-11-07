@@ -25,7 +25,7 @@ $(document).ready(function () {
     dom: "lBfrtip", // 'l' es para el selector de longitud
     buttons: [
       {
-        text: '<i class="fa-solid fa-box-open fa-lg"></i><i class="fa-solid fa-plus fa-2xs"></i> Agregar artículo',
+        text: '<i class="fa-solid fa-heart-circle-plus fa-xl"></i> Agregar artículo',
         action: function (e, dt, node, config) {
           var formu = document.querySelector(".modalAddArticle"); //mostrar el modal de crear artículo
           formu.style.display = "flex";
@@ -158,8 +158,6 @@ function solicitarDonacion(artName, categories, quantity) {
   document.getElementById("categories_donor").value = categories;
   document.getElementById("quantity_donor").max = quantity;
   document.getElementById("quantity_current").value = quantity;
-
-
 }
 function ocultarFormRequestDonor() {
   var modal = document.querySelector(".modalRequestDonor");
@@ -180,14 +178,5 @@ document.getElementById('beneficiary_type').addEventListener('change', function 
   } else {
     otrosDatos.style.display = 'none';
     datosPersona.style.display = 'flex';
-  }
-  if (this.value === '') {
-    datosPersona.style.display = 'none';
-    otrosDatos.style.display = 'none';
-    var inputs = document.getElementsByTagName('input');
-    for (var i = 0; i < inputs.length; i++) {
-      inputs[i].value = '';
-    }
-
   }
 });

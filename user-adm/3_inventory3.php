@@ -211,8 +211,7 @@ include_once '../settings/notice.php';
                                 <button class="accion accionEliminar"
                                     onclick="deleteArtInv('<?php echo $row['inventory_id']; ?>', '<?php echo $row['inventory_quantity']; ?>', '<?php echo $row['articles_name']; ?>')"
                                     title="Eliminar este artículo">
-                                    <i class="fa-solid fa-box-open fa-lg"></i>
-                                    <i class="fa-solid fa-minus fa-2xs"></i>
+                                    <i class="fa-solid fa-heart-circle-minus fa-lg"></i>
                                 </button>
                             </td>
                         </tr>
@@ -232,9 +231,9 @@ include_once '../settings/notice.php';
 
                     <!--campo de nombre de artículo-->
                     <div class="formLogCampo">
-                        <label for="articles_id">Artículo:<i class="fa-solid fa-asterisk"></i></label>
+                        <label for="articles_id">Donación:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
-                            <i class="fa-solid fa-box-open"></i>
+                            <i class="fa-solid fa-heart"></i>
                             <select name="articles_id" class="btnTxt" id="articles_id" required>
                                 <option value="">Seleccione</option>
                                 <?php
@@ -410,8 +409,8 @@ include_once '../settings/notice.php';
                         <div class="campo">
                             <i class="fa-solid fa-arrow-up-1-9"></i>
                             <input class="btnTxt" type="number" name="quantity_donor" id="quantity_donor"
-                                pattern="[0-9]{1,7}" min="1" max="" step="1"
-                                placeholder="introduzca la cantidad " required>
+                                pattern="[0-9]{1,7}" min="1" max="" step="1" placeholder="introduzca la cantidad "
+                                required>
                         </div>
                     </div>
 
@@ -454,8 +453,8 @@ include_once '../settings/notice.php';
                             </div>
                         </div>
 
-                         <!--campo de cédula-->
-                         <div class="formLogCampo">
+                        <!--campo de cédula-->
+                        <div class="formLogCampo">
                             <label for="users_dni">Cédula:<i class="fa-solid fa-asterisk"></i></label>
                             <div class="campo">
                                 <i class="fa-regular fa-address-card"></i>
