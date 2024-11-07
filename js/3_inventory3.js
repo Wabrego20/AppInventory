@@ -144,3 +144,24 @@ function solicitarArt(warehouses_total_quantity, inventory_id, id, articleName, 
         totalCost.toFixed(2);
     });
 }
+
+/**
+ * Formulario para solicitar una donación
+ */
+function solicitarDonacion(){
+  var formDonor = document.querySelector(".modalRequestDonor");
+  formDonor.style.display = "flex";
+  setTimeout(function () {
+    formDonor.classList.add("show");
+  }, 10);
+}
+
+function ocultarFormRequestDonor() {
+  var modal = document.querySelector(".modalRequestDonor");
+  modal.classList.remove("show");
+  modal.classList.add("hide");
+  setTimeout(function () {
+    modal.style.display = "none";
+    modal.classList.remove("hide");
+  }, 500);
+}

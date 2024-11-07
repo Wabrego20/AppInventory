@@ -204,7 +204,7 @@ include_once '../settings/notice.php';
                             <td><?php echo $row['inventory_re_order'] ?? 'n/a'; ?></td>
                             <td>
                                 <button class="accion accionSolicitar" title="clic para solicitar donación"
-                                    onclick="solicitarArt('<?php echo $row['warehouses_total_quantity']; ?>', '<?php echo $row['inventory_id']; ?>', '<?php echo $row['articles_id']; ?>', '<?php echo $row['articles_name']; ?>','<?php echo $row['categories_name']; ?>','<?php echo $row['warehouses_name']; ?>','','<?php echo $row['articles_unit_cost']; ?>','')"><i
+                                    onclick="solicitarDonacion('<?php echo $row['warehouses_total_quantity']; ?>', '<?php echo $row['inventory_id']; ?>', '<?php echo $row['articles_id']; ?>', '<?php echo $row['articles_name']; ?>','<?php echo $row['categories_name']; ?>','<?php echo $row['warehouses_name']; ?>','','<?php echo $row['articles_unit_cost']; ?>','')"><i
                                         class="fa-solid fa-paper-plane"></i></button>
                             </td>
                             <td>
@@ -302,7 +302,6 @@ include_once '../settings/notice.php';
                             Artículo</button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormAddArticle()">Cancelar</div>
                     </div>
-
                 </form>
             </div>
         </div>
@@ -376,6 +375,20 @@ include_once '../settings/notice.php';
                         <div class="btnSubmit btnCancel" onclick="ocultarFormAddQuantArticle()">Cancelar</div>
                     </div>
 
+                </form>
+            </div>
+        </div>
+
+        <!--Formulario para solicitar una donación-->
+        <div class="modalRequestDonor">
+            <div class="panelArticle">
+                <form method="post" class="formArticle">
+                    <h2>Solicitar Artículo Donado</h2>
+                    <!--Botón de crear usuario, botón de cancelar creación de usuario-->
+                    <div class="btnSubmitPanel">
+                        <button type="submit" class="btnSubmit btnVerde" name="solicitarDonacion">Generar Acta</button>
+                        <div class="btnSubmit btnCancel" onclick="ocultarFormRequestDonor()">Cancelar</div>
+                    </div>
                 </form>
             </div>
         </div>
