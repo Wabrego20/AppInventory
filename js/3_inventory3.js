@@ -77,7 +77,7 @@ function ocultarFormDeleteArticle() {
 /*
  *Función para agregar una cantidad de artículos de consumo interno
  */
- function addQuantArtConsumoInt(id2, id, name) {
+function addQuantArtConsumoInt(id2, id, name) {
   var formu = document.querySelector(".modalAddQuantArticle"); //mostrar el modal de crear artículo
   formu.style.display = "flex";
   setTimeout(function () {
@@ -148,12 +148,18 @@ function solicitarArt(warehouses_total_quantity, inventory_id, id, articleName, 
 /**
  * Formulario para solicitar una donación
  */
-function solicitarDonacion(){
+function solicitarDonacion(artName, categories, quantity) {
   var formDonor = document.querySelector(".modalRequestDonor");
   formDonor.style.display = "flex";
   setTimeout(function () {
     formDonor.classList.add("show");
   }, 10);
+  document.getElementById("articles_name_donor").value = artName;
+  document.getElementById("categories_donor").value = categories;
+  document.getElementById("quantity_donor").max = quantity;
+  document.getElementById("quantity_current").value = quantity;
+
+
 }
 
 function ocultarFormRequestDonor() {
@@ -165,3 +171,25 @@ function ocultarFormRequestDonor() {
     modal.classList.remove("hide");
   }, 500);
 }
+
+
+document.getElementById('beneficiary_type').addEventListener('change', function () {
+  var otrosDatos = document.getElementById('datosPrograma');
+  var datosPersona = document.getElementById('datosPersona');
+  if (this.value === 'Programa') {
+    otrosDatos.style.display = 'flex';
+    datosPersona.style.display = 'none';
+  } else {
+    otrosDatos.style.display = 'none';
+    datosPersona.style.display = 'flex';
+  }
+  if (this.value === '') {
+    datosPersona.style.display = 'none';
+    otrosDatos.style.display = 'none';
+    var inputs = document.getElementsByTagName('input');
+    for (var i = 0; i < inputs.length; i++) {
+      inputs[i].value = '';
+    }
+
+  }
+});

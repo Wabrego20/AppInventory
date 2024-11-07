@@ -538,7 +538,7 @@ include_once '../settings/notice.php';
                     <!--Tipo de Donante-->
                     <div class="formLogCampo">
                         <label for="donor_type">Tipo de Donante:<i class="fa-solid fa-asterisk"></i></label>
-                        <div class="campo" style="width:350px;">
+                        <div class="campo">
                             <i class="fa-solid fa-award"></i>
                             <Select name="donor_type" id="donor_type" class="btnTxt" required>
                                 <Option value="">Seleccione</Option>

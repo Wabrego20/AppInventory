@@ -204,7 +204,7 @@ include_once '../settings/notice.php';
                             <td><?php echo $row['inventory_re_order'] ?? 'n/a'; ?></td>
                             <td>
                                 <button class="accion accionSolicitar" title="clic para solicitar donación"
-                                    onclick="solicitarDonacion('<?php echo $row['warehouses_total_quantity']; ?>', '<?php echo $row['inventory_id']; ?>', '<?php echo $row['articles_id']; ?>', '<?php echo $row['articles_name']; ?>','<?php echo $row['categories_name']; ?>','<?php echo $row['warehouses_name']; ?>','','<?php echo $row['articles_unit_cost']; ?>','')"><i
+                                    onclick="solicitarDonacion('<?php echo $row['articles_name']; ?>', '<?php echo $row['categories_name']; ?>', '<?php echo $row['inventory_quantity']; ?>','<?php echo $row['categories_name']; ?>','<?php echo $row['warehouses_name']; ?>','','<?php echo $row['articles_unit_cost']; ?>','')"><i
                                         class="fa-solid fa-paper-plane"></i></button>
                             </td>
                             <td>
@@ -384,6 +384,146 @@ include_once '../settings/notice.php';
             <div class="panelArticle">
                 <form method="post" class="formArticle">
                     <h2>Solicitar Artículo Donado</h2>
+
+                    <!--campo de categoría-->
+                    <div class="formLogCampo">
+                        <label for="articles_name_donor">Artículo:<i class="fa-solid fa-asterisk"></i></label>
+                        <div class="campo">
+                            <i class="fa-solid fa-box-open"></i>
+                            <input type="text" name="articles_name" id="articles_name_donor" class="btnTxt" readonly>
+                        </div>
+                    </div>
+
+                    <!--campo de categoría-->
+                    <div class="formLogCampo">
+                        <label for="categories_donor">Categoría:</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-layer-group"></i>
+                            <input type="text" name="categories_name" id="categories_donor" class="btnTxt" readonly>
+                        </div>
+                    </div>
+
+                    <!--campo de cantidad de artículos-->
+                    <div class="formLogCampo">
+                        <input type="hidden" name="" id="quantity_current">
+                        <label for="quantity_donor">Cantidad:<i class="fa-solid fa-asterisk"></i></label>
+                        <div class="campo">
+                            <i class="fa-solid fa-arrow-up-1-9"></i>
+                            <input class="btnTxt" type="number" name="quantity_donor" id="quantity_donor"
+                                pattern="[0-9]{1,7}" min="1" max="" step="1"
+                                placeholder="introduzca la cantidad " required>
+                        </div>
+                    </div>
+
+                    <!--campo de Tipo de Beneficiario-->
+                    <div class="formLogCampo">
+                        <label for="beneficiary_type">Tipo de Beneficiario:<i class="fa-solid fa-asterisk"></i></label>
+                        <div class="campo">
+                            <i class="fa-solid fa-hands-holding-child"></i>
+                            <select name="beneficiary_type" class="btnTxt" id="beneficiary_type" required>
+                                <option value="">Seleccione</option>
+                                <option value="Persona Natural">Persona Natural</option>
+                                <option value="Programa">Programa</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!--Formulario con datos del programa-->
+                    <div class="formArticle" id="datosPrograma" style="display:none;">
+                        <h2>Datos de Programa</h2>
+
+                        <!--campo de nombre-->
+                        <div class="formLogCampo">
+                            <label for="donor_name">Nombre del Programa:<i class="fa-solid fa-asterisk"></i></label>
+                            <div class="campo">
+                                <i class="fa-solid fa-signature"></i>
+                                <input class="btnTxt" type="text" name="donor_name" id="donor_name"
+                                    pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ/s]{3,50}" maxlength="50"
+                                    placeholder="introduzca el nombre">
+                            </div>
+                        </div>
+
+                        <!--RUC de la empresa-->
+                        <div class="formLogCampo">
+                            <label for="donor_ruc">Encargado:<i class="fa-solid fa-asterisk"></i></label>
+                            <div class="campo">
+                                <i class="fa-solid fa-id-card-clip"></i>
+                                <input class="btnTxt" type="text" name="donor_ruc" id="donor_ruc" pattern="\d{8}-\d{1}"
+                                    maxlength="10" placeholder="introduzca el RUC de la empresa"
+                                    title="El formato debe ser ########-#">
+                            </div>
+                        </div>
+
+                         <!--campo de cédula-->
+                         <div class="formLogCampo">
+                            <label for="users_dni">Cédula:<i class="fa-solid fa-asterisk"></i></label>
+                            <div class="campo">
+                                <i class="fa-regular fa-address-card"></i>
+                                <input class="btnTxt" type="text" name="users_dni" id="users_dni"
+                                    pattern="[a-zA-Z0-9]{1,2}-[0-9]{2,4}-[0-9]{2,4}" maxlength="14"
+                                    placeholder="introduzca cédula">
+                            </div>
+                        </div>
+
+                        <!--Campo de correo-->
+                        <div class="formLogCampo">
+                            <label for="donor_email">Correo:<i class="fa-solid fa-asterisk"></i></label>
+                            <div class="campo">
+                                <i class="fa-regular fa-envelope"></i>
+                                <input class="btnTxt" type="email" name="donor_email" id="donor_email" maxlength="30"
+                                    placeholder="introduzca correo electrónico">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Formulario con datos de persona natural-->
+                    <div class="formArticle" id="datosPersona" style="display:none;">
+                        <h2>Datos de El Beneficiario</h2>
+
+                        <!--campo de nombre-->
+                        <div class="formLogCampo">
+                            <label for="donor_name">Nombre:<i class="fa-solid fa-asterisk"></i></label>
+                            <div class="campo">
+                                <i class="fa-solid fa-signature"></i>
+                                <input class="btnTxt" type="text" name="donor_name" id="donor_name"
+                                    pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,20}" maxlength="20"
+                                    placeholder="introduzca su nombre">
+                            </div>
+                        </div>
+
+                        <!--campo de nombre-->
+                        <div class="formLogCampo">
+                            <label for="donor_name">Apellido:<i class="fa-solid fa-asterisk"></i></label>
+                            <div class="campo">
+                                <i class="fa-solid fa-signature"></i>
+                                <input class="btnTxt" type="text" name="donor_name" id="donor_name"
+                                    pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,20}" maxlength="20"
+                                    placeholder="introduzca su nombre">
+                            </div>
+                        </div>
+
+                        <!--campo de cédula-->
+                        <div class="formLogCampo">
+                            <label for="users_dni">Cédula:<i class="fa-solid fa-asterisk"></i></label>
+                            <div class="campo">
+                                <i class="fa-regular fa-address-card"></i>
+                                <input class="btnTxt" type="text" name="users_dni" id="users_dni"
+                                    pattern="[a-zA-Z0-9]{1,2}-[0-9]{2,4}-[0-9]{2,4}" maxlength="14"
+                                    placeholder="introduzca cédula">
+                            </div>
+                        </div>
+
+                        <!--Campo de correo-->
+                        <div class="formLogCampo">
+                            <label for="donor_email">Correo:<i class="fa-solid fa-asterisk"></i></label>
+                            <div class="campo">
+                                <i class="fa-regular fa-envelope"></i>
+                                <input class="btnTxt" type="email" name="donor_email" id="donor_email" maxlength="30"
+                                    placeholder="introduzca correo electrónico">
+                            </div>
+                        </div>
+                    </div>
+
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
                     <div class="btnSubmitPanel">
                         <button type="submit" class="btnSubmit btnVerde" name="solicitarDonacion">Generar Acta</button>
