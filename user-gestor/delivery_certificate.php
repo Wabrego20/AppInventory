@@ -44,7 +44,7 @@ $fecha = date('Y-m-d H:i:s');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../settings/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="../settings/styles.css">
-    <link rel="stylesheet" href="../css/delivery_certificate.css">
+    <link rel="stylesheet" href="../css/certificate.css">
     <title>Acta de Entrega</title>
 </head>
 
@@ -52,9 +52,10 @@ $fecha = date('Y-m-d H:i:s');
     <main>
         <div class="campos">
             <img src="../img/logoApp" alt="logos">
-            <h2>Acta de Entrega</h2>
+            
             <img src="../img/logoMides" alt="logos" class="logoMides">            
         </div>
+        <h2>Acta de Entrega</h2>
 
         <div class="datos">
             <div class="campos">

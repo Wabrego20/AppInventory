@@ -53,3 +53,8 @@ main {
   border-radius: 5px;
   object-fit: cover; 
 }
+
+h2{
+  width: 95%;
+  text-align: center;
+}
