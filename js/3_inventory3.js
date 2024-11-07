@@ -161,7 +161,6 @@ function solicitarDonacion(artName, categories, quantity) {
 
 
 }
-
 function ocultarFormRequestDonor() {
   var modal = document.querySelector(".modalRequestDonor");
   modal.classList.remove("show");
@@ -171,7 +170,6 @@ function ocultarFormRequestDonor() {
     modal.classList.remove("hide");
   }, 500);
 }
-
 
 document.getElementById('beneficiary_type').addEventListener('change', function () {
   var otrosDatos = document.getElementById('datosPrograma');

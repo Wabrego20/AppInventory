@@ -160,6 +160,11 @@ document.getElementById("article_donor").addEventListener("change", function () 
     document.getElementById("articles_photo_donor").value = foto
         ? foto
         : "Vacío";
+
+    var cant = selectedOption.getAttribute("data-inventory_quantity");
+    document.getElementById("donor_quantity").max = cant
+        ? cant
+        : "Vacío";
 });
 
 

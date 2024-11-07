@@ -171,7 +171,9 @@ include_once '../settings/notice.php';
             <tbody>
                 <?php
                 $session = $_SESSION['users_user'];
-                $usuarios = "SELECT users.*, rol.* FROM users JOIN rol ON users.rol_id = rol.rol_id WHERE users.users_user != ?";
+                $usuarios = "SELECT users.*, rol.* FROM users 
+                JOIN rol ON users.rol_id = rol.rol_id 
+                WHERE users.users_user != ?";
                 $stmt = $conn->prepare($usuarios);
                 $stmt->bind_param("s", $session);
                 $stmt->execute();
@@ -499,7 +501,7 @@ include_once '../settings/notice.php';
 
                                 if ($selectArticles->num_rows > 0) {
                                     while ($row = $selectArticles->fetch_assoc()) {
-                                        echo '<option value="' . $row["articles_name"] . '" data-photo="' . $row["articles_photo"] . '" data-warehouses-name="' . $row["warehouses_name"] . '" data-articles-brand="' . $row["articles_brand"] .  '" data-units-name="' . $row["units_name"] . '" data-category-name="' . $row["categories_name"] . '">' . $row["articles_name"] . '</option>';
+                                        echo '<option value="' . $row["articles_name"] . '" data-photo="' . $row["articles_photo"] . '" data-inventory_quantity="' . $row["inventory_quantity"] . '" data-warehouses-name="' . $row["warehouses_name"] . '" data-articles-brand="' . $row["articles_brand"] .  '" data-units-name="' . $row["units_name"] . '" data-category-name="' . $row["categories_name"] . '">' . $row["articles_name"] . '</option>';
                                     }
                                 } else {
                                     echo '<option value="">No hay artículo disponible</option>';
@@ -530,7 +532,7 @@ include_once '../settings/notice.php';
                         <div class="campo">
                             <i class="fa-solid fa-arrow-up-1-9"></i>
                             <input class="btnTxt" type="number" name="donor_quantity" id="donor_quantity"
-                                pattern="[0-9]{1,7}" min="1" max="1000000" step="1"
+                                pattern="[0-9]{1,7}" min="1" max="" step="1"
                                 placeholder="introduzca la cantidad " required>
                         </div>
                     </div>
