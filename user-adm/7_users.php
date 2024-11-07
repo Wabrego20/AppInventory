@@ -451,7 +451,7 @@ include_once '../settings/notice.php';
 
         <div class="modalDonante">
             <div class="panelCreate">
-                <form method="POST" class="formCreate" action="donor_certificate.php" target="_blank" >
+                <form method="POST" class="formCreate" action="donor_certificate.php" target="_blank">
                     <h2>Datos de la Donación</h2>
                     <input type="hidden" name="users_id" id="id_donor">
                     <input type="hidden" name="users_name" id="name_donor">
@@ -817,22 +817,5 @@ if (isset($_POST['deleteUser'])) {
     $stmt->close();
     $conn->close();
 }
-/*
- *Crear Acta para donantes
- */
-if (isset($_POST['crearActa'])) {
-    ?>
-    <form action="donor_certificate.php" method="POST" id="form-<?php echo $fila; ?>" target="-blank">
-
-        <button type="submit" title="Ver acta de entrega"
-            style="background: none; border: none; padding: 0; cursor: pointer;">
-            <i class="fa-solid fa-file-pdf"></i>
-        </button>
-    </form>
-    <?php
-
-
-}
-
 
 ?>
