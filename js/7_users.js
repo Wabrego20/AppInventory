@@ -168,29 +168,89 @@ document.getElementById("article_donor").addEventListener("change", function () 
 });
 
 
-function validarActa() {
-    const donorType = document.getElementById('donor_type').value;
-    const donorName = document.getElementById('donor_name').value;
-    const donorRuc = document.getElementById('donor_ruc').value;
-    const donorPhone = document.getElementById('donor_office_phone').value;
-    const donorEmail = document.getElementById('donor_email').value;
-    const donorAddress = document.getElementById('donor_adress').value;
-    const articulo = document.getElementById('article_donor').value;
-    const cantidad = document.getElementById('donor_quantity').value;
+document.getElementById("donor_type").addEventListener("change", function () {
+    document.getElementById('donor_name').value = "";
+    document.getElementById('donor_ruc').value = "";
+    document.getElementById('donor_office_phone').value = "";
+    document.getElementById('donor_email').value = "";
+    document.getElementById('donor_adress').value = "";
+});
+document.getElementById('donorForm').addEventListener('submit', function (event) {
+    const donorType = document.getElementById('donor_type').value.trim();
+    const donorName = document.getElementById('donor_name').value.trim();
+    const donorRuc = document.getElementById('donor_ruc').value.trim();
+    const donorPhone = document.getElementById('donor_office_phone').value.trim();
+    const donorEmail = document.getElementById('donor_email').value.trim();
+    const donorAddress = document.getElementById('donor_adress').value.trim();
+
+    if (donorType === 'Natural') {
+        event.preventDefault();
+        Swal.fire({
+            color: "var(--verde)",
+            icon: "success",
+            iconColor: "var(--verde)",
+            title: 'Éxito!',
+            text: 'Acta creada correctamente',
+            showConfirmButton: true,
+            customClass: {
+                confirmButton: 'btn-confirm'
+            },
+            confirmButtonText: "Aceptar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "../user-adm/7_users.php";
+                var form = document.getElementById('donorForm');
+                form.action = '../user-adm/donor_certificate.php';
+                form.target = '_blank';
+                form.submit();
+            }
+        });
+    }
 
     if (donorType === 'Juridica') {
-        if (!donorName || !donorRuc || !donorPhone || !donorEmail || !donorAddress || !articulo || !cantidad || cantidad > cant) {
-            return false; // Evita el envío del formulario
+        if (!donorName || !donorRuc || !donorPhone || !donorEmail || !donorAddress) {
+            Swal.fire({
+                color: "var(--rojo)",
+                icon: "error",
+                iconColor: "var(--rojo)",
+                title: '¡Error!',
+                text: 'Todos los campos son obligatorios',
+                showConfirmButton: true,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                }
+            });
+            event.preventDefault();
+        } else {
+            event.preventDefault();
+            Swal.fire({
+                color: "var(--verde)",
+                icon: "success",
+                iconColor: "var(--verde)",
+                title: 'Éxito!',
+                text: 'Acta creada correctamente',
+                showConfirmButton: true,
+                customClass: {
+                    confirmButton: 'btn-confirm'
+                },
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "../user-adm/7_users.php";
+                    var form = document.getElementById('donorForm');
+                    form.action = '../user-adm/donor_certificate.php';
+                    form.target = '_blank';
+                    form.submit();
+                }
+            });
         }
-        window.location.href = "../user-adm/users.php";
-        document.querySelector('.modalDonante').style.display = 'none'; // Oculta el formulario
     }
+});
 
-    else if (donorType === 'Natural') {
-        if (!articulo || !cantidad || cantidad > cant) {
-            return false; // Evita el envío del formulario
-        }
-        window.location.href = "../user-adm/users.php";
-        document.querySelector('.modalDonante').style.display = 'none'; // Oculta el formulario
-    }
-}
+
+
+

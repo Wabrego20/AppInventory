@@ -451,7 +451,7 @@ include_once '../settings/notice.php';
 
         <div class="modalDonante">
             <div class="panelCreate">
-                <form method="POST" class="formCreate" action="donor_certificate.php" target="_blank">
+                <form method="POST" class="formCreate" id="donorForm">
                     <h2>Datos de la Donación</h2>
                     <input type="hidden" name="users_id" id="id_donor">
                     <input type="hidden" name="users_name" id="name_donor">
@@ -608,7 +608,7 @@ include_once '../settings/notice.php';
 
                     <!--Botón de aprobar donación, botón de cancelar-->
                     <div class="btnSubmitPanel">
-                        <input type="submit" value="Crear Acta" class="btnSubmit btnVerde" onclick=" return validarActa();">
+                        <input type="submit" value="Crear Acta" class="btnSubmit btnVerde">
                         <div class="btnSubmit btnCancel" onclick="ocultarFormDonante()">Cancelar</div>
                     </div>
                 </form>

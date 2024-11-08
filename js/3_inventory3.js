@@ -159,13 +159,15 @@ document.getElementById('beneficiary_type').addEventListener('change', function 
   }
 });
 
-document.getElementById('donationForm').addEventListener('submit', function (event) {
+document.getElementById('beneficiaryForm').addEventListener('submit', function (event) {
   var beneficiary_type = document.getElementById('beneficiary_type').value.trim();
   var beneficiaryName = document.getElementById('beneficiary_name').value.trim();
   var beneficiaryLastName = document.getElementById('beneficiary_last_name').value.trim();
   var beneficiaryDni = document.getElementById('beneficiary_dni').value.trim();
   var beneficiaryEmail = document.getElementById('beneficiary_email').value.trim();
-  if (beneficiary_type === "Natural")
+
+ 
+  if (beneficiary_type === "Natural") {
     if (!beneficiaryName || !beneficiaryLastName || !beneficiaryDni || !beneficiaryEmail) {
       Swal.fire({
         color: "var(--rojo)",
@@ -180,7 +182,6 @@ document.getElementById('donationForm').addEventListener('submit', function (eve
         confirmButtonText: "Aceptar",
       }).then((result) => {
         if (result.isConfirmed) {
-
         }
       });
       event.preventDefault(); // Evita que el formulario se envíe
@@ -200,12 +201,71 @@ document.getElementById('donationForm').addEventListener('submit', function (eve
       }).then((result) => {
         if (result.isConfirmed) {
           window.location.href = '../user-adm/3_inventory3.php';
-          var form = document.getElementById('donationForm');
+          var form = document.getElementById('beneficiaryForm');
           form.action = '../user-adm/beneficiary_certificate.php';
           form.target = '_blank';
           form.submit();
         }
       });
     }
+  }
+
+
+  
+  var benefited_program = document.getElementById('benefited_program').value.trim();
+  var programName = document.getElementById('programName').value.trim();
+  var programLastName = document.getElementById('programLastName').value.trim();
+  var programDni = document.getElementById('programDni').value.trim();
+  var programEmail = document.getElementById('programEmail').value.trim();
+  if (beneficiary_type === "Programa") {
+    if (!benefited_program || !programName || !programLastName || !programDni || !programEmail) {
+      Swal.fire({
+        color: "var(--rojo)",
+        icon: "error",
+        iconColor: "var(--rojo)",
+        title: '¡Error!',
+        text: 'Todos los campos son obligatorios',
+        showConfirmButton: true,
+        customClass: {
+          confirmButton: 'btn-confirm'
+        },
+        confirmButtonText: "Aceptar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+        }
+      });
+      event.preventDefault(); // Evita que el formulario se envíe
+    }
+    else {
+      event.preventDefault();
+      Swal.fire({
+        color: "var(--verde)",
+        icon: "success",
+        iconColor: "var(--verde)",
+        title: 'Éxito!',
+        text: 'Acta creada correctamente',
+        showConfirmButton: true,
+        customClass: {
+          confirmButton: 'btn-confirm'
+        },
+        confirmButtonText: "Aceptar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = '../user-adm/3_inventory3.php';
+          var form = document.getElementById('beneficiaryForm');
+          form.action = '../user-adm/beneficiary_certificate.php';
+          form.target = '_blank';
+          form.submit();
+        }
+      });
+    }
+  }
+
 
 });
+
+
+
+
+
+

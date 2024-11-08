@@ -112,19 +112,15 @@ $conn->close();
                 <h4><?php echo htmlspecialchars($approver_dni); ?></h4>
             </div>
             <?php
-            if ($beneficiary_type === 'Programa') {
-                $donor_name = $_POST['donor_name'] ?? 'sin empresa';
-                $donor_ruc = $_POST['donor_ruc'] ?? 'sin ruc';
-                $donor_office_phone = $_POST['donor_office_phone'] ?? 'sin phone';
-                $donor_email = $_POST['donor_email'] ?? 'sin mail';
-                $donor_adress = $_POST['donor_adress'] ?? 'sin adress';
+            if ($beneficiary_type ==! 'Natural') {
+                $benefited_program = $_POST['benefited_program'] ?? 'sin empresa';
                 ?>
                 <div class="campos dobleSaltoLinea">
-                    <h4>Datos de la Empresa</h4>
+                    <h4>Datos del Programa</h4>
                 </div>
                 <div class="campos">
                     <label>Nombre:</label>
-                    <h4> <?php echo htmlspecialchars($donor_name); ?></h4>
+                    <h4> <?php echo htmlspecialchars($benefited_program); ?></h4>
                 </div>
                 <div class="campos">
                     <label>RUC:</label>

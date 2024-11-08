@@ -381,7 +381,7 @@ include_once '../settings/notice.php';
         <!--Formulario para solicitar una donación-->
         <div class="modalRequestDonor">
             <div class="panelArticle">
-                <form method="post" class="formArticle" id="donationForm">
+                <form method="post" class="formArticle" id="beneficiaryForm">
                     <h2>Solicitar Artículo Donado</h2>
 
                     <!--campo de categoría-->
@@ -436,32 +436,46 @@ include_once '../settings/notice.php';
 
                         <!--campo de nombre-->
                         <div class="formLogCampo">
-                            <label for="donor_name">Nombre del Programa:<i class="fa-solid fa-asterisk"></i></label>
+                            <label for="benefited_program">Nombre del Programa:<i
+                                    class="fa-solid fa-asterisk"></i></label>
                             <div class="campo">
                                 <i class="fa-solid fa-signature"></i>
-                                <input class="btnTxt" type="text" name="donor_name" id="donor_name"
+                                <input class="btnTxt" type="text" name="benefited_program" id="benefited_program"
                                     pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ/s]{3,50}" maxlength="50"
                                     placeholder="introduzca el nombre">
                             </div>
                         </div>
 
-                        <!--RUC de la empresa-->
+                        <!--campo de nombre-->
                         <div class="formLogCampo">
-                            <label for="donor_ruc">Encargado:<i class="fa-solid fa-asterisk"></i></label>
+                            <label for="programName">Nombre del Encargado:<i
+                                    class="fa-solid fa-asterisk"></i></label>
                             <div class="campo">
-                                <i class="fa-solid fa-id-card-clip"></i>
-                                <input class="btnTxt" type="text" name="donor_ruc" id="donor_ruc" pattern="\d{8}-\d{1}"
-                                    maxlength="10" placeholder="introduzca el RUC de la empresa"
-                                    title="El formato debe ser ########-#">
+                                <i class="fa-solid fa-signature"></i>
+                                <input class="btnTxt" type="text" name="beneficiary_name" id="programName"
+                                    pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,20}" maxlength="20"
+                                    placeholder="introduzca su nombre">
+                            </div>
+                        </div>
+
+                        <!--campo de apellido-->
+                        <div class="formLogCampo">
+                            <label for="programLastName">Apellido del Encargado:<i
+                                    class="fa-solid fa-asterisk"></i></label>
+                            <div class="campo">
+                                <i class="fa-solid fa-signature"></i>
+                                <input class="btnTxt" type="text" name="programLastName"
+                                    id="beneficiary_last_name" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,20}" maxlength="20"
+                                    placeholder="introduzca su apellido">
                             </div>
                         </div>
 
                         <!--campo de cédula-->
                         <div class="formLogCampo">
-                            <label for="users_dni">Cédula:<i class="fa-solid fa-asterisk"></i></label>
+                            <label for="programDni">Cédula del Encargado:<i class="fa-solid fa-asterisk"></i></label>
                             <div class="campo">
                                 <i class="fa-regular fa-address-card"></i>
-                                <input class="btnTxt" type="text" name="users_dni" id="users_dni"
+                                <input class="btnTxt" type="text" name="beneficiary_dni" id="programDni"
                                     pattern="[a-zA-Z0-9]{1,2}-[0-9]{2,4}-[0-9]{2,4}" maxlength="14"
                                     placeholder="introduzca cédula">
                             </div>
@@ -469,11 +483,11 @@ include_once '../settings/notice.php';
 
                         <!--Campo de correo-->
                         <div class="formLogCampo">
-                            <label for="donor_email">Correo:<i class="fa-solid fa-asterisk"></i></label>
+                            <label for="programEmail">Correo:<i class="fa-solid fa-asterisk"></i></label>
                             <div class="campo">
                                 <i class="fa-regular fa-envelope"></i>
-                                <input class="btnTxt" type="email" name="donor_email" id="donor_email" maxlength="30"
-                                    placeholder="introduzca correo electrónico">
+                                <input class="btnTxt" type="email" name="beneficiary_email" id="programEmail"
+                                    maxlength="30" placeholder="introduzca correo electrónico">
                             </div>
                         </div>
                     </div>
@@ -528,7 +542,7 @@ include_once '../settings/notice.php';
 
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
                     <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnVerde" name="solicitarDonación">Generar Acta</button>
+                        <button type="submit" class="btnSubmit btnVerde">Generar Acta</button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormRequestDonor()">Cancelar</div>
                     </div>
                 </form>
