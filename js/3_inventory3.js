@@ -116,36 +116,6 @@ document.getElementById("articles_id").addEventListener("change", function () {
 });
 
 /**
- * Formulario para realizar una solicitud
- */
-function solicitarArt(warehouses_total_quantity, inventory_id, id, articleName, categoryName, warehouseName, quantity, unitCost, totalCost) {
-  var formu = document.querySelector(".modalAddArticle");
-  formu.style.display = "flex";
-  setTimeout(function () {
-    formu.classList.add("show");
-  }, 10);
-  document.getElementById('request_quantity').max = warehouses_total_quantity;
-  document.getElementById("inventory_id").value = inventory_id;
-  document.getElementById("articles_id").value = id;
-  document.getElementById("articles_name").value = articleName;
-  document.getElementById("categories_name").value = categoryName;
-  document.getElementById("warehouses_name").value = warehouseName;
-  document.getElementById("request_quantity").value = quantity;
-  document.getElementById("articles_unit_cost").value = unitCost;
-  document.getElementById("request_total_cost").value = totalCost;
-
-  document
-    .getElementById("request_quantity")
-    .addEventListener("input", function () {
-      var quantity = document.getElementById("request_quantity").value;
-      var unitCost = document.getElementById("articles_unit_cost").value;
-      var totalCost = quantity * unitCost;
-      document.getElementById("request_total_cost").value =
-        totalCost.toFixed(2);
-    });
-}
-
-/**
  * Formulario para solicitar una donación
  */
 function solicitarDonacion(art_id, artName, foto, categories, quantity, warehouse) {
@@ -178,8 +148,8 @@ document.getElementById('beneficiary_type').addEventListener('change', function 
   if (this.value === 'Programa') {
     datosPrograma.style.display = 'flex';
     datosPersona.style.display = 'none';
-  } 
-  else if(this.value === 'Persona Natural'){
+  }
+  else if (this.value === 'Natural') {
     datosPrograma.style.display = 'none';
     datosPersona.style.display = 'flex';
   }
@@ -187,4 +157,55 @@ document.getElementById('beneficiary_type').addEventListener('change', function 
     datosPrograma.style.display = 'none';
     datosPersona.style.display = 'none';
   }
+});
+
+document.getElementById('donationForm').addEventListener('submit', function (event) {
+  var beneficiary_type = document.getElementById('beneficiary_type').value.trim();
+  var beneficiaryName = document.getElementById('beneficiary_name').value.trim();
+  var beneficiaryLastName = document.getElementById('beneficiary_last_name').value.trim();
+  var beneficiaryDni = document.getElementById('beneficiary_dni').value.trim();
+  var beneficiaryEmail = document.getElementById('beneficiary_email').value.trim();
+  if (beneficiary_type === "Natural")
+    if (!beneficiaryName || !beneficiaryLastName || !beneficiaryDni || !beneficiaryEmail) {
+      Swal.fire({
+        color: "var(--rojo)",
+        icon: "error",
+        iconColor: "var(--rojo)",
+        title: '¡Error!',
+        text: 'Todos los campos son obligatorios',
+        showConfirmButton: true,
+        customClass: {
+          confirmButton: 'btn-confirm'
+        },
+        confirmButtonText: "Aceptar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+
+        }
+      });
+      event.preventDefault(); // Evita que el formulario se envíe
+    } else {
+      event.preventDefault();
+      Swal.fire({
+        color: "var(--verde)",
+        icon: "success",
+        iconColor: "var(--verde)",
+        title: 'Éxito!',
+        text: 'Acta creada correctamente',
+        showConfirmButton: true,
+        customClass: {
+          confirmButton: 'btn-confirm'
+        },
+        confirmButtonText: "Aceptar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = '../user-adm/3_inventory3.php';
+          var form = document.getElementById('donationForm');
+          form.action = '../user-adm/beneficiary_certificate.php';
+          form.target = '_blank';
+          form.submit();
+        }
+      });
+    }
+
 });

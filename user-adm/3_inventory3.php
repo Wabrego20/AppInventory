@@ -381,7 +381,7 @@ include_once '../settings/notice.php';
         <!--Formulario para solicitar una donación-->
         <div class="modalRequestDonor">
             <div class="panelArticle">
-                <form method="post" class="formArticle" action="beneficiary_certificate.php" target="_blank">
+                <form method="post" class="formArticle" id="donationForm">
                     <h2>Solicitar Artículo Donado</h2>
 
                     <!--campo de categoría-->
@@ -424,7 +424,7 @@ include_once '../settings/notice.php';
                             <i class="fa-solid fa-hands-holding-child"></i>
                             <select name="beneficiary_type" class="btnTxt" id="beneficiary_type" required>
                                 <option value="">Seleccione</option>
-                                <option value="Persona Natural">Persona Natural</option>
+                                <option value="Natural">Persona Natural</option>
                                 <option value="Programa">Programa</option>
                             </select>
                         </div>
@@ -528,7 +528,7 @@ include_once '../settings/notice.php';
 
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
                     <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnVerde">Generar Acta</button>
+                        <button type="submit" class="btnSubmit btnVerde" name="solicitarDonación">Generar Acta</button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormRequestDonor()">Cancelar</div>
                     </div>
                 </form>
