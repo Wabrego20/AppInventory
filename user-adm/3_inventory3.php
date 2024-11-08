@@ -204,7 +204,7 @@ include_once '../settings/notice.php';
                             <td><?php echo $row['inventory_re_order'] ?? 'n/a'; ?></td>
                             <td>
                                 <button class="accion accionSolicitar" title="clic para solicitar donación"
-                                    onclick="solicitarDonacion('<?php echo $row['articles_name']; ?>', '<?php echo $row['categories_name']; ?>', '<?php echo $row['inventory_quantity']; ?>','<?php echo $row['categories_name']; ?>','<?php echo $row['warehouses_name']; ?>','','<?php echo $row['articles_unit_cost']; ?>','')"><i
+                                    onclick="solicitarDonacion('<?php echo $row['articles_id']; ?>','<?php echo $row['articles_name']; ?>', '<?php echo $row['articles_photo']; ?>', '<?php echo $row['categories_name']; ?>', '<?php echo $row['inventory_quantity']; ?>','<?php echo $row['warehouses_name']; ?>')"><i
                                         class="fa-solid fa-paper-plane"></i></button>
                             </td>
                             <td>
@@ -231,7 +231,7 @@ include_once '../settings/notice.php';
 
                     <!--campo de nombre de artículo-->
                     <div class="formLogCampo">
-                        <label for="articles_id">Donación:<i class="fa-solid fa-asterisk"></i></label>
+                        <label for="articles_id">Donación:</label>
                         <div class="campo">
                             <i class="fa-solid fa-heart"></i>
                             <select name="articles_id" class="btnTxt" id="articles_id" required>
@@ -381,12 +381,15 @@ include_once '../settings/notice.php';
         <!--Formulario para solicitar una donación-->
         <div class="modalRequestDonor">
             <div class="panelArticle">
-                <form method="post" class="formArticle">
+                <form method="post" class="formArticle" action="beneficiary_certificate.php" target="_blank">
                     <h2>Solicitar Artículo Donado</h2>
 
                     <!--campo de categoría-->
                     <div class="formLogCampo">
-                        <label for="articles_name_donor">Artículo:<i class="fa-solid fa-asterisk"></i></label>
+                        <input type="hidden" name="articles_id" id="articles_id_donor">
+                        <input type="hidden" name="articles_photo" id="articles_photo_donor">
+                        <input type="hidden" name="warehouses_name" id="warehouses_name_donor">
+                        <label for="articles_name_donor">Artículo Donado:</label>
                         <div class="campo">
                             <i class="fa-solid fa-box-open"></i>
                             <input type="text" name="articles_name" id="articles_name_donor" class="btnTxt" readonly>
@@ -404,7 +407,7 @@ include_once '../settings/notice.php';
 
                     <!--campo de cantidad de artículos-->
                     <div class="formLogCampo">
-                        <input type="hidden" name="" id="quantity_current">
+                        <input type="hidden" name="quantity_current" id="quantity_current">
                         <label for="quantity_donor">Cantidad:<i class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <i class="fa-solid fa-arrow-up-1-9"></i>
@@ -481,10 +484,10 @@ include_once '../settings/notice.php';
 
                         <!--campo de nombre-->
                         <div class="formLogCampo">
-                            <label for="donor_name">Nombre:<i class="fa-solid fa-asterisk"></i></label>
+                            <label for="beneficiary_name">Nombre:<i class="fa-solid fa-asterisk"></i></label>
                             <div class="campo">
                                 <i class="fa-solid fa-signature"></i>
-                                <input class="btnTxt" type="text" name="donor_name" id="donor_name"
+                                <input class="btnTxt" type="text" name="beneficiary_name" id="beneficiary_name"
                                     pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,20}" maxlength="20"
                                     placeholder="introduzca su nombre">
                             </div>
@@ -492,21 +495,21 @@ include_once '../settings/notice.php';
 
                         <!--campo de nombre-->
                         <div class="formLogCampo">
-                            <label for="donor_name">Apellido:<i class="fa-solid fa-asterisk"></i></label>
+                            <label for="beneficiary_last_name">Apellido:<i class="fa-solid fa-asterisk"></i></label>
                             <div class="campo">
                                 <i class="fa-solid fa-signature"></i>
-                                <input class="btnTxt" type="text" name="donor_name" id="donor_name"
-                                    pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,20}" maxlength="20"
+                                <input class="btnTxt" type="text" name="beneficiary_last_name"
+                                    id="beneficiary_last_name" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,20}" maxlength="20"
                                     placeholder="introduzca su nombre">
                             </div>
                         </div>
 
                         <!--campo de cédula-->
                         <div class="formLogCampo">
-                            <label for="users_dni">Cédula:<i class="fa-solid fa-asterisk"></i></label>
+                            <label for="beneficiary_dni">Cédula:<i class="fa-solid fa-asterisk"></i></label>
                             <div class="campo">
                                 <i class="fa-regular fa-address-card"></i>
-                                <input class="btnTxt" type="text" name="users_dni" id="users_dni"
+                                <input class="btnTxt" type="text" name="beneficiary_dni" id="beneficiary_dni"
                                     pattern="[a-zA-Z0-9]{1,2}-[0-9]{2,4}-[0-9]{2,4}" maxlength="14"
                                     placeholder="introduzca cédula">
                             </div>
@@ -514,18 +517,18 @@ include_once '../settings/notice.php';
 
                         <!--Campo de correo-->
                         <div class="formLogCampo">
-                            <label for="donor_email">Correo:<i class="fa-solid fa-asterisk"></i></label>
+                            <label for="beneficiary_email">Correo:<i class="fa-solid fa-asterisk"></i></label>
                             <div class="campo">
                                 <i class="fa-regular fa-envelope"></i>
-                                <input class="btnTxt" type="email" name="donor_email" id="donor_email" maxlength="30"
-                                    placeholder="introduzca correo electrónico">
+                                <input class="btnTxt" type="email" name="beneficiary_email" id="beneficiary_email"
+                                    maxlength="30" placeholder="introduzca correo electrónico">
                             </div>
                         </div>
                     </div>
 
                     <!--Botón de crear usuario, botón de cancelar creación de usuario-->
                     <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnVerde" name="solicitarDonacion">Generar Acta</button>
+                        <button type="submit" class="btnSubmit btnVerde">Generar Acta</button>
                         <div class="btnSubmit btnCancel" onclick="ocultarFormRequestDonor()">Cancelar</div>
                     </div>
                 </form>
@@ -551,7 +554,7 @@ include_once '../settings/notice.php';
 
 <?php
 /*
- *Función para agregar un articulo al inventario de consumo interno
+ *Función para agregar un articulo al inventario de donación
  */
 if (isset($_POST['agregarDonacion'])) {
     $inventory_name = "Donaciones";
@@ -639,7 +642,7 @@ if (isset($_POST['agregarDonacion'])) {
     $conn->close();
 }
 /***
- * Función para Eliminarartículo de consumo interno
+ * Función para Eliminarartículo de donación
  */
 if (isset($_POST['eliminarArtBienesFisicos'])) {
     $name = htmlspecialchars($_POST['articles_name']);
@@ -709,7 +712,7 @@ if (isset($_POST['eliminarArtBienesFisicos'])) {
     $conn->close();
 }
 /***
- * Función para Eliminarartículo de consumo interno
+ * Función para agregar artículo de donación
  */
 if (isset($_POST['addQuantArt'])) {
     $quantity = intval(htmlspecialchars($_POST['inventory_quantity']));

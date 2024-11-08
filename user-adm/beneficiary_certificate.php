@@ -1,34 +1,69 @@
 <?php
-$users_name = $_POST['users_name'] ?? 'No disponible';
-$users_last_name = $_POST['users_last_name'] ?? 'No disponible';
-$users_dni = $_POST['users_dni'] ?? 'No disponible';
-$donor_type = $_POST['donor_type'] ?? 'No disponible';
-
-$approver_name = $_POST['approver_name'] ?? 'No disponible';
-$approver_last_name = $_POST['approver_last_name'] ?? 'No disponible';
-$approver_departament = $_POST['approver_departament'] ?? 'No disponible';
-$approver_dni = $_POST['approver_dni'] ?? 'No disponible';
-
-$warehouses_name = $_POST['warehouses_name'] ?? 'No disponible';
-
-$articles_name = $_POST['articles_name'] ?? 'No disponible';
-$articles_brand = $_POST['articles_brand'] ?? 'No disponible';
-$articles_photo = $_POST['articles_photo'] ?? '0.00';
-echo "<img class='fotoArticulo' src='data:image/jpeg;base64," . htmlspecialchars($articles_photo) . "' alt='Artículo Foto' />";
-
-$categories_name = $_POST['categories_name'] ?? 'No disponible';
-$departament_name = $_POST['departament_name'] ?? 'No disponible';
-$inventory_name = $_POST['inventory_name'] ?? 'No disponible';
-$units_name = $_POST['units_name'] ?? 'No disponible';
-
-$request_quantity = $_POST['donor_quantity'] ?? '0';
-
-// Datos de ejemplo (deberías obtener estos datos de tu base de datos)
-$solicitante = $users_name . ' ' . $users_last_name;
-$elaborado_por = $approver_name . ' ' . $approver_last_name;
-$cant = $request_quantity . ' ' . $units_name;
+/***
+ * Función para solicitar una donación
+ */
+include_once '../settings/conexion.php';
+include_once '../settings/sessionStart.php';
 date_default_timezone_set('America/Panama');
 $fecha = date('Y-m-d H:i:s');
+//tipo de beneficiario
+$beneficiary_type = htmlspecialchars($_POST['beneficiary_type']);
+
+//datos del beneficiario
+$beneficiary_name = htmlspecialchars($_POST['beneficiary_name']);
+$beneficiary_last_name = htmlspecialchars($_POST['beneficiary_last_name']);
+$beneficiary_email = htmlspecialchars($_POST['beneficiary_email']);
+$beneficiary_dni = htmlspecialchars($_POST['beneficiary_dni']);
+//datos del que aprueba
+$approver = "SELECT users.*, departament.departament_name 
+FROM users 
+JOIN departament ON users.departament_id = departament.departament_id 
+WHERE users_user = ?";
+$stmt = $conn->prepare($approver);
+$stmt->bind_param("s", $_SESSION['users_user']);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+
+if ($row) {
+    $approver_id = $row["users_id"];
+    $approver_name = $row["users_name"];
+    $approver_last_name = $row["users_last_name"];
+    $approver_dni = $row["users_dni"];
+    $approver_departament = $row["departament_name"];
+} else {
+    // Inicializar variables en caso de que no haya resultados
+    $approver_id = $approver_name = $approver_last_name = $approver_dni = $approver_departament = "No disponible";
+}
+$stmt->close();
+//Datos del artículo
+$articles_id = htmlspecialchars($_POST['articles_id']);
+$articles_name = htmlspecialchars($_POST['articles_name']);
+$categories_name = htmlspecialchars($_POST['categories_name']);
+$quantity_current = htmlspecialchars($_POST['quantity_current']);
+$quantity_donor = htmlspecialchars($_POST['quantity_donor']);
+$warehouse = htmlspecialchars($_POST['warehouses_name']);
+$articles_photo = $_POST['articles_photo'] ?? 'foto';
+echo "<img class='fotoArticulo' src='data:image/jpeg;base64," . htmlspecialchars($articles_photo) . "' alt='Artículo Foto' />";
+$newQuantity = $quantity_current - $quantity_donor;
+$sql = "SELECT articles.*, units_of_measure.units_name 
+    FROM articles 
+    JOIN units_of_measure ON articles.units_id = units_of_measure.units_id 
+    WHERE articles.articles_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $articles_id);
+$stmt->execute();
+$resultado = $stmt->get_result();
+if ($resultado->num_rows > 0) {
+    while ($fila = $resultado->fetch_assoc()) {
+        $articles_id = $fila["articles_id"];
+        $articles_brand = $fila["articles_brand"];
+        $units_name = $fila["units_name"];
+    }
+}
+$stmt->close();
+$conn->close();
+
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +75,7 @@ $fecha = date('Y-m-d H:i:s');
     <link rel="stylesheet" href="../settings/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="../settings/styles.css">
     <link rel="stylesheet" href="../css/certificate.css">
-    <title>Acta de Donante | MIDES </title>
+    <title>Acta de Beneficiario | MIDES </title>
 </head>
 
 <body>
@@ -49,7 +84,7 @@ $fecha = date('Y-m-d H:i:s');
             <img src="../img/logoApp" alt="logos">
             <img src="../img/logoMides" alt="logos" class="logoMides">
         </div>
-        <h2>Acta de Entrega a Donante</h2>
+        <h2>Acta de Entrega a Beneficiario</h2>
 
         <div class="datos">
             <div class="campos">
@@ -57,27 +92,27 @@ $fecha = date('Y-m-d H:i:s');
                 <h4> <?php echo htmlspecialchars($fecha); ?></h4>
             </div>
             <div class="campos">
-                <label>Donante:</label>
-                <h4><?php echo htmlspecialchars($solicitante); ?></h4>
+                <label>Beneficiario:</label>
+                <h4><?php echo htmlspecialchars($beneficiary_name . " " . $beneficiary_last_name); ?></h4>
             </div>
             <div class="campos">
                 <label>Persona:</label>
-                <h4><?php echo htmlspecialchars($donor_type); ?></h4>
+                <h4><?php echo htmlspecialchars($beneficiary_type); ?></h4>
             </div>
             <div class="campos">
                 <label>Cédula:</label>
-                <h4><?php echo htmlspecialchars($users_dni); ?></h4>
+                <h4><?php echo htmlspecialchars($beneficiary_dni); ?></h4>
             </div>
             <div class="campos">
                 <label>Elaborado por:</label>
-                <h4> <?php echo htmlspecialchars($elaborado_por); ?></h4>
+                <h4> <?php echo htmlspecialchars($approver_name . " " . $approver_last_name); ?></h4>
             </div>
             <div class="campos">
                 <label>Cédula:</label>
                 <h4><?php echo htmlspecialchars($approver_dni); ?></h4>
             </div>
             <?php
-            if ($donor_type === 'Juridica') {
+            if ($beneficiary_type === 'Programa') {
                 $donor_name = $_POST['donor_name'] ?? 'sin empresa';
                 $donor_ruc = $_POST['donor_ruc'] ?? 'sin ruc';
                 $donor_office_phone = $_POST['donor_office_phone'] ?? 'sin phone';
@@ -124,7 +159,7 @@ $fecha = date('Y-m-d H:i:s');
             </div>
             <div class="campos">
                 <label>Cantidad:</label>
-                <h4> <?php echo htmlspecialchars($cant); ?></h4>
+                <h4> <?php echo htmlspecialchars($quantity_donor . " " . $units_name); ?></h4>
             </div>
             <div class="campos">
                 <label>Categoría:</label>
@@ -132,7 +167,7 @@ $fecha = date('Y-m-d H:i:s');
             </div>
             <div class="campos">
                 <label>Bodega:</label>
-                <h4> <?php echo htmlspecialchars($warehouses_name); ?></h4>
+                <h4> <?php echo htmlspecialchars($warehouse); ?></h4>
             </div>
 
             <div class="campos dobleSaltoLinea">
@@ -144,17 +179,17 @@ $fecha = date('Y-m-d H:i:s');
                     <?php $formatter = new IntlDateFormatter('es_ES', IntlDateFormatter::FULL, IntlDateFormatter::NONE);
                     $date = new DateTime();
                     echo $formatter->format($date);
-                    ?>, en las instalaciones de la <?php echo $warehouses_name ?>, se realizó la donación de
-                    <?php echo $cant ?> de
-                    <?php echo $articles_name ?> de la marca <?php echo $articles_brand ?>. La donación fue realizada
-                    por
-                    <?php echo $solicitante ?> y gestionada por <?php echo $elaborado_por ?> de
+                    ?>, en las instalaciones de la <?php echo $warehouse ?>, se realizó la entrega de
+                    <?php echo $quantity_donor ?> <?php echo $units_name ?> de
+                    <?php echo $articles_name ?> de la marca <?php echo $articles_brand ?>. La donación fue a beneficio
+                    de
+                    <?php echo $beneficiary_name . " " . $beneficiary_last_name ?> y gestionada por <?php echo $approver_name . " " . $approver_last_name ?> del departamento de
                     <?php echo $approver_departament ?>.
                 </h4>
             </div>
 
             <div class="campos dobleSaltoLinea">
-                <h4>Firma del Donante:</h4>
+                <h4>Firma del Beneficiario:</h4>
                 ____________________________________
             </div>
 

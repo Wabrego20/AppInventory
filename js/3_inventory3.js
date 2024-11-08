@@ -26,7 +26,7 @@ $(document).ready(function () {
     buttons: [
       {
         text: '<i class="fa-solid fa-heart-circle-plus fa-xl"></i> Agregar artículo',
-        action: function (e, dt, node, config) {
+        action: function () {
           var formu = document.querySelector(".modalAddArticle"); //mostrar el modal de crear artículo
           formu.style.display = "flex";
           setTimeout(function () {
@@ -148,16 +148,19 @@ function solicitarArt(warehouses_total_quantity, inventory_id, id, articleName, 
 /**
  * Formulario para solicitar una donación
  */
-function solicitarDonacion(artName, categories, quantity) {
+function solicitarDonacion(art_id, artName, foto, categories, quantity, warehouse) {
   var formDonor = document.querySelector(".modalRequestDonor");
   formDonor.style.display = "flex";
   setTimeout(function () {
     formDonor.classList.add("show");
   }, 10);
+  document.getElementById("articles_id_donor").value = art_id;
   document.getElementById("articles_name_donor").value = artName;
+  document.getElementById("articles_photo_donor").value = foto;
   document.getElementById("categories_donor").value = categories;
   document.getElementById("quantity_donor").max = quantity;
   document.getElementById("quantity_current").value = quantity;
+  document.getElementById("warehouses_name_donor").value = warehouse;
 }
 function ocultarFormRequestDonor() {
   var modal = document.querySelector(".modalRequestDonor");
@@ -170,13 +173,18 @@ function ocultarFormRequestDonor() {
 }
 
 document.getElementById('beneficiary_type').addEventListener('change', function () {
-  var otrosDatos = document.getElementById('datosPrograma');
+  var datosPrograma = document.getElementById('datosPrograma');
   var datosPersona = document.getElementById('datosPersona');
   if (this.value === 'Programa') {
-    otrosDatos.style.display = 'flex';
+    datosPrograma.style.display = 'flex';
     datosPersona.style.display = 'none';
-  } else {
-    otrosDatos.style.display = 'none';
+  } 
+  else if(this.value === 'Persona Natural'){
+    datosPrograma.style.display = 'none';
     datosPersona.style.display = 'flex';
+  }
+  else {
+    datosPrograma.style.display = 'none';
+    datosPersona.style.display = 'none';
   }
 });
