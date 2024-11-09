@@ -204,7 +204,7 @@ include_once '../settings/notice.php';
                             <td><?php echo $row['inventory_re_order'] ?? 'n/a'; ?></td>
                             <td>
                                 <button class="accion accionSolicitar" title="clic para solicitar donación"
-                                    onclick="solicitarDonacion('<?php echo $row['articles_id']; ?>','<?php echo $row['articles_name']; ?>', '<?php echo $row['articles_photo']; ?>', '<?php echo $row['categories_name']; ?>', '<?php echo $row['inventory_quantity']; ?>','<?php echo $row['warehouses_name']; ?>')"><i
+                                    onclick="solicitarDonacion('<?php echo $row['articles_id']; ?>','<?php echo $row['articles_name']; ?>', '<?php echo $row['articles_photo']; ?>', '<?php echo $row['categories_name']; ?>', '<?php echo $row['inventory_quantity']; ?>','<?php echo $row['warehouses_id']; ?>','<?php echo $row['warehouses_name']; ?>','<?php echo $row['warehouses_total_quantity']; ?>')"><i
                                         class="fa-solid fa-paper-plane"></i></button>
                             </td>
                             <td>
@@ -388,7 +388,9 @@ include_once '../settings/notice.php';
                     <div class="formLogCampo">
                         <input type="hidden" name="articles_id" id="articles_id_donor">
                         <input type="hidden" name="articles_photo" id="articles_photo_donor">
+                        <input type="text" name="warehouses_id" id="warehouses_id_donor">
                         <input type="hidden" name="warehouses_name" id="warehouses_name_donor">
+                        <input type="text" name="warehouses_total_quantity" id="total_quantity">
                         <label for="articles_name_donor">Artículo Donado:</label>
                         <div class="campo">
                             <i class="fa-solid fa-box-open"></i>
@@ -464,8 +466,8 @@ include_once '../settings/notice.php';
                                     class="fa-solid fa-asterisk"></i></label>
                             <div class="campo">
                                 <i class="fa-solid fa-signature"></i>
-                                <input class="btnTxt" type="text" name="programLastName"
-                                    id="beneficiary_last_name" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,20}" maxlength="20"
+                                <input class="btnTxt" type="text" name="beneficiary_last_name"
+                                    id="programLastName" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,20}" maxlength="20"
                                     placeholder="introduzca su apellido">
                             </div>
                         </div>
@@ -566,7 +568,7 @@ include_once '../settings/notice.php';
 
 </html>
 
-<?php
+<?php 
 /*
  *Función para agregar un articulo al inventario de donación
  */

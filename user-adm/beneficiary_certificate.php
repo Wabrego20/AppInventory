@@ -8,7 +8,6 @@ date_default_timezone_set('America/Panama');
 $fecha = date('Y-m-d H:i:s');
 //tipo de beneficiario
 $beneficiary_type = htmlspecialchars($_POST['beneficiary_type']);
-
 //datos del beneficiario
 $beneficiary_name = htmlspecialchars($_POST['beneficiary_name']);
 $beneficiary_last_name = htmlspecialchars($_POST['beneficiary_last_name']);
@@ -24,7 +23,6 @@ $stmt->bind_param("s", $_SESSION['users_user']);
 $stmt->execute();
 $result = $stmt->get_result();
 $row = $result->fetch_assoc();
-
 if ($row) {
     $approver_id = $row["users_id"];
     $approver_name = $row["users_name"];
@@ -32,7 +30,6 @@ if ($row) {
     $approver_dni = $row["users_dni"];
     $approver_departament = $row["departament_name"];
 } else {
-    // Inicializar variables en caso de que no haya resultados
     $approver_id = $approver_name = $approver_last_name = $approver_dni = $approver_departament = "No disponible";
 }
 $stmt->close();
@@ -42,14 +39,30 @@ $articles_name = htmlspecialchars($_POST['articles_name']);
 $categories_name = htmlspecialchars($_POST['categories_name']);
 $quantity_current = htmlspecialchars($_POST['quantity_current']);
 $quantity_donor = htmlspecialchars($_POST['quantity_donor']);
+$warehouses_id = htmlspecialchars($_POST['warehouses_id']);
 $warehouse = htmlspecialchars($_POST['warehouses_name']);
+$total_quantity_current = intval($_POST['warehouses_total_quantity']);
 $articles_photo = $_POST['articles_photo'] ?? 'foto';
 echo "<img class='fotoArticulo' src='data:image/jpeg;base64," . htmlspecialchars($articles_photo) . "' alt='Artículo Foto' />";
+
+$newQuantityTotal = $total_quantity_current - $quantity_donor;
+$sql_update_quantity = "UPDATE warehouses SET warehouses_total_quantity = ? WHERE warehouses_id = ?";
+$stmt_update_quantity = $conn->prepare($sql_update_quantity);
+$stmt_update_quantity->bind_param("ii", $newQuantityTotal, $warehouses_id);
+$stmt_update_quantity->execute();
+$stmt_update_quantity->close();
+
 $newQuantity = $quantity_current - $quantity_donor;
+$sql = "UPDATE inventory SET inventory_quantity = ? WHERE articles_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("ii", $newQuantity, $articles_id);
+$stmt->execute();
+$stmt->close();
+
 $sql = "SELECT articles.*, units_of_measure.units_name 
-    FROM articles 
-    JOIN units_of_measure ON articles.units_id = units_of_measure.units_id 
-    WHERE articles.articles_id = ?";
+FROM articles 
+JOIN units_of_measure ON articles.units_id = units_of_measure.units_id 
+WHERE articles.articles_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $articles_id);
 $stmt->execute();
@@ -63,7 +76,6 @@ if ($resultado->num_rows > 0) {
 }
 $stmt->close();
 $conn->close();
-
 ?>
 
 <!DOCTYPE html>
@@ -112,7 +124,7 @@ $conn->close();
                 <h4><?php echo htmlspecialchars($approver_dni); ?></h4>
             </div>
             <?php
-            if ($beneficiary_type ==! 'Natural') {
+            if ($beneficiary_type == !'Natural') {
                 $benefited_program = $_POST['benefited_program'] ?? 'sin empresa';
                 ?>
                 <div class="campos dobleSaltoLinea">
@@ -179,7 +191,8 @@ $conn->close();
                     <?php echo $quantity_donor ?> <?php echo $units_name ?> de
                     <?php echo $articles_name ?> de la marca <?php echo $articles_brand ?>. La donación fue a beneficio
                     de
-                    <?php echo $beneficiary_name . " " . $beneficiary_last_name ?> y gestionada por <?php echo $approver_name . " " . $approver_last_name ?> del departamento de
+                    <?php echo $beneficiary_name . " " . $beneficiary_last_name ?> y gestionada por
+                    <?php echo $approver_name . " " . $approver_last_name ?> del departamento de
                     <?php echo $approver_departament ?>.
                 </h4>
             </div>
