@@ -13,6 +13,12 @@ $beneficiary_name = htmlspecialchars($_POST['beneficiary_name']);
 $beneficiary_last_name = htmlspecialchars($_POST['beneficiary_last_name']);
 $beneficiary_email = htmlspecialchars($_POST['beneficiary_email']);
 $beneficiary_dni = htmlspecialchars($_POST['beneficiary_dni']);
+//Datos del encargado de la empresa
+$programName = htmlspecialchars($_POST['programName']);
+$programLastName = htmlspecialchars($_POST['programLastName']);
+$programDni = htmlspecialchars($_POST['programDni']);
+$programEmail = htmlspecialchars($_POST['programEmail']);
+$benefited_program = $_POST['benefited_program'] ?? 'sin empresa';
 //datos del que aprueba
 $approver = "SELECT users.*, departament.departament_name 
 FROM users 
@@ -104,17 +110,50 @@ $conn->close();
                 <h4> <?php echo htmlspecialchars($fecha); ?></h4>
             </div>
             <div class="campos">
-                <label>Beneficiario:</label>
-                <h4><?php echo htmlspecialchars($beneficiary_name . " " . $beneficiary_last_name); ?></h4>
-            </div>
-            <div class="campos">
-                <label>Persona:</label>
+                <label>Tipo de Beneficiario:</label>
                 <h4><?php echo htmlspecialchars($beneficiary_type); ?></h4>
             </div>
-            <div class="campos">
-                <label>Cédula:</label>
-                <h4><?php echo htmlspecialchars($beneficiary_dni); ?></h4>
-            </div>
+            <?php
+            if ($beneficiary_type == 'Natural') {
+                ?>
+                <div class="campos">
+                    <label>Beneficiario:</label>
+                    <h4><?php echo htmlspecialchars($beneficiary_name . " " . $beneficiary_last_name); ?></h4>
+                </div>
+                <div class="campos">
+                    <label>Cédula:</label>
+                    <h4><?php echo htmlspecialchars($beneficiary_dni); ?></h4>
+                </div>
+                <div class="campos">
+                    <label>Correo:</label>
+                    <h4><?php echo htmlspecialchars($beneficiary_email); ?></h4>
+                </div>
+                <?php
+            }
+            if ($beneficiary_type == 'Programa') {
+                ?>
+                 <div class="campos dobleSaltoLinea">
+                    <h4>Datos del Programa</h4>
+                </div>
+                <div class="campos">
+                    <label>Nombre:</label>
+                    <h4> <?php echo htmlspecialchars($benefited_program); ?></h4>
+                </div>
+                <div class="campos">
+                    <label>Encargado del Programa:</label>
+                    <h4><?php echo htmlspecialchars($programName . " " . $programLastName); ?></h4>
+                </div>
+                <div class="campos">
+                    <label>Cédula:</label>
+                    <h4><?php echo htmlspecialchars($programDni); ?></h4>
+                </div>
+                <div class="campos">
+                    <label>Correo:</label>
+                    <h4><?php echo htmlspecialchars($programEmail); ?></h4>
+                </div>
+                <?php
+            }
+            ?>
             <div class="campos">
                 <label>Elaborado por:</label>
                 <h4> <?php echo htmlspecialchars($approver_name . " " . $approver_last_name); ?></h4>
@@ -123,36 +162,6 @@ $conn->close();
                 <label>Cédula:</label>
                 <h4><?php echo htmlspecialchars($approver_dni); ?></h4>
             </div>
-            <?php
-            if ($beneficiary_type == !'Natural') {
-                $benefited_program = $_POST['benefited_program'] ?? 'sin empresa';
-                ?>
-                <div class="campos dobleSaltoLinea">
-                    <h4>Datos del Programa</h4>
-                </div>
-                <div class="campos">
-                    <label>Nombre:</label>
-                    <h4> <?php echo htmlspecialchars($benefited_program); ?></h4>
-                </div>
-                <div class="campos">
-                    <label>RUC:</label>
-                    <h4> <?php echo htmlspecialchars($donor_ruc); ?></h4>
-                </div>
-                <div class="campos">
-                    <label>Teléfono:</label>
-                    <h4> <?php echo htmlspecialchars($donor_office_phone); ?></h4>
-                </div>
-                <div class="campos">
-                    <label>Correo:</label>
-                    <h4> <?php echo htmlspecialchars($donor_email); ?></h4>
-                </div>
-                <div class="campos">
-                    <label>Dirección:</label>
-                    <h4> <?php echo htmlspecialchars($donor_adress); ?></h4>
-                </div>
-                <?php
-            }
-            ?>
 
             <div class="campos dobleSaltoLinea">
                 <h4>Descripción del Artículo</h4>

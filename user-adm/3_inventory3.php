@@ -388,9 +388,9 @@ include_once '../settings/notice.php';
                     <div class="formLogCampo">
                         <input type="hidden" name="articles_id" id="articles_id_donor">
                         <input type="hidden" name="articles_photo" id="articles_photo_donor">
-                        <input type="text" name="warehouses_id" id="warehouses_id_donor">
+                        <input type="hidden" name="warehouses_id" id="warehouses_id_donor">
                         <input type="hidden" name="warehouses_name" id="warehouses_name_donor">
-                        <input type="text" name="warehouses_total_quantity" id="total_quantity">
+                        <input type="hidden" name="warehouses_total_quantity" id="total_quantity">
                         <label for="articles_name_donor">Artículo Donado:</label>
                         <div class="campo">
                             <i class="fa-solid fa-box-open"></i>
@@ -454,7 +454,7 @@ include_once '../settings/notice.php';
                                     class="fa-solid fa-asterisk"></i></label>
                             <div class="campo">
                                 <i class="fa-solid fa-signature"></i>
-                                <input class="btnTxt" type="text" name="beneficiary_name" id="programName"
+                                <input class="btnTxt" type="text" name="programName" id="programName"
                                     pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,20}" maxlength="20"
                                     placeholder="introduzca su nombre">
                             </div>
@@ -466,7 +466,7 @@ include_once '../settings/notice.php';
                                     class="fa-solid fa-asterisk"></i></label>
                             <div class="campo">
                                 <i class="fa-solid fa-signature"></i>
-                                <input class="btnTxt" type="text" name="beneficiary_last_name"
+                                <input class="btnTxt" type="text" name="programLastName"
                                     id="programLastName" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,20}" maxlength="20"
                                     placeholder="introduzca su apellido">
                             </div>
@@ -477,7 +477,7 @@ include_once '../settings/notice.php';
                             <label for="programDni">Cédula del Encargado:<i class="fa-solid fa-asterisk"></i></label>
                             <div class="campo">
                                 <i class="fa-regular fa-address-card"></i>
-                                <input class="btnTxt" type="text" name="beneficiary_dni" id="programDni"
+                                <input class="btnTxt" type="text" name="programDni" id="programDni"
                                     pattern="[a-zA-Z0-9]{1,2}-[0-9]{2,4}-[0-9]{2,4}" maxlength="14"
                                     placeholder="introduzca cédula">
                             </div>
@@ -488,7 +488,7 @@ include_once '../settings/notice.php';
                             <label for="programEmail">Correo:<i class="fa-solid fa-asterisk"></i></label>
                             <div class="campo">
                                 <i class="fa-regular fa-envelope"></i>
-                                <input class="btnTxt" type="email" name="beneficiary_email" id="programEmail"
+                                <input class="btnTxt" type="email" name="programEmail" id="programEmail"
                                     maxlength="30" placeholder="introduzca correo electrónico">
                             </div>
                         </div>
