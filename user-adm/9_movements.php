@@ -1,6 +1,7 @@
-<!-- Inicio de sesión y cierre de sesión por inactividad -->
+<!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
 include_once '../settings/sessionStart.php';
+include_once '../settings/conexion.php';
 include_once '../settings/notice.php';
 ?>
 <!DOCTYPE html>
@@ -13,8 +14,9 @@ include_once '../settings/notice.php';
     <link rel="stylesheet" href="../settings/header.css">
     <link rel="stylesheet" href="../settings/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="../settings/styles.css">
-    <link rel="stylesheet" href="../css/1_dashboard.css">
-    <title>Inicio | Sist-Inventario</title>
+    <link rel="stylesheet" href="../css/9_movements.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <title>Movimientos | Sist-Inventario</title>
 </head>
 
 <body>
@@ -28,16 +30,13 @@ include_once '../settings/notice.php';
                 <img src="../img/logoApp.png" alt="logoAPP" class="logoApp">
             </span>
             <ul>
-
-                <!--Pestaña de Inicio-->
-                <li class="active">
-                    <a href="#">
+                <li>
+                    <a href="1_dashboard.php">
                         <i class="fa-solid fa-house"></i>
                         <h5>Inicio</h5>
                     </a>
                 </li>
 
-                <!--Pestaña de artículos-->
                 <li>
                     <a href="2_articles.php">
                         <i class="fa-solid fa-box"></i>
@@ -71,33 +70,30 @@ include_once '../settings/notice.php';
                             </a>
                         </li>
 
-                         <!--Pestaña de Donaciones-->
-                         <li>
+                        <!--Pestaña de Ayuda Social--></li>
+                        <li>
                             <a href="3_inventory3.php">
-                                <i class="fa-solid fa-hand-holding-heart"></i>
+                                <i class="fa-solid fa-handshake-angle"></i>
                                 <h5>Donaciones</h5>
                             </a>
                         </li>
 
-                        <!--Pestaña de Ayuda Social-->
+                        <!--Pestaña de Donaciones-->
                         <li>
                             <a href="3_inventory4.php">
-                                <i class="fa-solid fa-handshake-angle"></i>
+                                <i class="fa-solid fa-hand-holding-heart"></i>
                                 <h5>Ayuda Social</h5>
                             </a>
                         </li>
                     </span>
                 </span>
 
-                <!--Pestaña de Bodegas-->
                 <li>
                     <a href="4_warehouse.php">
                         <i class="fa-solid fa-warehouse"></i>
                         <h5>Bodegas</h5>
                     </a>
                 </li>
-
-                <!--Pestaña de Solicitudes-->
                 <li>
                     <?php if ($pending_count > 0): ?>
                         <div class="bell" style="display: block;">
@@ -110,32 +106,24 @@ include_once '../settings/notice.php';
                         <h5>Solicitudes</h5>
                     </a>
                 </li>
-
-                <!--Pestaña de Reportes-->
                 <li>
                     <a href="6_reports.php">
                         <i class="fa-solid fa-chart-simple"></i>
                         <h5>Reportes</h5>
                     </a>
                 </li>
-
-                <!--Pestaña de Movimientos-->
-                <li>
-                    <a href="9_movements.php">
+                <li class="active">
+                    <a href="#">
                         <i class="fa-solid fa-truck-moving"></i>
                         <h5>Movimientos</h5>
                     </a>
                 </li>
-
-                <!--Pestaña de Usuarios-->
                 <li>
                     <a href="7_users.php">
                         <i class="fa-solid fa-users"></i>
                         <h5>Usuarios</h5>
                     </a>
                 </li>
-
-                <!--Pestaña de Mi Perfil-->
                 <li>
                     <a href="8_editUser.php">
                         <i class="fa-solid fa-user-gear"></i>
@@ -149,9 +137,7 @@ include_once '../settings/notice.php';
         <div class="formUserLogOut">
             <button class="btnUser" onclick="verBtnLogout();">
                 <i class="fa-solid fa-user-check"></i>
-                <h5>
-                    <?php echo $_SESSION['users_user']; ?>
-                </h5>
+                <h5><?php echo $_SESSION['users_user']; ?></h5>
                 <i class="fa-solid fa-angle-down"></i>
             </button>
             <button class="btnLogOut" id="logout" onclick="cerrarSesion();">
@@ -164,70 +150,63 @@ include_once '../settings/notice.php';
 
     <!--Ruta que muestra donde se encuentra actualmente-->
     <div class="ruta">
-        <h4>Inicio</h4>
+        <h4>Movimientos</h4>
     </div>
 
     <!--Cuerpo Principal-->
     <main>
-
-        <!--Apartado de Artículos o Productos-->
-        <a class="btn_seccion" href="2_articles.php">
-            <h2>Artículos o Productos</h2>
-            <img src="../gif/boxes.gif" alt="article">
-            <h4>Se añade este aparatado para crear, editar y consultar atículos para luego inventariarlos en los
-                diferentes tipos de inventario</h4>
-        </a>
-
-        <!--Apartado de Tipos de inventarios-->
-        <a class="btn_seccion" href="3_inventory.php">
-            <h2>Tipos de Inventarios</h2>
-            <img src="../gif/inventario.gif" alt="inventario">
-            <h4>Agregar y consultar inventario de consumo interno, material operativo, Donaciones, Compras para ayuda
-                social y material en tránsito.</h4>
-        </a>
-
-        <!--Apartado de Bodegas-->
-        <a class="btn_seccion" href="4_warehouse.php">
-            <h2>Bodegas</h2>
-            <img src="../gif/deposito.gif" alt="bodega">
-            <h4>Se añaden opciones para ver los artículos por bodegas, consultar, crear, editar o eliminar bodegas.</h4>
-        </a>
-
-        <!--Apartado de Solicitudes-->
-        <a class="btn_seccion" href="5_request.php">
-            <h2>Ordenes o Solicitudes</h2>
-            <img src="../gif/sos.gif" alt="solicitud">
-            <h4>Filtros o etiquetas para diferenciar las órdenes de compra según el tipo de inventario, ver las
-                solicitudes realizadas por los clientes. Aprobar, asignar o rechazar</h4>
-        </a>
-
-        <!--Apartado de reportes-->
-        <a class="btn_seccion" href="6_reports.php">
-            <h2>Reportes</h2>
-            <img src="../gif/estadisticas.gif" alt="reporte">
-            <h4>Se añaden opciones para ver los reportes del inventario ya sea por tipos o por bodegas entre otros.</h4>
-        </a>
-
-         <!--Apartado de Movimientos-->
-         <a class="btn_seccion" href="9_movements.php">
-            <h2>Movimientos</h2>
-            <img src="../gif/move.gif" alt="move">
-            <h4>Se añaden opciones para ver todos los ovimientos de entrada y salidada de los artículos de todos los inventarios.</h4>
-        </a>
-
-        <!--Apartado de Tipos usuarios-->
-        <a class="btn_seccion" href="7_users.php">
-            <h2>Usuarios</h2>
-            <img src="../gif/users.gif" alt="users">
-            <h4>Se añaden opciones para administrar usuarios, de la aplicación, asignar roles entre otros</h4>
-        </a>
-
-        <!--Apartado de Mi Perfil-->
-        <a class="btn_seccion" href="8_editUser.php">
-            <h2>Mi Perfil</h2>
-            <img src="../gif/usuario.gif" alt="bell">
-            <h4>Se añade un apartado para configurar o editar perfil, datos personales, usuario y contraseña</h4>
-        </a>
+        <h2>Tabla de Movimientos</h2>
+        <table id="tableWarehouse">
+            <thead>
+                <tr>
+                    <th>N°</th>
+                    <th>Tipo de Movimiento</th>
+                    <th>Artículo</th>
+                    <th>Marca</th>
+                    <th>Cantidad</th>
+                    <th>Tipo de Inventario</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $stmt = $conn->prepare("SELECT * FROM warehouses");
+                $stmt->execute();
+                $result = $stmt->get_result();
+                if ($result->num_rows > 0) {
+                    $fila = 1;
+                    while ($row = $result->fetch_assoc()) {
+                        ?>
+                        <tr>
+                            <td><?php echo $fila; ?></td>
+                            <td><?php echo $row['warehouses_name'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['warehouses_province'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['warehouses_location'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['warehouses_total_quantity'] ?? 'no disponible'; ?></td>
+                            <td>
+                                <button class="accion accionEditar"
+                                    onclick="editBodega('<?php echo $row['warehouses_id']; ?>','<?php echo $row['warehouses_name']; ?>', '<?php echo $row['warehouses_province']; ?>', '<?php echo $row['warehouses_location']; ?>')"
+                                    title="Editar esta bodega">
+                                    <i class="fa-solid fa-warehouse"></i>
+                                    <i class="fa-solid fa-pen fa-xs"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <button class="accion accionEliminar"
+                                    onclick="deleteBodega('<?php echo $row['warehouses_name']; ?>', '<?php echo $row['warehouses_total_quantity']; ?>')"
+                                    title="Eliminar esta bodega">
+                                    <i class="fa-solid fa-warehouse"></i>
+                                    <i class="fa-solid fa-minus fa-2xs"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <?php
+                        $fila++;
+                    }
+                }
+                ?>
+            </tbody>
+        </table>
     </main>
 
     <!--Pie de Página-->
@@ -235,8 +214,12 @@ include_once '../settings/notice.php';
         <h6>© 2024 Universidad de Panamá y William Abrego. Todos los derechos reservados.</h6>
     </footer>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+    <script src="../js/9_movements.js"></script>
     <script src="../settings/header.js"></script>
-    <script src="../js/1_dashboard.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 

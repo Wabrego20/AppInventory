@@ -121,6 +121,14 @@ include_once '../settings/notice.php';
                     </a>
                 </li>
 
+                <!--Pestaña de Movimientos-->
+                <li>
+                    <a href="9_movements.php">
+                        <i class="fa-solid fa-truck-moving"></i>
+                        <h5>Movimientos</h5>
+                    </a>
+                </li>
+
                 <!--Pestaña de Usuarios-->
                 <li>
                     <a href="7_users.php">

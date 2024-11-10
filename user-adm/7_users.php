@@ -113,6 +113,13 @@ include_once '../settings/notice.php';
                         <h5>Reportes</h5>
                     </a>
                 </li>
+                <!--Pestaña de Movimientos-->
+                <li>
+                    <a href="9_movements.php">
+                        <i class="fa-solid fa-truck-moving"></i>
+                        <h5>Movimientos</h5>
+                    </a>
+                </li>
                 <li class="active">
                     <a href="#">
                         <i class="fa-solid fa-users"></i>
@@ -195,12 +202,19 @@ include_once '../settings/notice.php';
                                 </h5>
                             </td>
                             <td><?php echo $row['users_registration_date'] ?? 'dd/mm/aaaa'; ?></td>
-                            <td><i class="fa-solid fa-user-pen"
+                            <td>
+                                <button class="accion accionEditar"
                                     onclick="formEditUser('<?php echo $row['users_id']; ?>','<?php echo $row['users_dni']; ?>','<?php echo $row['users_name']; ?>','<?php echo $row['users_last_name']; ?>','<?php echo $row['users_email']; ?>','<?php echo $row['rol_id']; ?>','<?php echo $row['departament_id']; ?>');"
-                                    title="clic aquí para editar este usuario"></i></td>
-                            <td><i class="fa-solid fa-user-minus"
+                                    title="clic aquí para editar este usuario">
+                                    <i class="fa-solid fa-user-pen"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <button class="accion accionEliminar"
                                     onclick="formDeleteUser('<?php echo $row['users_id']; ?>','<?php echo $row['users_user']; ?>');"
-                                    title="clic aquí para eliminar este usuario"></i>
+                                    title="clic aquí para eliminar este usuario">
+                                    <i class="fa-solid fa-user-minus"></i>
+                                </button>
                             </td>
                         </tr>
                         <?php
@@ -501,7 +515,7 @@ include_once '../settings/notice.php';
 
                                 if ($selectArticles->num_rows > 0) {
                                     while ($row = $selectArticles->fetch_assoc()) {
-                                        echo '<option value="' . $row["articles_name"] . '" data-photo="' . $row["articles_photo"] . '" data-inventory_quantity="' . $row["inventory_quantity"] . '" data-warehouses-name="' . $row["warehouses_name"] . '" data-articles-brand="' . $row["articles_brand"] .  '" data-units-name="' . $row["units_name"] . '" data-category-name="' . $row["categories_name"] . '">' . $row["articles_name"] . '</option>';
+                                        echo '<option value="' . $row["articles_name"] . '" data-photo="' . $row["articles_photo"] . '" data-inventory_quantity="' . $row["inventory_quantity"] . '" data-warehouses-name="' . $row["warehouses_name"] . '" data-articles-brand="' . $row["articles_brand"] . '" data-units-name="' . $row["units_name"] . '" data-category-name="' . $row["categories_name"] . '">' . $row["articles_name"] . '</option>';
                                     }
                                 } else {
                                     echo '<option value="">No hay artículo disponible</option>';
@@ -520,7 +534,7 @@ include_once '../settings/notice.php';
                             <input type="hidden" name="warehouses_name" id="warehouses_name_donor">
                             <input type="hidden" name="units_name" id="units_name_donor">
                             <input type="hidden" name="articles_photo" id="articles_photo_donor">
-                            
+
                             <input type="text" name="categories_name" id="categories_name_donor" class="btnTxt"
                                 readonly>
                         </div>
@@ -532,8 +546,8 @@ include_once '../settings/notice.php';
                         <div class="campo">
                             <i class="fa-solid fa-arrow-up-1-9"></i>
                             <input class="btnTxt" type="number" name="donor_quantity" id="donor_quantity"
-                                pattern="[0-9]{1,7}" min="1" max="" step="1"
-                                placeholder="introduzca la cantidad " required>
+                                pattern="[0-9]{1,7}" min="1" max="" step="1" placeholder="introduzca la cantidad "
+                                required>
                         </div>
                     </div>
 
@@ -569,7 +583,8 @@ include_once '../settings/notice.php';
                             <div class="campo">
                                 <i class="fa-solid fa-id-card-clip"></i>
                                 <input class="btnTxt" type="text" name="donor_ruc" id="donor_ruc" pattern="\d{8}-\d{1}"
-                                    maxlength="10" placeholder="introduzca el RUC de la empresa" title="El formato debe ser ########-#">
+                                    maxlength="10" placeholder="introduzca el RUC de la empresa"
+                                    title="El formato debe ser ########-#">
                             </div>
                         </div>
 

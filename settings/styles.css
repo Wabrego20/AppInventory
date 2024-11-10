@@ -14,12 +14,12 @@
   --negro: #000000;
   --rojo: #e20000;
   --verde: #0e7a00;
-  --naranja: #ffa500;
-  --amarillo: #ffff00;
+  --naranja: #FF8000;
+  --amarillo: #FFD700;
   --morado: #800080;
-    --cian: #00ffff;
-    --rosa: #ff69b4;
-    --marron: #a52a2a;
+  --cian: #00ffff;
+  --rosa: #ff69b4;
+  --marron: #a52a2a;
 }
 body {
   display: flex;
@@ -69,13 +69,13 @@ main {
   display: none;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1155px) {
   .ruta {
     display: flex;
     justify-content: start;
     align-items: center;
     width: 100%;
-    border: 1px solid var(--gris);
+    border-bottom: 1px solid var(--grisClaro);
     h4 {
       color: var(--azul);
       margin: 5px;
@@ -202,29 +202,31 @@ Tabla
   }
 
   .dataTables_empty {
-    color: var(--rojo)
-  }
-
-  .paging_simple_numbers{
-    color: var(--blanco);
-    a.paginate_button {
-      border-radius: 5px;
-      background-color: var(--blanco);
-      color: var(--azul);
-      padding: 5px 10px;
-      margin: 5px;
-    }
-    a.paginate_button:hover{
-      background-color: var(--azul);
-      box-shadow: 0 0 5px var(--blanco);
-      color: var(--blanco);
-    }
+    color: var(--rojo);
   }
   .dataTables_info {
     color: var(--blanco) !important;
     margin: 5px;
   }
 }
+
+.dataTables_wrapper {
+  & .paging_simple_numbers {
+    a.paginate_button {
+      border-radius: 5px;
+      padding: 5px 10px;
+      margin: 5px;
+      color: var(--azul) !important;
+      background-color: var(--blanco) !important;
+    }
+    a.paginate_button.disabled {
+      pointer-events: none;
+      color: var(--gris) !important;
+      background-color: transparent !important;
+    }
+  }
+}
+
 /*
 *Botones para las columna de editar y eliminar
 */
@@ -239,38 +241,38 @@ Tabla
   color: var(--blanco);
   text-overflow: ellipsis;
   overflow: hidden; /* Oculta el desbordamiento */
-  white-space: nowrap; 
+  white-space: nowrap;
 }
-.accion:hover{
+.accion:hover {
   background-color: var(--blanco);
   scale: 0.99;
   cursor: pointer;
 }
-.accionCrear{
+.accionCrear {
   background-color: var(--verde);
 }
-.accionCrear:hover{
+.accionCrear:hover {
   color: var(--verde);
   box-shadow: 0 0 5px var(--verde);
 }
-.accionEliminar{
+.accionEliminar {
   background-color: var(--rojo);
 }
-.accionEliminar:hover{
+.accionEliminar:hover {
   color: var(--rojo);
   box-shadow: 0 0 5px var(--rojo);
 }
-.accionEditar{
-  background-color: var(--naranja);
+.accionEditar {
+  background-color: var(--amarillo);
 }
-.accionEditar:hover{
-  color: var(--naranja);
-  box-shadow: 0 0 5px var(--naranja);
+.accionEditar:hover {
+  color: var(--amarillo);
+  box-shadow: 0 0 5px var(--amarillo);
 }
-.accionSolicitar{
+.accionSolicitar {
   background-color: var(--negro);
 }
-.accionSolicitar:hover{
+.accionSolicitar:hover {
   color: var(--negro);
   box-shadow: 0 0 5px var(--negro);
 }
@@ -303,7 +305,6 @@ Tabla
 .btnAzul {
   color: var(--blanco);
   background-color: var(--azul);
-
 }
 .btnAzul:hover {
   color: var(--azul);
@@ -311,7 +312,7 @@ Tabla
   box-shadow: 0 0 5px var(--azul);
 }
 
-.btnRojo{
+.btnRojo {
   color: var(--blanco);
   background-color: var(--rojo);
 }
@@ -319,7 +320,6 @@ Tabla
   color: var(--rojo);
   background-color: var(--blanco);
   box-shadow: 0 0 5px var(--rojo);
-  
 }
 
 .btnVerde {
@@ -343,7 +343,7 @@ Tabla
   box-shadow: 0 0 5px var(--negro);
 }
 
-.btnCancel{
+.btnCancel {
   line-height: 40px;
   background-color: var(--gris);
   color: var(--blanco);
@@ -353,10 +353,3 @@ Tabla
   background-color: var(--blanco);
   box-shadow: 0 0 5px var(--gris);
 }
-
-@media print {
-  .no-print {
-      display: none;
-  }
-}
-
