@@ -175,7 +175,9 @@ include_once '../settings/notice.php';
             <tbody>
                 <?php
                 $stmt = $conn->prepare("SELECT * FROM movements 
-                JOIN articles ON articles.articles_id = movements.articles_id");
+                JOIN articles ON articles.articles_id = movements.articles_id
+                JOIN warehouses ON warehouses.warehouses_id = movements.warehouses_id
+                JOIN users ON users.users_id = movements.users_id");
                 $stmt->execute();
                 $result = $stmt->get_result();
                 if ($result->num_rows > 0) {
@@ -192,9 +194,9 @@ include_once '../settings/notice.php';
                             <td><?php echo $row['movements_quantity'] ?? 'no disponible'; ?></td>
                             <td><?php echo $row['warehouses_name'] ?? 'no disponible'; ?></td>
                             <td><?php echo $row['inventory_name'] ?? 'no disponible'; ?></td>
-                            <td><?php echo $row['users_user'] ?? 'no disponible'; ?></td>
-                            <td><?php echo $row['users_user'] ?? 'no disponible'; ?></td>
-                            <td><?php echo $row['movevements_date'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['users_user'] ?? '-'; ?></td>
+                            <td><?php echo $row['approver_id'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['movements_date'] ?? 'no disponible'; ?></td>
                         </tr>
                         <?php
                         $fila++;

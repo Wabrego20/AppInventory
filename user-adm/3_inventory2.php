@@ -462,6 +462,26 @@ if (isset($_POST['agregarArtBienesFisicos'])) {
         </script>
         <?php
     } else {
+         //insertar datos en tabla de movements
+         $movements_name = "Entrada";
+         $user = $_SESSION['users_user'];
+         $checkUserQuery = $conn->prepare("SELECT users_id FROM users WHERE users_user = ?");
+         $checkUserQuery->bind_param("s", $user);
+         $checkUserQuery->execute();
+         $result = $checkUserQuery->get_result();
+         if ($result->num_rows > 0) {
+             $row = $result->fetch_assoc();
+             $users_id = $row['users_id'];
+         } else {
+             echo 'Usuario no encontrado';
+         }
+         $stmtMove = $conn->prepare("INSERT INTO movements (movements_name, articles_id, movements_quantity, warehouses_id, inventory_name, users_id) VALUES (?, ?, ?, ?, ?, ?)");
+         $stmtMove->bind_param("siiisi", $movements_name, $articles_id, $quantity, $warehouses_id, $inventory_name, $users_id);
+         if ($stmtMove->execute()) {
+         } else {
+             echo "Error al insertar el registro en movements: " . $stmtMove->error;
+         }
+         $stmtMove->close();
 
         $stmt = $conn->prepare("INSERT INTO inventory (articles_id, categories_id, inventory_quantity, inventory_name, warehouses_id, inventory_total_cost, inventory_re_order) 
         VALUES (?, ?, ?, ?, ?, ?, ?)");

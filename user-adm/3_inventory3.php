@@ -92,7 +92,7 @@ include_once '../settings/notice.php';
                         <h5>Bodegas</h5>
                     </a>
                 </li>
-                
+
                 <!--Pestaña de Solicitudes-->
                 <li class="bell">
                     <?php if ($pending_count > 0): ?>
@@ -458,8 +458,7 @@ include_once '../settings/notice.php';
 
                         <!--campo de nombre-->
                         <div class="formLogCampo">
-                            <label for="programName">Nombre del Encargado:<i
-                                    class="fa-solid fa-asterisk"></i></label>
+                            <label for="programName">Nombre del Encargado:<i class="fa-solid fa-asterisk"></i></label>
                             <div class="campo">
                                 <i class="fa-solid fa-signature"></i>
                                 <input class="btnTxt" type="text" name="programName" id="programName"
@@ -474,8 +473,8 @@ include_once '../settings/notice.php';
                                     class="fa-solid fa-asterisk"></i></label>
                             <div class="campo">
                                 <i class="fa-solid fa-signature"></i>
-                                <input class="btnTxt" type="text" name="programLastName"
-                                    id="programLastName" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,20}" maxlength="20"
+                                <input class="btnTxt" type="text" name="programLastName" id="programLastName"
+                                    pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ]{3,20}" maxlength="20"
                                     placeholder="introduzca su apellido">
                             </div>
                         </div>
@@ -496,8 +495,8 @@ include_once '../settings/notice.php';
                             <label for="programEmail">Correo:<i class="fa-solid fa-asterisk"></i></label>
                             <div class="campo">
                                 <i class="fa-regular fa-envelope"></i>
-                                <input class="btnTxt" type="email" name="programEmail" id="programEmail"
-                                    maxlength="30" placeholder="introduzca correo electrónico">
+                                <input class="btnTxt" type="email" name="programEmail" id="programEmail" maxlength="30"
+                                    placeholder="introduzca correo electrónico">
                             </div>
                         </div>
                     </div>
@@ -576,7 +575,7 @@ include_once '../settings/notice.php';
 
 </html>
 
-<?php 
+<?php
 /*
  *Función para agregar un articulo al inventario de donación
  */
@@ -588,7 +587,7 @@ if (isset($_POST['agregarDonacion'])) {
     date_default_timezone_set('America/Panama');
     $warehouses_id = htmlspecialchars($_POST['warehouses_id']);
     $re_order = $quantity / 3;
-    $checkQuery = $conn->prepare("SELECT * FROM inventory WHERE articles_id = ? AND warehouses_id = ? AND categories_id = ?");
+    $checkQuery = $conn->prepare("SELECT * FROM inventory WHERE articles_id = ? AND warehouses_id = ? AND categories_id = ? AND inventory_name ='Donaciones' ");
     $checkQuery->bind_param("iii", $articles_id, $warehouses_id, $categories_id);
     $checkQuery->execute();
     $result = $checkQuery->get_result();
@@ -614,6 +613,26 @@ if (isset($_POST['agregarDonacion'])) {
         </script>
         <?php
     } else {
+        //insertar datos en tabla de movements
+        $movements_name = "Entrada";
+        $user = $_SESSION['users_user'];
+        $checkUserQuery = $conn->prepare("SELECT users_id FROM users WHERE users_user = ?");
+        $checkUserQuery->bind_param("s", $user);
+        $checkUserQuery->execute();
+        $result = $checkUserQuery->get_result();
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $users_id = $row['users_id'];
+        } else {
+            echo 'Usuario no encontrado';
+        }
+        $stmtMove = $conn->prepare("INSERT INTO movements (movements_name, articles_id, movements_quantity, warehouses_id, inventory_name, users_id) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmtMove->bind_param("siiisi", $movements_name, $articles_id, $quantity, $warehouses_id, $inventory_name, $users_id);
+        if ($stmtMove->execute()) {
+        } else {
+            echo "Error al insertar el registro en movements: " . $stmtMove->error;
+        }
+        $stmtMove->close();
 
         $stmt = $conn->prepare("INSERT INTO inventory (articles_id, categories_id, inventory_quantity, inventory_name, warehouses_id, inventory_re_order) 
         VALUES (?, ?, ?, ?, ?, ?)");
