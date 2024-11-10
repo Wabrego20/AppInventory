@@ -39,7 +39,6 @@ nav {
     }
   }
 }
-
 .active {
   pointer-events: none;
   background-color: var(--blanco);
@@ -77,7 +76,6 @@ nav ul li:hover {
     border-radius: 5px;
     transition: 0.2s ease-in-out;
     width: 100%;
-
     h5 {
       margin: 5px;
     }
@@ -230,31 +228,32 @@ nav ul li:hover {
 
 }
 
-.bell {
-  float: right;
-  position: relative;
-  text-align: center;
-  margin-right: 5px;
-  margin-top: 10px;
-  display: none;
-  .fa-bell {
-    color: var(--naranja);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    font-size: 25px;
-  }
 
-  h6 {
-    color: var(--blanco);
-    font-weight: bold;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-  }
+.bell {
+  position: relative;
 }
+
+.fa-bell {
+  color: var(--naranja);
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  font-size: 25px;
+}
+
+.fa-bell h6 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--blanco);
+  font-weight: bold;
+  text-align: center;
+  font-size: 12px;
+}
+
+
 
 .custom-width{
   width: 400px;

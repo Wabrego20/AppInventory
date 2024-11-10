@@ -71,8 +71,8 @@ include_once '../settings/notice.php';
                             </a>
                         </li>
 
-                         <!--Pestaña de Donaciones-->
-                         <li>
+                        <!--Pestaña de Donaciones-->
+                        <li>
                             <a href="3_inventory3.php">
                                 <i class="fa-solid fa-hand-holding-heart"></i>
                                 <h5>Donaciones</h5>
@@ -98,12 +98,11 @@ include_once '../settings/notice.php';
                 </li>
 
                 <!--Pestaña de Solicitudes-->
-                <li>
+                <li class="bell">
                     <?php if ($pending_count > 0): ?>
-                        <div class="bell" style="display: block;">
-                            <i class="fa-solid fa-bell"></i>
+                        <i class="fa-solid fa-bell fa-shake" style="display: block;">
                             <h6><?php echo $pending_count; ?></h6>
-                        </div>
+                        </i>
                     <?php endif; ?>
                     <a href="5_request.php">
                         <i class="fa-solid fa-clipboard-list"></i>
@@ -208,11 +207,12 @@ include_once '../settings/notice.php';
             <h4>Se añaden opciones para ver los reportes del inventario ya sea por tipos o por bodegas entre otros.</h4>
         </a>
 
-         <!--Apartado de Movimientos-->
-         <a class="btn_seccion" href="9_movements.php">
+        <!--Apartado de Movimientos-->
+        <a class="btn_seccion" href="9_movements.php">
             <h2>Movimientos</h2>
             <img src="../gif/move.gif" alt="move">
-            <h4>Se añaden opciones para ver todos los ovimientos de entrada y salidada de los artículos de todos los inventarios.</h4>
+            <h4>Se añaden opciones para ver todos los ovimientos de entrada y salidada de los artículos de todos los
+                inventarios.</h4>
         </a>
 
         <!--Apartado de Tipos usuarios-->
