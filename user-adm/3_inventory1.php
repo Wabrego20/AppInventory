@@ -614,6 +614,8 @@ if (isset($_POST['addQuantArt'])) {
     $warehouse_id = htmlspecialchars($_POST['warehouses_id']);
     date_default_timezone_set('America/Panama');
 
+    
+
     // Obtener la cantidad actual del inventario
     $query = $conn->prepare("SELECT inventory_quantity FROM inventory WHERE inventory_id = ?");
     $query->bind_param("i", $inventory_id);
