@@ -92,7 +92,7 @@ include_once '../settings/notice.php';
                         <h5>Bodegas</h5>
                     </a>
                 </li>
-                
+
                 <!--Pestaña de Solicitudes-->
                 <li class="bell">
                     <?php if ($pending_count > 0): ?>
@@ -437,6 +437,7 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
     $warehouses_id = htmlspecialchars($_POST['warehouses_id']);
     $total_cost = htmlspecialchars($_POST['inventory_total_cost']);
     $re_order = $quantity / 3;
+
     $checkQuery = $conn->prepare("SELECT * FROM inventory WHERE articles_id = ? AND warehouses_id = ? AND categories_id = ?");
     $checkQuery->bind_param("iii", $articles_id, $warehouses_id, $categories_id);
     $checkQuery->execute();
@@ -463,6 +464,15 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
         </script>
         <?php
     } else {
+        //insertar datos en tabla de movements
+        $movements_name = "Entrada";
+        $stmtMove = $conn->prepare("INSERT INTO movements (movements_name, articles_id, movements_quantity) VALUES (?, ?, ?)");
+        $stmtMove->bind_param("sii", $movements_name, $articles_id, $quantity);
+        if ($stmtMove->execute()) {
+        } else {
+            echo "Error al insertar el registro en movements: " . $stmtMove->error;
+        }
+        $stmtMove->close();
 
         $stmt = $conn->prepare("INSERT INTO inventory (articles_id, categories_id, inventory_quantity, inventory_name, warehouses_id, inventory_total_cost, inventory_re_order) 
         VALUES (?, ?, ?, ?, ?, ?, ?)");

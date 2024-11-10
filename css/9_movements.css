@@ -112,3 +112,7 @@ main {
   color: var(--verde);
   font-weight: bold;
 }
+.salida {
+  color: var(--rojo);
+  font-weight: bold;
+}
