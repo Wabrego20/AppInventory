@@ -107,3 +107,8 @@ main {
     }
   }
 }
+
+.entrada {
+  color: var(--verde);
+  font-weight: bold;
+}

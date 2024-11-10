@@ -157,15 +157,18 @@ include_once '../settings/notice.php';
     <!--Cuerpo Principal-->
     <main>
         <h2>Tabla de Movimientos</h2>
-        <table id="tableWarehouse">
+        <table id="tableMove">
             <thead>
                 <tr>
                     <th>N°</th>
-                    <th>Tipo de Movimiento</th>
+                    <th>Acción</th>
                     <th>Artículo</th>
                     <th>Marca</th>
-                    <th>Cantidad</th>
-                    <th>Tipo de Inventario</th>
+                    <th>Cant.</th>
+                    <th>Bodega</th>
+                    <th>Inventario</th>
+                    <th>Usuario</th>
+                    <th>Beneficiario</th>
                     <th>Fecha</th>
                 </tr>
             </thead>
@@ -180,26 +183,17 @@ include_once '../settings/notice.php';
                         ?>
                         <tr>
                             <td><?php echo $fila; ?></td>
+                            <td class="<?php echo strtolower($row['movevements_name'] ?? ''); ?>">
+                                <?php echo $row['movevements_name'] ?? 'move_name'; ?>
+                            </td>
+                            <td><?php echo $row['articles_name'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['articles_brand'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['movevements_quantity'] ?? 'no disponible'; ?></td>
                             <td><?php echo $row['warehouses_name'] ?? 'no disponible'; ?></td>
-                            <td><?php echo $row['warehouses_province'] ?? 'no disponible'; ?></td>
-                            <td><?php echo $row['warehouses_location'] ?? 'no disponible'; ?></td>
-                            <td><?php echo $row['warehouses_total_quantity'] ?? 'no disponible'; ?></td>
-                            <td>
-                                <button class="accion accionEditar"
-                                    onclick="editBodega('<?php echo $row['warehouses_id']; ?>','<?php echo $row['warehouses_name']; ?>', '<?php echo $row['warehouses_province']; ?>', '<?php echo $row['warehouses_location']; ?>')"
-                                    title="Editar esta bodega">
-                                    <i class="fa-solid fa-warehouse"></i>
-                                    <i class="fa-solid fa-pen fa-xs"></i>
-                                </button>
-                            </td>
-                            <td>
-                                <button class="accion accionEliminar"
-                                    onclick="deleteBodega('<?php echo $row['warehouses_name']; ?>', '<?php echo $row['warehouses_total_quantity']; ?>')"
-                                    title="Eliminar esta bodega">
-                                    <i class="fa-solid fa-warehouse"></i>
-                                    <i class="fa-solid fa-minus fa-2xs"></i>
-                                </button>
-                            </td>
+                            <td><?php echo $row['inventory_name'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['users_user'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['users_user'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['movevements_date'] ?? 'no disponible'; ?></td>
                         </tr>
                         <?php
                         $fila++;

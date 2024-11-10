@@ -2,7 +2,7 @@
  *Función para visualizar la tabla de bodegas
  */
 $(document).ready(function () {
-  $("#tableWarehouse").DataTable({
+  $("#tableMove").DataTable({
     language: {
       processing: "Procesando...",
       lengthMenu: "Mostrar _MENU_ bodegas",
@@ -21,26 +21,12 @@ $(document).ready(function () {
       },
       aria: {
         sortAscending: ": Activar para ordenar la columna de manera ascendente",
-        sortDescending:
-          ": Activar para ordenar la columna de manera descendente",
+        sortDescending: ": Activar para ordenar la columna de manera descendente",
       },
     },
-    dom: "lBfrtip", // 'l' es para el selector de longitud
-    buttons: [
-      {
-        text: '<i class="fa-solid fa-warehouse"></i><i class="fa-solid fa-plus fa-xs"></i> Crear bodega',
-        action: function (e, dt, node, config) {
-          var formu = document.querySelector(".modalCreateBodega");
-          formu.style.display = "flex";
-          setTimeout(function () {
-            formu.classList.add("show");
-          }, 10);
-        },
-        className: 'oculto'
-      },
-    ],
   });
 });
+
 /*
  *Función para ocultar el modal de bodegas
  */
