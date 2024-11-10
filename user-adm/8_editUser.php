@@ -99,13 +99,12 @@ include_once '../settings/notice.php';
                     </a>
                 </li>
 
-                <!--Pestaña de Solicitudes-->
-                <li>
+               <!--Pestaña de Solicitudes-->
+               <li class="bell">
                     <?php if ($pending_count > 0): ?>
-                        <div class="bell" style="display: block;">
-                            <i class="fa-solid fa-bell"></i>
+                        <i class="fa-solid fa-bell fa-shake" style="display: block;">
                             <h6><?php echo $pending_count; ?></h6>
-                        </div>
+                        </i>
                     <?php endif; ?>
                     <a href="5_request.php">
                         <i class="fa-solid fa-clipboard-list"></i>
