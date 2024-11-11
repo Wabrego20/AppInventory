@@ -73,15 +73,7 @@ include_once '../settings/notice.php';
                             </a>
                         </li>
 
-                        <!--Pestaña de Ayuda Social--></li>
-                        <li>
-                            <a href="3_inventory3.php">
-                                <i class="fa-solid fa-handshake-angle"></i>
-                                <h5>Donaciones</h5>
-                            </a>
-                        </li>
-
-                        <!--Pestaña de Donaciones-->
+                        <!--Pestaña de Ayuda social-->
                         <li>
                             <a href="3_inventory4.php">
                                 <i class="fa-solid fa-hand-holding-heart"></i>

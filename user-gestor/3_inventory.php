@@ -71,12 +71,6 @@ include_once '../settings/conexion.php';
                                 <h5>Ayuda Social</h5>
                             </a>
                         </li>
-                        <li>
-                            <a href="">
-                                <i class="fa-solid fa-hand-holding-heart"></i>
-                                <h5>Donaciones</h5>
-                            </a>
-                        </li>
                     </span>
                 </span>
 
@@ -131,24 +125,17 @@ include_once '../settings/conexion.php';
             <h4>Ver útiles de oficina, útiles de aseo, productos de cafetería, alimentos y bebidas</h4>
         </a>
 
-        <a class="btn_seccion" href="inventory2.html">
-            <h2>Ayuda Social a Programas</h2>
-            <img src="../gif/marketing-social.gif" alt="article">
-            <h4>Ver alimentos, implementos médicos, materiales de construcción.</h4>
-        </a>
-
         <a class="btn_seccion" href="inventory3.html">
             <h2>Inventario de Bienes Físicos</h2>
             <img src="../gif/portapapeles.gif" alt="article">
             <h4>Solicitado por los Departamentos para sus operaciones, son registrados en el Sistema Istmo, realiza un acta de entrega al departamento. </h4>
         </a>
 
-        <a class="btn_seccion" href="inventory4.html">
-            <h2>Inventario de Donaciones</h2>
-            <img src="../gif/donacion-de-alimentos.gif" alt="article">
-            <h4>Entidades benefactoras que brindan bienes los cuales se deben ingresar al sistema para llevar un control los mismos y después distribuirlos.</h4>
+        <a class="btn_seccion" href="inventory2.html">
+            <h2>Ayuda Social a Programas</h2>
+            <img src="../gif/marketing-social.gif" alt="article">
+            <h4>Ver alimentos, implementos médicos, materiales de construcción.</h4>
         </a>
-
     </main>
 
     <!--Pie de Página-->

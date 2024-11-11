@@ -122,20 +122,20 @@ nav ul li:hover {
 
 .subMenu {
   position: absolute;
-  transition: 0.2s ease-in-out;
   display: none;
   border-radius: 5px;
-  background-color: var(--grisClaro);
-  border: 1px solid var(--negro);
+  transition: 0.5s ease-in-out;
 }
 
 .panelMenuInventory:hover .subMenu {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--blanco);
 }
 
 .menuInventory a,
 .subMenu a {
-  display: block;
+  display: flex;
 }
 
 /*
@@ -227,8 +227,6 @@ nav ul li:hover {
   }
 
 }
-
-
 .bell {
   position: relative;
 }
@@ -252,9 +250,6 @@ nav ul li:hover {
   text-align: center;
   font-size: 12px;
 }
-
-
-
 .custom-width{
   width: 400px;
 }

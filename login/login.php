@@ -22,7 +22,7 @@
 
   <main>
     <!--Formulario para iniciar sesión-->
-    <form method="post" class="formLog login">
+    <form method="post" class="formLog login" id="login">
       <h2>Iniciar Sesión</h2>
       <img src="../gif/login.gif" alt="loginGif" class="loginGif">
       <h3>Introduzca sus credenciales por favor:</h3>
@@ -90,9 +90,9 @@
 </html>
 
 <?php
+include_once '../settings/conexion.php';
+session_start();
 if (isset($_POST['iniciarSesion'])) {
-  include_once ("../settings/conexion.php");
-  session_start();
   // Obtener datos del usuario (sanitizados)
   $usuario = htmlspecialchars($_POST['users_user']);
   $clave = htmlspecialchars($_POST['users_password']);
@@ -156,10 +156,11 @@ if (isset($_POST['iniciarSesion'])) {
           color: "var(--rojo)",
           icon: "error",
           iconColor: "var(--rojo)",
-          title: 'Error ',
+          title: 'Error',
           text: 'Contraseña Incorrecta',
           showConfirmButton: true,
           allowOutsideClick: false,
+          width: '400px',
           customClass: {
             confirmButton: 'btn-confirm'
           },
@@ -183,6 +184,7 @@ if (isset($_POST['iniciarSesion'])) {
         text: 'Usuario Incorrecto',
         showConfirmButton: true,
         allowOutsideClick: false,
+        width: '400px',
         customClass: {
           confirmButton: 'btn-confirm'
         },

@@ -73,12 +73,7 @@ include_once '../settings/conexion.php';
                                 <h5>Ayuda Social</h5>
                             </a>
                         </li>
-                        <li>
-                            <a href="">
-                                <i class="fa-solid fa-hand-holding-heart"></i>
-                                <h5>Donaciones</h5>
-                            </a>
-                        </li>
+                      
                     </span>
                 </span>
                 <li>

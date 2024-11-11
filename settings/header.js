@@ -2,7 +2,7 @@
 /*
  *Función para ver y ocultar el menú de navegación responsive
  */
- function verMenu() {
+function verMenu() {
   var menu__bar = document.getElementById("menu");
   menu__bar.style.left = "0";
 }
@@ -13,18 +13,18 @@ function ocultarMenu() {
 /*
  *Función para ver y ocultar el botón de cerrar sesión
  */
- var isAtTop = true;
- function verBtnLogout() {
-   var verBtn1 = document.querySelector(".btnLogOut");
-   if (isAtTop) {
-     verBtn1.style.top = "35px";
-     verBtn1.style.scale = "1";
-   } else {
-     verBtn1.style.top = "0";
-     verBtn1.style.scale = "0";
-   }
-   isAtTop = !isAtTop; // Alterna el estado
- }
+var isAtTop = true;
+function verBtnLogout() {
+  var verBtn1 = document.querySelector(".btnLogOut");
+  if (isAtTop) {
+    verBtn1.style.top = "35px";
+    verBtn1.style.scale = "1";
+  } else {
+    verBtn1.style.top = "0";
+    verBtn1.style.scale = "0";
+  }
+  isAtTop = !isAtTop; // Alterna el estado
+}
 /*
  *Función para cerrar sesión
  */
@@ -38,6 +38,7 @@ function cerrarSesion() {
     showCancelButton: true,
     confirmButtonText: "Cerrar sesión",
     cancelButtonText: "Cancelar",
+    width: "400px",
     customClass: {
       confirmButton: "btn-confirm",
       cancelButton: "btn-cancel",
@@ -60,8 +61,9 @@ function cerrarSesion() {
             showCancelButton: false,
             showConfirmButton: false,
             allowOutsideClick: false,
+            width: "400px",
             customClass: {
-              popup: 'custom-width' // Añade una clase personalizada si es necesario
+              popup: 'custom-width'
             }
           });
           setTimeout(() => {
@@ -72,7 +74,3 @@ function cerrarSesion() {
     }
   });
 }
-
-
-
-/********************************FIN DE  ENCABEZADO**********************************/

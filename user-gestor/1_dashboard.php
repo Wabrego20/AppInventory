@@ -77,14 +77,6 @@ include_once '../settings/sessionStart.php';
                                 <h5>Ayuda Social</h5>
                             </a>
                         </li>
-
-                        <!--Pestaña de Donaciones-->
-                        <li>
-                            <a href="">
-                                <i class="fa-solid fa-hand-holding-heart"></i>
-                                <h5>Donaciones</h5>
-                            </a>
-                        </li>
                     </span>
                 </span>
 
