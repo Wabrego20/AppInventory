@@ -212,8 +212,8 @@ include_once '../settings/notice.php';
                             <td><?php echo $row['inventory_re_order'] ?? 'n/a'; ?></td>
                             <td>
                                 <button class="accion accionSolicitar" title="clic para solicitar donación"
-                                    onclick="solicitarDonacion('<?php echo $row['articles_id']; ?>','<?php echo $row['articles_name']; ?>', '<?php echo $row['articles_photo']; ?>', '<?php echo $row['categories_name']; ?>', '<?php echo $row['inventory_quantity']; ?>','<?php echo $row['warehouses_id']; ?>','<?php echo $row['warehouses_name']; ?>','<?php echo $row['warehouses_total_quantity']; ?>')"><i
-                                        class="fa-solid fa-paper-plane"></i></button>
+                                    onclick="solicitarDonacion('<?php echo $row['articles_id']; ?>','<?php echo $row['articles_name']; ?>', '<?php echo $row['articles_photo']; ?>', '<?php echo $row['categories_name']; ?>', '<?php echo $row['inventory_quantity']; ?>','<?php echo $row['warehouses_id']; ?>','<?php echo $row['warehouses_name']; ?>','<?php echo $row['warehouses_total_quantity']; ?>')">
+                                    <i class="fa-solid fa-paper-plane"></i></button>
                             </td>
                             <td>
                                 <button class="accion accionEliminar"
@@ -399,6 +399,7 @@ include_once '../settings/notice.php';
                         <input type="hidden" name="warehouses_id" id="warehouses_id_donor">
                         <input type="hidden" name="warehouses_name" id="warehouses_name_donor">
                         <input type="hidden" name="warehouses_total_quantity" id="total_quantity">
+                        <input type="hidden" name="inventory_name" id="inventory_name" value="Donaciones">
                         <label for="articles_name_donor">Artículo Donado:</label>
                         <div class="campo">
                             <i class="fa-solid fa-box-open"></i>

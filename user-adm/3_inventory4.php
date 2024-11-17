@@ -399,6 +399,7 @@ include_once '../settings/notice.php';
                         <input type="hidden" name="warehouses_id" id="warehouses_id_donor">
                         <input type="hidden" name="warehouses_name" id="warehouses_name_donor">
                         <input type="hidden" name="warehouses_total_quantity" id="total_quantity">
+                        <input type="hidden" name="inventory_name" id="" value="Ayuda Social">
                         <label for="articles_name_donor">Artículo Donado:</label>
                         <div class="campo">
                             <i class="fa-solid fa-box-open"></i>

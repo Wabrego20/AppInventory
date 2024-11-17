@@ -195,7 +195,7 @@ include_once '../settings/notice.php';
                             <td><?php echo $row['warehouses_name'] ?? 'no disponible'; ?></td>
                             <td><?php echo $row['inventory_name'] ?? 'no disponible'; ?></td>
                             <td><?php echo $row['users_user'] ?? '-'; ?></td>
-                            <td><?php echo $row['approver_id'] ?? 'no disponible'; ?></td>
+                            <td><?php echo $row['beneficiary_name'] ?? 'no disponible'; ?></td>
                             <td><?php echo $row['movements_date'] ?? 'no disponible'; ?></td>
                         </tr>
                         <?php

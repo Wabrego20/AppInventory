@@ -6,6 +6,8 @@ include_once '../settings/conexion.php';
 include_once '../settings/sessionStart.php';
 date_default_timezone_set('America/Panama');
 $fecha = date('Y-m-d H:i:s');
+//tipo de inventario
+$inventory_name = htmlspecialchars($_POST['inventory_name']);
 //tipo de beneficiario
 $beneficiary_type = htmlspecialchars($_POST['beneficiary_type']);
 //datos del beneficiario
@@ -38,7 +40,7 @@ if ($row) {
 } else {
     $approver_id = $approver_name = $approver_last_name = $approver_dni = $approver_departament = "No disponible";
 }
-$stmt->close();
+
 //Datos del artículo
 $articles_id = htmlspecialchars($_POST['articles_id']);
 $articles_name = htmlspecialchars($_POST['articles_name']);
@@ -50,6 +52,18 @@ $warehouse = htmlspecialchars($_POST['warehouses_name']);
 $total_quantity_current = intval($_POST['warehouses_total_quantity']);
 $articles_photo = $_POST['articles_photo'] ?? 'foto';
 echo "<img class='fotoArticulo' src='data:image/jpeg;base64," . htmlspecialchars($articles_photo) . "' alt='Artículo Foto' />";
+
+//insertar datos en tabla de movements
+$movements_name = "Salida";
+$beneficiary = ($beneficiary_name && $beneficiary_last_name) ? ($beneficiary_name . ' ' . $beneficiary_last_name) : ($programName . ' ' . $programLastName);
+$stmtMove = $conn->prepare("INSERT INTO movements (movements_name, articles_id, movements_quantity, warehouses_id, inventory_name, users_id, beneficiary_name) VALUES (?, ?, ?, ?, ?, ?, ?)");
+$stmtMove->bind_param("siiisis", $movements_name, $articles_id, $quantity_donor, $warehouses_id, $inventory_name, $approver_id, $beneficiary);
+if ($stmtMove->execute()) {
+} else {
+    echo "Error al insertar el registro en movements: " . $stmtMove->error;
+}
+$stmtMove->close();
+$stmt->close();
 
 $newQuantityTotal = $total_quantity_current - $quantity_donor;
 $sql_update_quantity = "UPDATE warehouses SET warehouses_total_quantity = ? WHERE warehouses_id = ?";

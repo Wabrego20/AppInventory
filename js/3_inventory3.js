@@ -177,6 +177,7 @@ document.getElementById("beneficiary_type").addEventListener("change", function 
 });
 
 document.getElementById('beneficiaryForm').addEventListener('submit', function (event) {
+
   var beneficiary_type = document.getElementById('beneficiary_type').value.trim();
   var beneficiaryName = document.getElementById('beneficiary_name').value.trim();
   var beneficiaryLastName = document.getElementById('beneficiary_last_name').value.trim();
