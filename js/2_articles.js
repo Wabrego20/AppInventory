@@ -75,7 +75,6 @@ document
       reader.readAsDataURL(file);
     }
   });
-
   /*
   *Editar Artículo
   */
@@ -94,7 +93,6 @@ document
   document.getElementById("articles_costo_edit").value = costo;
   document.getElementById("articles_fecha_edit").value = fecha;
 }
-
 /*
  *Función para ocultar el modal de editar artículo
  */
@@ -107,7 +105,6 @@ document
     modal.classList.remove("hide");
   }, 500);
 }
-
  /*
   *Eliminar Artículo
   */

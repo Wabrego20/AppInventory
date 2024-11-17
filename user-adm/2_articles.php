@@ -69,8 +69,8 @@ include_once '../settings/notice.php';
                             </a>
                         </li>
 
-                         <!--Pestaña de Donaciones-->
-                         <li>
+                        <!--Pestaña de Donaciones-->
+                        <li>
                             <a href="3_inventory3.php">
                                 <i class="fa-solid fa-hand-holding-heart"></i>
                                 <h5>Donaciones</h5>
@@ -114,14 +114,14 @@ include_once '../settings/notice.php';
                     </a>
                 </li>
 
-                 <!--Pestaña de Movimientos-->
-                 <li>
+                <!--Pestaña de Movimientos-->
+                <li>
                     <a href="9_movements.php">
                         <i class="fa-solid fa-truck-moving"></i>
                         <h5>Movimientos</h5>
                     </a>
                 </li>
-                
+
                 <li>
                     <a href="7_users.php">
                         <i class="fa-solid fa-users"></i>
@@ -362,7 +362,7 @@ include_once '../settings/notice.php';
                                 class="fa-solid fa-asterisk"></i></label>
                         <div class="campo">
                             <input type="file" id="btnArticlesPhoto"
-                                accept="image/jpeg, image/jpg, image/jpe"
+                                accept="image/jpeg, image/jpg, image/jpe, image/png, image/gif, image/bmp, image/webp, image/tiff"
                                 style="display: none;" name="articles_photo" required />
                             <div class="btnArticlesPhoto" onclick="btnArticlesPhoto();">
                                 <i class="fa-solid fa-camera-retro"></i>
@@ -571,8 +571,7 @@ if (isset($_POST['crearArticulo'])) {
     // Validar el tipo de archivo de la imagen
     if (isset($_FILES['articles_photo'])) {
         $fileType = mime_content_type($_FILES['articles_photo']['tmp_name']);
-        $allowedTypes = ['image/jpeg', 'image/jpg', 'image/jpe'];
-
+        $allowedTypes = ['image/jpeg', 'image/jpg', 'image/jpe', 'image/png', 'image/gif', 'image/bmp', 'image/webp', 'image/tiff'];
         if (!in_array($fileType, $allowedTypes)) {
             ?>
             <script>
@@ -581,7 +580,7 @@ if (isset($_POST['crearArticulo'])) {
                     icon: "error",
                     iconColor: "var(--rojo)",
                     title: '¡Error!',
-                    text: 'Se requiere una imagen. jpg, jpe, jpeg.',
+                    text: 'Se requiere una imagen. jpeg, jpg, jpe, png, gif, bmp, webp, tiff.',
                     showConfirmButton: true,
                     customClass: {
                         confirmButton: 'btn-confirm'
