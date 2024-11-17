@@ -153,6 +153,29 @@ $conn->close();
                 </div>
                 <?php
             }
+            if ($beneficiary_type == 'ONG') {
+                ?>
+                 <div class="campos dobleSaltoLinea">
+                    <h4>Datos de la ONG</h4>
+                </div>
+                <div class="campos">
+                    <label>Nombre:</label>
+                    <h4> <?php echo htmlspecialchars($benefited_program); ?></h4>
+                </div>
+                <div class="campos">
+                    <label>Encargado del Programa:</label>
+                    <h4><?php echo htmlspecialchars($programName . " " . $programLastName); ?></h4>
+                </div>
+                <div class="campos">
+                    <label>Cédula:</label>
+                    <h4><?php echo htmlspecialchars($programDni); ?></h4>
+                </div>
+                <div class="campos">
+                    <label>Correo:</label>
+                    <h4><?php echo htmlspecialchars($programEmail); ?></h4>
+                </div>
+                <?php
+            }
             ?>
             <div class="campos">
                 <label>Elaborado por:</label>

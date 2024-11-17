@@ -5,12 +5,12 @@ $(document).ready(function () {
   $("#tableMove").DataTable({
     language: {
       processing: "Procesando...",
-      lengthMenu: "Mostrar _MENU_ bodegas",
-      zeroRecords: "No se encontraron bodegas",
-      emptyTable: "Ningúna bodega disponible en esta tabla",
-      info: "Mostrando bodega del _START_ al _END_ de un total de _TOTAL_ bodegas",
-      infoEmpty: "Mostrando bodega del 0 al 0 de un total de 0 bodegas",
-      infoFiltered: "(filtrado de un total de _MAX_ bodegas)",
+      lengthMenu: "Mostrar _MENU_ movimientos",
+      zeroRecords: "No se encontraron movimientos",
+      emptyTable: "Ningún movimiento disponible en esta tabla",
+      info: "Mostrando movimiento del _START_ al _END_ de un total de _TOTAL_ movimientos",
+      infoEmpty: "Mostrando movimiento del 0 al 0 de un total de 0 movimientos",
+      infoFiltered: "(filtrado de un total de _MAX_ movimiento)",
       search: "Buscar:",
       loadingRecords: "Cargando...",
       paginate: {
