@@ -28,7 +28,7 @@ $(document).ready(function () {
         buttons: [
             {
                 text: '<i class="fas fa-user-plus"></i> Crear usuario',
-                action: function (e, dt, node, config) {
+                action: function () {
                     var modalUser = document.querySelector(".modalCreate");
                     modalUser.style.display = "flex";
                     setTimeout(function () {

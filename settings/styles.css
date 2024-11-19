@@ -17,9 +17,10 @@
   --naranja: #FF8000;
   --amarillo: #FFD700;
   --morado: #800080;
-  --cian: #00ffff;
   --rosa: #ff69b4;
   --marron: #a52a2a;
+  --even: #cceeff;
+  --odd: #bbddff;
 }
 body {
   display: flex;
@@ -200,6 +201,9 @@ Tabla
 
   .dataTable tbody .even {
     background-color: var(--even);
+  }
+  .dataTable tbody .odd {
+    background-color: var(--odd);
   }
 
   .dataTables_empty {

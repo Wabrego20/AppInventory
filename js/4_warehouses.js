@@ -29,7 +29,7 @@ $(document).ready(function () {
     buttons: [
       {
         text: '<i class="fa-solid fa-warehouse"></i><i class="fa-solid fa-plus fa-xs"></i> Crear bodega',
-        action: function (e, dt, node, config) {
+        action: function () {
           var formu = document.querySelector(".modalCreateBodega");
           formu.style.display = "flex";
           setTimeout(function () {

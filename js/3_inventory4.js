@@ -27,7 +27,7 @@ $(document).ready(function () {
       {
         text: '<i class="fa-solid fa-heart-circle-plus fa-xl"></i> Agregar artículo',
         action: function () {
-          var formu = document.querySelector(".modalAddArticle"); //mostrar el modal de crear artículo
+          var formu = document.querySelector(".modalAddArticle");
           formu.style.display = "flex";
           setTimeout(function () {
             formu.classList.add("show");

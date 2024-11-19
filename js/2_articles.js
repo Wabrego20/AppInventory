@@ -24,12 +24,12 @@ $(document).ready(function () {
         sortDescending: ": Activar para ordenar la columna de manera descendente",
       },
     },
-    dom: "lBfrtip", // 'l' es para el selector de longitud
+    dom: "lBfrtip",
     buttons: [
       {
         text: '<i class="fa-solid fa-box fa-lg"></i><i class="fa-solid fa-plus fa-2xs"></i> Crear artículo',
-        action: function (e, dt, node, config) {
-          var formu = document.querySelector(".modalCreateArticle"); //mostrar el modal de crear artículo
+        action: function () {
+          var formu = document.querySelector(".modalCreateArticle");
           formu.style.display = "flex";
           setTimeout(function () {
             formu.classList.add("show");

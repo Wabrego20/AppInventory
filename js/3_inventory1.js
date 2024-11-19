@@ -26,7 +26,7 @@ $(document).ready(function () {
     buttons: [
       {
         text: '<i class="fa-solid fa-box-open fa-lg"></i><i class="fa-solid fa-plus fa-2xs"></i> Agregar artículo',
-        action: function (e, dt, node, config) {
+        action: function () {
           var formu = document.querySelector(".modalAddArticle"); //mostrar el modal de crear artículo
           formu.style.display = "flex";
           setTimeout(function () {
