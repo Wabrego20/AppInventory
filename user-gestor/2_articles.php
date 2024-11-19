@@ -52,7 +52,6 @@ include_once("../settings/conexion.php");
                         </a>
                     </li>
                     <span class="subMenu">
-
                         <li>
                             <a href="3_inventory1.php">
                                 <i class="fa-solid fa-stapler"></i>
@@ -65,12 +64,6 @@ include_once("../settings/conexion.php");
                             <a href="3_inventory2.php">
                                 <i class="fa-solid fa-computer"></i>
                                 <h5>Bienes Físicos</h5>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <i class="fa-solid fa-handshake-angle"></i>
-                                <h5>Ayuda Social</h5>
                             </a>
                         </li>
                     </span>

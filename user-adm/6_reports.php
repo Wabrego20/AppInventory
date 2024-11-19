@@ -94,7 +94,7 @@ include_once '../settings/notice.php';
                         <h5>Bodegas</h5>
                     </a>
                 </li>
-                
+
                 <!--Pestaña de Solicitudes-->
                 <li class="bell">
                     <?php if ($pending_count > 0): ?>
@@ -190,7 +190,8 @@ include_once '../settings/notice.php';
                 $data2[] = $row;
             }
         } else {
-            echo "0 resultados";
+            $row['articles_name'] = 'ningún registro';
+            $data2[] = $row;
         }
         $conn->close();
         ?>

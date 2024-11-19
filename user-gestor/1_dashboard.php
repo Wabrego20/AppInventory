@@ -53,7 +53,6 @@ include_once '../settings/sessionStart.php';
                         </a>
                     </li>
                     <span class="subMenu">
-
                         <!--Pestaña de consumo interno-->
                         <li>
                             <a href="3_inventory1.php">
@@ -67,14 +66,6 @@ include_once '../settings/sessionStart.php';
                             <a href="3_inventory2.php">
                                 <i class="fa-solid fa-computer"></i>
                                 <h5>Bienes Físicos</h5>
-                            </a>
-                        </li>
-
-                        <!--Pestaña de Ayuda Social-->
-                        <li>
-                            <a href="">
-                                <i class="fa-solid fa-handshake-angle"></i>
-                                <h5>Ayuda Social</h5>
                             </a>
                         </li>
                     </span>

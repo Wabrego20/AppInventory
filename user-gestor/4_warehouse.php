@@ -68,13 +68,6 @@ include_once("../settings/conexion.php");
                                 <h5>Bienes Físicos</h5>
                             </a>
                         </li>
-                        <li>
-                            <a href="">
-                                <i class="fa-solid fa-handshake-angle"></i>
-                                <h5>Ayuda Social</h5>
-                            </a>
-                        </li>
-                      
                     </span>
                 </span>
 

@@ -50,7 +50,6 @@ include_once '../settings/conexion.php';
                         </a>
                     </li>
                     <span class="subMenu">
-
                         <li>
                             <a href="3_inventory1.php">
                                 <i class="fa-solid fa-stapler"></i>
@@ -63,12 +62,6 @@ include_once '../settings/conexion.php';
                             <a href="3_inventory2.php">
                                 <i class="fa-solid fa-computer"></i>
                                 <h5>Bienes Físicos</h5>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <i class="fa-solid fa-handshake-angle"></i>
-                                <h5>Ayuda Social</h5>
                             </a>
                         </li>
                     </span>
@@ -125,16 +118,10 @@ include_once '../settings/conexion.php';
             <h4>Ver útiles de oficina, útiles de aseo, productos de cafetería, alimentos y bebidas</h4>
         </a>
 
-        <a class="btn_seccion" href="inventory3.html">
+        <a class="btn_seccion" href="3_inventory2.php">
             <h2>Inventario de Bienes Físicos</h2>
             <img src="../gif/portapapeles.gif" alt="article">
             <h4>Solicitado por los Departamentos para sus operaciones, son registrados en el Sistema Istmo, realiza un acta de entrega al departamento. </h4>
-        </a>
-
-        <a class="btn_seccion" href="inventory2.html">
-            <h2>Ayuda Social a Programas</h2>
-            <img src="../gif/marketing-social.gif" alt="article">
-            <h4>Ver alimentos, implementos médicos, materiales de construcción.</h4>
         </a>
     </main>
 

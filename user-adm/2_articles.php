@@ -582,6 +582,7 @@ if (isset($_POST['crearArticulo'])) {
                     title: '¡Error!',
                     text: 'Se requiere una imagen. jpeg, jpg, jpe, png, gif, bmp, webp, tiff.',
                     showConfirmButton: true,
+                    width: '400px',
                     customClass: {
                         confirmButton: 'btn-confirm'
                     },
@@ -608,6 +609,7 @@ if (isset($_POST['crearArticulo'])) {
                 title: '¡Error!',
                 text: 'No se ha subido ninguna imagen.',
                 showConfirmButton: true,
+                width: '400px',
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },
@@ -636,6 +638,7 @@ if (isset($_POST['crearArticulo'])) {
                 title: '¡Error!',
                 text: 'Artículo existente de la misma marca',
                 showConfirmButton: true,
+                width: '400px',
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },
@@ -661,6 +664,7 @@ if (isset($_POST['crearArticulo'])) {
                     iconColor: "var(--verde)",
                     title: '!Éxito!',
                     text: 'Artículo Creado',
+                    width: '400px',
                     showConfirmButton: true,
                     customClass: {
                         confirmButton: 'btn-confirm'
@@ -682,6 +686,7 @@ if (isset($_POST['crearArticulo'])) {
                     iconColor: "var(--rojo)",
                     title: '¡Error!',
                     text: 'No se ejecutó la sentencia',
+                    width: '400px',
                     showConfirmButton: true,
                     customClass: {
                         confirmButton: 'btn-confirm'
@@ -748,6 +753,7 @@ if (isset($_POST['editarArticulo'])) {
                 text: 'Artículo Actualizado.',
                 showConfirmButton: true,
                 allowOutsideClick: false,
+                width: '400px',
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },
@@ -768,6 +774,7 @@ if (isset($_POST['editarArticulo'])) {
                 iconColor: "var(--rojo)",
                 title: 'Error',
                 text: 'No se actualizo el artículo.',
+                width: '400px',
                 showConfirmButton: true,
                 allowOutsideClick: false,
                 customClass: {
@@ -812,6 +819,7 @@ if (isset($_POST['eliminarArticulo'])) {
                 text: 'El artículo no se puede eliminar porque está inventariado.',
                 showConfirmButton: true,
                 allowOutsideClick: false,
+                width: '400px',
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },
@@ -837,6 +845,7 @@ if (isset($_POST['eliminarArticulo'])) {
                 iconColor: "var(--verde)",
                 title: 'Éxito',
                 text: 'El artículo ha sido eliminado.',
+                width: '400px',
                 showConfirmButton: true,
                 allowOutsideClick: false,
                 customClass: {

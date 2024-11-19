@@ -116,3 +116,9 @@ main {
   color: var(--rojo);
   font-weight: bold;
 }
+
+.dataTable tbody tr{
+  color: var(--azul);
+  text-align: center;
+  height: 50px;
+}

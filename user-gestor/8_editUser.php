@@ -56,7 +56,6 @@ include_once '../settings/notice.php';
                         </a>
                     </li>
                     <span class="subMenu">
-
                         <!--Pestaña de consumo interno-->
                         <li>
                             <a href="3_inventory1.php">
@@ -70,14 +69,6 @@ include_once '../settings/notice.php';
                             <a href="3_inventory2.php">
                                 <i class="fa-solid fa-computer"></i>
                                 <h5>Bienes Físicos</h5>
-                            </a>
-                        </li>
-
-                        <!--Pestaña de Ayuda social-->
-                        <li>
-                            <a href="3_inventory4.php">
-                                <i class="fa-solid fa-hand-holding-heart"></i>
-                                <h5>Ayuda Social</h5>
                             </a>
                         </li>
                     </span>
