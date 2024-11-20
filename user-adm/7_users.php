@@ -680,6 +680,7 @@ if (isset($_POST['crearUsuario'])) {
                 title: '¡Error!',
                 text: 'La cédula o el correo ya existen',
                 showConfirmButton: true,
+                width: '400px',
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },
@@ -726,6 +727,7 @@ if (isset($_POST['crearUsuario'])) {
                     title: '!Éxito!',
                     text: 'Usuario Creado',
                     showConfirmButton: true,
+                    width: '400px',
                     customClass: {
                         confirmButton: 'btn-confirm'
                     },
@@ -778,6 +780,7 @@ if (isset($_POST['editUser'])) {
                 title: 'Éxito!',
                 text: 'Usuario actualizado correctamente',
                 showConfirmButton: true,
+                width: '400px',
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },
@@ -814,6 +817,7 @@ if (isset($_POST['deleteUser'])) {
                 icon: "success",
                 iconColor: "var(--verde)",
                 title: '!Éxito!',
+                width: '400px',
                 text: 'Usuario Eliminado correctamente',
                 showConfirmButton: true,
                 customClass: {

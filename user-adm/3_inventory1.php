@@ -452,6 +452,7 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
                 title: '¡Error!',
                 text: 'El artículo ya fue agregado',
                 showConfirmButton: true,
+                width: '400px',
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },
@@ -516,6 +517,7 @@ if (isset($_POST['agregarArtConsumoInterno'])) {
                     title: '!Éxito!',
                     text: 'Artículo Agregado',
                     showConfirmButton: true,
+                    width: '400px',
                     customClass: {
                         confirmButton: 'btn-confirm'
                     },
@@ -560,6 +562,7 @@ if (isset($_POST['eliminarArtConsumoInterno'])) {
                 text: 'No se puede eliminar el artículo porque, la cantidad disponible es mayor a 0.',
                 showConfirmButton: true,
                 allowOutsideClick: false,
+                width: '400px',
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },
@@ -586,6 +589,7 @@ if (isset($_POST['eliminarArtConsumoInterno'])) {
                     text: 'Artículo eliminado del inventario de Consumo Interno',
                     showConfirmButton: true,
                     allowOutsideClick: false,
+                    width: '400px',
                     customClass: {
                         confirmButton: 'btn-confirm'
                     },
@@ -613,8 +617,6 @@ if (isset($_POST['addQuantArt'])) {
     $inventory_id = htmlspecialchars($_POST['inventory_id']);
     $warehouse_id = htmlspecialchars($_POST['warehouses_id']);
     date_default_timezone_set('America/Panama');
-
-    
 
     // Obtener la cantidad actual del inventario
     $query = $conn->prepare("SELECT inventory_quantity FROM inventory WHERE inventory_id = ?");
@@ -660,6 +662,7 @@ if (isset($_POST['addQuantArt'])) {
                 title: '!Éxito!',
                 text: 'Cantidad actualizada del artículo en existencia',
                 showConfirmButton: true,
+                width: '400px',
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },
@@ -681,6 +684,7 @@ if (isset($_POST['addQuantArt'])) {
                 title: '¡Error!',
                 text: 'La cantidad del artículo no se pudo actualizar',
                 showConfirmButton: true,
+                width: '400px',
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },

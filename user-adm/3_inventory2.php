@@ -450,6 +450,7 @@ if (isset($_POST['agregarArtBienesFisicos'])) {
                 title: '¡Error!',
                 text: 'El artículo ya fue agregado',
                 showConfirmButton: true,
+                width: '400px',
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },
@@ -514,6 +515,7 @@ if (isset($_POST['agregarArtBienesFisicos'])) {
                     title: '!Éxito!',
                     text: 'Artículo Agregado',
                     showConfirmButton: true,
+                    width: '400px',
                     customClass: {
                         confirmButton: 'btn-confirm'
                     },
@@ -555,6 +557,7 @@ if (isset($_POST['eliminarArtBienesFisicos'])) {
                 icon: "error",
                 iconColor: "var(--rojo)",
                 title: 'Error',
+                width: '400px',
                 text: 'No se puede eliminar el artículo porque, la cantidad disponible es mayor a 0.',
                 showConfirmButton: true,
                 allowOutsideClick: false,
@@ -581,6 +584,7 @@ if (isset($_POST['eliminarArtBienesFisicos'])) {
                     icon: "success",
                     iconColor: "var(--verde)",
                     title: 'Éxito',
+                    width: '400px',
                     text: 'Artículo eliminado del inventario de Consumo Interno',
                     showConfirmButton: true,
                     allowOutsideClick: false,
@@ -654,6 +658,7 @@ if (isset($_POST['addQuantArt'])) {
                 icon: "success",
                 iconColor: "var(--verde)",
                 title: '!Éxito!',
+                width: '400px',
                 text: 'Cantidad actualizada del artículo en existencia',
                 showConfirmButton: true,
                 customClass: {
@@ -675,6 +680,7 @@ if (isset($_POST['addQuantArt'])) {
                 icon: "error",
                 iconColor: "var(--rojo)",
                 title: '¡Error!',
+                width: '400px',
                 text: 'La cantidad del artículo no se pudo actualizar',
                 showConfirmButton: true,
                 customClass: {

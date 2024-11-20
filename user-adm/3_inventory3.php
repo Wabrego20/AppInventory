@@ -602,6 +602,7 @@ if (isset($_POST['agregarDonacion'])) {
                 title: '¡Error!',
                 text: 'El artículo ya fue agregado',
                 showConfirmButton: true,
+                width: '400px',
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },
@@ -666,6 +667,7 @@ if (isset($_POST['agregarDonacion'])) {
                     title: '!Éxito!',
                     text: 'Artículo Agregado',
                     showConfirmButton: true,
+                    width: '400px',
                     customClass: {
                         confirmButton: 'btn-confirm'
                     },
@@ -710,6 +712,7 @@ if (isset($_POST['eliminarArtBienesFisicos'])) {
                 text: 'No se puede eliminar el artículo porque, la cantidad disponible es mayor a 0.',
                 showConfirmButton: true,
                 allowOutsideClick: false,
+                width: '400px',
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },
@@ -733,6 +736,7 @@ if (isset($_POST['eliminarArtBienesFisicos'])) {
                     icon: "success",
                     iconColor: "var(--verde)",
                     title: 'Éxito',
+                    width: '400px',
                     text: 'Artículo eliminado del inventario de Donaciones',
                     showConfirmButton: true,
                     allowOutsideClick: false,
@@ -808,6 +812,7 @@ if (isset($_POST['addQuantArt'])) {
                 title: '!Éxito!',
                 text: 'Cantidad actualizada del artículo en existencia',
                 showConfirmButton: true,
+                width: '400px',
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },
@@ -829,6 +834,7 @@ if (isset($_POST['addQuantArt'])) {
                 title: '¡Error!',
                 text: 'La cantidad del artículo no se pudo actualizar',
                 showConfirmButton: true,
+                width: '400px',
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },

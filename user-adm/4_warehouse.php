@@ -388,6 +388,7 @@ if (isset($_POST['crearBodega'])) {
                 title: '¡Error!',
                 text: 'La Bodega ya existen',
                 showConfirmButton: true,
+                width: '400px',
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },
@@ -414,6 +415,7 @@ if (isset($_POST['crearBodega'])) {
                     title: '!Éxito!',
                     text: 'Bodega Creada',
                     showConfirmButton: true,
+                    width: '400px',
                     customClass: {
                         confirmButton: 'btn-confirm'
                     },
@@ -458,6 +460,7 @@ if (isset($_POST['editBodega'])) {
                 text: 'Bodega Actualizada.',
                 showConfirmButton: true,
                 allowOutsideClick: false,
+                width: '400px',
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },
@@ -480,6 +483,7 @@ if (isset($_POST['editBodega'])) {
                 text: 'No se actualizo la bodega.',
                 showConfirmButton: true,
                 allowOutsideClick: false,
+                width: '400px',
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },
@@ -521,6 +525,7 @@ if (isset($_POST['eliminarBodega'])) {
                 text: 'No se puede eliminar la bodega porque contiene artículos.',
                 showConfirmButton: true,
                 allowOutsideClick: false,
+                width: '400px',
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },
@@ -548,6 +553,7 @@ if (isset($_POST['eliminarBodega'])) {
                     text: 'Bodega eliminada.',
                     showConfirmButton: true,
                     allowOutsideClick: false,
+                    width: '400px',
                     customClass: {
                         confirmButton: 'btn-confirm'
                     },

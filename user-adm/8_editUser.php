@@ -99,8 +99,8 @@ include_once '../settings/notice.php';
                     </a>
                 </li>
 
-               <!--Pestaña de Solicitudes-->
-               <li class="bell">
+                <!--Pestaña de Solicitudes-->
+                <li class="bell">
                     <?php if ($pending_count > 0): ?>
                         <i class="fa-solid fa-bell fa-shake" style="display: block;">
                             <h6><?php echo $pending_count; ?></h6>
@@ -213,11 +213,13 @@ include_once '../settings/notice.php';
             </div>
 
             <div class="panelDatos">
-                <h4 onclick="editarDatos('<?php echo $row['users_id'] ?? '0'; ?>')" title="clic aquí para editar sus datos personales">Editar Datos Personales...</h4>
+                <h4 onclick="editarDatos('<?php echo $row['users_id'] ?? '0'; ?>')"
+                    title="clic aquí para editar sus datos personales">Editar Datos Personales...</h4>
             </div>
 
             <div class="panelDatos">
-                <h4 onclick="cambiarPass('<?php echo $row['users_id'] ?? '0'; ?>')" title="clic aquí para cambiar su contraseña">Cambiar Contraseña...</h4>
+                <h4 onclick="cambiarPass('<?php echo $row['users_id'] ?? '0'; ?>')"
+                    title="clic aquí para cambiar su contraseña">Cambiar Contraseña...</h4>
             </div>
 
             <?php
@@ -473,6 +475,7 @@ if (isset($_POST['editarPerfil'])) {
                 title: '¡Éxito!',
                 text: 'Perfil actualizado correctamente',
                 showConfirmButton: true,
+                width: '400px',
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },
@@ -528,6 +531,7 @@ if (isset($_POST['editarPass'])) {
                             title: '¡Éxito!',
                             text: 'Contraseña actualizada correctamente',
                             showConfirmButton: true,
+                            width: '400px',
                             customClass: {
                                 confirmButton: 'btn-confirm'
                             },
@@ -552,6 +556,7 @@ if (isset($_POST['editarPass'])) {
                         icon: "error",
                         iconColor: "var(--rojo)",
                         title: 'Error',
+                        width: '400px',
                         text: 'Las nuevas contraseñas no coinciden',
                         showConfirmButton: true,
                         customClass: {
@@ -572,6 +577,7 @@ if (isset($_POST['editarPass'])) {
                     title: 'Error',
                     text: 'La contraseña actual es incorrecta',
                     showConfirmButton: true,
+                    width: '400px',
                     customClass: {
                         confirmButton: 'btn-confirm'
                     },

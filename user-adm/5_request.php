@@ -197,7 +197,7 @@ include_once '../settings/notice.php';
                 if ($result->num_rows > 0) {
                     $fila = 1;
                     while ($row = $result->fetch_assoc()) {
-                ?>
+                        ?>
                         <tr>
                             <td><?php echo $fila; ?></td>
                             <td><?php echo $row['users_user'] ?? 'no disponible'; ?></td>
@@ -225,7 +225,7 @@ include_once '../settings/notice.php';
                                         class="fa-solid fa-thumbs-down fa-lg"></i></button>
                             </td>
                         </tr>
-                <?php
+                        <?php
                         $fila++;
                     }
                 }
@@ -443,13 +443,14 @@ if (isset($_POST['approveRequest'])) {
         $stmt_update->execute();
 
         if ($stmt_update->affected_rows > 0) {
-?>
+            ?>
             <script>
                 Swal.fire({
                     color: "var(--verde)",
                     icon: "success",
                     iconColor: "var(--verde)",
                     title: 'Éxito',
+                    width: '400px',
                     text: 'Solicitud Aprobada y cantidad actualizada exitosamente.',
                     showConfirmButton: true,
                     allowOutsideClick: false,
@@ -463,9 +464,9 @@ if (isset($_POST['approveRequest'])) {
                     }
                 });
             </script>
-        <?php
+            <?php
         } else {
-        ?>
+            ?>
             <script>
                 Swal.fire({
                     color: "var(--rojo)",
@@ -475,6 +476,7 @@ if (isset($_POST['approveRequest'])) {
                     text: 'No se puede aprobar la solicitud o actualizar la cantidad.',
                     showConfirmButton: true,
                     allowOutsideClick: false,
+                    width: '400px',
                     customClass: {
                         confirmButton: 'btn-confirm'
                     },
@@ -485,7 +487,7 @@ if (isset($_POST['approveRequest'])) {
                     }
                 });
             </script>
-        <?php
+            <?php
         }
         $stmt_update_quantity->close();
         $stmt_update->close();
@@ -500,6 +502,7 @@ if (isset($_POST['approveRequest'])) {
                 text: 'Esta solicitud ya se ha procesado.',
                 showConfirmButton: true,
                 allowOutsideClick: false,
+                width: '400px',
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },
@@ -535,11 +538,6 @@ if (isset($_POST['rejectRequest'])) {
     $article_id = htmlspecialchars($_POST['articles_id'] ?? '0');
     $reason = htmlspecialchars($_POST['request_reason']);
 
-    // Verificar valores de entrada
-   /*  echo "Requester ID: " . $requester_id . "\n";
-    echo "Article ID: " . $article_id . "\n";
-    echo "Reason: " . $reason . "\n";
- */
     // Obtener el estado actual de la solicitud
     $sql_check_status = "SELECT request_status FROM request WHERE requester_id = ? AND articles_id = ?";
     $stmt_check_status = $conn->prepare($sql_check_status);
@@ -549,9 +547,6 @@ if (isset($_POST['rejectRequest'])) {
     $row_status = $result_status->fetch_assoc();
     $current_status = $row_status['request_status'] ?? '';
     $stmt_check_status->close();
-
-    // Verificar el estado actual
-   // echo "Current Status: " . $current_status . "\n";
 
     // Verificar si el estado es "Pendiente"
     if (trim($current_status) === 'Pendiente') {
@@ -563,7 +558,7 @@ if (isset($_POST['rejectRequest'])) {
 
         // Verificar si la actualización fue exitosa
         if ($stmt_update->affected_rows > 0) {
-        ?>
+            ?>
             <script>
                 Swal.fire({
                     color: "var(--verde)",
@@ -573,6 +568,7 @@ if (isset($_POST['rejectRequest'])) {
                     text: 'Solicitud Rechazada.',
                     showConfirmButton: true,
                     allowOutsideClick: false,
+                    width: '400px',
                     customClass: {
                         confirmButton: 'btn-confirm'
                     },
@@ -583,9 +579,9 @@ if (isset($_POST['rejectRequest'])) {
                     }
                 });
             </script>
-        <?php
+            <?php
         } else {
-        ?>
+            ?>
             <script>
                 Swal.fire({
                     color: "var(--rojo)",
@@ -595,6 +591,7 @@ if (isset($_POST['rejectRequest'])) {
                     text: 'No se puede rechazar la solicitud.',
                     showConfirmButton: true,
                     allowOutsideClick: false,
+                    width: '400px',
                     customClass: {
                         confirmButton: 'btn-confirm'
                     },
@@ -605,7 +602,7 @@ if (isset($_POST['rejectRequest'])) {
                     }
                 });
             </script>
-        <?php
+            <?php
         }
         $stmt_update->close();
     } else {
@@ -619,6 +616,7 @@ if (isset($_POST['rejectRequest'])) {
                 text: 'Esta solicitud ya se ha procesado.',
                 showConfirmButton: true,
                 allowOutsideClick: false,
+                width: '400px',
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },
@@ -629,7 +627,7 @@ if (isset($_POST['rejectRequest'])) {
                 }
             });
         </script>
-<?php
+        <?php
     }
     $conn->close();
 }
