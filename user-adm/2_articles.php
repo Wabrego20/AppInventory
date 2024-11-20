@@ -248,8 +248,8 @@ include_once '../settings/notice.php';
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
                             <input class="btnTxt" type="text" name="articles_name" id="articles_name"
-                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ.\°#\s,0-9]{3,30}" maxlength="30"
-                                placeholder="introduzca nombre del artículo" autofocus required>
+                                pattern='[A-Za-zÁÉÍÓÚáéíóúñÑ°#".\s,0-9]{3,30}' maxlength="30"
+                                placeholder="introduzca nombre del artículo" required>
                         </div>
                     </div>
 
@@ -270,7 +270,7 @@ include_once '../settings/notice.php';
                         <div class="campo">
                             <i class="fa-regular fa-flag"></i>
                             <input class="btnTxt" type="text" name="articles_brand" id="articles_brand"
-                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]{2,30}" maxlength="30"
+                            pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]{2,30}" maxlength="30"
                                 placeholder="introduzca la marca del producto">
                         </div>
                     </div>
@@ -331,7 +331,7 @@ include_once '../settings/notice.php';
                         <div class="campo">
                             <i class="fa-solid fa-dollar-sign"></i>
                             <input class="btnTxt" type="number" name="articles_unit_cost" id="articles_unit_cost"
-                                step="0.01" max="1000000" placeholder="introduzca precio del artículo" required>
+                                step="0.01" max="100000" placeholder="introduzca precio del artículo" required>
                         </div>
 
                     </div>
@@ -363,7 +363,7 @@ include_once '../settings/notice.php';
                         <div class="campo">
                             <input type="file" id="btnArticlesPhoto"
                                 accept="image/jpeg, image/jpg, image/jpe, image/png, image/gif, image/bmp, image/webp, image/tiff"
-                                style="display: none;" name="articles_photo" required />
+                                style="display: none;" name="articles_photo" />
                             <div class="btnArticlesPhoto" onclick="btnArticlesPhoto();">
                                 <i class="fa-solid fa-camera-retro"></i>
                                 <img id="articles_photo" style="display: none;" />
@@ -394,7 +394,7 @@ include_once '../settings/notice.php';
                         <div class="campo">
                             <i class="fa-solid fa-signature"></i>
                             <input class="btnTxt" type="text" name="articles_name" id="articles_name_edit"
-                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ.#°\s.,0-9]{3,30}" maxlength="30"
+                                pattern='[A-Za-zÁÉÍÓÚáéíóúñÑ°#".\s,0-9]{3,30}' maxlength="30"
                                 placeholder="introduzca nombre del artículo" autofocus required>
                         </div>
                     </div>
@@ -569,7 +569,7 @@ if (isset($_POST['crearArticulo'])) {
     $articles_expiration_date = htmlspecialchars($_POST['articles_expiration_date']) ?? 'no tiene';
 
     // Validar el tipo de archivo de la imagen
-    if (isset($_FILES['articles_photo'])) {
+    if (isset($_FILES['articles_photo']) && !empty($_FILES['articles_photo']['tmp_name'])) {
         $fileType = mime_content_type($_FILES['articles_photo']['tmp_name']);
         $allowedTypes = ['image/jpeg', 'image/jpg', 'image/jpe', 'image/png', 'image/gif', 'image/bmp', 'image/webp', 'image/tiff'];
         if (!in_array($fileType, $allowedTypes)) {

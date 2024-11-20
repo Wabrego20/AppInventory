@@ -152,13 +152,17 @@ main h2 {
   box-shadow: 0 0 5px var(--azul);
 }
 
-.donante {
+.donante{
   color: var(--negro);
+}
+.donante, .gestor, .administrador {
   font-weight: bold;
+  font-size: 18px;
 }
 .donante h5:hover {
   cursor: pointer;
   text-decoration: underline;
+  scale: 0.95;
 }
 
 #otrosDatos {
