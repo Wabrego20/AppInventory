@@ -409,7 +409,7 @@ include_once '../settings/notice.php';
 
     <!--Pie de Página-->
     <footer>
-        <h6>© 2024 Universidad de Panamá y William Abrego. Todos los derechos reservados.</h6>
+        <?php include '../settings/footer.php'; ?>
     </footer>
     <script src="../settings/header.js"></script>
     <script src="../js/8_editUser.js"></script>
