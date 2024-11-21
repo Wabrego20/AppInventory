@@ -273,7 +273,7 @@ include_once '../settings/notice.php';
             <div class="panelProcessRequest">
                 <form method="post" class="formProcessRequest">
                     <h2>Rechazar Solicitud</h2>
-                    <input type="text" name="request_id" id="request_id_reject">
+                    <input type="hidden" name="request_id" id="request_id_reject">
 
                     <!--campo de nombre de la solicitud-->
                     <div class="formLogCampo">

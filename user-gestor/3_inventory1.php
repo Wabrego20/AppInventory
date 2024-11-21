@@ -161,7 +161,7 @@ include_once '../settings/conexion.php';
                             <td><?php echo $row['inventory_total_cost'] ?? '0.00'; ?></td>
                             <td>
                                 <button class="accion accionSolicitar" title="clic para solicitar article"
-                                    onclick="solicitarArt('<?php echo $row['warehouses_total_quantity']; ?>', '<?php echo $row['inventory_id']; ?>', '<?php echo $row['articles_id']; ?>', '<?php echo $row['articles_name']; ?>','<?php echo $row['categories_name']; ?>','<?php echo $row['warehouses_name']; ?>','','<?php echo $row['articles_unit_cost']; ?>','')"><i
+                                    onclick="solicitarArt('<?php echo $row['inventory_id']; ?>', '<?php echo $row['articles_id']; ?>', '<?php echo $row['articles_name']; ?>','<?php echo $row['categories_name']; ?>','<?php echo $row['warehouses_name']; ?>', '<?php echo $row['inventory_quantity']; ?>','<?php echo $row['articles_unit_cost']; ?>','')"><i
                                         class="fa-solid fa-paper-plane"></i></button>
                             </td>
                         </tr>
@@ -356,7 +356,7 @@ if (isset($_POST['solicitarArtConsumoInterno'])) {
                     icon: "success",
                     iconColor: "var(--verde)",
                     title: '!Éxito!',
-                    text: 'Se ha enviado su solicitud, ir al apartado de Solicitudes para verificar el estado de su solicitud',
+                    text: 'Tu solicitud ha sido enviada. Por favor, dirígete a la sección de Solicitudes para verificar su estado.'
                     showConfirmButton: true,
                     width: '400px',
                     customClass: {
