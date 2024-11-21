@@ -167,11 +167,13 @@ include_once '../settings/notice.php';
             </div>
 
             <div class="panelDatos">
-                <h4 onclick="editarDatos('<?php echo $row['users_id'] ?? '0'; ?>')" title="clic para editar datos">Editar Datos Personales...</h4>
+                <h4 onclick="editarDatos('<?php echo $row['users_id'] ?? '0'; ?>')" title="clic para editar datos">Editar
+                    Datos Personales...</h4>
             </div>
 
             <div class="panelDatos">
-                <h4 onclick="cambiarPass('<?php echo $row['users_id'] ?? '0'; ?>')" title="clic para cambiar contraseña">Cambiar Contraseña...</h4>
+                <h4 onclick="cambiarPass('<?php echo $row['users_id'] ?? '0'; ?>')" title="clic para cambiar contraseña">
+                    Cambiar Contraseña...</h4>
             </div>
 
             <?php
@@ -361,6 +363,17 @@ include_once '../settings/notice.php';
 
     <!--Pie de Página-->
     <footer>
+        <h4>Documentación</h4>
+        <div class="doc">
+            <section>
+                <a href="../video/Solicitar Artículo de Consumo Interno y ver Acta de Entrega.mp4"
+                    target="_blank">Solicitar Artículo de Consumo Interno y ver Acta de Entrega.</a>
+            </section>
+            <section>
+                <a href="../video/Solicitar Artículo de Bienes Físicos y ver Acta de Entrega.mp4"
+                    target="_blank">Solicitar Artículo de Bienes Físicos y ver Acta de Entrega.</a>
+            </section>
+        </div>
         <h6>© 2024 Universidad de Panamá y William Abrego. Todos los derechos reservados.</h6>
     </footer>
     <script src="../settings/header.js"></script>

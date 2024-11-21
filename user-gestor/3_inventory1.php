@@ -342,11 +342,9 @@ if (isset($_POST['solicitarArtConsumoInterno'])) {
         </script>
         <?php
     } else {
-
         $stmt_insert = $conn->prepare('INSERT INTO request (requester_id, articles_id, warehouse_id, inventory_id, request_quantity, request_total_cost) 
                                    VALUES (?, ?, ?, ?, ?, ?)');
         $stmt_insert->bind_param('iiiiid', $user_id, $article_id, $warehouse_id, $inventory_id, $request_quantity, $request_total_cost);
-
         // Ejecutar la inserción y manejar errores
         if ($stmt_insert->execute()) {
             ?>
@@ -356,7 +354,7 @@ if (isset($_POST['solicitarArtConsumoInterno'])) {
                     icon: "success",
                     iconColor: "var(--verde)",
                     title: '!Éxito!',
-                    text: 'Tu solicitud ha sido enviada. Por favor, dirígete a la sección de Solicitudes para verificar su estado.'
+                    text: 'Tu solicitud ha sido enviada. Por favor, dirígete a la sección de Solicitudes para verificar su estado.',
                     showConfirmButton: true,
                     width: '400px',
                     customClass: {

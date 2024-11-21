@@ -409,7 +409,27 @@ include_once '../settings/notice.php';
 
     <!--Pie de Página-->
     <footer>
-        <?php include '../settings/footer.php'; ?>
+        <h4>Documentación</h4>
+        <div class="doc">
+            <section>
+                <a href="../video/crearArticulo.mp4" target="_blank">Crear Artículo.</a>
+                <a href="../video/aprobar una solicitud.mp4" target="_blank">Aprobar una solicitud.</a>
+                <a href="../video/rechazar una solicitud.mp4" target="_blank">Rechazar una solicitud.</a>
+            </section>
+            <section>
+                <a href="../video/agregarArticuloConsumoInterno.mp4" target="_blank">Agregar Artículo de Consumo
+                    Interno.</a>
+                <a href="../video/agregarArticuloBienesFisicos.mp4" target="_blank">Agregar Artículo de Bienes
+                    Físicos.</a>
+            </section>
+            <section>
+                <a href="../video/Agregar Donación y Generar Acta de Entrega.mp4" target="_blank">Agregar Donación y
+                    Generar Acta de Entrega.</a>
+                <a href="../video/agregarArticuloBienesFisicos.mp4" target="_blank">Agregar Ayuda Social y Generar Acta
+                    de Entrega.</a>
+            </section>
+        </div>
+        <h6>© 2024 Universidad de Panamá y William Abrego. Todos los derechos reservados.</h6>
     </footer>
     <script src="../settings/header.js"></script>
     <script src="../js/8_editUser.js"></script>
@@ -449,7 +469,6 @@ if (isset($_POST['editarPerfil'])) {
             $base64Image = $row['users_photo'];
         }
     }
-
     // Consulta SQL
     $sql = "UPDATE users SET 
                 users_photo = ?, 

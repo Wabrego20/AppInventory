@@ -360,7 +360,7 @@ if (isset($_POST['solicitarArtBienesFisicos'])) {
                     iconColor: "var(--verde)",
                     title: '!Éxito!',
                     width: '400px',
-                    text: 'Tu solicitud ha sido enviada. Por favor, dirígete a la sección de Solicitudes para verificar su estado.'
+                    text: 'Tu solicitud ha sido enviada. Por favor, dirígete a la sección de Solicitudes para verificar su estado.',
                     showConfirmButton: true,
                     customClass: {
                         confirmButton: 'btn-confirm'

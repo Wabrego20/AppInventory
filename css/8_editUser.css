@@ -255,3 +255,40 @@ main {
     background-color: var(--blanco);
   }
 }
+
+footer{
+  flex-direction: column;
+  color: var(--azul);
+  h4{
+    width: 95%;
+    margin: 5px 0;
+  }
+  .doc{
+    width: 94%;
+    margin: 0 10px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    section{
+      display: flex;
+      justify-content: start;
+      align-items: start;
+      flex-direction: column;
+      margin: 5px 10px;
+      a{
+        text-decoration: none;
+        font-size: 14px;
+        color: var(--azul);
+        margin: 5px 0;
+        font-style: oblique;
+      }
+      a:hover{
+        text-decoration: underline;
+        color: var(--negro);
+      }
+    }
+  }
+  h6{
+    width: 95%;
+  }
+}
