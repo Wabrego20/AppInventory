@@ -1,7 +1,7 @@
 <!--Inicio de sesión y cierre de sesión por inactividad-->
 <?php
-include_once("../settings/sessionStart.php");
-include_once("../settings/conexion.php");
+include_once ("../settings/sessionStart.php");
+include_once ("../settings/conexion.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -14,7 +14,7 @@ include_once("../settings/conexion.php");
     <link rel="stylesheet" href="../settings/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="../settings/styles.css">
     <link rel="stylesheet" href="../css/4_warehouse.css">
-    <style>.oculto { display: none;}</style>
+    <style>.oculto {display: none;}</style>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
     <title>Bodegas | Sist-Inventario</title>
 </head>
@@ -134,7 +134,7 @@ include_once("../settings/conexion.php");
                 if ($result->num_rows > 0) {
                     $fila = 1;
                     while ($row = $result->fetch_assoc()) {
-                ?>
+                        ?>
                         <tr>
                             <td><?php echo $fila; ?></td>
                             <td><?php echo $row['warehouses_name'] ?? 'no disponible'; ?></td>
@@ -143,7 +143,7 @@ include_once("../settings/conexion.php");
                             <td><?php echo $row['warehouses_total_quantity'] ?? 'no disponible'; ?></td>
                         </tr>
 
-                <?php
+                        <?php
                         $fila++;
                     }
                 }
@@ -151,117 +151,6 @@ include_once("../settings/conexion.php");
 
             </tbody>
         </table>
-
-        <!--Formulario para Crear un usuario-->
-        <div class="modalCreateBodega">
-            <div class="panelCreateBodega">
-                <form method="post" class="formCreateBodega" name="crearBodega">
-                    <h2>Crear Bodega/Almacén</h2>
-
-                    <!--campo de nombre de la bodega-->
-                    <div class="formLogCampo">
-                        <label for="warehouses_name">Nombre:</label>
-                        <div class="campo">
-                            <i class="fa-solid fa-signature"></i>
-                            <input class="btnTxt" type="text" name="warehouses_name" id="warehouses_name"
-                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]+" maxlength="30" placeholder="introduzca un nombre"
-                                required autofocus>
-                        </div>
-                    </div>
-
-                    <!--campo de provincia de la bodega-->
-                    <div class="formLogCampo">
-                        <label for="warehouses_province">Provincia:</label>
-                        <div class="campo">
-                            <i class="fa-solid fa-map-location-dot"></i>
-                            <select name="warehouses_province" id="warehouses_province" class="btnTxt" required>
-                                <option value="">Seleccione</option>
-                                <option value="Panamá">Panamá</option>
-                                <option value="Colón">Colón</option>
-                                <option value="Chiriquí">Chiriquí</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!--campo de ubicación de la bodega-->
-                    <div class="formLogCampo">
-                        <label for="warehouses_location">Dirección:</label>
-                        <div class="campo">
-                            <i class="fa-solid fa-location-dot"></i>
-                            <textarea name="warehouses_location" id="warehouses_location" class="btnTxt textArea"
-                                maxlength="100" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]+"
-                                placeholder="introduzca la dirección de la bodega" required></textarea>
-                        </div>
-                    </div>
-
-                    <!--Botón de crear bodega, botón de cancelar creación de bodega-->
-                    <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnCreateUser" name="crearBodega">
-                            <i class="fa-solid fa-heart-circle-plus"></i> Crear Bodega
-                        </button>
-                        <div class="btnSubmit btnCancel" onclick="ocultarFormCreateBodega()">Cancelar</div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!--Formulario para Editar un usuario-->
-        <div class="modalEditBodega">
-            <div class="panelCreateBodega">
-                <form method="post" class="formCreateBodega">
-                    <h2>Editar Bodega/Almacén</h2>
-
-                    <!--campo de nombre de la bodega-->
-                    <div class="formLogCampo">
-                        <label for="warehouses_name">Nombre:</label>
-                        <div class="campo">
-                            <i class="fa-solid fa-signature"></i>
-                            <input class="btnTxt" type="text" name="warehouses_name" id="warehouses_name"
-                                value="<?php echo isset($name) ? htmlspecialchars($name) : ''; ?>"
-                                pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]+" maxlength="30" placeholder="Edite el nombre"
-                                required autofocus>
-                        </div>
-                    </div>
-
-                    <!--campo de provincia de la bodega-->
-                    <div class="formLogCampo">
-                        <label for="warehouses_province">Provincia:</label>
-                        <div class="campo">
-                            <i class="fa-solid fa-map-location-dot"></i>
-                            <select name="warehouses_province" id="warehouses_province" class="btnTxt" required>
-                                <option
-                                    value="<?php echo isset($provincia) ? htmlspecialchars($provincia) : 'Seleccione'; ?>">
-                                    Seleccione</option>
-                                <option value="Panamá">Panamá</option>
-                                <option value="Colón">Colón</option>
-                                <option value="Chiriquí">Chiriquí</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!--campo de ubicación de la bodega-->
-                    <div class="formLogCampo">
-                        <label for="warehouses_location">Dirección:</label>
-                        <div class="campo">
-                            <i class="fa-solid fa-location-dot"></i>
-                            <textarea name="warehouses_location" id="warehouses_location" class="btnTxt textArea"
-                                maxlength="100" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s,0-9]+"
-                                placeholder="Edite la dirección de la bodega"
-                                required><?php echo isset($direccion) ? htmlspecialchars($direccion) : ''; ?></textarea>
-                        </div>
-                    </div>
-
-                    <!--Botón de crear bodega, botón de cancelar creación de bodega-->
-                    <div class="btnSubmitPanel">
-                        <button type="submit" class="btnSubmit btnCreateUser" name="editBodega">
-                            <i class="fa-solid fa-heart-circle-plus"></i> Guardar Bodega
-                        </button>
-                        <div class="btnSubmit btnCancel" onclick="ocultarFormEditBodega()">Cancelar</div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
     </main>
 
     <!--Pie de Página-->
@@ -279,129 +168,3 @@ include_once("../settings/conexion.php");
 </body>
 
 </html>
-
-<!--Crear Bodega-->
-<?php
-if (isset($_POST['crearBodega'])) {
-    $name = htmlspecialchars($_POST['warehouses_name']);
-    $provincia = htmlspecialchars($_POST['warehouses_province']);
-    $direccion = htmlspecialchars($_POST['warehouses_location']);
-
-    // Verificar si la cédula o el correo ya existen
-    $checkQuery = $conn->prepare("SELECT * FROM warehouses WHERE warehouses_name = ? OR warehouses_location = ?");
-    $checkQuery->bind_param("ss", $name, $direccion);
-    $checkQuery->execute();
-    $result = $checkQuery->get_result();
-
-    if ($result->num_rows > 0) {
-?>
-        <script>
-            Swal.fire({
-                color: "var(--rojo)",
-                icon: "error",
-                iconColor: "var(--rojo)",
-                title: '¡Error!',
-                text: 'La Bodega ya existen',
-                showConfirmButton: true,
-                customClass: {
-                    confirmButton: 'btn-confirm'
-                },
-                confirmButtonText: "Aceptar",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = window.location.href;
-                }
-            });
-        </script>
-        <?php
-    } else {
-        $stmt = $conn->prepare("INSERT INTO warehouses (warehouses_name, warehouses_province, warehouses_location) 
-                    VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $name, $provincia, $direccion);
-
-        if ($stmt->execute()) {
-        ?>
-            <script>
-                Swal.fire({
-                    color: "var(--verde)",
-                    icon: "success",
-                    iconColor: "var(--verde)",
-                    title: '!Éxito!',
-                    text: 'Bodega Creada',
-                    showConfirmButton: true,
-                    customClass: {
-                        confirmButton: 'btn-confirm'
-                    },
-                    confirmButtonText: "Aceptar",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = window.location.href;
-                    }
-                });
-            </script>
-        <?php
-        } else {
-            echo "Error: " . $stmt->error;
-        }
-        $stmt->close();
-    }
-    $checkQuery->close();
-    $conn->close();
-}
-
-if (isset($_POST['editBodega'])) {
-
-    $name = htmlspecialchars($_POST['warehouses_name']);
-    $provincia = htmlspecialchars($_POST['warehouses_province']);
-    $direccion = htmlspecialchars($_POST['warehouses_location']);
-    $sql = "UPDATE warehouses SET 
-            warehouses_name = ?, 
-            warehouses_province = ?, 
-            warehouses_location = ?
-        WHERE warehouses_id = ?";
-
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssss", $name, $provincia, $direccion);
-
-    if ($stmt->execute()) {
-        ?>
-        <script>
-            Swal.fire({
-                color: "var(--verde)",
-                icon: "success",
-                iconColor: "var(--verde)",
-                title: '!Éxito!',
-                text: 'Bodega actualizada.',
-                showConfirmButton: true,
-                allowOutsideClick: false,
-                customClass: {
-                    confirmButton: 'btn-confirm'
-                },
-                confirmButtonText: "Aceptar",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = window.location.href;
-                }
-            });
-        </script>
-<?php
-    } else {
-        echo "Error actualizando la bodega: " . $conn->error;
-    }
-
-    $stmt->close();
-    $conn->close();
-} else {
-    $sql = "SELECT * FROM warehouses WHERE warehouses_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $warehouses_id);
-    if ($stmt->execute()) {
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            $name = htmlspecialchars($_POST['warehouses_name']);
-            $provincia = htmlspecialchars($_POST['warehouses_province']);
-            $direccion = htmlspecialchars($_POST['warehouses_location']);
-        }
-    }
-}
-?>

@@ -221,7 +221,7 @@ include_once '../settings/notice.php';
                             </td>
                             <td>
                                 <button title="clic para rechazar solicitud" class="accion accionEliminar"
-                                    onclick="rejectRequest('<?php echo $row['articles_id']; ?>', '<?php echo $row['requester_id']; ?>', '<?php echo $row['articles_name']; ?>', '<?php echo $row['request_quantity']; ?>')"><i
+                                    onclick="rejectRequest('<?php echo $row['request_id']; ?>','<?php echo $row['articles_id']; ?>', '<?php echo $row['requester_id']; ?>', '<?php echo $row['articles_name']; ?>', '<?php echo $row['request_quantity']; ?>')"><i
                                         class="fa-solid fa-thumbs-down fa-lg"></i></button>
                             </td>
                         </tr>
@@ -273,6 +273,7 @@ include_once '../settings/notice.php';
             <div class="panelProcessRequest">
                 <form method="post" class="formProcessRequest">
                     <h2>Rechazar Solicitud</h2>
+                    <input type="text" name="request_id" id="request_id_reject">
 
                     <!--campo de nombre de la solicitud-->
                     <div class="formLogCampo">
@@ -316,7 +317,6 @@ include_once '../settings/notice.php';
             <div class="panelProcessRequest">
                 <form method="post" class="formProcessRequest">
                     <h2>Rechazo de la Solicitud</h2>
-
                     <div class="formLogCampo">
                         <label for="request_reason">Razón:</label>
                         <div class="campo">
@@ -357,6 +357,9 @@ include_once '../settings/notice.php';
 if (isset($_POST['approveRequest'])) {
 
     $approver_user = $_SESSION['users_user'];
+
+    $requester_id = htmlspecialchars($_POST['requester_id']);
+
     $article_id = htmlspecialchars($_POST['articles_id']);
 
     $sql_user = "SELECT users_id FROM users WHERE users_user = ?";
@@ -404,15 +407,40 @@ if (isset($_POST['approveRequest'])) {
         $stmt_update_quantity->execute();
 
         // Obtener el inventory_quantity de la tabla inventory basado en warehouses_id
-        $sql_inventory_quantity = "SELECT inventory_quantity, inventory_id FROM inventory WHERE warehouses_id = ?";
+        $sql_inventory_quantity = "SELECT inventory_name, inventory_quantity, inventory_id FROM inventory WHERE warehouses_id = ?";
         $stmt_inventory_quantity = $conn->prepare($sql_inventory_quantity);
         $stmt_inventory_quantity->bind_param("i", $warehouse_id);
         $stmt_inventory_quantity->execute();
         $result_inventory_quantity = $stmt_inventory_quantity->get_result();
         $row_inventory = $result_inventory_quantity->fetch_assoc();
+        $inventory_name = $row_inventory['inventory_name'] ?? '0';
         $current_inventory_quantity = $row_inventory['inventory_quantity'] ?? '0';
         $inventory_id = $row_inventory['inventory_id'] ?? '0';
         $stmt_inventory_quantity->close();
+
+        $sql_requester = "SELECT users.users_name, users.users_last_name 
+                  FROM users 
+                  JOIN request ON users.users_id = request.requester_id 
+                  WHERE request.requester_id = ?";
+        $stmt_requester = $conn->prepare($sql_requester);
+        $stmt_requester->bind_param("i", $requester_id);
+        $stmt_requester->execute();
+        $result_requester = $stmt_requester->get_result();
+        $row_requester = $result_requester->fetch_assoc();
+        $beneficiary_name = $row_requester['users_name'];
+        $beneficiary_last_name = $row_requester['users_last_name'];
+        $stmt_requester->close();
+
+        //insertar datos en tabla de movements
+        $movements_name = "Salida";
+        $beneficiary = ($beneficiary_name && $beneficiary_last_name) ? ($beneficiary_name . ' ' . $beneficiary_last_name) : 'Vacío';
+        $stmtMove = $conn->prepare("INSERT INTO movements (movements_name, articles_id, movements_quantity, warehouses_id, inventory_name, users_id, beneficiary_name) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmtMove->bind_param("siiisis", $movements_name, $article_id, $request_quantity, $warehouse_id, $inventory_name, $approver_id, $beneficiary);
+        if ($stmtMove->execute()) {
+        } else {
+            echo "Error al insertar el registro en movements: " . $stmtMove->error;
+        }
+        $stmtMove->close();
 
         // Obtener todas las filas relevantes de la tabla inventory
         $sql_inventory_quantity = "SELECT inventory_quantity, inventory_id FROM inventory WHERE articles_id = ? AND warehouses_id = ?";
@@ -534,26 +562,29 @@ if (isset($_POST['rejectRequest'])) {
     $approver_id = $row_user['users_id'] ?? '0';
     $stmt_user->close();
 
+    $request_id = htmlspecialchars($_POST['request_id'] ?? '0');
     $requester_id = htmlspecialchars($_POST['requester_id'] ?? '0');
     $article_id = htmlspecialchars($_POST['articles_id'] ?? '0');
     $reason = htmlspecialchars($_POST['request_reason']);
 
     // Obtener el estado actual de la solicitud
-    $sql_check_status = "SELECT request_status FROM request WHERE requester_id = ? AND articles_id = ?";
-    $stmt_check_status = $conn->prepare($sql_check_status);
-    $stmt_check_status->bind_param("ii", $requester_id, $article_id);
-    $stmt_check_status->execute();
-    $result_status = $stmt_check_status->get_result();
-    $row_status = $result_status->fetch_assoc();
-    $current_status = $row_status['request_status'] ?? '';
-    $stmt_check_status->close();
+
+    $sql = "SELECT request_status, warehouse_id FROM request WHERE request_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $request_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $current_status = $row['request_status'] ?? '';
+    $warehouse_id = $row['warehouse_id'] ?? '0';
+    $stmt->close();
 
     // Verificar si el estado es "Pendiente"
     if (trim($current_status) === 'Pendiente') {
         // Actualizar la tabla request
-        $sql_update = "UPDATE request SET request_status = ?, approver_id = ?, request_reason = ? WHERE requester_id = ? AND articles_id = ?";
+        $sql_update = "UPDATE request SET request_status = ?, approver_id = ?, request_reason = ? WHERE request_id = ?";
         $stmt_update = $conn->prepare($sql_update);
-        $stmt_update->bind_param("sisii", $state, $approver_id, $reason, $requester_id, $article_id);
+        $stmt_update->bind_param("sisi", $state, $approver_id, $reason, $request_id);
         $stmt_update->execute();
 
         // Verificar si la actualización fue exitosa

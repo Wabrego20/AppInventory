@@ -14,11 +14,7 @@ include_once '../settings/conexion.php';
     <link rel="stylesheet" href="../settings/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="../settings/styles.css">
     <link rel="stylesheet" href="../css/3_inventory1.css">
-    <style>
-        .oculto {
-            display: none;
-        }
-    </style>
+    <style>.oculto {display: none;}</style>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
     <title>Consumo Interno | Sist-Inventario</title>
 </head>
@@ -333,6 +329,7 @@ if (isset($_POST['solicitarArtConsumoInterno'])) {
                 title: '!Error!',
                 text: 'Ya se ha solicitado este artículo y está pendiente.',
                 showConfirmButton: true,
+                width: '400px',
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },
@@ -361,6 +358,7 @@ if (isset($_POST['solicitarArtConsumoInterno'])) {
                     title: '!Éxito!',
                     text: 'Se ha enviado su solicitud, ir al apartado de Solicitudes para verificar el estado de su solicitud',
                     showConfirmButton: true,
+                    width: '400px',
                     customClass: {
                         confirmButton: 'btn-confirm'
                     },

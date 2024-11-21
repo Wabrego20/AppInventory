@@ -180,7 +180,7 @@ include_once '../settings/conexion.php';
         <div class="modalAddArticle">
             <div class="panelArticle">
                 <form method="post" class="formArticle">
-                    <h2>Solicitar Artículo de Consumo Interno</h2>
+                    <h2>Solicitar Artículo de Bienes físicos</h2>
 
                     <!--campo de nombre de artículo-->
                     <div class="formLogCampo">
@@ -332,6 +332,7 @@ if (isset($_POST['solicitarArtBienesFisicos'])) {
                 title: '!Error!',
                 text: 'Ya se ha solicitado este artículo y está pendiente.',
                 showConfirmButton: true,
+                width: '400px',
                 customClass: {
                     confirmButton: 'btn-confirm'
                 },
@@ -358,6 +359,7 @@ if (isset($_POST['solicitarArtBienesFisicos'])) {
                     icon: "success",
                     iconColor: "var(--verde)",
                     title: '!Éxito!',
+                    width: '400px',
                     text: 'Se ha enviado su solicitud, ir al apartado de Solicitudes para verificar el estado de su solicitud',
                     showConfirmButton: true,
                     customClass: {
