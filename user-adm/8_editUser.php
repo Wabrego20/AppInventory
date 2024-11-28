@@ -30,7 +30,6 @@ include_once '../settings/notice.php';
                 <img src="../img/logoApp.png" alt="logoAPP" class="logoApp">
             </span>
             <ul>
-
                 <!--Pestaña de Inicio-->
                 <li>
                     <a href="1_dashboard.php">
@@ -203,6 +202,10 @@ include_once '../settings/notice.php';
 
                     <label>Del Departamento de:
                         <h4><?php echo $row['departament_name'] ?? 'no disponible'; ?></h4>
+                    </label>
+
+                    <label>Correo Electrónico:
+                        <h4><?php echo $row['users_email'] ?? 'no disponible'; ?></h4>
                     </label>
 
                     <label>Edad:
