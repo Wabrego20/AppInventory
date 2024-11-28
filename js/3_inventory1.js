@@ -162,3 +162,9 @@ function solicitarArt(inventory_id, id, articleName, categoryName, warehouseName
         totalCost.toFixed(2);
     });
 }
+
+
+document.getElementById('category').addEventListener('contextmenu', function(event) {
+  event.preventDefault(); // Evita que se muestre el menú contextual predeterminado
+  document.getElementById('panelCategory').classList.add('show');
+});

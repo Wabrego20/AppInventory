@@ -159,6 +159,10 @@ include_once '../settings/notice.php';
                         <h4><?php echo $row['departament_name'] ?? 'no disponible'; ?></h4>
                     </label>
 
+                    <label>Correo Electrónico:
+                        <h4><?php echo $row['users_email'] ?? 'no disponible'; ?></h4>
+                    </label>
+
                     <label>Edad:
                         <h4><?php echo $row['users_age'] . ' ' . 'años' ?? 'no disponible'; ?></h4>
                     </label>
@@ -307,7 +311,7 @@ include_once '../settings/notice.php';
             <div class="panelPass">
                 <h2>Cambiar Contraseña</h2>
                 <form method="post" class="formPass">
-                    <input type="text" name="users_id" id="editPass">
+                    <input type="hidden" name="users_id" id="editPass">
 
                     <!--Campo de Contraseña actual-->
                     <div class="formLogCampo">
