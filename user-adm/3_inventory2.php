@@ -409,7 +409,7 @@ include_once '../settings/notice.php';
 
     <!--Pie de Página-->
     <footer>
-        <h6>© 2024 Universidad de Panamá y William Abrego. Todos los derechos reservados.</h6>
+        <h6>© 2025 Universidad de Panamá y William Abrego. Todos los derechos reservados.</h6>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>

@@ -197,7 +197,7 @@ include_once '../settings/notice.php';
         ?>
     </main>
     <footer>
-        <h6>© 2024 Universidad de Panamá y William Abrego. Todos los derechos reservados.</h6>
+        <h6>© 2025 Universidad de Panamá y William Abrego. Todos los derechos reservados.</h6>
     </footer>
     <script>const data = <?php echo json_encode($data); ?>;</script>
     <script>const data2 = <?php echo json_encode($data2); ?>;</script>

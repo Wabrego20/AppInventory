@@ -432,7 +432,7 @@ include_once '../settings/notice.php';
                     de Entrega.</a>
             </section>
         </div>
-        <h6>© 2024 Universidad de Panamá y William Abrego. Todos los derechos reservados.</h6>
+        <h6>© 2025 Universidad de Panamá y William Abrego. Todos los derechos reservados.</h6>
     </footer>
     <script src="../settings/header.js"></script>
     <script src="../js/8_editUser.js"></script>
