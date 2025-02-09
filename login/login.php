@@ -13,7 +13,7 @@
 </head>
 
 <body>
-  <video src="../video/fondoLogin.mp4" class="fondo" autoplay muted loop></video>
+  <!--<video src="../video/fondoLogin.mp4" class="fondo" autoplay muted loop></video>-->
 
   <header>
     <img src="../img/logoApp.png" class="logoApp">
