@@ -541,7 +541,7 @@ include_once '../settings/notice.php';
 
                         <!--Campo de correo-->
                         <div class="formLogCampo">
-                            <label for="beneficiary_email">Correo:<i class="fa-solid fa-asterisk"></i></label>
+                            <label for="beneficiary_email">Correo:</label>
                             <div class="campo">
                                 <i class="fa-regular fa-envelope"></i>
                                 <input class="btnTxt" type="email" name="beneficiary_email" id="beneficiary_email"
