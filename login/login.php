@@ -52,14 +52,14 @@
       <!--Botón de inicio de sesión y de recuperar contraseña-->
       <input type="submit" value="Iniciar Sesión" class="btnSubmit" name="iniciarSesion"
         title="Click para iniciar sesión">
-      <h5><a onclick="verFormRecoverPass()">Ir a Recuperar Contraseña</a></h5>
+      <!-- <h5><a onclick="verFormRecoverPass()">Ir a Recuperar Contraseña</a></h5> -->
     </form>
 
-    <!--Formulario para recuperar contraseña-->
+    <!--Formulario para recuperar contraseña. No entra en función-->
     <form method="post" class="formLog recover scale__off">
       <h2>Recuperar Contraseña</h2>
       <img src="../gif/recover_pass.gif" alt="loginGif" class="loginGif">
-      <h3>Introduzca un correo electrónico por favor:</h3>
+      <h3>Introduzca su correo electrónico por favor:</h3>
 
       <!--Campo de correo eletronico-->
       <div class="formLogCampo">
@@ -72,7 +72,7 @@
       </div>
 
       <!--Botón de recuperar contraseña y botón para regresar a inicio de sesión-->
-      <input type="submit" value="Recuperar Contraseña" class="btnSubmit">
+      <input type="submit" value="Recuperar Contraseña" class="btnSubmit" name="recuperarPass">
       <h5><a onclick="verFormLogin()">Ir a Iniciar Sesión</a></h5>
     </form>
 
@@ -92,6 +92,8 @@
 <?php
 include_once '../settings/conexion.php';
 session_start();
+
+//********************INICIAR SESIÓN***************
 if (isset($_POST['iniciarSesion'])) {
   // Obtener datos del usuario (sanitizados)
   $usuario = htmlspecialchars($_POST['users_user']);
