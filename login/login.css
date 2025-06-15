@@ -12,6 +12,7 @@
 }
 main{
     align-items: center;
+    background-color: aqua;
 }
 .formLog{
     width: 400px;
