@@ -8,11 +8,10 @@
     max-width: 95%;
     margin: 5px;
     border-radius: 5px;
-    background-color: var(--azul);
+    background-color: var(--blanco);
 }
 main{
     align-items: center;
-    background-color: aqua;
 }
 .formLog{
     width: 400px;
